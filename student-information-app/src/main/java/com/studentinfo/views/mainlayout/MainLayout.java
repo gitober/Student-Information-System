@@ -1,4 +1,4 @@
-package com.studentinfo.views;
+package com.studentinfo.views.mainlayout;
 
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.dependency.CssImport;

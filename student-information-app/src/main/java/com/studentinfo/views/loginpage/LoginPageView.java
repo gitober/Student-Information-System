@@ -1,10 +1,12 @@
 package com.studentinfo.views.loginpage;
 
-import com.studentinfo.views.MainLayout;
+import com.studentinfo.views.mainlayout.MainLayout;
+import com.studentinfo.views.profilepage.ProfilePageView;
+import com.studentinfo.views.registration.RegistrationView;
 import com.vaadin.flow.component.Composite;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
-import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
@@ -21,7 +23,6 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 @Route(value = "", layout = MainLayout.class)
 @RouteAlias(value = "")
 @AnonymousAllowed
-
 public class LoginPageView extends Composite<VerticalLayout> {
 
     public LoginPageView() {
@@ -74,8 +75,8 @@ public class LoginPageView extends Composite<VerticalLayout> {
         Button signInButton = new Button("Sign in");
         signInButton.addClassName("signin-button");
         signInButton.addClickListener(e -> {
-            // Add logic for sign-in action here
-            System.out.println("Sign in button clicked");
+            // Navigate to the ProfilePageView
+            UI.getCurrent().navigate(ProfilePageView.class);
         });
 
         // Signup text and link
@@ -85,8 +86,8 @@ public class LoginPageView extends Composite<VerticalLayout> {
         Button signupButton = new Button("Signup");
         signupButton.addClassName("signup-link");
         signupButton.addClickListener(e -> {
-            // Add logic for signup action here
-            System.out.println("Signup button clicked");
+            // Navigate to the ProfilePageView
+            UI.getCurrent().navigate(RegistrationView.class);
         });
 
         // Adding components to left content
