@@ -25,6 +25,8 @@ public class Application implements AppShellConfigurator {
         SpringApplication.run(Application.class, args);
     }
 
+    // Tämä on branch testi
+
     @Bean
     SqlDataSourceScriptDatabaseInitializer dataSourceScriptDatabaseInitializer(DataSource dataSource,
             SqlInitializationProperties properties, UserRepository repository) {
