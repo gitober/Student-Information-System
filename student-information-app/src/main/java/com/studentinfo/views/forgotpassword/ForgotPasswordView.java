@@ -1,5 +1,6 @@
 package com.studentinfo.views.forgotpassword;
 
+import com.studentinfo.views.mainlayout.MainLayout;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -17,7 +18,7 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
 
 @PageTitle("Forgot Password")
-@Route(value = "forgotpassword")
+@Route(value = "forgotpassword", layout = MainLayout.class)
 @AnonymousAllowed
 public class ForgotPasswordView extends Composite<VerticalLayout> {
 
