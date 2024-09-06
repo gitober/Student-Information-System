@@ -1,15 +1,16 @@
 package com.studentinfo.views.registration;
 
+import com.studentinfo.services.RegistrationHandler;
+import com.studentinfo.views.mainlayout.MainLayout;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
-import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
@@ -18,16 +19,24 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
+import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
+import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 
 @PageTitle("Registration")
-@Route(value = "register")
+@Route(value = "register", layout = MainLayout.class)
 @AnonymousAllowed
 public class RegistrationView extends Composite<VerticalLayout> {
 
-    public RegistrationView() {
+    private final RegistrationHandler registrationHandler;
+
+    @Autowired
+    public RegistrationView(RegistrationHandler registrationHandler) {
+        this.registrationHandler = registrationHandler;
+
         // Main layout
         VerticalLayout layoutColumn2 = new VerticalLayout();
         H3 h3 = new H3("Personal Information");
@@ -42,6 +51,11 @@ public class RegistrationView extends Composite<VerticalLayout> {
         PasswordField passwordField = new PasswordField("Create Password");
         PasswordField confirmPasswordField = new PasswordField("Confirm Password");
 
+        // Role selection
+        ComboBox<String> roleComboBox = new ComboBox<>("Role");
+        roleComboBox.setItems("Student", "Teacher");
+        roleComboBox.setPlaceholder("Select role");
+
         // Buttons
         Button saveButton = new Button("Register");
         saveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
@@ -49,37 +63,30 @@ public class RegistrationView extends Composite<VerticalLayout> {
 
         // Button click listeners
         saveButton.addClickListener(e -> {
-            // Validate password and confirm password match
             if (!passwordField.getValue().equals(confirmPasswordField.getValue())) {
                 Notification.show("Passwords do not match. Please try again.");
                 return;
             }
 
-            // Simulate saving the user (you would replace this with actual saving logic)
-            boolean registrationSuccessful = saveUser(
+            boolean registrationSuccessful = registrationHandler.registerUser(
                     firstNameField.getValue(),
                     lastNameField.getValue(),
                     birthdayField.getValue(),
                     phoneNumberField.getValue(),
                     emailField.getValue(),
-                    passwordField.getValue()
+                    passwordField.getValue(),
+                    roleComboBox.getValue()
             );
 
             if (registrationSuccessful) {
-                // Show success notification
                 Notification.show("Registration successful!");
-
-                // Navigate back to the login page (index route "")
-                UI.getCurrent().navigate("");
+                UI.getCurrent().navigate("login");
             } else {
                 Notification.show("Registration failed. Please try again.");
             }
         });
 
-        cancelButton.addClickListener(e -> {
-            // Navigate back to the login page without saving
-            UI.getCurrent().navigate("");
-        });
+        cancelButton.addClickListener(e -> UI.getCurrent().navigate("login"));
 
         // Layout configuration
         layoutColumn2.setWidth("100%");
@@ -96,7 +103,8 @@ public class RegistrationView extends Composite<VerticalLayout> {
                 phoneNumberField,
                 emailField,
                 passwordField,
-                confirmPasswordField
+                confirmPasswordField,
+                roleComboBox
         );
         layoutColumn2.add(h3, formLayout2Col);
 
@@ -107,19 +115,5 @@ public class RegistrationView extends Composite<VerticalLayout> {
 
         // Add main layout to the content
         getContent().add(layoutColumn2);
-    }
-
-    /**
-     * Simulates saving the user information.
-     * Replace this method with actual service call to save the user details.
-     */
-    private boolean saveUser(String firstName, String lastName, LocalDate birthday, String phoneNumber,
-                             String email, String password) {
-        // Add the logic to save the user details here (e.g., call a service method)
-        // Return true if successful, false otherwise
-
-        // This is a stub. Replace with actual save logic.
-        System.out.println("Saving user: " + firstName + " " + lastName);
-        return true; // Simulate successful registration
     }
 }

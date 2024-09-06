@@ -1,14 +1,14 @@
 package com.studentinfo.data.entity;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "students")
+@DiscriminatorValue("STUDENT")  // This value will be stored in the `user_type` column for students
 public class Student extends User {
 
     private String grade;
-    private String studentClass; // Ensure this matches with repository method names
+    private String studentClass;
 
     // Getters and setters
     public String getGrade() {

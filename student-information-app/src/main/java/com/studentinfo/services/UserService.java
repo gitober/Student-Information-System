@@ -3,61 +3,94 @@ package com.studentinfo.services;
 import com.studentinfo.data.entity.User;
 import com.studentinfo.data.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional  // Ensures all public methods are transactional
 public class UserService {
 
-    private final UserRepository repository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager; // Use Spring Security's AuthenticationManager
 
     @Autowired
-    public UserService(UserRepository repository, PasswordEncoder passwordEncoder) {
-        this.repository = repository;
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+        this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
     }
 
-    public Optional<User> get(Long id) {
-        return repository.findById(id);
+    // Authenticate user based on username and password
+    public Optional<User> authenticate(String username, String password) {
+        // Perform authentication using Spring Security's AuthenticationManager
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(username, password)
+        );
+
+        // Set the authenticated user in the SecurityContext
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        // Fetch the user from the repository after authentication is successful
+        Optional<User> userOptional = Optional.ofNullable(userRepository.findByUsername(username));
+
+        // Logging authenticated roles (for debugging)
+        userOptional.ifPresent(user -> System.out.println("Authenticated user roles: " + authentication.getAuthorities()));
+
+        return userOptional;
     }
 
-    public User save(User entity) {
-        if (entity.getHashedPassword() != null && !entity.getHashedPassword().isEmpty()) {
-            entity.setHashedPassword(passwordEncoder.encode(entity.getHashedPassword()));
-        }
-        return repository.save(entity);
-    }
-
-    public void delete(Long id) {
-        repository.deleteById(id);
-    }
-
-    public Page<User> list(Pageable pageable) {
-        return repository.findAll(pageable);
-    }
-
-    public Page<User> list(Pageable pageable, Specification<User> filter) {
-        return repository.findAll(filter, pageable);
-    }
-
-    public int count() {
-        return (int) repository.count();
-    }
-
-    public Optional<User> findByUsername(String username) {
-        return Optional.ofNullable(repository.findByUsername(username));
-    }
-
+    // List all users
     public List<User> list() {
-        return repository.findAll();
+        return userRepository.findAll();
+    }
+
+    // Get a user by ID
+    public Optional<User> get(Long id) {
+        return userRepository.findById(id);
+    }
+
+    // Save or update a user
+    public User save(User user) {
+        return userRepository.save(user);
+    }
+
+    // Delete a user by ID
+    public void delete(Long id) {
+        userRepository.deleteById(id);
+    }
+
+    // Helper method to get the current HttpServletRequest
+    private HttpServletRequest getRequest() {
+        try {
+            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            return attributes.getRequest();
+        } catch (IllegalStateException e) {
+            throw new IllegalStateException("No current request available", e);
+        }
+    }
+
+    // Helper method to get the current HttpServletResponse
+    private HttpServletResponse getResponse() {
+        try {
+            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletResponse response = attributes.getResponse();
+            if (response == null) {
+                throw new IllegalStateException("No response available");
+            }
+            return response;
+        } catch (IllegalStateException e) {
+            throw new IllegalStateException("No current response available", e);
+        }
     }
 }
