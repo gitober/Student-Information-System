@@ -16,6 +16,6 @@ public class TeacherDashboardView extends VerticalLayout {
         setJustifyContentMode(JustifyContentMode.START);
 
         add(new H1("Teacher Dashboard"));
-        add(new Paragraph("Manage courses, view student performance, HELLO TESTI."));
+        add(new Paragraph("Manage courses, view student performance, HELLLOOOOOOO WOOOOOW TEST2."));
     }
 }

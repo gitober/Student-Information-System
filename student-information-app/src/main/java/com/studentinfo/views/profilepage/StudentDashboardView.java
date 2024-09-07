@@ -16,6 +16,6 @@ public class StudentDashboardView extends VerticalLayout {
         setJustifyContentMode(JustifyContentMode.START);
 
         add(new H1("Student Dashboard"));
-        add(new Paragraph("View your enrolled courses, grades, and attendance details here."));
+        add(new Paragraph("View your enrolled courses, grades, and attendance details here. WOW TESTI DAMN HOT"));
     }
 }
