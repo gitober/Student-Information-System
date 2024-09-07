@@ -1,0 +1,49 @@
+/* Header styles */
+.header {
+    width: 100%;
+    height: var(--header-height, 60px);  /* Fallback in case var is not defined */
+    background-color: var(--primary-color, #007BFF);  /* Fallback in case var is not defined */
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for better separation */
+}
+
+/* Application name within the header */
+.app-name {
+    color: white;
+    font-size: 22px;
+    font-weight: 200;
+    text-align: center;
+}
+
+/* Styling for navigation links */
+.router-link {
+    margin-right: 15px;
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s ease;
+}
+
+.router-link:hover {
+    color: #d1e0ff; /* Lighten the color on hover */
+}
+
+/* Logout button styles */
+.logout-button {
+    background-color: #ff4d4f;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #d43536; /* Darker red on hover */
+}

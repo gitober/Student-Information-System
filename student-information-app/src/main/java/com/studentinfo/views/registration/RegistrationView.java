@@ -1,7 +1,7 @@
 package com.studentinfo.views.registration;
 
+import com.studentinfo.views.header.HeaderView;
 import com.studentinfo.services.RegistrationHandler;
-import com.studentinfo.views.mainlayout.MainLayout;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -24,10 +24,8 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.time.LocalDate;
-
 @PageTitle("Registration")
-@Route(value = "register", layout = MainLayout.class)
+@Route(value = "register")
 @AnonymousAllowed
 public class RegistrationView extends Composite<VerticalLayout> {
 
@@ -37,12 +35,29 @@ public class RegistrationView extends Composite<VerticalLayout> {
     public RegistrationView(RegistrationHandler registrationHandler) {
         this.registrationHandler = registrationHandler;
 
-        // Main layout
+        // Main layout setup
+        VerticalLayout mainLayout = getContent();
+        mainLayout.setSizeFull();
+        mainLayout.setPadding(false);
+        mainLayout.setSpacing(false);
+        mainLayout.setAlignItems(Alignment.CENTER);
+
+        // Add the reusable Header component
+        mainLayout.add(new HeaderView("Registration"));
+
+        // Layout for form and content
         VerticalLayout layoutColumn2 = new VerticalLayout();
+        layoutColumn2.setWidth("100%");
+        layoutColumn2.setMaxWidth("800px");
+        layoutColumn2.setHeight("min-content");
+        layoutColumn2.setAlignItems(Alignment.CENTER);
+        layoutColumn2.setJustifyContentMode(JustifyContentMode.START);
+
+        // Form Title
         H3 h3 = new H3("Personal Information");
-        FormLayout formLayout2Col = new FormLayout();
 
         // Form fields
+        FormLayout formLayout2Col = new FormLayout();
         TextField firstNameField = new TextField("First Name");
         TextField lastNameField = new TextField("Last Name");
         DatePicker birthdayField = new DatePicker("Birthday");
@@ -88,14 +103,7 @@ public class RegistrationView extends Composite<VerticalLayout> {
 
         cancelButton.addClickListener(e -> UI.getCurrent().navigate("login"));
 
-        // Layout configuration
-        layoutColumn2.setWidth("100%");
-        layoutColumn2.setMaxWidth("800px");
-        layoutColumn2.setHeight("min-content");
-        layoutColumn2.setAlignItems(Alignment.CENTER);
-        layoutColumn2.setJustifyContentMode(JustifyContentMode.START);
-
-        // Add components to the layout
+        // Add components to the form layout
         formLayout2Col.add(
                 firstNameField,
                 lastNameField,
@@ -113,7 +121,7 @@ public class RegistrationView extends Composite<VerticalLayout> {
         buttonLayout.addClassName(Gap.MEDIUM);
         layoutColumn2.add(buttonLayout);
 
-        // Add main layout to the content
-        getContent().add(layoutColumn2);
+        // Add the form layout to the main layout
+        mainLayout.add(layoutColumn2);
     }
 }

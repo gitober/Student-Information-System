@@ -1,0 +1,19 @@
+/* Teacher Edit Profile View Styles */
+.teacher-edit-profile-view {
+    padding: 20px;
+    background-color: #ffebee; /* Light red for teacher view */
+    border-radius: 8px;
+    box-sizing: border-box;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.teacher-edit-profile-view[dragging] {
+    background-color: rgba(138, 43, 226, 0.2); /* Adjusted to a lighter purple color in proper rgba format */
+}
+
+/* Apply other relevant styles here */
+.teacher-edit-profile-view .drop-zone {
+    border: 1px dashed #e57373;
+    background-color: rgba(138, 43, 226, 0.1); /* Adjusted to proper rgba format */
+}

@@ -1,0 +1,19 @@
+/* Student Edit Profile View Styles */
+.student-edit-profile-view {
+    padding: 20px;
+    background-color: #e8f5e9; /* Light green for student view */
+    border-radius: 8px;
+    box-sizing: border-box;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.student-edit-profile-view[dragging] {
+    background-color: rgba(54, 133, 255, 0.2); /* Lighter blue for dragging */
+}
+
+/* Apply other relevant styles here */
+.student-edit-profile-view .drop-zone {
+    border: 1px dashed #76c7c0;
+    background-color: rgba(54, 133, 255, 0.1); /* Adjusted to proper rgba format */
+}

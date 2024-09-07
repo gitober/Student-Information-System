@@ -1,60 +1,52 @@
 package com.studentinfo.views.profilepage;
 
+import com.studentinfo.views.header.HeaderView;
 import com.studentinfo.security.AuthenticatedUser;
-import com.studentinfo.views.mainlayout.MainLayout;
+import com.studentinfo.services.UserContentLoader;
 import com.vaadin.flow.component.Composite;
-import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.server.auth.AnonymousAllowed;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Route(value = "profile", layout = MainLayout.class) // Ensure MainLayout is used here
+@Route(value = "profile")
 @PageTitle("Profile Page")
 @RolesAllowed("USER")
+@CssImport("./themes/studentinformationapp/views/profile-page-view/profile-page-view.css")
 public class ProfilePageView extends Composite<VerticalLayout> {
 
     private final AuthenticatedUser authenticatedUser;
-    private final com.studentinfo.views.profilepage.UserContentLoader userContentLoader;
+    private final UserContentLoader userContentLoader;
 
     @Autowired
-    public ProfilePageView(AuthenticatedUser authenticatedUser) {
+    public ProfilePageView(AuthenticatedUser authenticatedUser, UserContentLoader userContentLoader) {
         this.authenticatedUser = authenticatedUser;
-        this.userContentLoader = new com.studentinfo.views.profilepage.UserContentLoader(authenticatedUser);
+        this.userContentLoader = userContentLoader;
 
+        // Main layout setup
         VerticalLayout mainLayout = getContent();
-        mainLayout.setWidthFull();
+        mainLayout.setSizeFull();
         mainLayout.setPadding(false);
         mainLayout.setSpacing(false);
         mainLayout.setAlignItems(FlexComponent.Alignment.CENTER);
         mainLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
 
-        H1 header = new H1("Profile Page");
-        mainLayout.add(header);
+        // Add the reusable Header component
+        mainLayout.add(new HeaderView("Profile Page", authenticatedUser));
 
-        HorizontalLayout layoutRow = new HorizontalLayout();
+        // Create a container for user-specific content
         VerticalLayout layoutColumn = new VerticalLayout();
-        HorizontalLayout layoutFooter = new HorizontalLayout();
-
-        layoutRow.setWidthFull();
-        layoutRow.setAlignItems(FlexComponent.Alignment.START);
-        layoutRow.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
-
-        layoutColumn.setWidth("100%");
+        layoutColumn.setWidthFull();
         layoutColumn.setAlignItems(FlexComponent.Alignment.CENTER);
         layoutColumn.setJustifyContentMode(FlexComponent.JustifyContentMode.START);
 
-        layoutFooter.setWidthFull();
-        layoutFooter.setAlignItems(FlexComponent.Alignment.END);
-        layoutFooter.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
-
-        mainLayout.add(layoutRow, layoutColumn, layoutFooter);
-
-        // Load user-specific content
+        // Load user-specific content using UserContentLoader
         userContentLoader.loadContent(layoutColumn);
+
+        // Add the content layout to the main layout
+        mainLayout.add(layoutColumn);
     }
 }
