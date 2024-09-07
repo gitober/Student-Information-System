@@ -3,6 +3,10 @@ package com.studentinfo.security;
 import com.studentinfo.data.entity.User;
 import com.studentinfo.data.repository.UserRepository;
 import com.vaadin.flow.spring.security.AuthenticationContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +19,7 @@ public class AuthenticatedUser {
 
     private final UserRepository userRepository;
     private final AuthenticationContext authenticationContext;
+    private static final Logger logger = LoggerFactory.getLogger(AuthenticatedUser.class);
 
     public AuthenticatedUser(AuthenticationContext authenticationContext, UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -25,28 +30,34 @@ public class AuthenticatedUser {
     public Optional<User> get() {
         Optional<UserDetails> userDetailsOpt = authenticationContext.getAuthenticatedUser(UserDetails.class);
 
-        // Debug: Log the authentication status
-        System.out.println("Checking authentication status...");
+        logger.info("Checking authentication status...");
         userDetailsOpt.ifPresentOrElse(
-                userDetails -> System.out.println("Authenticated username: " + userDetails.getUsername()),
-                () -> System.out.println("No authenticated user found.")
+                userDetails -> logger.debug("Authenticated username: {}", userDetails.getUsername()),
+                () -> logger.warn("No authenticated user found.")
         );
 
-        // Fetch the user entity from the repository
-        return userDetailsOpt.map(userDetails -> {
-            User user = userRepository.findByUsername(userDetails.getUsername());
-            // Debug: Log the retrieved user and roles
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            logger.info("SecurityContextHolder contains: User - {}, Authorities - {}", auth.getName(), auth.getAuthorities());
+        } else {
+            logger.warn("SecurityContextHolder is empty.");
+        }
+
+        return userDetailsOpt.flatMap(userDetails -> {
+            User user = userRepository.findByEmail(userDetails.getUsername());
             if (user != null) {
-                System.out.println("User found: " + user.getUsername() + ", Roles: " + user.getRoles());
+                logger.info("User found: {}, Roles: {}", user.getEmail(), user.getRoles());
             } else {
-                System.out.println("User not found in repository.");
+                logger.warn("User not found in repository for username: {}", userDetails.getUsername());
             }
-            return user;
+            return Optional.ofNullable(user);
         });
     }
 
+
+
     public void logout() {
         authenticationContext.logout();
-        System.out.println("User logged out successfully.");
+        logger.info("User logged out successfully.");
     }
 }

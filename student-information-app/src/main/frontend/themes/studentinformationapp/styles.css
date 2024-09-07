@@ -1,5 +1,6 @@
 @import "theme-editor.css";
 @import url('./views/login-page-view.css');
-@import url('./views/profile-page-view.css');
-@import url('./views/courses-view.css');
-@import url('./views/grades-view.css');
+@import url('views/profile-page-view/profile-page-view.css');
+@import url('views/courses-view/courses-view.css');
+@import url('views/grades-view/grades-view.css');
+@import url('./views/shared-styles.css');

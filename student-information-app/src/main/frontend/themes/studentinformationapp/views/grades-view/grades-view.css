@@ -1,0 +1,9 @@
+/* Grades View Styles */
+.grades-view {
+    padding: 2px;
+    box-sizing: border-box;
+    display: block;
+    position: relative;
+    height: 100%;
+    overflow-y: auto;
+}
