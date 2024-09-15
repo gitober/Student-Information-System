@@ -5,20 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="49cfb8af-12fd-4a91-b702-3553d39bf1cc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/student-information-app/src/main/bundles/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/student-information-app/src/main/bundles/dev.bundle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/shared-styles.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/mainlayout/MainLayout.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/student-information-app/src/main/resources/META-INF/resources/images/bird.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/controller/StudentControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/controller/TeacherControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/controller/UserControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/security/AuthenticatedUserTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/services/DepartmentServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/login-page-view.css" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/login-page-view.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/systeminformationapp/styles.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/systeminformationapp/theme.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/systeminformationapp/views/courses-view.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/systeminformationapp/views/grades-view.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/systeminformationapp/views/login-page-view.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/systeminformationapp/views/profile-page-view.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/loginpage/LoginPageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/loginpage/LoginPageView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +22,7 @@
       <list>
         <option value="CSS File" />
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -64,31 +57,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.Application.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/bober/OneDrive/Työpöytä/Student Information System/student-information-app/src/main/frontend/themes/studentinformationapp/images&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\bober\\OneDrive\\Työpöytä\\Student Information System\\student-information-app\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.Application.executor": "Run",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/bober/OneDrive/Työpöytä/Student Information System/student-information-app/src/main/frontend/themes/studentinformationapp/images",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "ts.external.directory.path": "C:\\Users\\bober\\OneDrive\\Työpöytä\\Student Information System\\student-information-app\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\bober\OneDrive\Työpöytä\Student Information System\student-information-app\src\main\frontend\themes\studentinformationapp\images" />
@@ -100,6 +95,14 @@
       <recent name="C:\Users\bober\OneDrive\Työpöytä\Student Information System\student-information-app\src\main\resources\META-INF\resources\icons\images" />
       <recent name="C:\Users\bober\OneDrive\Työpöytä\Student Information System\student-information-app\src\main\frontend\themes\studentinformationapp\images" />
       <recent name="C:\Users\bober\OneDrive\Työpöytä\Student Information System\student-information-app\src\main\frontend\themes\studentinformationapp\components" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.studentinfo.controller" />
+      <recent name="com.studentinfo.services" />
+      <recent name="com.studentinfo.security" />
     </key>
   </component>
   <component name="RunManager">
@@ -143,5 +146,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
