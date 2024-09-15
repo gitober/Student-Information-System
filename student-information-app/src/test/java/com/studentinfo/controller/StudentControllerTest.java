@@ -20,7 +20,7 @@ class StudentControllerTest {
     @BeforeEach
     void init() {
         // create an instance of StudentController
-        studentController = new StudentController();
+        studentController = new StudentController(/* tähän pitäis jotain keksii :/ */);
     }
 
     @AfterEach
