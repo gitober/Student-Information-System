@@ -2,6 +2,7 @@ package com.studentinfo.controller;
 
 import com.studentinfo.data.entity.Student;
 import org.junit.jupiter.api.*;
+import org.springframework.test.annotation.IfProfileValue;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +21,7 @@ class StudentControllerTest {
     @BeforeEach
     void init() {
         // create an instance of StudentController
-        studentController = new StudentController(/* tähän pitäis jotain keksii :/ */);
+        //studentController = new StudentController(/* tähän pitäis jotain keksii :/ */);
     }
 
     @AfterEach
