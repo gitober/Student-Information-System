@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-
 public class TeacherDTO extends UserDTO {
     private String subject;
     private String department;
