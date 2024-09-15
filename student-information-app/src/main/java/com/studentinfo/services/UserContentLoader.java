@@ -13,15 +13,27 @@ import com.studentinfo.views.editprofile.StudentEditProfileView;
 import com.studentinfo.views.editprofile.TeacherEditProfileView;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component // This annotation tells Spring to manage this class as a bean
+@Component
 public class UserContentLoader {
 
     private final AuthenticatedUser authenticatedUser;
+    private final TeacherService teacherService;
+    private final StudentService studentService;
+    private final DepartmentService departmentService;
+    private final SubjectService subjectService;
 
-    public UserContentLoader(AuthenticatedUser authenticatedUser) {
+    // Constructor injection for AuthenticatedUser, TeacherService, StudentService, DepartmentService, and SubjectService
+    @Autowired
+    public UserContentLoader(AuthenticatedUser authenticatedUser, TeacherService teacherService, StudentService studentService,
+                             DepartmentService departmentService, SubjectService subjectService) {
         this.authenticatedUser = authenticatedUser;
+        this.teacherService = teacherService;
+        this.studentService = studentService;
+        this.departmentService = departmentService;
+        this.subjectService = subjectService;
     }
 
     // Method to load profile content
@@ -75,11 +87,21 @@ public class UserContentLoader {
     // Method to load edit profile content
     public void loadEditProfileContent(VerticalLayout layout) {
         authenticatedUser.get().ifPresentOrElse(user -> {
-            // Check if the user is a Teacher or Student based on instance
             if (user instanceof Teacher) {
-                layout.add(new TeacherEditProfileView());
+                Teacher teacher = (Teacher) user;
+                // Pass the Teacher, DepartmentService, and SubjectService to the view
+                TeacherEditProfileView teacherView = new TeacherEditProfileView(teacher, departmentService, subjectService);
+                teacherView.setSaveListener(updatedTeacher -> {
+                    teacherService.save(updatedTeacher); // Save updated profile
+                });
+                layout.add(teacherView);
             } else if (user instanceof Student) {
-                layout.add(new StudentEditProfileView());
+                Student student = (Student) user;
+                StudentEditProfileView studentView = new StudentEditProfileView(student);
+                studentView.setSaveListener(updatedStudent -> {
+                    studentService.save(updatedStudent); // Save updated profile
+                });
+                layout.add(studentView);
             } else {
                 layout.add(new Paragraph("Role not recognized. Please contact support."));
             }

@@ -32,7 +32,7 @@ public class ForgotPasswordView extends Composite<VerticalLayout> {
         mainLayout.setJustifyContentMode(JustifyContentMode.START);
 
         // Add the reusable Header component
-        mainLayout.add(new HeaderView("Forgot Password"));
+        mainLayout.add(new HeaderView("EduBird"));
 
         // Layout for form and content
         VerticalLayout layoutColumn2 = new VerticalLayout();

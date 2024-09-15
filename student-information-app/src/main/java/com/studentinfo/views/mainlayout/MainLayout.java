@@ -47,7 +47,7 @@ public class MainLayout extends Composite<VerticalLayout> implements RouterLayou
         // Check if the user is authenticated and add the buttons dynamically
         authenticatedUser.get().ifPresent(user -> {
             // Navigation links
-            RouterLink homeLink = new RouterLink("Profile - Home", ProfilePageView.class);
+            RouterLink homeLink = new RouterLink("Home", ProfilePageView.class);
             RouterLink coursesLink = new RouterLink("Courses", CoursesView.class);
             RouterLink gradesLink = new RouterLink("Grades", GradesView.class);
             RouterLink editProfileLink = new RouterLink("Edit Profile", EditProfileView.class);

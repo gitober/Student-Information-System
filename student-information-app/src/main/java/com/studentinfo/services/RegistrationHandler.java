@@ -33,13 +33,11 @@ public class RegistrationHandler {
 
             // Determine user type based on the role and create the appropriate object
             if ("Student".equalsIgnoreCase(role)) {
-                user = new Student(); // Create a Student instance
+                user = new Student();
                 ((Student) user).setGrade("Grade Example");
                 ((Student) user).setStudentClass("Class Example");
             } else if ("Teacher".equalsIgnoreCase(role)) {
-                user = new Teacher(); // Create a Teacher instance
-                ((Teacher) user).setSubject("Subject Example");
-                ((Teacher) user).setDepartment("Department Example");
+                user = new Teacher(); // Create a basic Teacher instance without setting department or subject
             } else {
                 Notification.show("Invalid role selected.");
                 return false;
@@ -50,21 +48,15 @@ public class RegistrationHandler {
             user.setLastName(lastName);
             user.setBirthday(birthday);
             user.setPhoneNumber(phoneNumber);
-            user.setUsername(email); // Previously set as username; set it explicitly as email too
-            user.setEmail(email); // Ensure the email field is set correctly
+            user.setUsername(email);
+            user.setEmail(email);
 
             // Encode and set password
             String encodedPassword = passwordEncoder.encode(password);
             user.setHashedPassword(encodedPassword);
 
-            // Correctly map role selection to Role enum
-            if ("Student".equalsIgnoreCase(role)) {
-                user.setRoles(Set.of(Role.USER)); // Set to USER
-                // Set specific student attributes
-            } else if ("Teacher".equalsIgnoreCase(role)) {
-                user.setRoles(Set.of(Role.USER)); // Set to USER
-                // Set specific teacher attributes
-            }
+            // Set roles
+            user.setRoles(Set.of(Role.USER));
 
             // Save the user using UserService
             userService.save(user);
@@ -74,5 +66,4 @@ public class RegistrationHandler {
             return false;
         }
     }
-
 }

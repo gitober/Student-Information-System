@@ -10,12 +10,12 @@ public interface TeacherRepository extends JpaRepository<Teacher, Long>, JpaSpec
     // Find a teacher by username, assuming you have a unique username field inherited from User
     Teacher findByUsername(String username);
 
-    // Find teachers by department
-    List<Teacher> findByDepartment(String department);
+    // Find teachers by department name
+    List<Teacher> findByDepartment_Name(String departmentName);
 
-    // Find teachers by subject
-    List<Teacher> findBySubject(String subject);
+    // Find teachers by subject name
+    List<Teacher> findBySubject_Name(String subjectName);
 
-    // Find teachers by both department and subject
-    List<Teacher> findByDepartmentAndSubject(String department, String subject);
+    // Find teachers by both department name and subject name
+    List<Teacher> findByDepartment_NameAndSubject_Name(String departmentName, String subjectName);
 }

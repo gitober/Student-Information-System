@@ -1,29 +1,33 @@
 package com.studentinfo.data.entity;
 
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
 @Entity
 @DiscriminatorValue("TEACHER")  // This value will be stored in the `user_type` column for teachers
 public class Teacher extends User {
 
-    private String subject;
-    private String department;
+    @ManyToOne
+    @JoinColumn(name = "subject_id", nullable = true)
+    private Subject subject;
+
+    @ManyToOne
+    @JoinColumn(name = "department_id", nullable = true)
+    private Department department;
 
     // Getters and setters
-    public String getSubject() {
+    public Subject getSubject() {
         return subject;
     }
 
-    public void setSubject(String subject) {
+    public void setSubject(Subject subject) {
         this.subject = subject;
     }
 
-    public String getDepartment() {
+    public Department getDepartment() {
         return department;
     }
 
-    public void setDepartment(String department) {
+    public void setDepartment(Department department) {
         this.department = department;
     }
 }

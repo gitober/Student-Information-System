@@ -35,7 +35,7 @@ public class GradesView extends Composite<VerticalLayout> {
         mainLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
 
         // Add the reusable Header component
-        mainLayout.add(new HeaderView("Grades", authenticatedUser));
+        mainLayout.add(new HeaderView("EduBird", authenticatedUser));
 
         // Create a container for user-specific content
         VerticalLayout layoutColumn = new VerticalLayout();

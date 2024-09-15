@@ -5,7 +5,7 @@ import com.studentinfo.views.courses.CoursesView;
 import com.studentinfo.views.editprofile.EditProfileView;
 import com.studentinfo.views.grades.GradesView;
 import com.studentinfo.views.profilepage.ProfilePageView;
-import com.studentinfo.views.TeacherUpdateStudentProfileView.TeacherUpdateStudentProfileView; // Import the Teacher's update student profile view
+import com.studentinfo.views.TeacherUpdateStudentProfileView.TeacherUpdateStudentProfileView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Span;
@@ -13,14 +13,12 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.component.dependency.CssImport;
 
-@CssImport("./themes/studentinformationapp/views/header-view.css")  // Link to your CSS file
+@CssImport("./themes/studentinformationapp/views/header-view.css")
 public class HeaderView extends HorizontalLayout {
 
-    // Constructor for authenticated pages
     public HeaderView(String title, AuthenticatedUser authenticatedUser) {
-        this(title); // Call the simplified constructor first
+        this(title);
 
-        // Check if the user is authenticated
         authenticatedUser.get().ifPresent(user -> {
             // Navigation links
             RouterLink homeLink = new RouterLink("Home", ProfilePageView.class);
@@ -37,24 +35,22 @@ public class HeaderView extends HorizontalLayout {
 
             // Add Teacher-specific link for updating student profiles
             if (user instanceof com.studentinfo.data.entity.Teacher) {
-                RouterLink updateStudentProfilesLink = new RouterLink("Update Students", TeacherUpdateStudentProfileView.class);
+                RouterLink updateStudentProfilesLink = new RouterLink("Update Student Details", TeacherUpdateStudentProfileView.class);
                 updateStudentProfilesLink.addClassName("router-link");
                 this.add(updateStudentProfilesLink);
             }
 
-            // Logout button
+            // Logout button - directs to Spring Security's logout endpoint
             Button logoutButton = new Button("Logout", click -> {
-                authenticatedUser.logout();
-                UI.getCurrent().navigate("login");
+                UI.getCurrent().getPage().setLocation("/logout"); // Redirects to the Spring Security logout endpoint
             });
             logoutButton.addClassName("logout-button");
 
-            // Add the links and logout button to the header
+            // Add all components to the header
             this.add(homeLink, coursesLink, gradesLink, editProfileLink, logoutButton);
         });
     }
 
-    // Simplified constructor for pages without authentication (e.g., Login)
     public HeaderView(String title) {
         this.setWidthFull();
         this.setHeight("var(--header-height, 60px)");
