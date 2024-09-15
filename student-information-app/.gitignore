@@ -4,6 +4,7 @@
 .settings
 .project
 .classpath
+student-information-app/.env
 
 *.iml
 .DS_Store
