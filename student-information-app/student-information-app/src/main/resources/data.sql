@@ -1,2 +1,0 @@
--- No data initialization currently.
--- SQL commands will be added later when needed.
