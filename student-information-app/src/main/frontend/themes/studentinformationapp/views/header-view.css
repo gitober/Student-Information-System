@@ -35,7 +35,7 @@
 
 /* Logout button styles */
 .logout-button {
-    background-color: #ff4d4f;
+    background-color: #e6a14d;
     color: white;
     border: none;
     padding: 8px 16px;
@@ -45,5 +45,5 @@
 }
 
 .logout-button:hover {
-    background-color: #d43536; /* Darker red on hover */
+    background-color: #d89441; /* Darker red on hover */
 }

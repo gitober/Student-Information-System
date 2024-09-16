@@ -35,7 +35,7 @@ public class HeaderView extends HorizontalLayout {
 
             // Add Teacher-specific link for updating student profiles
             if (user instanceof com.studentinfo.data.entity.Teacher) {
-                RouterLink updateStudentProfilesLink = new RouterLink("Update Student Details", TeacherUpdateStudentProfileView.class);
+                RouterLink updateStudentProfilesLink = new RouterLink("Student Management", TeacherUpdateStudentProfileView.class);
                 updateStudentProfilesLink.addClassName("router-link");
                 this.add(updateStudentProfilesLink);
             }

@@ -1,0 +1,88 @@
+/* teacher-update-student-profile-view.css */
+
+.teacher-update-student-profile-view {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 20px;
+    background-color: #DEECECFF; /* Background color */
+    overflow-y: auto;
+}
+
+/* Page header styling */
+.page-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.page-header h1 {
+    font-size: 24px;
+    color: #000000; /* Black color for the header */
+    margin: 0;
+}
+
+.page-description {
+    font-size: 16px;
+    color: #333333; /* Dark grey color for the description */
+    margin-top: 10px;
+}
+
+/* Grid styling */
+.teacher-update-student-profile-view .v-grid {
+    margin-bottom: 30px; /* Space between grid and form */
+    background-color: #ffffff; /* White background for grid */
+    border-radius: 8px; /* Rounded corners for grid */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow for grid */
+}
+
+/* Form container styling */
+.teacher-update-student-profile-view .form-container {
+    background-color: #ffffff; /* White background for form */
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* More pronounced shadow */
+    margin-top: 20px;
+}
+
+/* Text fields styling */
+.teacher-update-student-profile-view .v-text-field,
+.teacher-update-student-profile-view .v-email-field {
+    width: 100%;
+    margin-bottom: 20px; /* Space between fields */
+    border: 1px solid #013681; /* Dark blue border for fields */
+    border-radius: 4px; /* Rounded corners for fields */
+}
+
+/* Save button styling */
+.teacher-update-student-profile-view .save-button {
+    width: 100%;
+    margin-top: 20px;
+    background-color: #FDB069; /* Primary button color */
+    color: #ffffff; /* Text color */
+    border: none;
+    border-radius: 4px;
+    padding: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.teacher-update-student-profile-view .save-button:hover {
+    background-color: #e6a14d; /* Slightly darker color on hover */
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+    .teacher-update-student-profile-view {
+        padding: 10px;
+    }
+
+    .teacher-update-student-profile-view .form-container {
+        padding: 15px;
+    }
+
+    .teacher-update-student-profile-view .save-button {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
