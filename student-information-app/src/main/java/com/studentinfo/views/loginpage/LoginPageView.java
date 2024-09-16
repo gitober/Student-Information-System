@@ -37,7 +37,7 @@ public class LoginPageView extends Composite<VerticalLayout> {
         mainLayout.addClassName("login-page");
 
         // Add the simplified Header component without authentication links
-        mainLayout.add(new HeaderView("Login Page"));
+        mainLayout.add(new HeaderView("EduBird"));
 
         // Content layout setup
         HorizontalLayout contentLayout = new HorizontalLayout();
