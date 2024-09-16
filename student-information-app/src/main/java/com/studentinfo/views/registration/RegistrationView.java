@@ -43,7 +43,7 @@ public class RegistrationView extends Composite<VerticalLayout> {
         mainLayout.setAlignItems(Alignment.CENTER);
 
         // Add the reusable Header component
-        mainLayout.add(new HeaderView("Registration"));
+        mainLayout.add(new HeaderView("EduBird"));
 
         // Layout for form and content
         VerticalLayout layoutColumn2 = new VerticalLayout();
