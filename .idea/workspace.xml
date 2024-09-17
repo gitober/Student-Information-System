@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="49cfb8af-12fd-4a91-b702-3553d39bf1cc" name="Changes" comment="before data.sql change">
+    <list default="true" id="49cfb8af-12fd-4a91-b702-3553d39bf1cc" name="Changes" comment="pullet main, tests not working">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/services/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/services/UserServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/test/resources/application-test.properties" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/test/resources/application-test.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,6 +66,7 @@
     "JUnit.StudentRepositoryTest.executor": "Run",
     "JUnit.UserRepositoryTest.executor": "Run",
     "JUnit.UserRepositoryTest.testUserSaved.executor": "Run",
+    "JUnit.UserServiceTest.executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
@@ -110,7 +114,7 @@
       <recent name="com.studentinfo.security" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.Application">
+  <component name="RunManager" selected="JUnit.UserServiceTest">
     <configuration name="StudentControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="student-information-app" />
       <shortenClasspath name="ARGS_FILE" />
@@ -177,6 +181,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="UserServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="student-information-app" />
+      <shortenClasspath name="ARGS_FILE" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.studentinfo.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.studentinfo.services" />
+      <option name="MAIN_CLASS_NAME" value="com.studentinfo.services.UserServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <shortenClasspath name="ARGS_FILE" />
       <option name="TEST_OBJECT" value="class" />
@@ -197,6 +217,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.UserServiceTest" />
         <item itemvalue="JUnit.StudentRepositoryTest" />
         <item itemvalue="JUnit.UserRepositoryTest.testUserSaved" />
         <item itemvalue="JUnit.UserRepositoryTest" />
@@ -229,7 +250,8 @@
       <workItem from="1725348183775" duration="2589000" />
       <workItem from="1726440609144" duration="568000" />
       <workItem from="1726471329090" duration="15017000" />
-      <workItem from="1726571749522" duration="9247000" />
+      <workItem from="1726571749522" duration="9449000" />
+      <workItem from="1726602485357" duration="2230000" />
     </task>
     <task id="LOCAL−00001" summary="uodated .gitignore">
       <option name="closed" value="true" />
@@ -287,7 +309,14 @@
       <option name="presentableId" value="LOCAL−00008" />
       <updated>1726580276523</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL−00009" summary="pullet main, tests not working">
+      <option name="closed" value="true" />
+      <created>1726581777146</created>
+      <option name="number" value="LOCAL−00009" />
+      <option name="presentableId" value="LOCAL−00009" />
+      <updated>1726581777146</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -317,7 +346,8 @@
     <MESSAGE value="repository tests not working" />
     <MESSAGE value="Väli commit" />
     <MESSAGE value="before data.sql change" />
-    <option name="LAST_COMMIT_MESSAGE" value="before data.sql change" />
+    <MESSAGE value="pullet main, tests not working" />
+    <option name="LAST_COMMIT_MESSAGE" value="pullet main, tests not working" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
