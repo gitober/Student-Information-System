@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="49cfb8af-12fd-4a91-b702-3553d39bf1cc" name="Changes" comment="Väli commit">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+    <list default="true" id="49cfb8af-12fd-4a91-b702-3553d39bf1cc" name="Changes" comment="before data.sql change">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/bundles/dev.bundle" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/bundles/dev.bundle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/data/repository/StudentRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/data/repository/StudentRepositoryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +23,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -113,7 +110,7 @@
       <recent name="com.studentinfo.security" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.StudentRepositoryTest">
+  <component name="RunManager" selected="Spring Boot.Application">
     <configuration name="StudentControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="student-information-app" />
       <shortenClasspath name="ARGS_FILE" />
@@ -232,7 +229,7 @@
       <workItem from="1725348183775" duration="2589000" />
       <workItem from="1726440609144" duration="568000" />
       <workItem from="1726471329090" duration="15017000" />
-      <workItem from="1726571749522" duration="7620000" />
+      <workItem from="1726571749522" duration="9247000" />
     </task>
     <task id="LOCAL−00001" summary="uodated .gitignore">
       <option name="closed" value="true" />
@@ -283,7 +280,14 @@
       <option name="presentableId" value="LOCAL−00007" />
       <updated>1726577626982</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL−00008" summary="before data.sql change">
+      <option name="closed" value="true" />
+      <created>1726580276523</created>
+      <option name="number" value="LOCAL−00008" />
+      <option name="presentableId" value="LOCAL−00008" />
+      <updated>1726580276523</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -291,6 +295,17 @@
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
@@ -301,7 +316,8 @@
     <MESSAGE value="controller tests green" />
     <MESSAGE value="repository tests not working" />
     <MESSAGE value="Väli commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Väli commit" />
+    <MESSAGE value="before data.sql change" />
+    <option name="LAST_COMMIT_MESSAGE" value="before data.sql change" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
