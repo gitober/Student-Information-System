@@ -17,8 +17,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import com.studentinfo.security.AuthenticatedUser; // Adjust the import if needed
+import com.studentinfo.security.AuthenticatedUser;
 
 import java.util.List;
 
@@ -42,11 +41,11 @@ public class TeacherUpdateStudentProfileView extends VerticalLayout {
         this.studentService = studentService;
         this.header = new HeaderView("EduBird", authenticatedUser); // Pass authenticated user
 
-        // Set layout settings to avoid content going under the header
+        // Set layout settings to center the content
         setPadding(false);
         setSpacing(false);
         setAlignItems(FlexComponent.Alignment.CENTER); // Center the content horizontally
-        setJustifyContentMode(FlexComponent.JustifyContentMode.START); // Align content to start vertically
+        setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER); // Center the content vertically
 
         // Add padding to prevent content from sticking to or going under the header
         getStyle().set("padding-top", "60px"); // Adjust based on header height
@@ -62,8 +61,13 @@ public class TeacherUpdateStudentProfileView extends VerticalLayout {
         configureGrid();
         configureForm();
 
-        add(studentGrid);
-        add(firstNameField, lastNameField, phoneNumberField, emailField, createSaveButton());
+        // Wrap form fields and button in a layout for proper centering
+        VerticalLayout formLayout = new VerticalLayout(firstNameField, lastNameField, phoneNumberField, emailField, createSaveButton());
+        formLayout.setAlignItems(FlexComponent.Alignment.CENTER);
+        formLayout.setSpacing(true);
+        formLayout.setPadding(true);
+
+        add(studentGrid, formLayout); // Add grid and centered form layout
         updateGrid();
     }
 
@@ -89,10 +93,10 @@ public class TeacherUpdateStudentProfileView extends VerticalLayout {
         studentGrid.removeAllColumns();
 
         // Define only the columns that are needed with headers and appropriate widths
-        studentGrid.addColumn(Student::getFirstName).setHeader("First Name").setAutoWidth(true).setFlexGrow(0);
-        studentGrid.addColumn(Student::getLastName).setHeader("Last Name").setAutoWidth(true).setFlexGrow(0);
-        studentGrid.addColumn(Student::getEmail).setHeader("Email").setAutoWidth(true).setFlexGrow(0);
-        studentGrid.addColumn(Student::getPhoneNumber).setHeader("Phone Number").setAutoWidth(true).setFlexGrow(0);
+        studentGrid.addColumn(Student::getFirstName).setHeader("First Name").setAutoWidth(true).setFlexGrow(1);
+        studentGrid.addColumn(Student::getLastName).setHeader("Last Name").setAutoWidth(true).setFlexGrow(1);
+        studentGrid.addColumn(Student::getEmail).setHeader("Email").setAutoWidth(true).setFlexGrow(1);
+        studentGrid.addColumn(Student::getPhoneNumber).setHeader("Phone Number").setAutoWidth(true).setFlexGrow(1);
 
         // Set a fixed height for the grid to limit the number of visible rows
         studentGrid.setHeight("400px"); // Adjust as needed to make it visually appealing
@@ -110,10 +114,11 @@ public class TeacherUpdateStudentProfileView extends VerticalLayout {
     }
 
     private void configureForm() {
-        firstNameField.setWidthFull();
-        lastNameField.setWidthFull();
-        phoneNumberField.setWidthFull();
-        emailField.setWidthFull();
+        // Set the fields to fixed width
+        firstNameField.setWidth("600px");
+        lastNameField.setWidth("600px");
+        phoneNumberField.setWidth("600px");
+        emailField.setWidth("600px");
         setVisibleForm(false); // Hide the form initially
     }
 
