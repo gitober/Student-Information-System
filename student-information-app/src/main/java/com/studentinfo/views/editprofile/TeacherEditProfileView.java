@@ -36,7 +36,7 @@ public class TeacherEditProfileView extends VerticalLayout {
         this.teacher = teacher;
 
         addClassName("teacher-edit-profile-view");
-        setWidthFull();
+
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
 
@@ -45,6 +45,7 @@ public class TeacherEditProfileView extends VerticalLayout {
         // Create layout for current details
         currentDetailsLayout = new VerticalLayout();
         currentDetailsLayout.addClassName("current-details-layout");
+
 
         // Initialize form fields with current teacher data
         firstNameField = new TextField("First Name");
@@ -80,12 +81,16 @@ public class TeacherEditProfileView extends VerticalLayout {
         // Create horizontal layout for current details and form fields
         HorizontalLayout mainLayout = new HorizontalLayout(currentDetailsLayout, formLayout);
         mainLayout.setWidthFull();
-        mainLayout.setAlignItems(Alignment.STRETCH); // Ensures both layouts stretch to the same height
-        mainLayout.setJustifyContentMode(JustifyContentMode.CENTER);
+        mainLayout.setAlignItems(Alignment.CENTER); // Ensure both layouts stretch to the same height
+        mainLayout.setJustifyContentMode(JustifyContentMode.CENTER); // Align content to start at the top
 
-        currentDetailsLayout.setHeight("100%"); // Ensure it takes up available space
-        formLayout.setHeight("100%"); // Ensure it takes up available space
+        // Set equal flex grow to ensure both sides take up equal space
+        mainLayout.setFlexGrow(1, currentDetailsLayout);
+        mainLayout.setFlexGrow(1, formLayout);
 
+        // Remove explicit height settings that might cause conflicts
+        currentDetailsLayout.setHeightFull();
+        formLayout.setHeightFull();
 
         add(mainLayout);
 
@@ -120,9 +125,23 @@ public class TeacherEditProfileView extends VerticalLayout {
 
     public void setSaveListener(Consumer<Teacher> saveListener) {
         saveButton.addClickListener(event -> {
+            // Update the teacher object with new values from the form
+            teacher.setFirstName(firstNameField.getValue());
+            teacher.setLastName(lastNameField.getValue());
+            teacher.setPhoneNumber(phoneNumberField.getValue());
+            teacher.setEmail(emailField.getValue());
+            teacher.setDepartment(departmentComboBox.getValue());
+            teacher.setSubject(subjectComboBox.getValue());
+
+            // Refresh the current details display with updated values
             updateTeacherProfile();
+
+            // Call the save listener with the updated teacher object
             saveListener.accept(teacher);
+
+            // Show confirmation notification
             Notification.show("Profile updated successfully!", 3000, Notification.Position.TOP_CENTER);
         });
     }
+
 }

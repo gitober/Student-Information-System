@@ -33,46 +33,43 @@ public class LoginPageView extends Composite<VerticalLayout> {
 
         // Main layout setup
         VerticalLayout mainLayout = getContent();
-        mainLayout.setSizeFull();
+        mainLayout.setWidthFull();
+        mainLayout.setAlignItems(FlexComponent.Alignment.CENTER);
+        mainLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.START);
+        mainLayout.setPadding(false);
+        mainLayout.setSpacing(false);
         mainLayout.addClassName("login-page");
 
-        // Add the simplified Header component without authentication links
+        mainLayout.getStyle().set("padding-top", "60px"); // Padding to avoid header overlap
+
+        // Add the reusable Header component
         mainLayout.add(new HeaderView("EduBird"));
 
         // Content layout setup
         HorizontalLayout contentLayout = new HorizontalLayout();
         contentLayout.setSizeFull();
+        contentLayout.setPadding(false);
+        contentLayout.setSpacing(false);
+        contentLayout.setAlignItems(FlexComponent.Alignment.STRETCH);
+        contentLayout.addClassName("content-layout");
 
-        // Configure the fields
-        configureFields();
+        // Setup left and right content
+        contentLayout.add(setupLeftContent(), setupRightContent());
+        contentLayout.setFlexGrow(1);
 
-        // Layouts for content
-        VerticalLayout leftContent = setupLeftContent();
-        VerticalLayout rightContent = setupRightContent();
-
-        // Add left and right content to content layout
-        contentLayout.add(leftContent, rightContent);
-        contentLayout.setFlexGrow(1, leftContent);
-        contentLayout.setFlexGrow(1, rightContent);
-
-        // Add the content layout to the main layout
-        mainLayout.add(contentLayout);
-    }
-
-    private void configureFields() {
-        emailField.addClassName("input-field");
-        emailField.getElement().getStyle().set("box-sizing", "border-box");
-        passwordField.addClassName("input-field");
-        passwordField.getElement().getStyle().set("box-sizing", "border-box");
+        mainLayout.addAndExpand(contentLayout);
     }
 
     private VerticalLayout setupLeftContent() {
         VerticalLayout leftContent = new VerticalLayout();
         leftContent.setSizeFull();
-        leftContent.addClassName("left-content");
+        leftContent.setPadding(false);
+        leftContent.setSpacing(false);
         leftContent.setAlignItems(FlexComponent.Alignment.CENTER);
+        leftContent.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
+        leftContent.addClassName("left-content");
 
-        // Components setup
+        // Add components
         Span welcomeText = new Span("Welcome");
         welcomeText.addClassName("welcome-text");
         Span instructionText = new Span("Please enter your details");
@@ -83,23 +80,25 @@ public class LoginPageView extends Composite<VerticalLayout> {
 
         Button signInButton = new Button("Sign in");
         signInButton.addClassName("signin-button");
-        // Updated call to match login method
         signInButton.addClickListener(e -> loginHandler.login(emailField.getValue(), passwordField.getValue()));
 
-        Span signupText = new Span("Don’t have an account yet? ");
+        Span signupText = new Span("Don’t have an account yet?");
         signupText.addClassName("signup-text");
         Button signupButton = new Button("Signup");
         signupButton.addClassName("signup-link");
         signupButton.addClickListener(e -> UI.getCurrent().navigate("register"));
 
         leftContent.add(welcomeText, instructionText, emailField, passwordField, rememberMeCheckbox, signInButton, signupText, signupButton);
-
         return leftContent;
     }
 
     private VerticalLayout setupRightContent() {
         VerticalLayout rightContent = new VerticalLayout();
         rightContent.setSizeFull();
+        rightContent.setPadding(false);
+        rightContent.setSpacing(false);
+        rightContent.setAlignItems(FlexComponent.Alignment.CENTER);
+        rightContent.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
         rightContent.addClassName("right-content");
 
         Image birdImage = new Image("images/bird.png", "Colorful Bird");

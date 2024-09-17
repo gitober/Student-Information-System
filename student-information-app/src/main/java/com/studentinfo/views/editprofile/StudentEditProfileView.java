@@ -67,7 +67,7 @@ public class StudentEditProfileView extends VerticalLayout {
         // Create horizontal layout for current details and form fields
         HorizontalLayout mainLayout = new HorizontalLayout(currentDetailsLayout, formLayout);
         mainLayout.setWidthFull();
-        mainLayout.setAlignItems(Alignment.STRETCH); // Ensure both layouts stretch to the same height
+        mainLayout.setAlignItems(Alignment.CENTER); // Ensure both layouts stretch to the same height
         mainLayout.setJustifyContentMode(JustifyContentMode.CENTER);
 
         // Add main layout to the view

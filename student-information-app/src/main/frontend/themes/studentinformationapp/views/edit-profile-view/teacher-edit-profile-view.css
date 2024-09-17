@@ -2,106 +2,75 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 100vh; /* Full viewport height */
+    justify-content: flex-start;
+    min-height: calc(100vh - 60px);
     background-color: #ffffff;
     padding: 20px;
-    font-family: Arial, sans-serif; /* Apply font family to the entire view */
 }
 
 .teacher-edit-profile-view h2 {
-    font-size: 36px; /* Adjust font size */
-    font-weight: bold; /* Make the font bold */
-    color: #333; /* Set font color */
-    margin-bottom: 20px; /* Adjust margin */
+    font-size: 36px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
 }
 
 .current-details-layout {
+    flex: 1;
+    max-width: 45%; /* Restrict the maximum width to make it smaller */
+    min-width: 0;
+    padding: 10px; /* Reduce padding to make it more compact */
     background-color: #deecec;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px; /* Increased padding for better spacing */
-    max-width: 400px; /* Adjust max-width */
-    width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center items horizontally */
-    font-family: Arial, sans-serif; /* Apply font family to the details layout */
+    align-items: center;
+    box-sizing: border-box;
+    height: 150%;
 }
 
 .current-details-layout h3 {
-    margin: 0 0 20px 0; /* Adjust space below the title */
-    font-size: 24px; /* Increased font size for the title */
-    color: #333; /* Font color for the title */
-    text-align: center; /* Center the title text */
+    margin: 0 0 10px 0; /* Reduce space below the title */
+    font-size: 20px; /* Reduce font size for the title */
+    color: #333;
+    text-align: center;
 }
 
 .current-details-layout .detail {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Center content vertically */
+    justify-content: center;
     align-items: flex-start;
-    margin-bottom: 20px; /* Reduced space between detail items */
-    width: 100%; /* Full width for each detail section */
-    padding: 10px; /* Add padding to detail boxes */
-    box-sizing: border-box; /* Ensure padding is included in the total width */
+    margin-bottom: 10px; /* Reduce space between detail items */
+    width: 100%;
+    padding: 5px; /* Decrease padding to make it more compact */
+    box-sizing: border-box;
 }
 
 .current-details-layout .label {
-    font-weight: bold; /* Make the label bold */
-    font-size: 16px; /* Increased font size for the label */
-    color: #333; /* Font color for the label */
-    text-align: left; /* Align text to the left */
+    font-weight: bold;
+    font-size: 14px; /* Slightly smaller font size */
+    color: #333;
+    text-align: left;
 }
 
 .current-details-layout .value {
-    font-size: 16px; /* Increased font size for the value */
-    color: #666; /* Font color for the value */
+    font-size: 14px; /* Slightly smaller font size */
+    color: #666;
 }
 
-
 .form-layout {
+    flex: 1;
+    max-width: 55%; /* Ensure the form layout has a bit more space */
+    min-width: 0;
+    padding: 20px;
     background-color: #deecec;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px; /* Increased padding for better spacing */
-    max-width: 400px; /* Adjust max-width */
-    width: 100%;
     display: grid;
-    gap: 10px; /* Space between grid items */
-    font-family: Arial, sans-serif; /* Apply font family to the form layout */
-}
-
-.text-field,
-.combo-box {
-    margin-bottom: 10px; /* Space below fields */
-    width: 100%;
-    font-size: 14px; /* Set font size for form fields */
-    color: #333; /* Set font color */
-}
-
-.text-field input,
-.combo-box select {
-    padding: 4px; /* Adjust padding */
-}
-
-.save-button {
-    background-color: #FDB069;
-    color: #ffffff;
-    border: none;
-    border-radius: 4px;
-    padding: 12px; /* Increased padding for a larger button */
-    font-size: 16px; /* Increased font size for better readability */
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: 100%;
-    max-width: 400px;
-    font-family: Arial, sans-serif; /* Apply font family to the button */
-    margin-top: 20px; /* Space above the button */
-}
-
-.save-button:hover {
-    background-color: #e6a14d;
+    gap: 10px;
+    box-sizing: border-box;
 }

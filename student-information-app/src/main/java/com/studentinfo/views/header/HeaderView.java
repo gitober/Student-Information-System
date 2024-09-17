@@ -53,7 +53,7 @@ public class HeaderView extends HorizontalLayout {
 
     public HeaderView(String title) {
         this.setWidthFull();
-        this.setHeight("var(--header-height, 60px)");
+        this.setHeight("60px"); // Set a fixed height directly
         this.setAlignItems(Alignment.CENTER);
         this.setJustifyContentMode(JustifyContentMode.BETWEEN);
         this.addClassName("header");
@@ -65,4 +65,5 @@ public class HeaderView extends HorizontalLayout {
         // Add the app name to the header
         this.add(appName);
     }
+
 }

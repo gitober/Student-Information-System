@@ -5,14 +5,15 @@
     justify-content: center;
     height: 100vh; /* Full viewport height */
     background-color: #ffffff;
-    font-family: Arial, sans-serif; /* Apply font family to the entire view */
 }
 
-.student-edit-profile-view h2 {
-    font-size: 36px; /* Adjust font size */
-    font-weight: bold; /* Make the font bold */
-    color: #333; /* Set font color */
-    margin-bottom: 20px; /* Adjust margin */
+.student-edit-profile-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Adjust if you want content starting at the top but centered horizontally */
+    height: auto; /* Change from 100vh if the header is taking up part of the height */
+    padding: 20px; /* Optional: Add padding to center the content nicely */
 }
 
 .current-details-layout {
@@ -25,7 +26,6 @@
     display: flex;
     flex-direction: column;
     align-items: center; /* Center items horizontally */
-    font-family: Arial, sans-serif; /* Apply font family to the details layout */
 }
 
 .current-details-layout h3 {
@@ -67,7 +67,6 @@
     width: 100%;
     display: grid;
     gap: 10px; /* Space between grid items */
-    font-family: Arial, sans-serif; /* Apply font family to the form layout */
 }
 
 .text-field,
@@ -94,10 +93,11 @@
     transition: background-color 0.3s ease;
     width: 100%;
     max-width: 400px;
-    font-family: Arial, sans-serif; /* Apply font family to the button */
     margin-top: 20px; /* Space above the button */
 }
 
 .save-button:hover {
     background-color: #e6a14d;
 }
+
+

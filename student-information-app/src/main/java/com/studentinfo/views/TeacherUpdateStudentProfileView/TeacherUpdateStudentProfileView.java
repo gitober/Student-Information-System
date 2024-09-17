@@ -9,6 +9,7 @@ import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextField;
@@ -41,7 +42,15 @@ public class TeacherUpdateStudentProfileView extends VerticalLayout {
         this.studentService = studentService;
         this.header = new HeaderView("EduBird", authenticatedUser); // Pass authenticated user
 
-        setSizeFull();
+        // Set layout settings to avoid content going under the header
+        setPadding(false);
+        setSpacing(false);
+        setAlignItems(FlexComponent.Alignment.CENTER); // Center the content horizontally
+        setJustifyContentMode(FlexComponent.JustifyContentMode.START); // Align content to start vertically
+
+        // Add padding to prevent content from sticking to or going under the header
+        getStyle().set("padding-top", "60px"); // Adjust based on header height
+
         addClassName("teacher-update-student-profile-view"); // Add the CSS class for consistent styling
 
         // Add header for the page
