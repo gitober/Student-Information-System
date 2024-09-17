@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="49cfb8af-12fd-4a91-b702-3553d39bf1cc" name="Changes" comment="repository tests not working">
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/student-information-app/src/test/resources/application-test.properties" afterDir="false" />
+    <list default="true" id="49cfb8af-12fd-4a91-b702-3553d39bf1cc" name="Changes" comment="Väli commit">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/bundles/dev.bundle" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/bundles/dev.bundle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/data/repository/StudentRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/data/repository/StudentRepositoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/data/repository/UserRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/data/repository/UserRepositoryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,10 +98,10 @@
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\George\IdeaProjects\Student-Information-System\student-information-app" />
+      <recent name="C:\Users\George\IdeaProjects\Student-Information-System\student-information-app\src\main\resources" />
       <recent name="C:\Users\George\IdeaProjects\Student-Information-System" />
       <recent name="C:\Users\bober\OneDrive\Työpöytä\Student Information System\student-information-app\src\main\resources\META-INF\resources\images" />
       <recent name="C:\Users\bober\OneDrive\Työpöytä\Student Information System\student-information-app\src\main\resources\META-INF\resources\icons" />
-      <recent name="C:\Users\bober\OneDrive\Työpöytä\Student Information System\student-information-app\src\main\resources\META-INF\resources\icons\images" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -232,7 +232,7 @@
       <workItem from="1725348183775" duration="2589000" />
       <workItem from="1726440609144" duration="568000" />
       <workItem from="1726471329090" duration="15017000" />
-      <workItem from="1726571749522" duration="5279000" />
+      <workItem from="1726571749522" duration="7620000" />
     </task>
     <task id="LOCAL−00001" summary="uodated .gitignore">
       <option name="closed" value="true" />
@@ -276,7 +276,14 @@
       <option name="presentableId" value="LOCAL−00006" />
       <updated>1726493672100</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL−00007" summary="Väli commit">
+      <option name="closed" value="true" />
+      <created>1726577626982</created>
+      <option name="number" value="LOCAL−00007" />
+      <option name="presentableId" value="LOCAL−00007" />
+      <updated>1726577626982</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -293,7 +300,8 @@
     <MESSAGE value=".env setup" />
     <MESSAGE value="controller tests green" />
     <MESSAGE value="repository tests not working" />
-    <option name="LAST_COMMIT_MESSAGE" value="repository tests not working" />
+    <MESSAGE value="Väli commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Väli commit" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
