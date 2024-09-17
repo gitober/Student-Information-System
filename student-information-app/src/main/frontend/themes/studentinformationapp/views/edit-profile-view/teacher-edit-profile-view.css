@@ -17,25 +17,26 @@
 
 .current-details-layout {
     flex: 1;
-    max-width: 45%; /* Restrict the maximum width to make it smaller */
+    max-width: 35%; /* Restrict the maximum width to make it smaller */
     min-width: 0;
-    padding: 10px; /* Reduce padding to make it more compact */
+    padding: 13px; /* Reduce padding to make it more compact */
     background-color: #deecec;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     box-sizing: border-box;
     height: 150%;
 }
 
 .current-details-layout h3 {
-    margin: 0 0 10px 0; /* Reduce space below the title */
-    font-size: 20px; /* Reduce font size for the title */
+    margin: 5px 0; /* Adjust margin to remove extra space */
+    font-size: 23px; /* Font size for the title */
     color: #333;
-    text-align: center;
+    text-align: left; /* Align text to the left */
+    width: 100%; /* Make sure the text takes the full width */
 }
 
 .current-details-layout .detail {
@@ -51,19 +52,19 @@
 
 .current-details-layout .label {
     font-weight: bold;
-    font-size: 14px; /* Slightly smaller font size */
+    font-size: 20px; /* Slightly smaller font size */
     color: #333;
     text-align: left;
 }
 
 .current-details-layout .value {
-    font-size: 14px; /* Slightly smaller font size */
+    font-size: 16px; /* Slightly smaller font size */
     color: #666;
 }
 
 .form-layout {
     flex: 1;
-    max-width: 55%; /* Ensure the form layout has a bit more space */
+    max-width: 35%; /* Ensure the form layout has a bit more space */
     min-width: 0;
     padding: 20px;
     background-color: #deecec;
@@ -73,4 +74,27 @@
     display: grid;
     gap: 10px;
     box-sizing: border-box;
+}
+
+.save-button-teacher {
+    background-color: #e6a14d; /* Green background */
+    color: white; /* White text */
+    padding: 10px 20px; /* Add some padding */
+    font-size: 16px; /* Font size */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+
+    /* Centering */
+    display: block; /* Make button a block-level element */
+    margin: 20px auto; /* Center horizontally with auto margins and add some vertical spacing */
+}
+
+.save-button-teacher:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+.save-button-teacher:focus {
+    outline: none; /* Remove outline on focus */
 }

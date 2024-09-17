@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-
 /* teacher-update-student-profile-view.css */
 
 .teacher-update-student-profile-view {
@@ -19,13 +18,13 @@
 }
 
 .page-header h1 {
-    font-size: 24px;
+    font-size: 30px;
     color: #000000; /* Black color for the header */
-    margin: 0;
+    margin-top: 30px;
 }
 
 .page-description {
-    font-size: 16px;
+    font-size: 20px;
     color: #333333; /* Dark grey color for the description */
     margin-top: 10px;
 }
@@ -34,36 +33,26 @@
 .teacher-update-student-profile-view .v-grid {
     margin-bottom: 30px; /* Space between grid and form */
     background-color: #ffffff; /* White background for grid */
-    border-radius: 8px; /* Rounded corners for grid */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow for grid */
 }
 
 /* Form container styling */
 .teacher-update-student-profile-view .form-container {
     background-color: #ffffff; /* White background for form */
-    padding: 25px;
-    border-radius: 8px;
+    padding: 20px 30px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* More pronounced shadow */
-    margin-top: 20px;
+    margin-top: 0;
 }
 
-/* Text fields styling */
-.teacher-update-student-profile-view .v-text-field,
-.teacher-update-student-profile-view .v-email-field {
-    width: 100%;
-    margin-bottom: 20px; /* Space between fields */
-    border: 1px solid #013681; /* Dark blue border for fields */
-    border-radius: 4px; /* Rounded corners for fields */
-}
 
 /* Save button styling */
 .teacher-update-student-profile-view .save-button {
     width: 100%;
-    margin-top: 20px;
+    margin-top: 20px; /* Space above the button */
     background-color: #FDB069; /* Primary button color */
     color: #ffffff; /* Text color */
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     padding: 12px;
     font-size: 16px;
     cursor: pointer;
@@ -73,6 +62,7 @@
 .teacher-update-student-profile-view .save-button:hover {
     background-color: #e6a14d; /* Slightly darker color on hover */
 }
+
 
 /* Responsive design adjustments */
 @media (max-width: 768px) {

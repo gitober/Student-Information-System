@@ -46,19 +46,11 @@ public class TeacherEditProfileView extends VerticalLayout {
         currentDetailsLayout = new VerticalLayout();
         currentDetailsLayout.addClassName("current-details-layout");
 
-
-        // Initialize form fields with current teacher data
+        // Initialize form fields without setting values initially (empty fields)
         firstNameField = new TextField("First Name");
-        firstNameField.setValue(teacher.getFirstName());
-
         lastNameField = new TextField("Last Name");
-        lastNameField.setValue(teacher.getLastName());
-
         phoneNumberField = new TextField("Phone Number");
-        phoneNumberField.setValue(teacher.getPhoneNumber());
-
         emailField = new TextField("Email");
-        emailField.setValue(teacher.getEmail());
 
         departmentComboBox = new ComboBox<>("Department");
         departmentComboBox.setItems(departmentService.findAll());
@@ -71,7 +63,7 @@ public class TeacherEditProfileView extends VerticalLayout {
         subjectComboBox.setValue(teacher.getSubject());
 
         saveButton = new Button("Save");
-        saveButton.addClassName("save-button");
+        saveButton.addClassName("save-button-teacher");
 
         // Create layout for form fields
         VerticalLayout formLayout = new VerticalLayout();
@@ -81,24 +73,28 @@ public class TeacherEditProfileView extends VerticalLayout {
         // Create horizontal layout for current details and form fields
         HorizontalLayout mainLayout = new HorizontalLayout(currentDetailsLayout, formLayout);
         mainLayout.setWidthFull();
-        mainLayout.setAlignItems(Alignment.CENTER); // Ensure both layouts stretch to the same height
+        mainLayout.setAlignItems(Alignment.START); // Ensure both layouts stretch to the same height
         mainLayout.setJustifyContentMode(JustifyContentMode.CENTER); // Align content to start at the top
 
-        // Set equal flex grow to ensure both sides take up equal space
         mainLayout.setFlexGrow(1, currentDetailsLayout);
         mainLayout.setFlexGrow(1, formLayout);
 
-        // Remove explicit height settings that might cause conflicts
         currentDetailsLayout.setHeightFull();
         formLayout.setHeightFull();
 
         add(mainLayout);
 
-        // Set initial details
+        // Set initial details display
         updateTeacherProfile();
     }
 
+    // Method to update teacher profile values similar to your first example
     private void updateTeacherProfile() {
+        if (!firstNameField.isEmpty()) teacher.setFirstName(firstNameField.getValue());
+        if (!lastNameField.isEmpty()) teacher.setLastName(lastNameField.getValue());
+        if (!phoneNumberField.isEmpty()) teacher.setPhoneNumber(phoneNumberField.getValue());
+        if (!emailField.isEmpty()) teacher.setEmail(emailField.getValue());
+
         // Clear the current details layout and add the heading
         currentDetailsLayout.removeAll(); // Remove all existing content
         currentDetailsLayout.add(new H3("Current Details:"));
@@ -126,10 +122,7 @@ public class TeacherEditProfileView extends VerticalLayout {
     public void setSaveListener(Consumer<Teacher> saveListener) {
         saveButton.addClickListener(event -> {
             // Update the teacher object with new values from the form
-            teacher.setFirstName(firstNameField.getValue());
-            teacher.setLastName(lastNameField.getValue());
-            teacher.setPhoneNumber(phoneNumberField.getValue());
-            teacher.setEmail(emailField.getValue());
+            updateTeacherProfile(); // Call the update method to handle fields only if not empty
             teacher.setDepartment(departmentComboBox.getValue());
             teacher.setSubject(subjectComboBox.getValue());
 
@@ -143,5 +136,4 @@ public class TeacherEditProfileView extends VerticalLayout {
             Notification.show("Profile updated successfully!", 3000, Notification.Position.TOP_CENTER);
         });
     }
-
 }
