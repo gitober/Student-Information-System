@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="49cfb8af-12fd-4a91-b702-3553d39bf1cc" name="Changes" comment="controller tests green">
-      <change afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/controller/UserControllerTest2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/data/repository/StudentRepositoryTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/data/repository/UserRepositoryTest.java" afterDir="false" />
+    <list default="true" id="49cfb8af-12fd-4a91-b702-3553d39bf1cc" name="Changes" comment="repository tests not working">
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/student-information-app/src/test/resources/application-test.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/data/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/data/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/services/DepartmentServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/services/DepartmentServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/data/repository/StudentRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/data/repository/StudentRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/data/repository/UserRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/data/repository/UserRepositoryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,6 +63,7 @@
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "JUnit.StudentControllerTest.executor": "Run",
+    "JUnit.StudentRepositoryTest.executor": "Run",
     "JUnit.UserRepositoryTest.executor": "Run",
     "JUnit.UserRepositoryTest.testUserSaved.executor": "Run",
     "RequestMappingsPanelOrder0": "0",
@@ -71,6 +71,7 @@
     "RequestMappingsPanelWidth0": "75",
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.Application.executor": "Run",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
@@ -112,7 +113,7 @@
       <recent name="com.studentinfo.security" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.UserRepositoryTest.testUserSaved">
+  <component name="RunManager" selected="JUnit.StudentRepositoryTest">
     <configuration name="StudentControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="student-information-app" />
       <shortenClasspath name="ARGS_FILE" />
@@ -125,6 +126,22 @@
       <option name="PACKAGE_NAME" value="com.studentinfo.controller" />
       <option name="MAIN_CLASS_NAME" value="com.studentinfo.controller.StudentControllerTest" />
       <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StudentRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="student-information-app" />
+      <shortenClasspath name="ARGS_FILE" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.studentinfo.data.repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.studentinfo.data.repository" />
+      <option name="MAIN_CLASS_NAME" value="com.studentinfo.data.repository.StudentRepositoryTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -183,6 +200,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.StudentRepositoryTest" />
         <item itemvalue="JUnit.UserRepositoryTest.testUserSaved" />
         <item itemvalue="JUnit.UserRepositoryTest" />
         <item itemvalue="JUnit.StudentControllerTest" />
@@ -213,7 +231,8 @@
       <workItem from="1725294163226" duration="810000" />
       <workItem from="1725348183775" duration="2589000" />
       <workItem from="1726440609144" duration="568000" />
-      <workItem from="1726471329090" duration="14896000" />
+      <workItem from="1726471329090" duration="15017000" />
+      <workItem from="1726571749522" duration="5279000" />
     </task>
     <task id="LOCAL−00001" summary="uodated .gitignore">
       <option name="closed" value="true" />
@@ -250,7 +269,14 @@
       <option name="presentableId" value="LOCAL−00005" />
       <updated>1726480232811</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL−00006" summary="repository tests not working">
+      <option name="closed" value="true" />
+      <created>1726493672100</created>
+      <option name="number" value="LOCAL−00006" />
+      <option name="presentableId" value="LOCAL−00006" />
+      <updated>1726493672100</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -266,7 +292,8 @@
     <MESSAGE value="Commented lines out" />
     <MESSAGE value=".env setup" />
     <MESSAGE value="controller tests green" />
-    <option name="LAST_COMMIT_MESSAGE" value="controller tests green" />
+    <MESSAGE value="repository tests not working" />
+    <option name="LAST_COMMIT_MESSAGE" value="repository tests not working" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
