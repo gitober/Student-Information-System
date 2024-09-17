@@ -4,7 +4,7 @@ import com.studentinfo.security.AuthenticatedUser;
 import com.studentinfo.views.courses.CoursesView;
 import com.studentinfo.views.editprofile.EditProfileView;
 import com.studentinfo.views.grades.GradesView;
-import com.studentinfo.views.profilepage.ProfilePageView;
+import com.studentinfo.views.homeprofilepage.ProfilePageView;
 import com.studentinfo.views.TeacherUpdateStudentProfileView.TeacherUpdateStudentProfileView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -24,6 +24,7 @@ public class HeaderView extends HorizontalLayout {
             // Navigation links in the correct order
             RouterLink homeLink = new RouterLink("Home", ProfilePageView.class);
             homeLink.addClassName("router-link");
+            homeLink.addClassName("home-link");
 
             RouterLink coursesLink = new RouterLink("Courses", CoursesView.class);
             coursesLink.addClassName("router-link");

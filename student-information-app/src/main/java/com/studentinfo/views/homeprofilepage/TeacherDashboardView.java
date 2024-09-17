@@ -1,10 +1,9 @@
-package com.studentinfo.views.profilepage;
+package com.studentinfo.views.homeprofilepage;
 
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.html.Image;
 
 @CssImport("./themes/studentinformationapp/views/profile-page-view/teacher-profile-page-view.css")
 public class TeacherDashboardView extends VerticalLayout {

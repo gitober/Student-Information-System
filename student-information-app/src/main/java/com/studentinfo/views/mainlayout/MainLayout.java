@@ -4,7 +4,7 @@ import com.studentinfo.security.AuthenticatedUser;
 import com.studentinfo.views.courses.CoursesView;
 import com.studentinfo.views.editprofile.EditProfileView;
 import com.studentinfo.views.grades.GradesView;
-import com.studentinfo.views.profilepage.ProfilePageView;
+import com.studentinfo.views.homeprofilepage.ProfilePageView;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;

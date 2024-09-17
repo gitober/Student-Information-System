@@ -1,4 +1,4 @@
-package com.studentinfo.views.profilepage;
+package com.studentinfo.views.homeprofilepage;
 
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.H1;

@@ -1,14 +1,14 @@
 /* Logo styling */
 .logo {
-    height: 50px; /* Increased the height to make the logo bigger */
+    height: 50px; /* Standard height */
     margin-right: 10px; /* Space between the logo and the app name */
 }
 
 /* Header styles */
 .header {
     width: 100%;
-    height: var(--header-height, 60px);  /* Fallback in case var is not defined */
-    background-color: var(--primary-color, #007BFF);  /* Fallback in case var is not defined */
+    height: var(--header-height, 60px); /* Fallback height */
+    background-color: var(--primary-color, #007BFF); /* Fallback color */
     display: flex;
     align-items: center;
     padding: 0 20px;
@@ -16,7 +16,8 @@
     top: 0;
     left: 0;
     z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for better separation */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    justify-content: space-between; /* Distributes space between logo/title and nav items */
 }
 
 /* Title styling */
@@ -35,8 +36,22 @@
     transition: color 0.3s ease;
 }
 
-.router-link:hover {
-    color: #d1e0ff; /* Lighten the color on hover */
+/* Specific class for the Home link */
+.home-link {
+    display: inline-block; /* Ensure Home link is always visible */
+}
+
+/* Hide other links on smaller screens */
+@media (max-width: 576px) {
+    .router-link {
+        display: none; /* Hide all links */
+    }
+
+    .home-link {
+        display: inline-block; /* Show only the Home link */
+        margin-right: 5px;
+        font-size: 14px; /* Adjust the font size if needed */
+    }
 }
 
 /* Logout button styles */
@@ -50,8 +65,9 @@
     transition: background-color 0.3s ease;
 }
 
+/* Logout button hover */
 .logout-button:hover {
-    background-color: #d89441; /* Darker red on hover */
+    background-color: #d89441;
 }
 
 /* Container for logo and title */

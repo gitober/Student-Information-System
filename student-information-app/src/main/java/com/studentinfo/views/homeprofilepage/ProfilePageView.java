@@ -1,4 +1,4 @@
-package com.studentinfo.views.profilepage;
+package com.studentinfo.views.homeprofilepage;
 
 import com.studentinfo.views.header.HeaderView;
 import com.studentinfo.security.AuthenticatedUser;

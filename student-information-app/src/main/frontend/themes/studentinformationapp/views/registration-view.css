@@ -1,0 +1,80 @@
+/* Container for the registration view */
+.registration-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensures the container respects the header */
+    justify-content: center;
+    align-items: center;
+    padding: 0; /* Removes unnecessary padding */
+    background-color: #ffffff !important; /* Light green background */
+    box-sizing: border-box;
+}
+
+/* Main registration form styling */
+.registration-form {
+    padding: 1rem; /* Reduced padding to make the form appear smaller */
+    background-color: rgba(152, 201, 97, 0.29); /* White background for the form */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    max-width: 700px; /* Reduced max-width for better alignment */
+    width: 100%;
+    transition: all 0.3s ease;
+    margin: 0; /* Removed unnecessary margin */
+    box-sizing: border-box;
+    /* Removed border styling if not needed */
+}
+
+/* Form title styling */
+.registration-form-title {
+    color: #002e6d; /* Dark blue from your palette */
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    text-align: center; /* Centers the title */
+    font-weight: bold;
+    padding-bottom: 0.5rem; /* Adds space below the title */
+    border-bottom: 1px solid #e0e0e0; /* Adds a subtle underline */
+}
+
+/* Button layout */
+.registration-button-layout {
+    display: flex;
+    justify-content: center; /* Center align buttons */
+    gap: 1rem; /* Adjusted gap for better alignment */
+    margin-top: 1rem; /* Adjusted margin above the buttons */
+}
+
+/* Primary button styling */
+.registration-primary-button,
+.registration-secondary-button {
+    padding: 0.5rem 1.5rem; /* Adjusted padding for buttons */
+    border: none; /* Removes any default button border */
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.registration-primary-button {
+    background-color: #ffcc8f !important; /* Light orange button */
+    color: #ffffff; /* White text */
+}
+
+.registration-secondary-button {
+    background-color: #f2e8f5 !important; /* Light purple background */
+    color: #000000; /* Black text */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+    .registration-form {
+        padding: 1rem;
+        max-width: 600px; /* Further reduce max-width for tablets */
+    }
+}
+
+@media (max-width: 768px) {
+    .registration-form {
+        padding: 0.75rem;
+        max-width: 90%;
+    }
+}
