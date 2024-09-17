@@ -1,9 +1,1 @@
-/* Grades View Styles */
-.grades-view {
-    padding: 2px;
-    box-sizing: border-box;
-    display: block;
-    position: relative;
-    height: 100%;
-    overflow-y: auto;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');

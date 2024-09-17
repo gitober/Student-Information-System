@@ -28,25 +28,25 @@ public class EditProfileView extends Composite<VerticalLayout> {
 
         // Main layout setup
         VerticalLayout mainLayout = getContent();
-        mainLayout.setSizeFull();
-        mainLayout.setPadding(false);
-        mainLayout.setSpacing(false);
-        mainLayout.setAlignItems(FlexComponent.Alignment.CENTER);
-        mainLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
+        mainLayout.setPadding(false); // Disable default padding
+        mainLayout.setSpacing(false); // Disable spacing between elements
+        mainLayout.setAlignItems(FlexComponent.Alignment.CENTER); // Center content horizontally
+        mainLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.START); // Align content to start vertically
+
+        // Add padding to avoid content going under the fixed header
+        mainLayout.getStyle().set("padding-top", "60px"); // Adjust padding based on actual header height
 
         // Add the reusable Header component
         mainLayout.add(new HeaderView("EduBird", authenticatedUser));
 
         // Create a container for user-specific content
         VerticalLayout layoutColumn = new VerticalLayout();
-        layoutColumn.setWidthFull();
-        layoutColumn.setAlignItems(FlexComponent.Alignment.CENTER);
-        layoutColumn.setJustifyContentMode(FlexComponent.JustifyContentMode.START);
 
         // Load user-specific content using UserContentLoader
         userContentLoader.loadEditProfileContent(layoutColumn);
 
         // Add the content layout to the main layout
         mainLayout.add(layoutColumn);
+
     }
 }

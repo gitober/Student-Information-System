@@ -1,78 +1,190 @@
-/* Login Page Styles */
+/* Main content styles */
 .login-page {
   display: flex;
-  flex: 1;
-  width: 100%;
+  flex-direction: column;
+  min-height: 100vh; /* Full viewport height to ensure it respects the header */
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.left-content {
-  width: 50%;
-  height: 100%;
+.content-layout {
+  display: flex;
+  flex: 1;
+  align-items: stretch;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+/* Styles for left and right content to ensure full height */
+.left-content,
+.right-content {
+  flex: 1;
   padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 10px; /* Adds space between elements */
+  box-sizing: border-box;
+  min-height: 100%;
+}
+
+.left-content {
+  background: #f9f9f9;
 }
 
 .right-content {
-  width: 50%;
-  height: 100%;
   background: rgba(152, 201, 97, 0.29);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .welcome-text {
-  font-size: 32px;
+  font-size: 32px !important;
   font-weight: bold;
-  color: black;
+  margin: 0;
   text-align: center;
-  margin: 0 0 10px;
+  margin-bottom: 10px;
 }
 
 .instruction-text {
-  font-size: 14px;
-  color: #888;
+  font-size: 16px;
+  margin: 0;
+  text-align: center;
+  color: #555; /* Slightly lighter text color for contrast */
   margin-bottom: 20px;
 }
 
-.input-field::part(input-field) {
-  padding: 0;
-  border: none;
-  box-shadow: none;
-}
-
-.input-field::part(label) {
-  color: #555;
-}
-
-.input-field::part(input-field) {
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+.text-field {
+  margin-top: 20px;
+  width: 100%;
+  max-width: 400px; /* Keeps inputs within a nice max width */
 }
 
 .signin-button {
-  width: 242px;
-  height: 33px;
-  background: #FDB069;
-  border: 1px solid #ACA6A6;
-  border-radius: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px 0;
+  width: 100%;
+  max-width: 200px; /* Ensures button doesn't get too large */
+  height: 40px;
+  background: #fdb069;
+  border: none;
+  border-radius: 20px;
+  margin: 10px 0;
   cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff; /* White text color for contrast */
+  transition: background-color 0.3s ease;
+}
+
+.signin-button:hover {
+  background-color: #e6a14d; /* Slightly darker on hover */
 }
 
 .signup-link {
-  color: #044A46;
+  color: #044a46;
   font-weight: bold;
   cursor: pointer;
+  font-size: 16px;
+  padding: 8px 16px;
+  border: 1px solid #044a46;
+  border-radius: 10px;
+  transition: all 0.3s ease;
 }
 
-.bird-image {
-  max-width: 100%;
-  height: auto;
-  width: 566px;
+.signup-link:hover {
+  background-color: #044a46;
+  color: #ffffff; /* White text color on hover */
+}
+
+.remember-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  color: #555;
+}
+
+/* Responsive behavior */
+
+/* Medium devices (tablets, 768px and up) */
+@media (max-width: 1024px) {
+  .content-layout {
+    flex-direction: row;
+  }
+
+  .left-content,
+  .right-content {
+    flex: 1;
+    padding: 15px;
+  }
+
+  .signin-button {
+    width: 100%;
+  }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (max-width: 768px) {
+  .content-layout {
+    flex-direction: column;
+    min-height: auto; /* Allow content to adjust its height automatically */
+  }
+
+  .left-content,
+  .right-content {
+    min-width: 100%;
+    padding: 10px;
+  }
+
+  .signin-button {
+    width: 80%;
+  }
+
+  .welcome-text {
+    font-size: 28px;
+  }
+
+  .instruction-text {
+    font-size: 14px;
+  }
+
+  /* Hide right content */
+  .right-content {
+    display: none; /* Hide the right content on smaller screens */
+  }
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 576px) {
+  .content-layout {
+    flex-direction: column;
+    align-items: center;
+    min-height: auto;
+  }
+
+  .left-content,
+  .right-content {
+    padding: 10px;
+    min-width: 100%;
+  }
+
+  .signin-button {
+    width: 80%;
+    margin-top: 10px;
+  }
+
+  .welcome-text {
+    font-size: 24px;
+  }
+
+  .instruction-text {
+    font-size: 12px;
+  }
+
+  .bird-image {
+    max-width: 80%;
+  }
+
+  /* Hide right content */
+  .right-content {
+    display: none; /* Hide the right content on extra small screens */
+  }
 }
