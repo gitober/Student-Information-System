@@ -40,14 +40,17 @@ public class LoginPageView extends Composite<VerticalLayout> {
         mainLayout.setSpacing(false);
         mainLayout.addClassName("login-page");
 
-        mainLayout.getStyle().set("padding-top", "60px"); // Padding to avoid header overlap
+        // Add the reusable Header component first
+        HeaderView header = new HeaderView("EduBird");
+        header.setWidthFull();
+        mainLayout.add(header);
 
-        // Add the reusable Header component
-        mainLayout.add(new HeaderView("EduBird"));
+        // Add a spacer to ensure content starts below the header
+        mainLayout.getStyle().set("padding-top", "60px"); // Dynamically set padding to match the header height
 
-        // Content layout setup
+        // Content layout setup (below the header)
         HorizontalLayout contentLayout = new HorizontalLayout();
-        contentLayout.setSizeFull();
+        contentLayout.setWidthFull();
         contentLayout.setPadding(false);
         contentLayout.setSpacing(false);
         contentLayout.setAlignItems(FlexComponent.Alignment.STRETCH);
@@ -57,7 +60,9 @@ public class LoginPageView extends Composite<VerticalLayout> {
         contentLayout.add(setupLeftContent(), setupRightContent());
         contentLayout.setFlexGrow(1);
 
+        // Add content layout to main layout
         mainLayout.addAndExpand(contentLayout);
+
     }
 
     private VerticalLayout setupLeftContent() {

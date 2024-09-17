@@ -8,6 +8,7 @@ import com.studentinfo.views.profilepage.ProfilePageView;
 import com.studentinfo.views.TeacherUpdateStudentProfileView.TeacherUpdateStudentProfileView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.RouterLink;
@@ -20,7 +21,7 @@ public class HeaderView extends HorizontalLayout {
         this(title);
 
         authenticatedUser.get().ifPresent(user -> {
-            // Navigation links
+            // Navigation links in the correct order
             RouterLink homeLink = new RouterLink("Home", ProfilePageView.class);
             homeLink.addClassName("router-link");
 
@@ -33,11 +34,11 @@ public class HeaderView extends HorizontalLayout {
             RouterLink editProfileLink = new RouterLink("Edit Profile", EditProfileView.class);
             editProfileLink.addClassName("router-link");
 
-            // Add Teacher-specific link for updating student profiles
+            // Teacher-specific link for updating student profiles
+            RouterLink updateStudentProfilesLink = null;
             if (user instanceof com.studentinfo.data.entity.Teacher) {
-                RouterLink updateStudentProfilesLink = new RouterLink("Student Management", TeacherUpdateStudentProfileView.class);
+                updateStudentProfilesLink = new RouterLink("Student Management", TeacherUpdateStudentProfileView.class);
                 updateStudentProfilesLink.addClassName("router-link");
-                this.add(updateStudentProfilesLink);
             }
 
             // Logout button - directs to Spring Security's logout endpoint
@@ -46,8 +47,12 @@ public class HeaderView extends HorizontalLayout {
             });
             logoutButton.addClassName("logout-button");
 
-            // Add all components to the header
-            this.add(homeLink, coursesLink, gradesLink, editProfileLink, logoutButton);
+            // Add all components in the desired order
+            this.add(homeLink, coursesLink, gradesLink);
+            if (updateStudentProfilesLink != null) {
+                this.add(updateStudentProfilesLink);
+            }
+            this.add(editProfileLink, logoutButton);
         });
     }
 
@@ -58,12 +63,21 @@ public class HeaderView extends HorizontalLayout {
         this.setJustifyContentMode(JustifyContentMode.BETWEEN);
         this.addClassName("header");
 
+        // Application logo
+        Image logo = new Image("images/bird.png", "EduBird Logo");
+        logo.addClassName("logo");
+
         // Application title
         Span appName = new Span(title);
         appName.addClassName("app-name");
 
-        // Add the app name to the header
-        this.add(appName);
-    }
+        // Container for logo and title
+        HorizontalLayout logoAndTitle = new HorizontalLayout(logo, appName);
+        logoAndTitle.setAlignItems(Alignment.CENTER);
+        logoAndTitle.setSpacing(false);
+        logoAndTitle.addClassName("logo-title-container");
 
+        // Add the logo and the app name container to the header
+        this.add(logoAndTitle);
+    }
 }
