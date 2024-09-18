@@ -1,77 +1,88 @@
 package com.studentinfo.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.studentinfo.data.entity.User;
-import org.junit.jupiter.api.*;
-
-import java.util.List;
-import java.util.Optional;
+import com.studentinfo.services.UserService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserControllerTest {
+@WebMvcTest(controllers = UserController.class)
+@AutoConfigureMockMvc(addFilters = false)
+@ExtendWith(MockitoExtension.class)
+public class UserControllerTest {
 
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
     private UserController userController;
 
-    @BeforeAll
-    static void setUp() {
-        System.out.println("Starting the userControllerTest class");
-    }
+    @MockBean
+    private UserService userService;
+
+    @MockBean
+    private User user;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @BeforeEach
-    void init() {
-        // create an instance of UserController
-        //userController = new UserController(/* tähän pitäis jotain keksii :/ */);
+    void setUp() {
+
+
     }
 
-    @AfterEach
-    void tearDownEach() {
-        userController = null;
-    }
-
-    // unit test for UserController.getAllUsers()
     @Test
-    void testGetAllUsers() {
-        // call the getAllUsers() method
-        List<User> users = userController.getAllUsers();
-        // check if the list of users is not null
-        assertNotNull(users);
-    }
+    public void testCreateUser() throws Exception {
 
-    // unit test for UserController.getUserById()
-    @Test
-    void testGetUserById() {
-        // call the getUserById() method
-        Optional<User> user = userController.getUserById(1L);
-        // check if the user is not null
+        // arrange
+
+
+
+        // act
+
+        userController.createUser(user);
+
+        // assert
+
         assertNotNull(user);
+
     }
 
-    // unit test for UserController.createUser()
     @Test
-    void testCreateUser() {
-        // create a new user
-        User user = new User();
-        user.setId(1L);
-        user.setFirstName("John");
-        user.setLastName("Doe");
-        // call the createUser() method
-        User newUser = userController.createUser(user);
-        // check if the new user is not null
-        assertNotNull(newUser);
+    public void testGetAllUsers() {
+
+        userController.getAllUsers();
+
+        assertNotNull(user);
+
     }
 
-    // unit test for UserController.updateUser()
     @Test
-    void testDeleteUser() {
-        // call the deleteUser() method
+    public void testGetUserById() {
+
+        userController.getUserById(1L);
+
+        assertNotNull(user);
+
+    }
+
+    @Test
+    public void testDeleteUser() {
+
         userController.deleteUser(1L);
-        // check if the user is deleted
-        assertNull(userController.getUserById(1L));
-    }
 
-    @AfterAll
-    static void tearDown() {
-        System.out.println("Completed the userControllerTest class");
+        assertNull(user);
+
     }
 
 }

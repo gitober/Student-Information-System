@@ -7,22 +7,22 @@ CREATE TABLE IF NOT EXISTS users (
                                      last_name VARCHAR(255) DEFAULT NULL,
                                      name VARCHAR(255) DEFAULT NULL,
                                      phone_number VARCHAR(255) DEFAULT NULL,
-                                     username VARCHAR(255) UNIQUE NOT NULL,  -- Ensuring username is unique and not nullable
+                                     username VARCHAR(255) UNIQUE NOT NULL,
                                      user_type VARCHAR(31) NOT NULL,
                                      grade VARCHAR(255) DEFAULT NULL,
                                      student_class VARCHAR(255) DEFAULT NULL,
                                      department_id BIGINT DEFAULT NULL,
                                      subject_id BIGINT DEFAULT NULL,
-                                     email VARCHAR(255) UNIQUE NOT NULL,  -- Added email field with unique and not-null constraint
+                                     email VARCHAR(255) UNIQUE NOT NULL,
                                      PRIMARY KEY (id)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 -- Create the 'department' table only if it does not exist
 CREATE TABLE IF NOT EXISTS department (
                                           id BIGINT NOT NULL AUTO_INCREMENT,
                                           name VARCHAR(255) NOT NULL UNIQUE,
                                           PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 -- Create the 'subject' table only if it does not exist
 CREATE TABLE IF NOT EXISTS subject (
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS subject (
                                        department_id BIGINT NOT NULL,
                                        PRIMARY KEY (id),
                                        FOREIGN KEY (department_id) REFERENCES department(id) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 -- Create the 'student' table only if it does not exist
 CREATE TABLE IF NOT EXISTS student (
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS student (
                                        PRIMARY KEY (Student_number),
                                        KEY FK_student_users (UserID),
                                        CONSTRAINT FK_student_users FOREIGN KEY (UserID) REFERENCES users (id) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 -- Create the 'teacher' table only if it does not exist
 CREATE TABLE IF NOT EXISTS teacher (
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS teacher (
                                        CONSTRAINT FK_teacher_users FOREIGN KEY (UserID) REFERENCES users (id) ON DELETE SET NULL ON UPDATE CASCADE,
                                        FOREIGN KEY (department_id) REFERENCES department(id) ON DELETE SET NULL ON UPDATE CASCADE,
                                        FOREIGN KEY (subject_id) REFERENCES subject(id) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 -- Create the 'user_roles' table only if it does not exist
 CREATE TABLE IF NOT EXISTS user_roles (
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS user_roles (
                                           roles ENUM('STUDENT','TEACHER','USER') NOT NULL,  -- Corrected roles to match enum structure
                                           PRIMARY KEY (user_id, roles),
                                           CONSTRAINT FK_user_roles FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 -- Create the 'course' table only if it does not exist
 CREATE TABLE IF NOT EXISTS course (
@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS course (
                                       Course_name VARCHAR(255) NOT NULL,
                                       Duration INT NOT NULL,
                                       PRIMARY KEY (CourseID)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 -- Create the 'grade' table only if it does not exist
 CREATE TABLE IF NOT EXISTS grade (
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS grade (
                                      PRIMARY KEY (GradeID),
                                      FOREIGN KEY (Student_number) REFERENCES student(Student_number) ON DELETE CASCADE ON UPDATE CASCADE,
                                      FOREIGN KEY (CourseID) REFERENCES course(CourseID) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 -- Create the 'attendance' table only if it does not exist
 CREATE TABLE IF NOT EXISTS attendance (
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS attendance (
                                           PRIMARY KEY (AttendanceID),
                                           FOREIGN KEY (Student_number) REFERENCES student(Student_number) ON DELETE CASCADE ON UPDATE CASCADE,
                                           FOREIGN KEY (CourseID) REFERENCES course(CourseID) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 -- Create the 'batch' table only if it does not exist
 CREATE TABLE IF NOT EXISTS batch (
@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS batch (
                                      CourseID INT NOT NULL,
                                      PRIMARY KEY (BatchID),
                                      FOREIGN KEY (CourseID) REFERENCES course(CourseID) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 -- Create the 'registration' table only if it does not exist
 CREATE TABLE IF NOT EXISTS registration (
@@ -127,7 +127,7 @@ CREATE TABLE IF NOT EXISTS registration (
                                             PRIMARY KEY (RegistrationID),
                                             FOREIGN KEY (Student_number) REFERENCES student(Student_number) ON DELETE CASCADE ON UPDATE CASCADE,
                                             FOREIGN KEY (BatchID) REFERENCES batch(BatchID) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 -- Create the 'profile' table only if it does not exist
 CREATE TABLE IF NOT EXISTS profile (
@@ -135,4 +135,4 @@ CREATE TABLE IF NOT EXISTS profile (
                                        Year INT NOT NULL,
                                        Student_number INT NOT NULL,
                                        FOREIGN KEY (Student_number) REFERENCES student(Student_number) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
