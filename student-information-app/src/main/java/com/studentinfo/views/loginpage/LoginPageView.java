@@ -23,13 +23,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 @AnonymousAllowed
 public class LoginPageView extends Composite<VerticalLayout> {
 
-    private final TextField emailField = new TextField("Email", "Enter your email");
-    private final PasswordField passwordField = new PasswordField("Password", "Enter password");
-    private final LoginHandler loginHandler;
+    private final TextField emailField;
+    private final PasswordField passwordField;
+    private final Button signInButton;
+    private final Button signUpButton;
 
     @Autowired
     public LoginPageView(LoginHandler loginHandler) {
-        this.loginHandler = loginHandler;
+        this.emailField = new TextField("Email", "Enter your email");
+        this.emailField.addClassName("login-text-field");
+
+        this.passwordField = new PasswordField("Password", "Enter password");
+        this.passwordField.addClassName("login-text-field");
+
+        this.signInButton = new Button("Sign in");
+        this.signInButton.addClassName("login-signin-button");
+
+        this.signUpButton = new Button("Signup");
+        this.signUpButton.addClassName("login-signup-link");
 
         // Main layout setup
         VerticalLayout mainLayout = getContent();
@@ -38,7 +49,7 @@ public class LoginPageView extends Composite<VerticalLayout> {
         mainLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.START);
         mainLayout.setPadding(false);
         mainLayout.setSpacing(false);
-        mainLayout.addClassName("login-page");
+        mainLayout.addClassName("login-view-page");
 
         // Add the reusable Header component first
         HeaderView header = new HeaderView("EduBird");
@@ -46,7 +57,7 @@ public class LoginPageView extends Composite<VerticalLayout> {
         mainLayout.add(header);
 
         // Add a spacer to ensure content starts below the header
-        mainLayout.getStyle().set("padding-top", "60px"); // Dynamically set padding to match the header height
+        mainLayout.getStyle().set("padding-top", "60px");
 
         // Content layout setup (below the header)
         HorizontalLayout contentLayout = new HorizontalLayout();
@@ -54,7 +65,7 @@ public class LoginPageView extends Composite<VerticalLayout> {
         contentLayout.setPadding(false);
         contentLayout.setSpacing(false);
         contentLayout.setAlignItems(FlexComponent.Alignment.STRETCH);
-        contentLayout.addClassName("content-layout");
+        contentLayout.addClassName("login-content-layout");
 
         // Setup left and right content
         contentLayout.add(setupLeftContent(), setupRightContent());
@@ -63,6 +74,8 @@ public class LoginPageView extends Composite<VerticalLayout> {
         // Add content layout to main layout
         mainLayout.addAndExpand(contentLayout);
 
+        signInButton.addClickListener(e -> loginHandler.login(emailField.getValue(), passwordField.getValue()));
+        signUpButton.addClickListener(e -> UI.getCurrent().navigate("register"));
     }
 
     private VerticalLayout setupLeftContent() {
@@ -72,28 +85,21 @@ public class LoginPageView extends Composite<VerticalLayout> {
         leftContent.setSpacing(false);
         leftContent.setAlignItems(FlexComponent.Alignment.CENTER);
         leftContent.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
-        leftContent.addClassName("left-content");
+        leftContent.addClassName("login-left-content");
 
         // Add components
         Span welcomeText = new Span("Welcome");
-        welcomeText.addClassName("welcome-text");
+        welcomeText.addClassName("login-welcome-text");
         Span instructionText = new Span("Please enter your details");
-        instructionText.addClassName("instruction-text");
+        instructionText.addClassName("login-instruction-text");
 
         Checkbox rememberMeCheckbox = new Checkbox("Remember me");
-        rememberMeCheckbox.addClassName("remember-checkbox");
+        rememberMeCheckbox.addClassName("login-remember-checkbox");
 
-        Button signInButton = new Button("Sign in");
-        signInButton.addClassName("signin-button");
-        signInButton.addClickListener(e -> loginHandler.login(emailField.getValue(), passwordField.getValue()));
+        Span signUpText = new Span("Don’t have an account yet?");
+        signUpText.addClassName("login-signup-text");
 
-        Span signupText = new Span("Don’t have an account yet?");
-        signupText.addClassName("signup-text");
-        Button signupButton = new Button("Signup");
-        signupButton.addClassName("signup-link");
-        signupButton.addClickListener(e -> UI.getCurrent().navigate("register"));
-
-        leftContent.add(welcomeText, instructionText, emailField, passwordField, rememberMeCheckbox, signInButton, signupText, signupButton);
+        leftContent.add(welcomeText, instructionText, emailField, passwordField, rememberMeCheckbox, signInButton, signUpText, signUpButton);
         return leftContent;
     }
 
@@ -104,10 +110,10 @@ public class LoginPageView extends Composite<VerticalLayout> {
         rightContent.setSpacing(false);
         rightContent.setAlignItems(FlexComponent.Alignment.CENTER);
         rightContent.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
-        rightContent.addClassName("right-content");
+        rightContent.addClassName("login-right-content");
 
         Image birdImage = new Image("images/bird.png", "Colorful Bird");
-        birdImage.addClassName("bird-image");
+        birdImage.addClassName("login-bird-image");
         rightContent.add(birdImage);
 
         return rightContent;
