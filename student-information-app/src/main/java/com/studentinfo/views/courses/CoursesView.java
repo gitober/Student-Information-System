@@ -28,20 +28,19 @@ public class CoursesView extends Composite<VerticalLayout> {
 
         // Main layout setup
         VerticalLayout mainLayout = getContent();
-        mainLayout.setSizeFull();
-        mainLayout.setPadding(false);
-        mainLayout.setSpacing(false);
-        mainLayout.setAlignItems(FlexComponent.Alignment.CENTER);
-        mainLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
+        mainLayout.setPadding(false); // Disable default padding if set by Vaadin
+        mainLayout.setSpacing(false); // Disable spacing between elements
+        mainLayout.setAlignItems(FlexComponent.Alignment.CENTER); // Center the content horizontally
+        mainLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.START); // Align content to start vertically
+
+// Add padding to avoid content sticking to or going under the header
+        mainLayout.getStyle().set("padding-top", "60px"); // Adjust based on header height
 
         // Add the reusable Header component
         mainLayout.add(new HeaderView("EduBird", authenticatedUser));
 
         // Create a container for user-specific content
         VerticalLayout layoutColumn = new VerticalLayout();
-        layoutColumn.setWidthFull();
-        layoutColumn.setAlignItems(FlexComponent.Alignment.CENTER);
-        layoutColumn.setJustifyContentMode(FlexComponent.JustifyContentMode.START);
 
         // Load user-specific content for courses
         userContentLoader.loadCoursesContent(layoutColumn);

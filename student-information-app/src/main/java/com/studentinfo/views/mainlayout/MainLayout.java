@@ -12,7 +12,6 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.spring.annotation.RouteScope;
@@ -21,17 +20,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @SpringComponent
 @RouteScope
-public class MainLayout extends Composite<VerticalLayout> implements RouterLayout {
+public class MainLayout extends Composite<Div> implements RouterLayout {
 
     private final AuthenticatedUser authenticatedUser;
 
     @Autowired
     public MainLayout(AuthenticatedUser authenticatedUser) {
         this.authenticatedUser = authenticatedUser;
-
-        VerticalLayout layout = new VerticalLayout();
-        layout.setSizeFull();
-        layout.addClassName("main-container");
 
         // Header
         Div header = new Div();
@@ -63,7 +58,7 @@ public class MainLayout extends Composite<VerticalLayout> implements RouterLayou
         });
 
         header.add(headerContent);
-        layout.add(header);
-        getContent().add(layout);
+        // Directly add the header to the main content
+        getContent().add(header);
     }
 }

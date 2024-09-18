@@ -3,11 +3,12 @@ package com.studentinfo.views.editprofile;
 import com.studentinfo.data.entity.Student;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
-import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextField;
+
 import java.util.function.Consumer;
 
 @CssImport("./themes/studentinformationapp/views/edit-profile-view/student-edit-profile-view.css")
@@ -46,7 +47,7 @@ public class StudentEditProfileView extends VerticalLayout {
         // Add current detail paragraphs
         add(nameParagraph, emailParagraph, phoneNumberParagraph, gradeParagraph, studentClassParagraph);
 
-        // Initialize form fields as empty
+        // Initialize form fields
         firstNameField = new TextField("First Name");
         lastNameField = new TextField("Last Name");
         phoneNumberField = new TextField("Phone Number");
@@ -54,8 +55,23 @@ public class StudentEditProfileView extends VerticalLayout {
 
         saveButton = new Button("Save");
 
-        // Add fields to the layout
-        add(firstNameField, lastNameField, phoneNumberField, emailField, saveButton);
+        // Create layout for form fields
+        VerticalLayout formLayout = new VerticalLayout();
+        formLayout.addClassName("form-layout");
+        formLayout.add(firstNameField, lastNameField, phoneNumberField, emailField, saveButton);
+
+        // Create layout for current details
+        VerticalLayout currentDetailsLayout = new VerticalLayout(nameParagraph, emailParagraph, phoneNumberParagraph, gradeParagraph, studentClassParagraph);
+        currentDetailsLayout.addClassName("current-details-layout");
+
+        // Create horizontal layout for current details and form fields
+        HorizontalLayout mainLayout = new HorizontalLayout(currentDetailsLayout, formLayout);
+        mainLayout.setWidthFull();
+        mainLayout.setAlignItems(Alignment.CENTER); // Ensure both layouts stretch to the same height
+        mainLayout.setJustifyContentMode(JustifyContentMode.CENTER);
+
+        // Add main layout to the view
+        add(mainLayout);
     }
 
     // Method to update student profile values

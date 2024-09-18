@@ -1,6 +1,19 @@
-@import "theme-editor.css";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Existing CSS imports */
+@import url('./views/shared-styles.css');
 @import url('./views/login-page-view.css');
 @import url('views/profile-page-view/profile-page-view.css');
 @import url('views/courses-view/courses-view.css');
+@import url('views/courses-view/student-courses-view.css');
+@import url('views/courses-view/teacher-courses-view.css');
+@import url('views/edit-profile-view/student-edit-profile-view.css');
+@import url('views/edit-profile-view/teacher-edit-profile-view.css');
+@import url('views/edit-profile-view/edit-profile-view.css');
 @import url('views/grades-view/grades-view.css');
-@import url('./views/shared-styles.css');
+@import url('views/grades-view/student-grades-view.css');
+@import url('views/grades-view/teacher-grades-view.css');
+@import url('views/profile-page-view/profile-page-view.css');
+@import url('views/profile-page-view/student-profile-page-view.css');
+@import url('views/profile-page-view/teacher-profile-page-view.css');
+@import url('views/TeacherUpdateStudentProfile/teacher-update-student-profile.css');

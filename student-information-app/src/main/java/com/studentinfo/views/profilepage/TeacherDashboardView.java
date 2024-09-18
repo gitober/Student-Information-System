@@ -26,9 +26,5 @@ public class TeacherDashboardView extends VerticalLayout {
         descriptionText.addClassName("description-text");
         add(descriptionText);
 
-        // Add resized bird image
-        Image mainImage = new Image("images/bird.png", "testii");
-        mainImage.addClassName("main-image");
-        add(mainImage);
     }
 }

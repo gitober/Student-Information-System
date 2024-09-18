@@ -1,3 +1,9 @@
+/* Logo styling */
+.logo {
+    height: 50px; /* Increased the height to make the logo bigger */
+    margin-right: 10px; /* Space between the logo and the app name */
+}
+
 /* Header styles */
 .header {
     width: 100%;
@@ -13,7 +19,7 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for better separation */
 }
 
-/* Application name within the header */
+/* Title styling */
 .app-name {
     color: white;
     font-size: 22px;
@@ -35,7 +41,7 @@
 
 /* Logout button styles */
 .logout-button {
-    background-color: #ff4d4f;
+    background-color: #e6a14d;
     color: white;
     border: none;
     padding: 8px 16px;
@@ -45,5 +51,11 @@
 }
 
 .logout-button:hover {
-    background-color: #d43536; /* Darker red on hover */
+    background-color: #d89441; /* Darker red on hover */
+}
+
+/* Container for logo and title */
+.logo-title-container {
+    display: flex;
+    align-items: center;
 }

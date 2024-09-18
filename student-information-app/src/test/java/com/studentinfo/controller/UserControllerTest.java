@@ -20,7 +20,7 @@ class UserControllerTest {
     @BeforeEach
     void init() {
         // create an instance of UserController
-        userController = new UserController(/* tähän pitäis jotain keksii :/ */);
+        //userController = new UserController(/* tähän pitäis jotain keksii :/ */);
     }
 
     @AfterEach
