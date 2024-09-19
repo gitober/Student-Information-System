@@ -1,6 +1,5 @@
 package com.studentinfo.views.forgotpassword;
 
-import com.studentinfo.services.PasswordResetService;
 import com.studentinfo.views.header.HeaderView;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
@@ -18,7 +17,6 @@ import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @PageTitle("Forgot Password")
 @Route(value = "forgotpassword")
@@ -29,9 +27,6 @@ public class ForgotPasswordView extends Composite<VerticalLayout> {
     private final EmailField emailField;
     private final Button submitButton;
     private final Button cancelButton;
-
-    @Autowired
-    private PasswordResetService passwordResetService;
 
     public ForgotPasswordView() {
         // Main layout setup
@@ -64,7 +59,7 @@ public class ForgotPasswordView extends Composite<VerticalLayout> {
 
         submitButton = new Button("Submit");
         submitButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        submitButton.addClickListener(e -> handleForgotPassword());
+        submitButton.addClickListener(e -> handleEmailSubmission());
         submitButton.addClassName("password-submit-button"); // Updated class name based on CSS
 
         cancelButton = new Button("Cancel");
@@ -81,18 +76,14 @@ public class ForgotPasswordView extends Composite<VerticalLayout> {
         mainLayout.add(formContainer);
     }
 
-    private void handleForgotPassword() {
+    private void handleEmailSubmission() {
         String email = emailField.getValue();
         if (email.isEmpty()) {
             Notification.show("Please enter your email address.", 3000, Notification.Position.TOP_CENTER);
-            return;
+        } else {
+            Notification.show("Email submitted.", 3000, Notification.Position.TOP_CENTER);
+            emailField.clear();
         }
-
-        // Call the service to initiate the password reset
-        passwordResetService.initiatePasswordReset(email);
-
-        Notification.show("If this email is registered, a password reset link will be sent.", 5000, Notification.Position.TOP_CENTER);
-        emailField.clear();
     }
 
     private void navigateToLogin() {
