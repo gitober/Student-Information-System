@@ -35,6 +35,7 @@ public class TeacherEditProfileView extends VerticalLayout {
     public TeacherEditProfileView(Teacher teacher, DepartmentService departmentService, SubjectService subjectService) {
         this.teacher = teacher;
 
+        // Updated the class name to match the namespaced CSS
         addClassName("teacher-edit-profile-view");
 
         setAlignItems(Alignment.CENTER);
@@ -44,7 +45,7 @@ public class TeacherEditProfileView extends VerticalLayout {
 
         // Create layout for current details
         currentDetailsLayout = new VerticalLayout();
-        currentDetailsLayout.addClassName("current-details-layout");
+        currentDetailsLayout.addClassName("teacher-edit-profile-view-current-details-layout");
 
         // Initialize form fields without setting values initially (empty fields)
         firstNameField = new TextField("First Name");
@@ -63,11 +64,11 @@ public class TeacherEditProfileView extends VerticalLayout {
         subjectComboBox.setValue(teacher.getSubject());
 
         saveButton = new Button("Save");
-        saveButton.addClassName("save-button-teacher");
+        saveButton.addClassName("teacher-edit-profile-view-save-button-teacher");
 
         // Create layout for form fields
         VerticalLayout formLayout = new VerticalLayout();
-        formLayout.addClassName("form-layout");
+        formLayout.addClassName("teacher-edit-profile-view-form-layout");
         formLayout.add(firstNameField, lastNameField, phoneNumberField, emailField, departmentComboBox, subjectComboBox, saveButton);
 
         // Create horizontal layout for current details and form fields
@@ -88,7 +89,7 @@ public class TeacherEditProfileView extends VerticalLayout {
         updateTeacherProfile();
     }
 
-    // Method to update teacher profile values similar to your first example
+    // Method to update teacher profile values
     private void updateTeacherProfile() {
         if (!firstNameField.isEmpty()) teacher.setFirstName(firstNameField.getValue());
         if (!lastNameField.isEmpty()) teacher.setLastName(lastNameField.getValue());
@@ -109,11 +110,11 @@ public class TeacherEditProfileView extends VerticalLayout {
 
     private VerticalLayout createDetailLayout(String label, String value) {
         VerticalLayout detailLayout = new VerticalLayout();
-        detailLayout.addClassName("detail");
+        detailLayout.addClassName("teacher-edit-profile-view-current-details-layout-detail");
 
         // Create a Paragraph to hold HTML content
         Paragraph detailParagraph = new Paragraph();
-        detailParagraph.getElement().setProperty("innerHTML", "<div class='label'>" + label + "</div><div class='value'>" + value + "</div>");
+        detailParagraph.getElement().setProperty("innerHTML", "<div class='teacher-edit-profile-view-current-details-layout-label'>" + label + "</div><div class='teacher-edit-profile-view-current-details-layout-value'>" + value + "</div>");
         detailLayout.add(detailParagraph);
 
         return detailLayout;

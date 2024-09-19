@@ -57,14 +57,19 @@ public class StudentEditProfileView extends VerticalLayout {
         VerticalLayout currentDetailsLayout = new VerticalLayout();
         currentDetailsLayout.addClassName("student-current-details-layout");
 
-        currentDetailsLayout.add(new Paragraph("Current Details:")); // Title
-        nameParagraph = new Paragraph("Name: " + student.getFirstName() + " " + student.getLastName());
-        emailParagraph = new Paragraph("Email: " + student.getEmail());
-        phoneNumberParagraph = new Paragraph("Phone Number: " + student.getPhoneNumber());
-        gradeParagraph = new Paragraph("Grade: " + student.getGrade());
-        studentClassParagraph = new Paragraph("Student Class: " + student.getStudentClass());
+        nameParagraph = new Paragraph();
+        nameParagraph.getElement().setProperty("innerHTML", "<span class='label'>Name: </span>" + student.getFirstName() + " " + student.getLastName());
+        emailParagraph = new Paragraph();
+        emailParagraph.getElement().setProperty("innerHTML", "<span class='label'>Email: </span>" + student.getEmail());
+        phoneNumberParagraph = new Paragraph();
+        phoneNumberParagraph.getElement().setProperty("innerHTML", "<span class='label'>Phone Number: </span>" + student.getPhoneNumber());
+        gradeParagraph = new Paragraph();
+        gradeParagraph.getElement().setProperty("innerHTML", "<span class='label'>Grade: </span>" + student.getGrade());
+        studentClassParagraph = new Paragraph();
+        studentClassParagraph.getElement().setProperty("innerHTML", "<span class='label'>Student Class: </span>" + student.getStudentClass());
 
         currentDetailsLayout.add(nameParagraph, emailParagraph, phoneNumberParagraph, gradeParagraph, studentClassParagraph);
+
 
 
         // Form section

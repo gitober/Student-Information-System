@@ -41,6 +41,11 @@
     margin: 0.5rem 0; /* Spacing between paragraphs */
 }
 
+.student-current-details-layout p span.label {
+    font-weight: bold; /* Make the title bold */
+    font-size: 18px; /* Adjust the font size */
+}
+
 /* Title for current details */
 .student-current-details-layout > p:first-child {
     font-weight: bold; /* Make the title bold */
