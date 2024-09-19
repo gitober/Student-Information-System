@@ -131,6 +131,14 @@ public class TeacherEditProfileView extends VerticalLayout {
             saveListener.accept(teacher);
 
             Notification.show("Profile updated successfully!", 3000, Notification.Position.TOP_CENTER);
+
+            // Clear the fields after saving
+            firstNameField.clear();
+            lastNameField.clear();
+            phoneNumberField.clear();
+            emailField.clear();
+            departmentComboBox.clear();
+            subjectComboBox.clear();
         });
     }
 }

@@ -65,7 +65,7 @@
   height: 40px;
   background: #fdb069;
   border: none;
-  border-radius: 20px;
+  border-radius: 13px;
   margin: 10px 0;
   cursor: pointer;
   font-size: 16px;
@@ -79,18 +79,18 @@
 }
 
 .login-signup-link {
-  color: #044a46;
+  color: #5ea9f4;
   font-weight: bold;
   cursor: pointer;
   font-size: 16px;
   padding: 8px 16px;
-  border: 1px solid #044a46;
+  border: 1px solid #5EA9F4FF;
   border-radius: 10px;
   transition: all 0.3s ease;
 }
 
 .login-signup-link:hover {
-  background-color: #044a46;
+  background-color: #4076aa;
   color: #ffffff; /* White text on hover */
 }
 

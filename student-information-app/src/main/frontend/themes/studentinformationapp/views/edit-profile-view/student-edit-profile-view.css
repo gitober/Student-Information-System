@@ -24,7 +24,7 @@
 /* Current details section */
 .student-current-details-layout {
     padding: 1rem;
-    background-color: #e8f5e9;
+    background-color: #dfefef;
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     flex: 1; /* Ensure both sections grow equally */
@@ -58,7 +58,7 @@
 /* Layout for the form */
 .student-edit-profile-form-layout {
     padding: 1rem;
-    background-color: #e8f5e9;
+    background-color: #dfefef;
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     flex: 1; /* Ensure both sections grow equally */
@@ -70,10 +70,10 @@
 
 /* Title styling for the student edit profile view */
 .student-edit-profile-title {
-    font-size: 24px; /* Larger font size for prominence */
+    font-size: 36px; /* Larger font size for prominence */
     font-weight: bold; /* Bold for emphasis */
-    color: #002e6d; /* Dark blue from your color palette */
-    margin-bottom: 0.5rem; /* Space below the title */
+    color: #333; /* Dark blue from your color palette */
+    margin-bottom: 20px; /* Space below the title */
     text-align: center; /* Center the title within the layout */
     padding-bottom: 0.25rem; /* Adds some spacing below the title */
 }

@@ -42,7 +42,7 @@ public class StudentEditProfileView extends VerticalLayout {
         addClassName("student-edit-profile-container");
 
         // Form Title
-        H3 h3 = new H3("Edit Your Profile");
+        H3 h3 = new H3("Edit Student Profile");
         h3.addClassName("student-edit-profile-title");
 
         // Wrapper layout for the title and main content
@@ -57,16 +57,20 @@ public class StudentEditProfileView extends VerticalLayout {
         VerticalLayout currentDetailsLayout = new VerticalLayout();
         currentDetailsLayout.addClassName("student-current-details-layout");
 
+        currentDetailsLayout.add(new H3("Current Details:"));
+
+
+
         nameParagraph = new Paragraph();
-        nameParagraph.getElement().setProperty("innerHTML", "<span class='label'>Name: </span>" + student.getFirstName() + " " + student.getLastName());
+        nameParagraph.getElement().setProperty("innerHTML", "<span class='label'>Name </span>" + "<br>" + student.getFirstName() + " " + student.getLastName());
         emailParagraph = new Paragraph();
-        emailParagraph.getElement().setProperty("innerHTML", "<span class='label'>Email: </span>" + student.getEmail());
+        emailParagraph.getElement().setProperty("innerHTML", "<span class='label'>Email </span>" + "<br>" + student.getEmail());
         phoneNumberParagraph = new Paragraph();
-        phoneNumberParagraph.getElement().setProperty("innerHTML", "<span class='label'>Phone Number: </span>" + student.getPhoneNumber());
+        phoneNumberParagraph.getElement().setProperty("innerHTML", "<span class='label'>Phone Number </span>" + "<br>"+ student.getPhoneNumber());
         gradeParagraph = new Paragraph();
-        gradeParagraph.getElement().setProperty("innerHTML", "<span class='label'>Grade: </span>" + student.getGrade());
+        gradeParagraph.getElement().setProperty("innerHTML", "<span class='label'>Grade </span>"+ "<br>" + student.getGrade());
         studentClassParagraph = new Paragraph();
-        studentClassParagraph.getElement().setProperty("innerHTML", "<span class='label'>Student Class: </span>" + student.getStudentClass());
+        studentClassParagraph.getElement().setProperty("innerHTML", "<span class='label'>Student Class </span>"+ "<br>" + student.getStudentClass());
 
         currentDetailsLayout.add(nameParagraph, emailParagraph, phoneNumberParagraph, gradeParagraph, studentClassParagraph);
 
@@ -110,11 +114,12 @@ public class StudentEditProfileView extends VerticalLayout {
         if (!phoneNumberField.isEmpty()) student.setPhoneNumber(phoneNumberField.getValue());
         if (!emailField.isEmpty()) student.setEmail(emailField.getValue());
 
-        // Update displayed paragraphs with new values
-        nameParagraph.setText("Name: " + student.getFirstName() + " " + student.getLastName());
-        emailParagraph.setText("Email: " + student.getEmail());
-        phoneNumberParagraph.setText("Phone Number: " + student.getPhoneNumber());
+        // Update displayed paragraphs with new values and retain HTML structure
+        nameParagraph.getElement().setProperty("innerHTML", "<span class='label'>Name </span>" + "<br>"+ student.getFirstName() + " " + student.getLastName());
+        emailParagraph.getElement().setProperty("innerHTML", "<span class='label'>Email </span>" + "<br>" + student.getEmail());
+        phoneNumberParagraph.getElement().setProperty("innerHTML", "<span class='label'>Phone Number </span>" + "<br>" + student.getPhoneNumber());
     }
+
 
     // Listener to trigger the save operation outside of this class
     public void setSaveListener(Consumer<Student> saveListener) {
@@ -122,6 +127,12 @@ public class StudentEditProfileView extends VerticalLayout {
             updateStudentProfile();
             saveListener.accept(student);
             Notification.show("Profile updated successfully", 3000, Notification.Position.TOP_CENTER);
+
+            // Clear the fields after saving
+            firstNameField.clear();
+            lastNameField.clear();
+            phoneNumberField.clear();
+            emailField.clear();
         });
     }
 }

@@ -16,7 +16,7 @@ public class TeacherDashboardView extends VerticalLayout {
         setJustifyContentMode(JustifyContentMode.CENTER); // Center content
 
         // Add welcome text
-        H1 welcomeText = new H1("Welcome");
+        H1 welcomeText = new H1("Teacher Dashboard");
         welcomeText.addClassName("welcome-text"); // Add a class for custom styles
         add(welcomeText);
 
