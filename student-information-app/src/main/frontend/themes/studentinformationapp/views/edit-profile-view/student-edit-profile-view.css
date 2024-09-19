@@ -21,7 +21,7 @@
     flex: 1 1 auto; /* Allows the layout to stretch */
 }
 
-/* Layout for current details */
+/* Current details section */
 .student-current-details-layout {
     padding: 1rem;
     background-color: #e8f5e9;
@@ -30,9 +30,25 @@
     flex: 1; /* Ensure both sections grow equally */
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Adjust to balance content if needed */
+    justify-content: flex-start; /* Align content to the top */
     min-height: 100%; /* Ensures the box stretches to the full available height */
 }
+
+/* Styling for the detail paragraphs */
+.student-current-details-layout p {
+    font-size: 19px; /* Font size for detail text */
+    color: #333; /* Text color */
+    margin: 0.5rem 0; /* Spacing between paragraphs */
+}
+
+/* Title for current details */
+.student-current-details-layout > p:first-child {
+    font-weight: bold; /* Make the title bold */
+    font-size: 18px; /* Slightly larger font for the title */
+    margin-bottom: 1rem; /* Space below the title */
+}
+
+
 
 /* Layout for the form */
 .student-edit-profile-form-layout {
@@ -56,6 +72,9 @@
     text-align: center; /* Center the title within the layout */
     padding-bottom: 0.25rem; /* Adds some spacing below the title */
 }
+
+
+
 
 /* Responsive Adjustments */
 
