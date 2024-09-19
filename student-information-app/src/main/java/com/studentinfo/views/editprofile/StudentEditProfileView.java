@@ -57,7 +57,7 @@ public class StudentEditProfileView extends VerticalLayout {
         VerticalLayout currentDetailsLayout = new VerticalLayout();
         currentDetailsLayout.addClassName("student-current-details-layout");
 
-        currentDetailsLayout.add(new Paragraph("Current Details:"));
+        currentDetailsLayout.add(new Paragraph("Current Details:")); // Title
         nameParagraph = new Paragraph("Name: " + student.getFirstName() + " " + student.getLastName());
         emailParagraph = new Paragraph("Email: " + student.getEmail());
         phoneNumberParagraph = new Paragraph("Phone Number: " + student.getPhoneNumber());
@@ -65,6 +65,7 @@ public class StudentEditProfileView extends VerticalLayout {
         studentClassParagraph = new Paragraph("Student Class: " + student.getStudentClass());
 
         currentDetailsLayout.add(nameParagraph, emailParagraph, phoneNumberParagraph, gradeParagraph, studentClassParagraph);
+
 
         // Form section
         VerticalLayout formLayout = new VerticalLayout();
