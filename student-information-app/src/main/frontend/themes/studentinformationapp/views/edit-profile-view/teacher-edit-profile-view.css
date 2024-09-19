@@ -1,79 +1,83 @@
-/* Container for the student edit profile view */
-.student-edit-profile-container {
+.teacher-edit-profile-view-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    padding: 0;
-    margin: 0;
-    background-color: transparent;
-    min-height: 100vh;
-    width: 100vw;
+    justify-content: flex-start;
+    min-height: calc(100vh - 60px);
+    background-color: #ffffff;
+    padding: 20px;
 }
 
-/* Main layout containing both sections */
-.student-edit-profile-main-layout {
-    display: flex;
-    gap: 1.5rem;
-    width: 90%;
-    max-width: 1200px;
-    margin: auto;
-    align-items: stretch; /* Stretch children to equal heights */
-    flex: 1 1 auto; /* Allows the layout to stretch */
+.teacher-edit-profile-view-title {
+    font-size: 36px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
 }
 
-/* Current details section */
-.student-edit-profile-current-details-layout {
-    padding: 1rem;
-    background-color: #e8f5e9;
+.teacher-edit-profile-view-current-details-layout {
+    flex: 1;
+    max-width: 35%; /* Restrict the maximum width to make it smaller */
+    min-width: 0;
+    padding: 13px; /* Reduce padding to make it more compact */
+    background-color: #deecec;
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    flex: 1; /* Ensure both sections grow equally */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* Align content to the top */
-    min-height: 100%; /* Ensures the box stretches to the full available height */
+    align-items: flex-start;
+    box-sizing: border-box;
+    height: 150%;
 }
 
-/* Styling for the detail paragraphs */
-.student-edit-profile-current-details-layout p {
-    font-size: 19px; /* Font size for detail text */
-    color: #333; /* Text color */
-    margin: 0.5rem 0; /* Spacing between paragraphs */
+.teacher-edit-profile-view-current-details-title {
+    margin: 5px 0; /* Adjust margin to remove extra space */
+    font-size: 23px; /* Font size for the title */
+    color: #333;
+    text-align: left; /* Align text to the left */
+    width: 100%; /* Make sure the text takes the full width */
 }
 
-/* Title for current details */
-.student-edit-profile-current-details-layout > p:first-child {
-    font-weight: bold; /* Make the title bold */
-    font-size: 18px; /* Slightly larger font for the title */
-    margin-bottom: 1rem; /* Space below the title */
-}
-
-/* Layout for the form */
-.student-edit-profile-form-layout {
-    padding: 1rem;
-    background-color: #e8f5e9;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    flex: 1; /* Ensure both sections grow equally */
+.teacher-edit-profile-view-detail {
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Adjust to balance content if needed */
-    min-height: 100%; /* Ensures the box stretches to the full available height */
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 10px; /* Reduce space between detail items */
+    width: 100%;
+    padding: 5px; /* Decrease padding to make it more compact */
+    box-sizing: border-box;
 }
 
-/* Title styling for the student edit profile view */
-.student-edit-profile-title {
-    font-size: 24px; /* Larger font size for prominence */
-    font-weight: bold; /* Bold for emphasis */
-    color: #002e6d; /* Dark blue from your color palette */
-    margin-bottom: 0.5rem; /* Space below the title */
-    text-align: center; /* Center the title within the layout */
-    padding-bottom: 0.25rem; /* Adds some spacing below the title */
+.teacher-edit-profile-view-label {
+    font-weight: bold;
+    font-size: 20px; /* Slightly smaller font size */
+    color: #333;
+    text-align: left;
 }
 
-/* Save button */
-.student-edit-profile-save-button {
-    background-color: #e6a14d; /* Custom background */
+.teacher-edit-profile-view-value {
+    font-size: 16px; /* Slightly smaller font size */
+    color: #666;
+}
+
+.teacher-edit-profile-view-form-layout {
+    flex: 1;
+    max-width: 35%; /* Ensure the form layout has a bit more space */
+    min-width: 0;
+    padding: 20px;
+    background-color: #deecec;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: grid;
+    gap: 10px;
+    box-sizing: border-box;
+}
+
+.teacher-edit-profile-view-save-button {
+    background-color: #e6a14d; /* Green background */
     color: white; /* White text */
     padding: 10px 20px; /* Add some padding */
     font-size: 16px; /* Font size */
@@ -81,69 +85,16 @@
     border-radius: 5px; /* Rounded corners */
     cursor: pointer; /* Pointer cursor on hover */
     transition: background-color 0.3s ease; /* Smooth hover effect */
+
+    /* Centering */
+    display: block; /* Make button a block-level element */
+    margin: 20px auto; /* Center horizontally with auto margins and add some vertical spacing */
 }
 
-.student-edit-profile-save-button:hover {
-    background-color: #45a049; /* Darker color on hover */
+.teacher-edit-profile-view-save-button:hover {
+    background-color: #45a049; /* Darker green on hover */
 }
 
-.student-edit-profile-save-button:focus {
+.teacher-edit-profile-view-save-button:focus {
     outline: none; /* Remove outline on focus */
-}
-
-/* Responsive Adjustments */
-@media (max-width: 1024px) {
-    .student-edit-profile-main-layout {
-        gap: 1rem; /* Reduce gap to make it more compact */
-        width: 95%; /* Adjust width to fit smaller screens */
-    }
-
-    .student-edit-profile-current-details-layout,
-    .student-edit-profile-form-layout {
-        padding: 0.75rem; /* Reduce padding on smaller screens */
-    }
-
-    .student-edit-profile-title {
-        font-size: 22px; /* Slightly reduce title size */
-    }
-}
-
-@media (max-width: 768px) {
-    .student-edit-profile-main-layout {
-        flex-direction: column; /* Stack sections vertically */
-        gap: 1rem;
-        width: 90%;
-    }
-
-    .student-edit-profile-current-details-layout,
-    .student-edit-profile-form-layout {
-        padding: 0.5rem; /* Further reduce padding for small screens */
-        min-height: auto; /* Remove fixed height to adapt better */
-    }
-
-    .student-edit-profile-title {
-        font-size: 20px; /* Reduce title size further */
-        margin-bottom: 0.25rem; /* Less space below the title */
-    }
-}
-
-@media (max-width: 576px) {
-    .student-edit-profile-main-layout {
-        flex-direction: column;
-        align-items: stretch; /* Make sections fill the screen */
-        gap: 0.5rem; /* Smaller gap between sections */
-        width: 95%; /* Use almost full width */
-    }
-
-    .student-edit-profile-current-details-layout,
-    .student-edit-profile-form-layout {
-        padding: 0.5rem; /* Minimal padding for very small screens */
-        box-shadow: none; /* Remove shadow to keep it simple */
-    }
-
-    .student-edit-profile-title {
-        font-size: 18px; /* Smaller font size for the title */
-        margin-bottom: 0.25rem; /* Reduce spacing below the title */
-        padding-bottom: 0.2rem; /* Further decrease padding below the title */
-    }
 }

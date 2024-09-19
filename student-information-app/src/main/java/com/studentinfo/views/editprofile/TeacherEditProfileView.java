@@ -35,47 +35,51 @@ public class TeacherEditProfileView extends VerticalLayout {
     public TeacherEditProfileView(Teacher teacher, DepartmentService departmentService, SubjectService subjectService) {
         this.teacher = teacher;
 
-        // Updated the class name to match the namespaced CSS
-        addClassName("teacher-edit-profile-view");
+        addClassName("teacher-edit-profile-view-container");
 
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
 
-        add(new H2("Edit Teacher Profile"));
+        H2 title = new H2("Edit Teacher Profile");
+        title.addClassName("teacher-edit-profile-view-title");
+        add(title);
 
-        // Create layout for current details
         currentDetailsLayout = new VerticalLayout();
         currentDetailsLayout.addClassName("teacher-edit-profile-view-current-details-layout");
 
-        // Initialize form fields without setting values initially (empty fields)
         firstNameField = new TextField("First Name");
         lastNameField = new TextField("Last Name");
         phoneNumberField = new TextField("Phone Number");
         emailField = new TextField("Email");
 
+        firstNameField.addClassName("teacher-edit-profile-view-input");
+        lastNameField.addClassName("teacher-edit-profile-view-input");
+        phoneNumberField.addClassName("teacher-edit-profile-view-input");
+        emailField.addClassName("teacher-edit-profile-view-input");
+
         departmentComboBox = new ComboBox<>("Department");
         departmentComboBox.setItems(departmentService.findAll());
         departmentComboBox.setItemLabelGenerator(Department::getName);
         departmentComboBox.setValue(teacher.getDepartment());
+        departmentComboBox.addClassName("teacher-edit-profile-view-combobox");
 
         subjectComboBox = new ComboBox<>("Subject");
         subjectComboBox.setItems(subjectService.findAll());
         subjectComboBox.setItemLabelGenerator(Subject::getName);
         subjectComboBox.setValue(teacher.getSubject());
+        subjectComboBox.addClassName("teacher-edit-profile-view-combobox");
 
         saveButton = new Button("Save");
-        saveButton.addClassName("teacher-edit-profile-view-save-button-teacher");
+        saveButton.addClassName("teacher-edit-profile-view-save-button");
 
-        // Create layout for form fields
         VerticalLayout formLayout = new VerticalLayout();
         formLayout.addClassName("teacher-edit-profile-view-form-layout");
         formLayout.add(firstNameField, lastNameField, phoneNumberField, emailField, departmentComboBox, subjectComboBox, saveButton);
 
-        // Create horizontal layout for current details and form fields
         HorizontalLayout mainLayout = new HorizontalLayout(currentDetailsLayout, formLayout);
         mainLayout.setWidthFull();
-        mainLayout.setAlignItems(Alignment.START); // Ensure both layouts stretch to the same height
-        mainLayout.setJustifyContentMode(JustifyContentMode.CENTER); // Align content to start at the top
+        mainLayout.setAlignItems(Alignment.START);
+        mainLayout.setJustifyContentMode(JustifyContentMode.CENTER);
 
         mainLayout.setFlexGrow(1, currentDetailsLayout);
         mainLayout.setFlexGrow(1, formLayout);
@@ -85,22 +89,20 @@ public class TeacherEditProfileView extends VerticalLayout {
 
         add(mainLayout);
 
-        // Set initial details display
         updateTeacherProfile();
     }
 
-    // Method to update teacher profile values
     private void updateTeacherProfile() {
         if (!firstNameField.isEmpty()) teacher.setFirstName(firstNameField.getValue());
         if (!lastNameField.isEmpty()) teacher.setLastName(lastNameField.getValue());
         if (!phoneNumberField.isEmpty()) teacher.setPhoneNumber(phoneNumberField.getValue());
         if (!emailField.isEmpty()) teacher.setEmail(emailField.getValue());
 
-        // Clear the current details layout and add the heading
-        currentDetailsLayout.removeAll(); // Remove all existing content
-        currentDetailsLayout.add(new H3("Current Details:"));
+        currentDetailsLayout.removeAll();
+        H3 detailsTitle = new H3("Current Details:");
+        detailsTitle.addClassName("teacher-edit-profile-view-current-details-title");
+        currentDetailsLayout.add(detailsTitle);
 
-        // Add updated details with labels and values
         currentDetailsLayout.add(createDetailLayout("Name", teacher.getFirstName() + " " + teacher.getLastName()));
         currentDetailsLayout.add(createDetailLayout("Email", teacher.getEmail()));
         currentDetailsLayout.add(createDetailLayout("Phone Number", teacher.getPhoneNumber()));
@@ -110,11 +112,10 @@ public class TeacherEditProfileView extends VerticalLayout {
 
     private VerticalLayout createDetailLayout(String label, String value) {
         VerticalLayout detailLayout = new VerticalLayout();
-        detailLayout.addClassName("teacher-edit-profile-view-current-details-layout-detail");
+        detailLayout.addClassName("teacher-edit-profile-view-detail");
 
-        // Create a Paragraph to hold HTML content
         Paragraph detailParagraph = new Paragraph();
-        detailParagraph.getElement().setProperty("innerHTML", "<div class='teacher-edit-profile-view-current-details-layout-label'>" + label + "</div><div class='teacher-edit-profile-view-current-details-layout-value'>" + value + "</div>");
+        detailParagraph.getElement().setProperty("innerHTML", "<div class='teacher-edit-profile-view-label'>" + label + "</div><div class='teacher-edit-profile-view-value'>" + value + "</div>");
         detailLayout.add(detailParagraph);
 
         return detailLayout;
@@ -122,18 +123,13 @@ public class TeacherEditProfileView extends VerticalLayout {
 
     public void setSaveListener(Consumer<Teacher> saveListener) {
         saveButton.addClickListener(event -> {
-            // Update the teacher object with new values from the form
-            updateTeacherProfile(); // Call the update method to handle fields only if not empty
+            updateTeacherProfile();
             teacher.setDepartment(departmentComboBox.getValue());
             teacher.setSubject(subjectComboBox.getValue());
 
-            // Refresh the current details display with updated values
             updateTeacherProfile();
-
-            // Call the save listener with the updated teacher object
             saveListener.accept(teacher);
 
-            // Show confirmation notification
             Notification.show("Profile updated successfully!", 3000, Notification.Position.TOP_CENTER);
         });
     }
