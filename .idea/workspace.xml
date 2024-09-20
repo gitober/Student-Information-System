@@ -5,20 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="49cfb8af-12fd-4a91-b702-3553d39bf1cc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/student-information-app/src/main/bundles/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/student-information-app/src/main/bundles/dev.bundle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/shared-styles.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/mainlayout/MainLayout.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/student-information-app/src/main/resources/META-INF/resources/images/bird.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/login-page-view.css" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/login-page-view.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/systeminformationapp/styles.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/systeminformationapp/theme.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/systeminformationapp/views/courses-view.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/systeminformationapp/views/grades-view.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/systeminformationapp/views/login-page-view.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/systeminformationapp/views/profile-page-view.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/loginpage/LoginPageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/loginpage/LoginPageView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,6 +21,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="gitta" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -115,8 +107,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.19072.14" />
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.19072.14" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.22855.74" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.22855.74" />
       </set>
     </attachedChunks>
   </component>
@@ -135,6 +127,8 @@
       <workItem from="1725293500409" duration="652000" />
       <workItem from="1725294163226" duration="810000" />
       <workItem from="1725348183775" duration="2589000" />
+      <workItem from="1726825777437" duration="486000" />
+      <workItem from="1726826284450" duration="4000" />
     </task>
     <servers />
   </component>
