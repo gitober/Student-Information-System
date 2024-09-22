@@ -22,6 +22,8 @@ webpack.generated.js
 
 # .env file containing environment variables for the application
 src/main/resources/.env
+src/main/resources/.env.*
+.env
 
 # IDE files (Not pushing modules.xml and workspace.xml will not affect the functionality of the project for others.
 /.idea/workspace.xml
@@ -32,3 +34,4 @@ dev.bundle
 
 # Generated files
 /.vaadin-node-tasks.lock
+.vaadin-node-tasks.lock
