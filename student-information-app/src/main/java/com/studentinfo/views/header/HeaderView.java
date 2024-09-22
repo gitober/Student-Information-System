@@ -1,6 +1,7 @@
 package com.studentinfo.views.header;
 
 import com.studentinfo.security.AuthenticatedUser;
+import com.studentinfo.views.TeacherAttendanceTrackingView.TeacherAttendanceTrackingView;
 import com.studentinfo.views.courses.CoursesView;
 import com.studentinfo.views.editprofile.EditProfileView;
 import com.studentinfo.views.grades.GradesView;
@@ -32,24 +33,32 @@ public class HeaderView extends HorizontalLayout {
             RouterLink gradesLink = new RouterLink("Grades", GradesView.class);
             gradesLink.addClassName("router-link");
 
-            RouterLink editProfileLink = new RouterLink("Edit Profile", EditProfileView.class);
-            editProfileLink.addClassName("router-link");
-
-            // Teacher-specific link for updating student profiles
+            RouterLink attendanceTrackingLink = null;
             RouterLink updateStudentProfilesLink = null;
+
+            // Teacher-specific links for updating student profiles and attendance tracking
             if (user instanceof com.studentinfo.data.entity.Teacher) {
+                attendanceTrackingLink = new RouterLink("Attendance Tracking", TeacherAttendanceTrackingView.class);
+                attendanceTrackingLink.addClassName("router-link");
+
                 updateStudentProfilesLink = new RouterLink("Student Management", TeacherUpdateStudentProfileView.class);
                 updateStudentProfilesLink.addClassName("router-link");
             }
 
+            RouterLink editProfileLink = new RouterLink("Edit Profile", EditProfileView.class);
+            editProfileLink.addClassName("router-link");
+
             // Logout button - directs to Spring Security's logout endpoint
             Button logoutButton = new Button("Logout", click -> {
-                UI.getCurrent().getPage().setLocation("/logout"); // Redirects to the Spring Security logout endpoint
+                UI.getCurrent().getPage().setLocation("/logout");
             });
             logoutButton.addClassName("logout-button");
 
             // Add all components in the desired order
             this.add(homeLink, coursesLink, gradesLink);
+            if (attendanceTrackingLink != null) {
+                this.add(attendanceTrackingLink);
+            }
             if (updateStudentProfilesLink != null) {
                 this.add(updateStudentProfilesLink);
             }

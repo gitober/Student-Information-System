@@ -3,7 +3,7 @@
 /* Existing CSS imports */
 @import url('./views/shared-styles.css');
 @import url('./views/login-page-view.css');
-@import url('views/profile-page-view/profile-page-view.css');
+@import url('views/home-profile-page-view/home-profile-page-view.css');
 @import url('views/courses-view/courses-view.css');
 @import url('views/courses-view/student-courses-view.css');
 @import url('views/courses-view/teacher-courses-view.css');
@@ -13,7 +13,8 @@
 @import url('views/grades-view/grades-view.css');
 @import url('views/grades-view/student-grades-view.css');
 @import url('views/grades-view/teacher-grades-view.css');
-@import url('views/profile-page-view/profile-page-view.css');
-@import url('views/profile-page-view/student-profile-page-view.css');
-@import url('views/profile-page-view/teacher-profile-page-view.css');
+@import url('views/home-profile-page-view/home-profile-page-view.css');
+@import url('views/home-profile-page-view/student-profile-page-view.css');
+@import url('views/home-profile-page-view/teacher-profile-page-view.css');
 @import url('views/TeacherUpdateStudentProfile/teacher-update-student-profile.css');
+@import url('views/TeacherAttendanceTrackingView/teacher-attendance-view.css');

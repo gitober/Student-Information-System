@@ -5,7 +5,7 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
-@CssImport("./themes/studentinformationapp/views/profile-page-view/student-profile-page-view.css")
+@CssImport("./themes/studentinformationapp/views/home-profile-page-view/student-profile-page-view.css")
 public class StudentDashboardView extends VerticalLayout {
 
     public StudentDashboardView() {
