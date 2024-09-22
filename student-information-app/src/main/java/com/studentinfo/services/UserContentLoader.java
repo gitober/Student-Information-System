@@ -71,7 +71,7 @@ public class UserContentLoader {
     // Method to load grades content
     public void loadGradesContent(VerticalLayout layout) {
         authenticatedUser.get().ifPresentOrElse(user -> {
-            // Check if the user is a Teacher or Student based on instance
+            System.out.println("User found: " + user.getUsername()); // Debugging log
             if (user instanceof Teacher) {
                 layout.add(new TeacherGradesView());
             } else if (user instanceof Student) {

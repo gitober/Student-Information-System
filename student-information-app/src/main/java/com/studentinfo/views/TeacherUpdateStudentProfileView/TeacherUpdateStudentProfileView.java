@@ -2,7 +2,6 @@ package com.studentinfo.views.TeacherUpdateStudentProfileView;
 
 import com.studentinfo.data.entity.Student;
 import com.studentinfo.services.StudentService;
-import com.studentinfo.views.header.HeaderView;
 import com.studentinfo.views.mainlayout.MainLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -28,24 +27,26 @@ import java.util.List;
 public class TeacherUpdateStudentProfileView extends VerticalLayout {
 
     private final StudentService studentService;
+    private final AuthenticatedUser authenticatedUser;
+
     private final Grid<Student> studentGrid = new Grid<>(Student.class);
     private final TextField firstNameField = new TextField("First Name");
     private final TextField lastNameField = new TextField("Last Name");
     private final TextField phoneNumberField = new TextField("Phone Number");
     private final EmailField emailField = new EmailField("Email");
+    private final Button saveButton = new Button("Save changes", event -> saveStudent());
     private Student selectedStudent;
-    private final HeaderView header;
 
     @Autowired
     public TeacherUpdateStudentProfileView(StudentService studentService, AuthenticatedUser authenticatedUser) {
         this.studentService = studentService;
-        this.header = new HeaderView("EduBird", authenticatedUser); // Pass authenticated user
+        this.authenticatedUser = authenticatedUser;
 
         // Set layout settings to center the content
         setPadding(false);
         setSpacing(false);
         setAlignItems(FlexComponent.Alignment.CENTER); // Center the content horizontally
-        setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER); // Center the content vertically
+        setJustifyContentMode(JustifyContentMode.CENTER); // Center the content vertically
 
         // Add padding to prevent content from sticking to or going under the header
         getStyle().set("padding-top", "60px"); // Adjust based on header height
@@ -55,14 +56,11 @@ public class TeacherUpdateStudentProfileView extends VerticalLayout {
         // Add header for the page
         add(createPageHeader());
 
-        // Add HeaderView
-        add(header);
-
         configureGrid();
         configureForm();
 
         // Wrap form fields and button in a layout for proper centering
-        VerticalLayout formLayout = new VerticalLayout(firstNameField, lastNameField, phoneNumberField, emailField, createSaveButton());
+        VerticalLayout formLayout = new VerticalLayout(firstNameField, lastNameField, phoneNumberField, emailField, saveButton);
         formLayout.setAlignItems(FlexComponent.Alignment.CENTER);
         formLayout.setSpacing(true);
         formLayout.setPadding(true);
@@ -106,9 +104,8 @@ public class TeacherUpdateStudentProfileView extends VerticalLayout {
             Student selectedStudent = event.getValue();
             if (selectedStudent != null) {
                 populateForm(selectedStudent); // Populate the form with the selected student's data
-                setVisibleForm(true); // Ensure the form is visible when a student is selected
             } else {
-                setVisibleForm(false); // Hide the form if no student is selected
+                clearForm(); // Clear the form if no student is selected
             }
         });
     }
@@ -119,7 +116,10 @@ public class TeacherUpdateStudentProfileView extends VerticalLayout {
         lastNameField.setWidth("600px");
         phoneNumberField.setWidth("600px");
         emailField.setWidth("600px");
-        setVisibleForm(false); // Hide the form initially
+        saveButton.setWidthFull();
+
+        // Hide the form fields initially
+        setVisibleForm(false);
     }
 
     private void updateGrid() {
@@ -128,23 +128,21 @@ public class TeacherUpdateStudentProfileView extends VerticalLayout {
     }
 
     private void populateForm(Student student) {
-        if (student != null) {
-            selectedStudent = student;
-            firstNameField.setValue(student.getFirstName() != null ? student.getFirstName() : "");
-            lastNameField.setValue(student.getLastName() != null ? student.getLastName() : "");
-            phoneNumberField.setValue(student.getPhoneNumber() != null ? student.getPhoneNumber() : "");
-            emailField.setValue(student.getEmail() != null ? student.getEmail() : "");
-            setVisibleForm(true); // Make sure the form is visible
-        } else {
-            setVisibleForm(false); // Hide the form if no student is selected
-        }
+        selectedStudent = student;
+        firstNameField.setValue(student.getFirstName() != null ? student.getFirstName() : "");
+        lastNameField.setValue(student.getLastName() != null ? student.getLastName() : "");
+        phoneNumberField.setValue(student.getPhoneNumber() != null ? student.getPhoneNumber() : "");
+        emailField.setValue(student.getEmail() != null ? student.getEmail() : "");
+        setVisibleForm(true); // Make sure the form is visible
     }
 
-    private Button createSaveButton() {
-        Button saveButton = new Button("Save changes", event -> saveStudent());
-        saveButton.addClassName("save-button"); // Add CSS class for consistent button styling
-        saveButton.setWidthFull();
-        return saveButton;
+    private void clearForm() {
+        selectedStudent = null;
+        firstNameField.clear();
+        lastNameField.clear();
+        phoneNumberField.clear();
+        emailField.clear();
+        setVisibleForm(false);
     }
 
     private void saveStudent() {
@@ -155,7 +153,7 @@ public class TeacherUpdateStudentProfileView extends VerticalLayout {
             selectedStudent.setEmail(emailField.getValue());
             studentService.save(selectedStudent); // Save changes to the database
             updateGrid(); // Refresh the grid to reflect changes
-            setVisibleForm(false); // Hide the form after saving
+            clearForm(); // Clear the form after saving
         }
     }
 
@@ -164,5 +162,6 @@ public class TeacherUpdateStudentProfileView extends VerticalLayout {
         lastNameField.setVisible(visible);
         phoneNumberField.setVisible(visible);
         emailField.setVisible(visible);
+        saveButton.setVisible(visible);
     }
 }
