@@ -6,7 +6,6 @@ import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.stubbing.OngoingStubbing;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +21,7 @@ class StudentControllerTest {
     @InjectMocks
     private StudentController studentController;
 
-    Student student;
+    Student mockStudent, createdStudent, updatedStudent, newStudent;
 
 
     @BeforeAll
@@ -35,81 +34,132 @@ class StudentControllerTest {
         // create a mock instance of StudentService
         MockitoAnnotations.openMocks(this);
         studentController = new StudentController(studentService);
-        student = new Student();
+        mockStudent = new Student();
+        createdStudent = new Student();
+        updatedStudent = new Student();
+        newStudent = new Student();
     }
 
     @AfterEach
     void tearDownEach() {
         studentController = null;
-        student = null;
+        mockStudent = null;
+        createdStudent = null;
+        updatedStudent = null;
+        newStudent = null;
     }
 
 
     // unit test for StudentController.getAllStudents()
     @Test
     void testGetAllStudents() {
-        // call the getAllStudents() method
+        // Arrange
+        newStudent.setFirstName("John");
+        newStudent.setLastName("Doe");
+        List<Student> studentList = List.of(newStudent);
+
+        // Mock the studentService.list() method
+        when(studentService.list()).thenReturn(studentList);
+
+        // Act
         List<Student> students = studentController.getAllStudents();
-        // check if the list of students is not null
+
+        // Assert
         assertNotNull(students);
+        assertEquals(students, studentController.getAllStudents());
+        assertEquals(studentService.list(), studentController.getAllStudents());
     }
 
     // unit test for StudentController.getStudentById()
     @Test
     void testGetStudentById() {
-        // call the getStudentById() method
+        // Arrange
+        newStudent.setId(1L);
+        newStudent.setFirstName("John");
+        newStudent.setLastName("Doe");
+        List<Student> studentList = List.of(newStudent);
+
+        // Mock the studentService.list() method
+        when(studentService.list()).thenReturn(studentList);
+
+        // Act
         Optional<Student> student = studentController.getStudentById(1L);
+
         // check if the student is not null
         assertNotNull(student);
+        System.out.println("Student: " + student);
     }
 
     // unit test for StudentController.createStudent()
     @Test
     void testCreateStudent() {
         // create a new student
-        student.setFirstName("John");
-        student.setLastName("Doe");
+        newStudent.setFirstName("John");
+        newStudent.setLastName("Doe");
 
-        // mock the save() method of StudentService
-        when(studentService.save(student)).thenReturn(student);
+        // save the new student by calling createStudent() method
+        when(studentController.createStudent(newStudent)).thenReturn(newStudent);
 
         // call the createStudent() method
-        Student newStudent = studentController.createStudent(student);
+        createdStudent = studentController.createStudent(newStudent);
+
         // check if the new student is not null
-        assertNotNull(newStudent);
-        assertEquals("John", newStudent.getFirstName());
-        assertEquals("Doe", newStudent.getLastName());
+        assertNotNull(createdStudent);
+        assertEquals("John", createdStudent.getFirstName());
+        assertEquals("Doe", createdStudent.getLastName());
     }
 
     // unit test for StudentController.updateStudent()
     @Test
     void testUpdateStudent() {
         // create a new student
-        student.setId(1L);
-        student.setFirstName("John");
-        student.setLastName("Doe");
+        newStudent.setFirstName("John");
+        newStudent.setLastName("Doe");
 
-        // mock the save() method of StudentService
-        when(studentService.save(student)).thenReturn(student);
+        // save the new student by calling createStudent() method
+        when(studentController.createStudent(newStudent)).thenReturn(newStudent);
+
+        // call the createStudent() method
+        createdStudent = studentController.createStudent(newStudent);
+
+        // test if the new student is created
+        assertEquals("John", newStudent.getFirstName());
+        assertEquals("Doe", newStudent.getLastName());
+
+        // update the student
+        newStudent.setFirstName("Jane");
+        newStudent.setLastName("Wayne");
 
         // call the updateStudent() method
-        Student updatedStudent = studentController.updateStudent(1L, student);
+        updatedStudent = studentController.updateStudent(1L, newStudent);
+
         // check if the updated student is not null
         assertNotNull(updatedStudent);
+        assertEquals("Jane", updatedStudent.getFirstName());
+        assertEquals("Wayne", updatedStudent.getLastName());
     }
 
     // unit test for StudentController.deleteStudent()
     @Test
     void testDeleteStudent() {
-        student.setId(1L);
-        student.setFirstName("John");
-        student.setLastName("Doe");
+        newStudent.setId(1L);
+        newStudent.setFirstName("John");
+        newStudent.setLastName("Doe");
 
         // mock the save() method of StudentService
-        when(studentService.save(student)).thenReturn(student);
+        when(studentController.createStudent(newStudent)).thenReturn(newStudent);
+
+        // call the createStudent() method
+        createdStudent = studentController.createStudent(newStudent);
+
+        // test if the new student is created
+        assertEquals("John", newStudent.getFirstName());
+        assertEquals("Doe", newStudent.getLastName());
+        assertEquals(1L, newStudent.getId());
 
         // call the deleteStudent() method
         studentController.deleteStudent(1L);
+
         // check if the student is deleted
         //assertNull(studentController.getStudentById(1L));
         assertEquals(Optional.empty(), studentController.getStudentById(1L));
