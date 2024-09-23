@@ -7,6 +7,7 @@
   box-sizing: border-box;
 }
 
+
 .login-content-layout {
   display: flex;
   flex: 1;
@@ -34,7 +35,7 @@
 }
 
 .login-right-content {
-  background: rgba(152, 201, 97, 0.29);
+  background: rgb(248, 235, 177);
 }
 
 .login-welcome-text {
@@ -172,7 +173,7 @@
     width: 90%; /* Adjusted width for extra small devices */
   }
   .login-bird-image {
-    max-width: 80%;
+    max-width: 100%;
   }
   .login-right-content {
     display: none; /* Hide right content on extra small screens */

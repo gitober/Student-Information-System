@@ -1,0 +1,12 @@
+.student-profile-page-view {
+    background-image: url('./images/aa.jpg'); /* Aseta taustakuva */
+    background-size: cover; /* Peittää koko alueen */
+    background-position: center; /* Keskittää kuvan */
+    min-height: 100vh; /* Varmistaa, että alue kattaa koko näkymän */
+    color: white; /* Varmistaa, että teksti erottuu taustasta */
+}
+
+.student-profile-page-view h1,
+.student-profile-page-view p {
+    color: black; /* Varmistaa, että kaikki h1- ja p-elementit ovat mustia */
+}
