@@ -1,4 +1,4 @@
-package com.studentinfo.views.profilepage;
+package com.studentinfo.views.homeprofilepage;
 
 import com.studentinfo.views.header.HeaderView;
 import com.studentinfo.security.AuthenticatedUser;
@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Route(value = "profile")
 @PageTitle("Profile Page")
 @RolesAllowed("USER")
-@CssImport("./themes/studentinformationapp/views/profile-page-view/profile-page-view.css")
+@CssImport("./themes/studentinformationapp/views/home-profile-page-view/home-profile-page-view.css")
 public class ProfilePageView extends Composite<VerticalLayout> {
 
     private final AuthenticatedUser authenticatedUser;

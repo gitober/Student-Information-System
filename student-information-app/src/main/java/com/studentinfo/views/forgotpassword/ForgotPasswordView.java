@@ -4,9 +4,11 @@ import com.studentinfo.views.header.HeaderView;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H6;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -15,12 +17,16 @@ import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
-import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
 
 @PageTitle("Forgot Password")
 @Route(value = "forgotpassword")
 @AnonymousAllowed
+@CssImport("./themes/studentinformationapp/views/forgotpassword-view.css")
 public class ForgotPasswordView extends Composite<VerticalLayout> {
+
+    private final EmailField emailField;
+    private final Button submitButton;
+    private final Button cancelButton;
 
     public ForgotPasswordView() {
         // Main layout setup
@@ -29,49 +35,58 @@ public class ForgotPasswordView extends Composite<VerticalLayout> {
         mainLayout.setPadding(false);
         mainLayout.setSpacing(false);
         mainLayout.setAlignItems(Alignment.CENTER);
-        mainLayout.setJustifyContentMode(JustifyContentMode.START);
+        mainLayout.setJustifyContentMode(JustifyContentMode.CENTER);
 
-        // Add the reusable Header component
         mainLayout.add(new HeaderView("EduBird"));
 
-        // Layout for form and content
-        VerticalLayout layoutColumn2 = new VerticalLayout();
-        layoutColumn2.setWidth("100%");
-        layoutColumn2.setMaxWidth("800px");
-        layoutColumn2.setHeight("min-content");
-        layoutColumn2.setAlignItems(Alignment.CENTER);
-        layoutColumn2.setJustifyContentMode(JustifyContentMode.START);
+        VerticalLayout formContainer = new VerticalLayout();
+        formContainer.setWidth("100%");
+        formContainer.setMaxWidth("400px");
+        formContainer.setAlignItems(Alignment.CENTER);
+        formContainer.setJustifyContentMode(JustifyContentMode.CENTER);
+        formContainer.addClassName("password-form-container"); // Updated class name based on CSS
 
-        // Title and subtitle
-        H3 h3 = new H3("Forgot Password?");
-        h3.setWidth("100%");
-        H6 h6 = new H6("Enter your email here");
-        h6.setWidth("max-content");
+        H3 title = new H3("Forgot Password?");
+        title.addClassName("password-form-title"); // Updated class name based on CSS
+        H6 subtitle = new H6("Enter your email here");
+        subtitle.addClassName("password-form-subtitle"); // Updated class name based on CSS
 
-        // Form setup
-        FormLayout formLayout2Col = new FormLayout();
-        formLayout2Col.setWidth("100%");
-        EmailField emailField = new EmailField("Email");
+        FormLayout formLayout = new FormLayout();
+        formLayout.setWidthFull();
+        emailField = new EmailField("Email");
+        emailField.setWidthFull();
+        emailField.addClassName("password-email-field"); // Updated class name based on CSS
 
-        // Buttons setup
-        Button buttonPrimary = new Button("Submit");
-        buttonPrimary.setWidth("min-content");
-        buttonPrimary.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        submitButton = new Button("Submit");
+        submitButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        submitButton.addClickListener(e -> handleEmailSubmission());
+        submitButton.addClassName("password-submit-button"); // Updated class name based on CSS
 
-        Button buttonSecondary = new Button("Cancel");
-        buttonSecondary.setWidth("min-content");
+        cancelButton = new Button("Cancel");
+        cancelButton.addClickListener(e -> navigateToLogin());
+        cancelButton.addClassName("password-cancel-button"); // Updated class name based on CSS
 
-        // Buttons layout
-        HorizontalLayout layoutRow = new HorizontalLayout(buttonPrimary, buttonSecondary);
-        layoutRow.addClassName(Gap.MEDIUM);
-        layoutRow.setWidth("100%");
-        layoutRow.getStyle().set("flex-grow", "1");
+        HorizontalLayout buttonLayout = new HorizontalLayout(submitButton, cancelButton);
+        buttonLayout.setWidthFull();
+        buttonLayout.setJustifyContentMode(JustifyContentMode.CENTER);
 
-        // Add components to the form layout
-        formLayout2Col.add(emailField);
-        layoutColumn2.add(h3, h6, formLayout2Col, layoutRow);
+        formLayout.add(emailField);
+        formContainer.add(title, subtitle, formLayout, buttonLayout);
 
-        // Add the form layout to the main layout
-        mainLayout.add(layoutColumn2);
+        mainLayout.add(formContainer);
+    }
+
+    private void handleEmailSubmission() {
+        String email = emailField.getValue();
+        if (email.isEmpty()) {
+            Notification.show("Please enter your email address.", 3000, Notification.Position.TOP_CENTER);
+        } else {
+            Notification.show("Email submitted.", 3000, Notification.Position.TOP_CENTER);
+            emailField.clear();
+        }
+    }
+
+    private void navigateToLogin() {
+        getUI().ifPresent(ui -> ui.navigate("login"));
     }
 }

@@ -1,100 +1,53 @@
 package com.studentinfo.data.repository;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.studentinfo.data.entity.User;
-import org.junit.jupiter.api.*;
-import org.mockito.Mock;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @DataJpaTest
-@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
+@ActiveProfiles("test") // application-test.properties used
 class UserRepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
 
-    private User user;
+    private User testUser;
 
     @BeforeEach
-    public void setUp(){
-        user = new User();
-    }
+    void setUp() {
+        // Create a test user
+        testUser = new User();
+        testUser.setUsername("john_doe");
+        testUser.setName("John Doe");
+        testUser.setEmail("john.doe@example.com");
 
-    @AfterEach
-    public void tearDown(){
-        userRepository.deleteAll();
-    }
-
-    @Test
-    public void testSetUsername(){
-        // Arrange
-        String username = "user1";
-
-        // Act
-        user.setUsername(username);
-
-        // Assert
-        assertEquals(username, user.getUsername(), "Username should be user1");
+        // Save the user to the database
+        userRepository.save(testUser);
     }
 
     @Test
-    public void testSetEmail(){
-        // Arrange
-        String email = "user1@example.com";
+    void findByUsername() {
+        User user = userRepository.findByUsername("john_doe");
 
-        // Act
-        user.setEmail(email);
-
-        // Assert
-        assertEquals(email, user.getEmail(), "Email should be user1@example.com");
+        assertNotNull(user);
+        assertEquals("john_doe", user.getUsername());
+        assertEquals("John Doe", user.getName());
+        assertEquals("john.doe@example.com", user.getEmail());
     }
 
     @Test
-    public void testGetByUsername(){
-        // Arrange
-        user.setUsername("user1");
-        userRepository.save(user);
+    void findByEmail() {
+        User user = userRepository.findByEmail("john.doe@example.com");
 
-        // Act
-        User foundUser = userRepository.findByUsername("user1");
-
-        // Assert
-        assertNotNull(foundUser, "User should be found");
-        assertEquals("user1", foundUser.getUsername(), "Username should be user1");
-    }
-
-    @Test
-    public void testGetByEmail(){
-        // Arrange
-        user.setEmail("user1@example.com");
-        userRepository.save(user);
-
-        // Act
-        User foundUser = userRepository.findByEmail("user1@example.com");
-
-        // Assert
-        assertNotNull(foundUser, "User should be found");
-        assertEquals("user1@example.com", foundUser.getEmail(), "Email should be user1@example.com");
-    }
-
-    @Test
-    @Disabled("This test is disabled because it is failing")
-    public void testUserSaved() {
-        // Arrange
-        User user = User.builder()
-                .username("user1")
-                .email("user1@example.com").build();
-
-        // Act
-        User savedUser = userRepository.save(user);
-
-        // Assert
-        assertNotNull(savedUser, "User should be saved");
-        assertEquals("user1", savedUser.getUsername(), "Username should be user1");
-        assertEquals("user1@example.com", savedUser.getEmail(), "Email should be user1@example.com");
+        assertNotNull(user);
+        assertEquals("john_doe", user.getUsername());
+        assertEquals("John Doe", user.getName());
+        assertEquals("john.doe@example.com", user.getEmail());
     }
 }

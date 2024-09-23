@@ -1,4 +1,4 @@
-.teacher-edit-profile-view {
+.teacher-edit-profile-view-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,19 +8,19 @@
     padding: 20px;
 }
 
-.teacher-edit-profile-view h2 {
+.teacher-edit-profile-view-title {
     font-size: 36px;
     font-weight: bold;
     color: #333;
     margin-bottom: 20px;
 }
 
-.current-details-layout {
+.teacher-edit-profile-view-current-details-layout {
     flex: 1;
     max-width: 35%; /* Restrict the maximum width to make it smaller */
     min-width: 0;
     padding: 13px; /* Reduce padding to make it more compact */
-    background-color: #deecec;
+    background-color: #E8F5E9FF;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -31,7 +31,7 @@
     height: 150%;
 }
 
-.current-details-layout h3 {
+.teacher-edit-profile-view-current-details-title {
     margin: 5px 0; /* Adjust margin to remove extra space */
     font-size: 23px; /* Font size for the title */
     color: #333;
@@ -39,7 +39,7 @@
     width: 100%; /* Make sure the text takes the full width */
 }
 
-.current-details-layout .detail {
+.teacher-edit-profile-view-detail {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -50,33 +50,33 @@
     box-sizing: border-box;
 }
 
-.current-details-layout .label {
+.teacher-edit-profile-view-label {
     font-weight: bold;
     font-size: 20px; /* Slightly smaller font size */
     color: #333;
     text-align: left;
 }
 
-.current-details-layout .value {
+.teacher-edit-profile-view-value {
     font-size: 16px; /* Slightly smaller font size */
     color: #666;
 }
 
-.form-layout {
+.teacher-edit-profile-view-form-layout {
     flex: 1;
     max-width: 35%; /* Ensure the form layout has a bit more space */
     min-width: 0;
     padding: 20px;
-    background-color: #deecec;
+    background-color: #E8F5E9FF;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     display: grid;
     gap: 10px;
     box-sizing: border-box;
 }
 
-.save-button-teacher {
+.teacher-edit-profile-view-save-button {
     background-color: #e6a14d; /* Green background */
     color: white; /* White text */
     padding: 10px 20px; /* Add some padding */
@@ -91,10 +91,10 @@
     margin: 20px auto; /* Center horizontally with auto margins and add some vertical spacing */
 }
 
-.save-button-teacher:hover {
-    background-color: #45a049; /* Darker green on hover */
+.teacher-edit-profile-view-save-button:hover {
+    background-color: #cc8c40; /* Darker green on hover */
 }
 
-.save-button-teacher:focus {
+.teacher-edit-profile-view-save-button:focus {
     outline: none; /* Remove outline on focus */
 }

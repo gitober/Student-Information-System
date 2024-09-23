@@ -4,8 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="49cfb8af-12fd-4a91-b702-3553d39bf1cc" name="Changes" comment="properties port 8080 -&gt; 9090">
+    <list default="true" id="49cfb8af-12fd-4a91-b702-3553d39bf1cc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/student-information-app/src/main/bundles/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/student-information-app/src/main/bundles/dev.bundle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/shared-styles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/mainlayout/MainLayout.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/student-information-app/src/main/resources/META-INF/resources/images/bird.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/login-page-view.css" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/login-page-view.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/systeminformationapp/styles.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/systeminformationapp/theme.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/systeminformationapp/views/courses-view.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/systeminformationapp/views/grades-view.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/systeminformationapp/views/login-page-view.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/systeminformationapp/views/profile-page-view.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/loginpage/LoginPageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/loginpage/LoginPageView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,13 +30,11 @@
       <list>
         <option value="CSS File" />
         <option value="Class" />
-        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -34,16 +45,13 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/gitober/Student-Information-System.git&quot;,
-    &quot;accountId&quot;: &quot;a1772b69-0a5a-41cb-8001-3ea2d759f6fe&quot;
+    &quot;accountId&quot;: &quot;f956999b-175b-400e-8c3e-ceaea04b9f1f&quot;
   }
 }</component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
 }</component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
-  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 0
@@ -59,26 +67,13 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;JUnit.StudentControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.StudentRepositoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserControllerTest2.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserRepositoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserRepositoryTest.testUserSaved.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.student-information-app [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.student-information-app [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.student-information-app [test].executor&quot;: &quot;Run&quot;,
     &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
     &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
     &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
     &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;Spring Boot.Application.executor&quot;: &quot;Run&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;branch-for-tests&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/bober/OneDrive/Työpöytä/Student Information System/student-information-app/src/main/frontend/themes/studentinformationapp/images&quot;,
@@ -90,14 +85,8 @@
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
     &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\bober\\OneDrive\\Työpöytä\\Student Information System\\student-information-app\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-  },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql&quot;
-    ]
   }
 }</component>
   <component name="RecentsManager">
@@ -106,121 +95,15 @@
       <recent name="C:\Users\bober\OneDrive\Työpöytä\Student Information System\student-information-app\src\main\resources\META-INF\resources\icons" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\George\IdeaProjects\Student-Information-System\student-information-app" />
-      <recent name="C:\Users\George\IdeaProjects\Student-Information-System\student-information-app\src\main\resources" />
-      <recent name="C:\Users\George\IdeaProjects\Student-Information-System" />
       <recent name="C:\Users\bober\OneDrive\Työpöytä\Student Information System\student-information-app\src\main\resources\META-INF\resources\images" />
       <recent name="C:\Users\bober\OneDrive\Työpöytä\Student Information System\student-information-app\src\main\resources\META-INF\resources\icons" />
-    </key>
-    <key name="CreateTestDialog.Recents.Supers">
-      <recent name="" />
-    </key>
-    <key name="CreateTestDialog.RecentsKey">
-      <recent name="com.studentinfo.data.repository" />
-      <recent name="com.studentinfo.services" />
-      <recent name="com.studentinfo.controller" />
-      <recent name="com.studentinfo.security" />
+      <recent name="C:\Users\bober\OneDrive\Työpöytä\Student Information System\student-information-app\src\main\resources\META-INF\resources\icons\images" />
+      <recent name="C:\Users\bober\OneDrive\Työpöytä\Student Information System\student-information-app\src\main\frontend\themes\studentinformationapp\images" />
+      <recent name="C:\Users\bober\OneDrive\Työpöytä\Student Information System\student-information-app\src\main\frontend\themes\studentinformationapp\components" />
     </key>
   </component>
-  <component name="RunAnythingCache">
-    <option name="myCommands">
-      <command value="mvn test" />
-      <command value="mvn clean" />
-      <command value="mvn install" />
-    </option>
-  </component>
-  <component name="RunManager" selected="JUnit.UserControllerTest">
-    <configuration name="StudentRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="student-information-app" />
-      <shortenClasspath name="ARGS_FILE" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.studentinfo.data.repository.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.studentinfo.data.repository" />
-      <option name="MAIN_CLASS_NAME" value="com.studentinfo.data.repository.StudentRepositoryTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UserControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="student-information-app" />
-      <shortenClasspath name="ARGS_FILE" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.studentinfo.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.studentinfo.controller" />
-      <option name="MAIN_CLASS_NAME" value="com.studentinfo.controller.UserControllerTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UserControllerTest2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="student-information-app" />
-      <shortenClasspath name="ARGS_FILE" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.studentinfo.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.studentinfo.controller" />
-      <option name="MAIN_CLASS_NAME" value="com.studentinfo.controller.UserControllerTest2" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UserRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="student-information-app" />
-      <shortenClasspath name="ARGS_FILE" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.studentinfo.data.repository.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.studentinfo.data.repository" />
-      <option name="MAIN_CLASS_NAME" value="com.studentinfo.data.repository.UserRepositoryTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UserServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="student-information-app" />
-      <shortenClasspath name="ARGS_FILE" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.studentinfo.services.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.studentinfo.services" />
-      <option name="MAIN_CLASS_NAME" value="com.studentinfo.services.UserServiceTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="JUnit" factoryName="JUnit">
-      <shortenClasspath name="ARGS_FILE" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager">
     <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <option name="envFilePaths">
-        <option value="$PROJECT_DIR$/student-information-app/.env" />
-      </option>
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="student-information-app" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.studentinfo.Application" />
@@ -228,21 +111,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="JUnit.UserControllerTest" />
-        <item itemvalue="JUnit.UserControllerTest2" />
-        <item itemvalue="JUnit.UserRepositoryTest" />
-        <item itemvalue="JUnit.UserServiceTest" />
-        <item itemvalue="JUnit.StudentRepositoryTest" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
-        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.19072.14" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.19072.14" />
       </set>
     </attachedChunks>
   </component>
@@ -261,115 +135,13 @@
       <workItem from="1725293500409" duration="652000" />
       <workItem from="1725294163226" duration="810000" />
       <workItem from="1725348183775" duration="2589000" />
-      <workItem from="1726440609144" duration="568000" />
-      <workItem from="1726471329090" duration="15017000" />
-      <workItem from="1726571749522" duration="9449000" />
-      <workItem from="1726602485357" duration="2230000" />
-      <workItem from="1726653586275" duration="6450000" />
     </task>
-    <task id="LOCAL−00001" summary="uodated .gitignore">
-      <option name="closed" value="true" />
-      <created>1726438902094</created>
-      <option name="number" value="LOCAL−00001" />
-      <option name="presentableId" value="LOCAL−00001" />
-      <updated>1726438902094</updated>
-    </task>
-    <task id="LOCAL−00002" summary="uodated .gitignore to ignore .env">
-      <option name="closed" value="true" />
-      <created>1726439163165</created>
-      <option name="number" value="LOCAL−00002" />
-      <option name="presentableId" value="LOCAL−00002" />
-      <updated>1726439163165</updated>
-    </task>
-    <task id="LOCAL−00003" summary="Commented lines out">
-      <option name="closed" value="true" />
-      <created>1726440529686</created>
-      <option name="number" value="LOCAL−00003" />
-      <option name="presentableId" value="LOCAL−00003" />
-      <updated>1726440529686</updated>
-    </task>
-    <task id="LOCAL−00004" summary=".env setup">
-      <option name="closed" value="true" />
-      <created>1726441124868</created>
-      <option name="number" value="LOCAL−00004" />
-      <option name="presentableId" value="LOCAL−00004" />
-      <updated>1726441124868</updated>
-    </task>
-    <task id="LOCAL−00005" summary="controller tests green">
-      <option name="closed" value="true" />
-      <created>1726480232811</created>
-      <option name="number" value="LOCAL−00005" />
-      <option name="presentableId" value="LOCAL−00005" />
-      <updated>1726480232811</updated>
-    </task>
-    <task id="LOCAL−00006" summary="repository tests not working">
-      <option name="closed" value="true" />
-      <created>1726493672100</created>
-      <option name="number" value="LOCAL−00006" />
-      <option name="presentableId" value="LOCAL−00006" />
-      <updated>1726493672100</updated>
-    </task>
-    <task id="LOCAL−00007" summary="Väli commit">
-      <option name="closed" value="true" />
-      <created>1726577626982</created>
-      <option name="number" value="LOCAL−00007" />
-      <option name="presentableId" value="LOCAL−00007" />
-      <updated>1726577626982</updated>
-    </task>
-    <task id="LOCAL−00008" summary="before data.sql change">
-      <option name="closed" value="true" />
-      <created>1726580276523</created>
-      <option name="number" value="LOCAL−00008" />
-      <option name="presentableId" value="LOCAL−00008" />
-      <updated>1726580276523</updated>
-    </task>
-    <task id="LOCAL−00009" summary="pullet main, tests not working">
-      <option name="closed" value="true" />
-      <created>1726581777146</created>
-      <option name="number" value="LOCAL−00009" />
-      <option name="presentableId" value="LOCAL−00009" />
-      <updated>1726581777146</updated>
-    </task>
-    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="UnknownFeatures">
-    <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="uodated .gitignore" />
-    <MESSAGE value="uodated .gitignore to ignore .env" />
-    <MESSAGE value="Commented lines out" />
-    <MESSAGE value=".env setup" />
-    <MESSAGE value="controller tests green" />
-    <MESSAGE value="repository tests not working" />
-    <MESSAGE value="Väli commit" />
-    <MESSAGE value="before data.sql change" />
-    <MESSAGE value="pullet main, tests not working" />
-    <option name="LAST_COMMIT_MESSAGE" value="pullet main, tests not working" />
-  </component>
-  <component name="XSLT-Support.FileAssociations.UIState">
-    <expand />
-    <select />
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Student_Information_System$StudentControllerTest.ic" NAME="StudentControllerTest Coverage Results" MODIFIED="1726477671131" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
-      <FILTER>com.studentinfo.controller.*</FILTER>
-    </SUITE>
   </component>
 </project>

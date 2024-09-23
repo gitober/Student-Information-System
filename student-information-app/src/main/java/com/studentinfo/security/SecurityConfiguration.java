@@ -71,7 +71,7 @@ public class SecurityConfiguration extends VaadinWebSecurity {
                 })
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/login", "/register", "/images/**", "/forgotpassword").permitAll();
-                    auth.requestMatchers("/profile", "/courses", "/editprofile", "/grades").hasRole("USER");
+                    auth.requestMatchers("/profile", "/courses", "/editprofile", "/grades", "/teacher/attendance-tracking", "teacher/update-students").hasRole("USER");
                     logger.info("Configured request matchers for authorization.");
                     logCurrentSecurityContext("After configuring authorization requests");
                 })

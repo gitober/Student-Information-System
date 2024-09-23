@@ -8,6 +8,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.notification.Notification;
@@ -21,12 +22,12 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
-import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @PageTitle("Registration")
 @Route(value = "register")
 @AnonymousAllowed
+@CssImport("./themes/studentinformationapp/views/registration-view.css")
 public class RegistrationView extends Composite<VerticalLayout> {
 
     private final RegistrationHandler registrationHandler;
@@ -41,20 +42,29 @@ public class RegistrationView extends Composite<VerticalLayout> {
         mainLayout.setPadding(false);
         mainLayout.setSpacing(false);
         mainLayout.setAlignItems(Alignment.CENTER);
+        mainLayout.setJustifyContentMode(JustifyContentMode.START);
+        mainLayout.addClassName("registration-container");
 
         // Add the reusable Header component
-        mainLayout.add(new HeaderView("EduBird"));
+        HeaderView header = new HeaderView("EduBird");
+        header.setWidthFull();
+        mainLayout.add(header);
+
+        // Add padding to ensure content starts below the header
+        mainLayout.getStyle().set("padding-top", "60px"); // Adjust padding to match header height
 
         // Layout for form and content
         VerticalLayout layoutColumn2 = new VerticalLayout();
         layoutColumn2.setWidth("100%");
         layoutColumn2.setMaxWidth("800px");
-        layoutColumn2.setHeight("min-content");
+        layoutColumn2.setHeight("min-content"); // UNDER HEADER STOP
         layoutColumn2.setAlignItems(Alignment.CENTER);
-        layoutColumn2.setJustifyContentMode(JustifyContentMode.START);
+        layoutColumn2.setJustifyContentMode(JustifyContentMode.CENTER);
+        layoutColumn2.addClassName("registration-form");
 
         // Form Title
-        H3 h3 = new H3("Personal Information");
+        H3 h3 = new H3("Register Here");
+        h3.addClassName("registration-form-title");
 
         // Form fields
         FormLayout formLayout2Col = new FormLayout();
@@ -66,15 +76,32 @@ public class RegistrationView extends Composite<VerticalLayout> {
         PasswordField passwordField = new PasswordField("Create Password");
         PasswordField confirmPasswordField = new PasswordField("Confirm Password");
 
+        // Add components to the form layout
+        formLayout2Col.add(
+                firstNameField,
+                lastNameField,
+                birthdayField,
+                phoneNumberField,
+                emailField,
+                passwordField,
+                confirmPasswordField
+        );
+        formLayout2Col.addClassName("registration-form-field");
+        layoutColumn2.add(h3, formLayout2Col);
+
         // Role selection
         ComboBox<String> roleComboBox = new ComboBox<>("Role");
         roleComboBox.setItems("Student", "Teacher");
         roleComboBox.setPlaceholder("Select role");
+        formLayout2Col.add(roleComboBox);
 
         // Buttons
         Button saveButton = new Button("Register");
         saveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        saveButton.addClassName("registration-primary-button");
+
         Button cancelButton = new Button("Cancel");
+        cancelButton.addClassName("registration-secondary-button");
 
         // Button click listeners
         saveButton.addClickListener(e -> {
@@ -103,25 +130,12 @@ public class RegistrationView extends Composite<VerticalLayout> {
 
         cancelButton.addClickListener(e -> UI.getCurrent().navigate("login"));
 
-        // Add components to the form layout
-        formLayout2Col.add(
-                firstNameField,
-                lastNameField,
-                birthdayField,
-                phoneNumberField,
-                emailField,
-                passwordField,
-                confirmPasswordField,
-                roleComboBox
-        );
-        layoutColumn2.add(h3, formLayout2Col);
-
         // Buttons layout
         HorizontalLayout buttonLayout = new HorizontalLayout(saveButton, cancelButton);
-        buttonLayout.addClassName(Gap.MEDIUM);
+        buttonLayout.addClassName("registration-button-layout");
         layoutColumn2.add(buttonLayout);
 
         // Add the form layout to the main layout
-        mainLayout.add(layoutColumn2);
+        mainLayout.addAndExpand(layoutColumn2); // Expands the content layout to fill available space
     }
 }

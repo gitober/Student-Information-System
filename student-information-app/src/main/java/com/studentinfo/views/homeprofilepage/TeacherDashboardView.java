@@ -1,12 +1,11 @@
-package com.studentinfo.views.profilepage;
+package com.studentinfo.views.homeprofilepage;
 
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.html.Image;
 
-@CssImport("./themes/studentinformationapp/views/profile-page-view/teacher-profile-page-view.css")
+@CssImport("./themes/studentinformationapp/views/home-profile-page-view/teacher-profile-page-view.css")
 public class TeacherDashboardView extends VerticalLayout {
 
     public TeacherDashboardView() {
@@ -17,7 +16,7 @@ public class TeacherDashboardView extends VerticalLayout {
         setJustifyContentMode(JustifyContentMode.CENTER); // Center content
 
         // Add welcome text
-        H1 welcomeText = new H1("Welcome");
+        H1 welcomeText = new H1("Teacher Dashboard");
         welcomeText.addClassName("welcome-text"); // Add a class for custom styles
         add(welcomeText);
 

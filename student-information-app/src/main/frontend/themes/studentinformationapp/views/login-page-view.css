@@ -1,13 +1,13 @@
-/* Main content styles */
-.login-page {
+/* Main login page styles */
+.login-view-page {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Full viewport height to ensure it respects the header */
+  min-height: 100vh; /* Full viewport height to respect the header */
   padding: 0;
   box-sizing: border-box;
 }
 
-.content-layout {
+.login-content-layout {
   display: flex;
   flex: 1;
   align-items: stretch;
@@ -15,86 +15,86 @@
   margin: 0;
 }
 
-/* Styles for left and right content to ensure full height */
-.left-content,
-.right-content {
+/* Unique styles for left and right sections to ensure full height */
+.login-left-content,
+.login-right-content {
   flex: 1;
   padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 10px; /* Adds space between elements */
+  gap: 10px; /* Space between elements */
   box-sizing: border-box;
   min-height: 100%;
 }
 
-.left-content {
+.login-left-content {
   background: #f9f9f9;
 }
 
-.right-content {
+.login-right-content {
   background: rgba(152, 201, 97, 0.29);
 }
 
-.welcome-text {
-  font-size: 32px !important;
+.login-welcome-text {
+  font-size: 32px;
   font-weight: bold;
   margin: 0;
   text-align: center;
   margin-bottom: 10px;
 }
 
-.instruction-text {
+.login-instruction-text {
   font-size: 16px;
   margin: 0;
   text-align: center;
-  color: #555; /* Slightly lighter text color for contrast */
+  color: #555; /* For contrast */
   margin-bottom: 20px;
 }
 
-.text-field {
+.login-text-field {
   margin-top: 20px;
-  width: 100%;
-  max-width: 400px; /* Keeps inputs within a nice max width */
+  width: 30%;
+  max-width: 400px; /* Optimal width */
 }
 
-.signin-button {
+.login-signin-button {
   width: 100%;
-  max-width: 200px; /* Ensures button doesn't get too large */
+  max-width: 200px;
   height: 40px;
   background: #fdb069;
   border: none;
-  border-radius: 20px;
+  border-radius: 13px;
   margin: 10px 0;
   cursor: pointer;
   font-size: 16px;
   font-weight: bold;
-  color: #ffffff; /* White text color for contrast */
+  color: #ffffff; /* For contrast */
   transition: background-color 0.3s ease;
 }
 
-.signin-button:hover {
-  background-color: #e6a14d; /* Slightly darker on hover */
+.login-signin-button:hover {
+  background-color: #e6a14d; /* Darker on hover */
 }
 
-.signup-link {
-  color: #044a46;
+.login-signup-link {
+  color: #5ea9f4;
   font-weight: bold;
   cursor: pointer;
   font-size: 16px;
   padding: 8px 16px;
-  border: 1px solid #044a46;
+  border: 1px solid #5EA9F4FF;
   border-radius: 10px;
   transition: all 0.3s ease;
 }
 
-.signup-link:hover {
-  background-color: #044a46;
-  color: #ffffff; /* White text color on hover */
+.login-signup-link:hover {
+  background-color: #4076aa;
+  color: #ffffff; /* White text on hover */
 }
 
-.remember-checkbox {
+.login-remember-checkbox {
   display: flex;
   align-items: center;
   gap: 5px;
@@ -102,89 +102,79 @@
   color: #555;
 }
 
-/* Responsive behavior */
-
-/* Medium devices (tablets, 768px and up) */
+/* Responsive behavior for devices of different sizes */
 @media (max-width: 1024px) {
-  .content-layout {
+  .login-content-layout {
     flex-direction: row;
   }
-
-  .left-content,
-  .right-content {
+  .login-left-content,
+  .login-right-content {
     flex: 1;
     padding: 15px;
   }
-
-  .signin-button {
+  .login-signin-button {
     width: 100%;
+  }
+  .login-text-field {
+    width: 50%; /* Adjusted width for medium devices */
   }
 }
 
-/* Small devices (landscape phones, 576px and up) */
 @media (max-width: 768px) {
-  .content-layout {
+  .login-content-layout {
     flex-direction: column;
-    min-height: auto; /* Allow content to adjust its height automatically */
+    min-height: auto;
   }
-
-  .left-content,
-  .right-content {
+  .login-left-content,
+  .login-right-content {
     min-width: 100%;
     padding: 10px;
   }
-
-  .signin-button {
+  .login-signin-button {
     width: 80%;
   }
-
-  .welcome-text {
+  .login-welcome-text {
     font-size: 28px;
   }
-
-  .instruction-text {
+  .login-instruction-text {
     font-size: 14px;
   }
-
-  /* Hide right content */
-  .right-content {
-    display: none; /* Hide the right content on smaller screens */
+  .login-text-field {
+    width: 80%; /* Adjusted width for small devices */
+  }
+  .login-right-content {
+    display: none; /* Hide right content on small screens */
   }
 }
 
-/* Extra small devices (portrait phones, less than 576px) */
 @media (max-width: 576px) {
-  .content-layout {
+  .login-content-layout {
     flex-direction: column;
     align-items: center;
     min-height: auto;
   }
-
-  .left-content,
-  .right-content {
+  .login-left-content,
+  .login-right-content {
     padding: 10px;
     min-width: 100%;
   }
-
-  .signin-button {
+  .login-signin-button {
     width: 80%;
     margin-top: 10px;
   }
-
-  .welcome-text {
+  .login-welcome-text {
     font-size: 24px;
   }
-
-  .instruction-text {
+  .login-instruction-text {
     font-size: 12px;
   }
-
-  .bird-image {
+  .login-text-field {
+    width: 90%; /* Adjusted width for extra small devices */
+  }
+  .login-bird-image {
     max-width: 80%;
   }
-
-  /* Hide right content */
-  .right-content {
-    display: none; /* Hide the right content on extra small screens */
+  .login-right-content {
+    display: none; /* Hide right content on extra small screens */
   }
 }

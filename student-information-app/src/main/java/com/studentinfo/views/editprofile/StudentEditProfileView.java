@@ -3,6 +3,7 @@ package com.studentinfo.views.editprofile;
 import com.studentinfo.data.entity.Student;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -19,7 +20,7 @@ public class StudentEditProfileView extends VerticalLayout {
     private final TextField phoneNumberField;
     private final TextField emailField;
     private final Button saveButton;
-    private final Student student; // Store the student object
+    private final Student student;
 
     // Paragraphs to display current details
     private final Paragraph nameParagraph;
@@ -30,70 +31,108 @@ public class StudentEditProfileView extends VerticalLayout {
 
     // Constructor accepting a Student object
     public StudentEditProfileView(Student student) {
-        this.student = student; // Initialize the student
+        this.student = student;
 
-        setWidthFull();
+        setSizeFull(); // Makes the layout take the full size of the parent
+        setPadding(false); // Removes any padding
+        setMargin(false); // Removes any margin
+        setSpacing(false); // Removes any spacing between child components
         setAlignItems(Alignment.CENTER);
-        setJustifyContentMode(JustifyContentMode.START);
+        setJustifyContentMode(JustifyContentMode.CENTER);
+        addClassName("student-edit-profile-container");
 
-        // Display current details above the fields
-        add(new Paragraph("Current Details:"));
-        nameParagraph = new Paragraph("Name: " + student.getFirstName() + " " + student.getLastName());
-        emailParagraph = new Paragraph("Email: " + student.getEmail());
-        phoneNumberParagraph = new Paragraph("Phone Number: " + student.getPhoneNumber());
-        gradeParagraph = new Paragraph("Grade: " + student.getGrade());  // Display only
-        studentClassParagraph = new Paragraph("Student Class: " + student.getStudentClass());  // Display only
+        // Form Title
+        H3 h3 = new H3("Edit Student Profile");
+        h3.addClassName("student-edit-profile-title");
 
-        // Add current detail paragraphs
-        add(nameParagraph, emailParagraph, phoneNumberParagraph, gradeParagraph, studentClassParagraph);
+        // Wrapper layout for the title and main content
+        VerticalLayout wrapperLayout = new VerticalLayout();
+        wrapperLayout.setSpacing(false); // Remove extra spacing between title and main content
+        wrapperLayout.setPadding(false); // Remove padding
+        wrapperLayout.setMargin(false); // Remove margin
+        wrapperLayout.setAlignItems(Alignment.CENTER); // Center align content
+        wrapperLayout.setWidthFull(); // Use full width
 
-        // Initialize form fields
+        // Current details section
+        VerticalLayout currentDetailsLayout = new VerticalLayout();
+        currentDetailsLayout.addClassName("student-current-details-layout");
+
+        currentDetailsLayout.add(new H3("Current Details:"));
+
+
+
+        nameParagraph = new Paragraph();
+        nameParagraph.getElement().setProperty("innerHTML", "<span class='label'>Name </span>" + "<br>" + student.getFirstName() + " " + student.getLastName());
+        emailParagraph = new Paragraph();
+        emailParagraph.getElement().setProperty("innerHTML", "<span class='label'>Email </span>" + "<br>" + student.getEmail());
+        phoneNumberParagraph = new Paragraph();
+        phoneNumberParagraph.getElement().setProperty("innerHTML", "<span class='label'>Phone Number </span>" + "<br>"+ student.getPhoneNumber());
+        gradeParagraph = new Paragraph();
+        gradeParagraph.getElement().setProperty("innerHTML", "<span class='label'>Grade </span>"+ "<br>" + student.getGrade());
+        studentClassParagraph = new Paragraph();
+        studentClassParagraph.getElement().setProperty("innerHTML", "<span class='label'>Student Class </span>"+ "<br>" + student.getStudentClass());
+
+        currentDetailsLayout.add(nameParagraph, emailParagraph, phoneNumberParagraph, gradeParagraph, studentClassParagraph);
+
+
+
+        // Form section
+        VerticalLayout formLayout = new VerticalLayout();
+        formLayout.addClassName("student-edit-profile-form-layout");
+
         firstNameField = new TextField("First Name");
         lastNameField = new TextField("Last Name");
         phoneNumberField = new TextField("Phone Number");
         emailField = new TextField("Email");
 
         saveButton = new Button("Save");
+        saveButton.addClassName("student-edit-profile-save-button");
 
-        // Create layout for form fields
-        VerticalLayout formLayout = new VerticalLayout();
-        formLayout.addClassName("form-layout");
         formLayout.add(firstNameField, lastNameField, phoneNumberField, emailField, saveButton);
 
-        // Create layout for current details
-        VerticalLayout currentDetailsLayout = new VerticalLayout(nameParagraph, emailParagraph, phoneNumberParagraph, gradeParagraph, studentClassParagraph);
-        currentDetailsLayout.addClassName("current-details-layout");
-
-        // Create horizontal layout for current details and form fields
+        // Combine current details and form into a main layout
         HorizontalLayout mainLayout = new HorizontalLayout(currentDetailsLayout, formLayout);
         mainLayout.setWidthFull();
-        mainLayout.setAlignItems(Alignment.CENTER); // Ensure both layouts stretch to the same height
+        mainLayout.setSpacing(true);
+        mainLayout.setAlignItems(Alignment.STRETCH); // Ensure child elements are stretched equally
         mainLayout.setJustifyContentMode(JustifyContentMode.CENTER);
+        mainLayout.addClassName("student-edit-profile-main-layout");
 
-        // Add main layout to the view
-        add(mainLayout);
+        // Add title and main layout to the wrapper layout
+        wrapperLayout.add(h3, mainLayout);
+
+        // Add the wrapper layout to the main view
+        add(wrapperLayout);
+
     }
+
 
     // Method to update student profile values
     private void updateStudentProfile() {
-        // Only update fields if they have new values
         if (!firstNameField.isEmpty()) student.setFirstName(firstNameField.getValue());
         if (!lastNameField.isEmpty()) student.setLastName(lastNameField.getValue());
         if (!phoneNumberField.isEmpty()) student.setPhoneNumber(phoneNumberField.getValue());
         if (!emailField.isEmpty()) student.setEmail(emailField.getValue());
 
-        // Update displayed paragraphs with new values
-        nameParagraph.setText("Name: " + student.getFirstName() + " " + student.getLastName());
-        emailParagraph.setText("Email: " + student.getEmail());
-        phoneNumberParagraph.setText("Phone Number: " + student.getPhoneNumber());
+        // Update displayed paragraphs with new values and retain HTML structure
+        nameParagraph.getElement().setProperty("innerHTML", "<span class='label'>Name </span>" + "<br>"+ student.getFirstName() + " " + student.getLastName());
+        emailParagraph.getElement().setProperty("innerHTML", "<span class='label'>Email </span>" + "<br>" + student.getEmail());
+        phoneNumberParagraph.getElement().setProperty("innerHTML", "<span class='label'>Phone Number </span>" + "<br>" + student.getPhoneNumber());
     }
 
-    // Listener to trigger the actual save operation outside of this class
+
+    // Listener to trigger the save operation outside of this class
     public void setSaveListener(Consumer<Student> saveListener) {
         saveButton.addClickListener(event -> {
             updateStudentProfile();
             saveListener.accept(student);
-            Notification.show("Profile updated successfully!", 3000, Notification.Position.TOP_CENTER);
+            Notification.show("Profile updated successfully", 3000, Notification.Position.TOP_CENTER);
+
+            // Clear the fields after saving
+            firstNameField.clear();
+            lastNameField.clear();
+            phoneNumberField.clear();
+            emailField.clear();
         });
     }
 }
