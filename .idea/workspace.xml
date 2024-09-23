@@ -4,12 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="49cfb8af-12fd-4a91-b702-3553d39bf1cc" name="Changes" comment="TeacherControllerTest init">
+    <list default="true" id="49cfb8af-12fd-4a91-b702-3553d39bf1cc" name="Changes" comment="I dont know what to do">
+      <change afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/data/repository/DepartmentRepositoryTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/data/repository/SubjectRepositoryTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/data/repository/TeacherRepositoryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/data/dto/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/data/dto/UserDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/controller/StudentControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/controller/StudentControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/controller/TeacherControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/controller/TeacherControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/controller/UserControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/controller/UserControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/data/repository/StudentRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/data/repository/StudentRepositoryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +23,7 @@
       <list>
         <option value="CSS File" />
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -59,13 +62,18 @@
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "JUnit.ApplicationTest.executor": "Run",
+    "JUnit.DepartmentRepositoryTest.executor": "Run",
     "JUnit.StudentControllerTest.executor": "Run",
     "JUnit.StudentControllerTest.testCreateStudent.executor": "Run",
+    "JUnit.StudentRepositoryTest.executor": "Run",
+    "JUnit.SubjectRepositoryTest.executor": "Run",
     "JUnit.TeacherControllerTest.executor": "Run",
     "JUnit.TeacherControllerTest.testCreateTeacher1.executor": "Run",
     "JUnit.TeacherControllerTest.testGetAllTeachers.executor": "Run",
+    "JUnit.TeacherRepositoryTest.executor": "Run",
     "JUnit.UserControllerTest.executor": "Run",
     "JUnit.UserRepositoryTest.executor": "Run",
+    "JUnit.repository in student-information-app.executor": "Run",
     "Maven.student-information-app [clean].executor": "Run",
     "Maven.student-information-app [install].executor": "Run",
     "RequestMappingsPanelOrder0": "0",
@@ -74,6 +82,8 @@
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.Application.executor": "Run",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "git-widget-placeholder": "branch-for-tests",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
@@ -107,6 +117,12 @@
       <recent name="C:\Users\bober\OneDrive\Työpöytä\Student Information System\student-information-app\src\main\resources\META-INF\resources\icons\images" />
       <recent name="C:\Users\bober\OneDrive\Työpöytä\Student Information System\student-information-app\src\main\frontend\themes\studentinformationapp\images" />
     </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.studentinfo.data.repository" />
+    </key>
   </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
@@ -114,13 +130,13 @@
       <command value="mvn install" />
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.UserControllerTest">
-    <configuration name="StudentControllerTest.testCreateStudent" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.repository in student-information-app">
+    <configuration name="DepartmentRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="student-information-app" />
       <shortenClasspath name="MANIFEST" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.studentinfo.controller.*" />
+          <option name="PATTERN" value="com.studentinfo.data.repository.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -134,47 +150,20 @@
           <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
         </ENTRIES>
       </extension>
-      <option name="PACKAGE_NAME" value="com.studentinfo.controller" />
-      <option name="MAIN_CLASS_NAME" value="com.studentinfo.controller.StudentControllerTest" />
-      <option name="METHOD_NAME" value="testCreateStudent" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TeacherControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="student-information-app" />
-      <shortenClasspath name="MANIFEST" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.studentinfo.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <extension name="net.ashald.envfile">
-        <option name="IS_ENABLED" value="false" />
-        <option name="IS_SUBST" value="false" />
-        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
-        <option name="IS_IGNORE_MISSING_FILES" value="false" />
-        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
-        <ENTRIES>
-          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
-        </ENTRIES>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.studentinfo.controller" />
-      <option name="MAIN_CLASS_NAME" value="com.studentinfo.controller.TeacherControllerTest" />
+      <option name="PACKAGE_NAME" value="com.studentinfo.data.repository" />
+      <option name="MAIN_CLASS_NAME" value="com.studentinfo.data.repository.DepartmentRepositoryTest" />
       <option name="METHOD_NAME" value="" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TeacherControllerTest.testCreateTeacher1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="StudentRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="student-information-app" />
       <shortenClasspath name="MANIFEST" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.studentinfo.controller.*" />
+          <option name="PATTERN" value="com.studentinfo.data.repository.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -188,20 +177,20 @@
           <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
         </ENTRIES>
       </extension>
-      <option name="PACKAGE_NAME" value="com.studentinfo.controller" />
-      <option name="MAIN_CLASS_NAME" value="com.studentinfo.controller.TeacherControllerTest" />
-      <option name="METHOD_NAME" value="testCreateTeacher1" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="PACKAGE_NAME" value="com.studentinfo.data.repository" />
+      <option name="MAIN_CLASS_NAME" value="com.studentinfo.data.repository.StudentRepositoryTest" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TeacherControllerTest.testGetAllTeachers" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="SubjectRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="student-information-app" />
       <shortenClasspath name="MANIFEST" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.studentinfo.controller.*" />
+          <option name="PATTERN" value="com.studentinfo.data.repository.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -215,20 +204,20 @@
           <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
         </ENTRIES>
       </extension>
-      <option name="PACKAGE_NAME" value="com.studentinfo.controller" />
-      <option name="MAIN_CLASS_NAME" value="com.studentinfo.controller.TeacherControllerTest" />
-      <option name="METHOD_NAME" value="testGetAllTeachers" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="PACKAGE_NAME" value="com.studentinfo.data.repository" />
+      <option name="MAIN_CLASS_NAME" value="com.studentinfo.data.repository.SubjectRepositoryTest" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TeacherRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="student-information-app" />
       <shortenClasspath name="MANIFEST" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.studentinfo.controller.*" />
+          <option name="PATTERN" value="com.studentinfo.data.repository.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -242,8 +231,8 @@
           <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
         </ENTRIES>
       </extension>
-      <option name="PACKAGE_NAME" value="com.studentinfo.controller" />
-      <option name="MAIN_CLASS_NAME" value="com.studentinfo.controller.UserControllerTest" />
+      <option name="PACKAGE_NAME" value="com.studentinfo.data.repository" />
+      <option name="MAIN_CLASS_NAME" value="com.studentinfo.data.repository.TeacherRepositoryTest" />
       <option name="METHOD_NAME" value="" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
@@ -277,6 +266,27 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="repository in student-information-app" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="student-information-app" />
+      <shortenClasspath name="MANIFEST" />
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+        </ENTRIES>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/data/repository" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="student-information-app" />
@@ -287,11 +297,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.UserControllerTest" />
-        <item itemvalue="JUnit.TeacherControllerTest.testGetAllTeachers" />
-        <item itemvalue="JUnit.TeacherControllerTest.testCreateTeacher1" />
-        <item itemvalue="JUnit.TeacherControllerTest" />
-        <item itemvalue="JUnit.StudentControllerTest.testCreateStudent" />
+        <item itemvalue="JUnit.repository in student-information-app" />
+        <item itemvalue="JUnit.SubjectRepositoryTest" />
+        <item itemvalue="JUnit.DepartmentRepositoryTest" />
+        <item itemvalue="JUnit.TeacherRepositoryTest" />
+        <item itemvalue="JUnit.StudentRepositoryTest" />
       </list>
     </recent_temporary>
   </component>
@@ -318,7 +328,7 @@
       <workItem from="1725293500409" duration="652000" />
       <workItem from="1725294163226" duration="810000" />
       <workItem from="1725348183775" duration="2589000" />
-      <workItem from="1727086505997" duration="7741000" />
+      <workItem from="1727086505997" duration="10519000" />
     </task>
     <task id="LOCAL−00001" summary="UserRepositoryTest works">
       <option name="closed" value="true" />
@@ -334,7 +344,14 @@
       <option name="presentableId" value="LOCAL−00002" />
       <updated>1727093073499</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL−00003" summary="I dont know what to do">
+      <option name="closed" value="true" />
+      <created>1727096980969</created>
+      <option name="number" value="LOCAL−00003" />
+      <option name="presentableId" value="LOCAL−00003" />
+      <updated>1727096980969</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -344,6 +361,7 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="UserRepositoryTest works" />
     <MESSAGE value="TeacherControllerTest init" />
-    <option name="LAST_COMMIT_MESSAGE" value="TeacherControllerTest init" />
+    <MESSAGE value="I dont know what to do" />
+    <option name="LAST_COMMIT_MESSAGE" value="I dont know what to do" />
   </component>
 </project>
