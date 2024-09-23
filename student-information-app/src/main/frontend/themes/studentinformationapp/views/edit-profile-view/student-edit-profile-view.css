@@ -1,14 +1,32 @@
 /* Container for the student edit profile view */
+/* Container for the student edit profile view */
 .student-edit-profile-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    padding: 0;
-    margin: 0;
-    background-color: transparent;
-    min-height: 100vh;
-    width: 100vw;
+    justify-content: flex-start;
+    min-height: calc(100vh - 60px);
+    background-image: url('./images/aa.jpg'); /* Aseta taustakuva */
+    background-size: cover; /* Peittää koko alueen */
+    background-position: center; /* Keskittää kuvan */
+    padding: 20px;
+    color: black; /* Tekstin väri mustaksi */
 }
+
+
+.student-current-details-layout p,
+.student-edit-profile-title {
+    color: #fff; /* Valkoinen tai muu väri, joka näkyy taustakuvassa */
+}
+
+.student-current-details-layout,
+.student-edit-profile-form-layout {
+    background-color: rgba(222, 236, 207, 0.9); /* Lisää läpinäkyvyys */
+}
+
+
+
+
 
 /* Main layout containing both sections */
 .student-edit-profile-main-layout {
@@ -24,7 +42,7 @@
 /* Current details section */
 .student-current-details-layout {
     padding: 1rem;
-    background-color: #dfefef;
+    background-color: white;
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     flex: 1; /* Ensure both sections grow equally */
@@ -58,7 +76,7 @@
 /* Layout for the form */
 .student-edit-profile-form-layout {
     padding: 1rem;
-    background-color: #dfefef;
+    background-color: white;
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     flex: 1; /* Ensure both sections grow equally */
@@ -70,14 +88,23 @@
 
 /* Title styling for the student edit profile view */
 .student-edit-profile-title {
-    font-size: 36px; /* Larger font size for prominence */
+    font-size: 30px; /* Larger font size for prominence */
     font-weight: bold; /* Bold for emphasis */
     color: #333; /* Dark blue from your color palette */
     margin-bottom: 20px; /* Space below the title */
-    text-align: center; /* Center the title within the layout */
+    text-align: left; /* Center the title within the layout */
     padding-bottom: 0.25rem; /* Adds some spacing below the title */
 }
 
+.student-edit-profile-save-button{
+    background-color: #FDB069; /* Golden Yellow */
+    color: white; /* White text */
+}
+
+student-edit-profile-save-button:hover {
+    background-color: #e08d53; /* Orange */
+    color: white; /* White text */
+}
 
 
 
@@ -96,7 +123,7 @@
     }
 
     .student-edit-profile-title {
-        font-size: 22px; /* Slightly reduce title size */
+        font-size: 24px; /* Slightly reduce title size */
     }
 }
 
@@ -115,7 +142,7 @@
     }
 
     .student-edit-profile-title {
-        font-size: 20px; /* Reduce title size further */
+        font-size: 24px; /* Reduce title size further */
         margin-bottom: 0.25rem; /* Less space below the title */
     }
 }

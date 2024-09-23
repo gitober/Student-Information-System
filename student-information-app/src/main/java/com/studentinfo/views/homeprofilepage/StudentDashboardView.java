@@ -13,7 +13,7 @@ public class StudentDashboardView extends VerticalLayout {
 
         setWidthFull();
         setAlignItems(Alignment.CENTER);
-        setJustifyContentMode(JustifyContentMode.START);
+        setJustifyContentMode(JustifyContentMode.CENTER); // Center content
 
         add(new H1("Student Dashboard"));
         add(new Paragraph("View your enrolled courses, grades, and attendance details here."));

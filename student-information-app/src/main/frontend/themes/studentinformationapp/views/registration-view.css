@@ -13,7 +13,7 @@
 /* Main registration form styling */
 .registration-form {
     padding: 1rem; /* Reduced padding to make the form appear smaller */
-    background-color: rgba(152, 201, 97, 0.29); /* White background for the form */
+    background-color: rgb(248, 235, 177); /* White background for the form */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     max-width: 700px; /* Reduced max-width for better alignment */

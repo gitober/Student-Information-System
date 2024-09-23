@@ -1,5 +1,5 @@
 .student-courses-view-container {
-    background-color: #DEECECFF; /* Soft background */
+    background-color: #FFF5BA; /* Soft background */
     padding: 20px;
     border-radius: 8px;
     max-width: 100%; /* Ensure container width doesn't exceed parent */
@@ -64,19 +64,38 @@
 }
 
 .student-courses-view-attendance-button {
-    background-color: #FFD700; /* Golden Yellow */
+    background-color: #FDB069; /* Golden Yellow */
+    color: white; /* Text color set to white */
+}
+
+.student-courses-view-attendance-button:hover {
+    background-color: #e08d53; /* Shared hover color */
+    color: white; /* Text color set to white */
 }
 
 .student-courses-view-enroll-button {
     background-color: #FDB069; /* Enroll button color */
+    color: white; /* Text color set to white */
 }
 
 .student-courses-view-orange-button {
-    background-color: #FFA500; /* Orange */
+    background-color: #FDB069; /* Orange */
+    color: white;
 }
 
 .student-courses-view-action-buttons button:hover {
-    background-color: #e08d53; /* Shared hover color, adjust if needed */
+    background-color: #e08d53; /* Shared hover color */
+    color: white; /* Text color set to white */
+}
+
+.student-courses-view-close-attendance-dialog-button{
+    background-color: #FDB069; /* Orange */
+    color: white;
+}
+
+.student-courses-view-close-attendance-dialog-button:hover {
+    background-color: #e08d53; /* Shared hover color */
+    color: white; /* Text color set to white */
 }
 
 /* Responsive adjustments for smaller screens */
@@ -101,41 +120,6 @@
         flex-wrap: nowrap; /* Keep buttons in a single row */
         justify-content: flex-start; /* Align buttons to the left */
     }
-}
-
-.student-courses-view-edit-button,
-.student-courses-view-details-button,
-.student-courses-view-delete-button,
-.student-courses-view-add-button,
-.student-courses-view-save-button,
-.student-courses-view-cancel-button,
-.student-courses-view-close-details-button,
-.student-courses-view-orange-button {
-    background-color: #FDB069; /* Original button color */
-    color: white; /* Text color set to white */
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    padding: 2px 5px;
-    font-size: 14px;
-}
-
-.student-courses-view-orange-button {
-    background-color: #FFA500; /* Orange button color */
-    color: white; /* Text color set to white */
-}
-
-.student-courses-view-edit-button:hover,
-.student-courses-view-details-button:hover,
-.student-courses-view-delete-button:hover,
-.student-courses-view-add-button:hover,
-.student-courses-view-save-button:hover,
-.student-courses-view-cancel-button:hover,
-.student-courses-view-close-details-button:hover,
-.student-courses-view-orange-button:hover,
-.student-courses-view-enroll-button:hover {
-    background-color: #e08d53; /* Hover color */
-    color: white; /* Text color set to white */
 }
 
 .student-courses-view-dialog-buttons {

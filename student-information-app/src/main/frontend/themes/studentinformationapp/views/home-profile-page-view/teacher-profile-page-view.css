@@ -1,0 +1,8 @@
+.teacher-profile-page-view {
+    background-image: url('./images/koulu.jpg'); /* Lisää taustakuva */
+    background-size: cover; /* Peittää koko alueen */
+    background-position: center; /* Keskittää kuvan */
+    min-height: 100vh; /* Varmistaa, että näkymä kattaa koko korkeuden */
+    color: black; /* Tekstin väri, jotta se erottuu taustasta */
+    padding: 20px; /* Lisätään hieman tyhjää tilaa */
+}
