@@ -1,0 +1,164 @@
+.student-courses-view-container {
+    background-color: #DEECECFF; /* Soft background */
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 100%; /* Ensure container width doesn't exceed parent */
+    margin: auto;
+    height: 100%; /* Allow the container to take full height */
+    overflow: auto; /* Enable both vertical and horizontal scrolling */
+}
+
+.student-courses-view-title {
+    color: #333;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 5px; /* Reduce margin */
+}
+
+.student-courses-view-search {
+    width: 100%;
+    max-width: 400px;
+    margin-top: 5px; /* Add some space above if needed */
+}
+
+.student-courses-view-grid {
+    display: flex;
+    flex-wrap: wrap; /* Allow columns to wrap */
+    justify-content: space-between; /* Distribute space between columns */
+    margin: 0; /* Remove any default margin */
+}
+
+.student-courses-view-course-column,
+.student-courses-view-subject-column,
+.student-courses-view-teacher-column,
+.student-courses-view-duration-column,
+.student-courses-view-actions-column {
+    text-align: left;
+    padding: 5px; /* Reduce padding */
+    min-width: 80px; /* Set a lower minimum width */
+    flex: 1 1 0; /* Allow columns to grow/shrink */
+    white-space: nowrap; /* Prevent content wrapping */
+}
+
+/* Styling for action buttons */
+.student-courses-view-action-buttons {
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    justify-content: flex-start; /* Align buttons to the top */
+    margin-top: 10px; /* Space above the button container */
+    overflow: visible; /* Allow full visibility */
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+.student-courses-view-action-buttons button {
+    color: white; /* Text color set to white */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 5px; /* Reduced padding for tighter buttons */
+    font-size: 12px;
+    margin-bottom: 5px; /* Space between buttons */
+    min-width: 80px; /* Set a minimum width */
+    max-width: 100px; /* Set a maximum width */
+    flex: 1; /* Buttons take equal space */
+}
+
+.student-courses-view-attendance-button {
+    background-color: #FFD700; /* Golden Yellow */
+}
+
+.student-courses-view-enroll-button {
+    background-color: #FDB069; /* Enroll button color */
+}
+
+.student-courses-view-orange-button {
+    background-color: #FFA500; /* Orange */
+}
+
+.student-courses-view-action-buttons button:hover {
+    background-color: #e08d53; /* Shared hover color, adjust if needed */
+}
+
+/* Responsive adjustments for smaller screens */
+@media screen and (max-width: 1550px) {
+    .student-courses-view-grid {
+        display: block; /* Allow each column to stack vertically */
+        overflow-x: visible; /* Disable horizontal scrolling for small screens */
+    }
+
+    .student-courses-view-course-column,
+    .student-courses-view-subject-column,
+    .student-courses-view-teacher-column,
+    .student-courses-view-duration-column,
+    .student-courses-view-actions-column {
+        display: block; /* Stack each column vertically */
+        width: 100%; /* Take full width on small screens */
+        padding: 10px 0; /* Adjust padding for better spacing */
+        text-align: center; /* Center-align text for better readability */
+    }
+
+    .student-courses-view-action-buttons {
+        flex-wrap: nowrap; /* Keep buttons in a single row */
+        justify-content: flex-start; /* Align buttons to the left */
+    }
+}
+
+.student-courses-view-edit-button,
+.student-courses-view-details-button,
+.student-courses-view-delete-button,
+.student-courses-view-add-button,
+.student-courses-view-save-button,
+.student-courses-view-cancel-button,
+.student-courses-view-close-details-button,
+.student-courses-view-orange-button {
+    background-color: #FDB069; /* Original button color */
+    color: white; /* Text color set to white */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 2px 5px;
+    font-size: 14px;
+}
+
+.student-courses-view-orange-button {
+    background-color: #FFA500; /* Orange button color */
+    color: white; /* Text color set to white */
+}
+
+.student-courses-view-edit-button:hover,
+.student-courses-view-details-button:hover,
+.student-courses-view-delete-button:hover,
+.student-courses-view-add-button:hover,
+.student-courses-view-save-button:hover,
+.student-courses-view-cancel-button:hover,
+.student-courses-view-close-details-button:hover,
+.student-courses-view-orange-button:hover,
+.student-courses-view-enroll-button:hover {
+    background-color: #e08d53; /* Hover color */
+    color: white; /* Text color set to white */
+}
+
+.student-courses-view-dialog-buttons {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.student-courses-view-add-button {
+    margin-top: 15px;
+}
+
+.student-courses-view-edit-dialog,
+.student-courses-view-details-dialog,
+.student-courses-view-delete-dialog,
+.student-courses-view-add-course-dialog {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.student-courses-view-course-name-field,
+.student-courses-view-subject-field,
+.student-courses-view-duration-field {
+    width: 100%;
+    margin-bottom: 10px;
+}

@@ -2,6 +2,7 @@ package com.studentinfo.views.courses;
 
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
@@ -14,6 +15,9 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+@CssImport("./themes/studentinformationapp/views/courses-view/teacher-courses-view.css")
+
 
 public class TeacherCoursesView extends Composite<VerticalLayout> {
 
@@ -76,7 +80,7 @@ public class TeacherCoursesView extends Composite<VerticalLayout> {
         }).setHeader("Actions").setClassNameGenerator(course -> "teacher-courses-view-actions-column");
 
         // Add course button (opens the "Add New Course" dialog)
-        Button addCourseButton = new Button("Add New Course");
+        Button addCourseButton = new Button("Add Course");
         addCourseButton.addClassName("teacher-courses-view-add-button");
         addCourseButton.addClickListener(event -> openAddCourseDialog());
 

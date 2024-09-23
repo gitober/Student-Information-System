@@ -1,0 +1,84 @@
+.teacher-grades-view-container {
+    padding: 20px;
+    background-color: #DEECECFF; /* Same background color as courses view */
+}
+
+.teacher-grades-view-title {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.teacher-grades-view-search {
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 400px; /* Set a maximum width */
+
+}
+
+.teacher-grades-view-grid {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.teacher-grades-view-course-column,
+.teacher-grades-view-student-column,
+.teacher-grades-view-grade-column {
+    text-align: left;
+    padding: 10px;
+}
+
+.teacher-grades-view-action-buttons {
+    gap: 10px;
+}
+
+.teacher-grades-view-edit-button,
+.teacher-grades-view-delete-button,
+.teacher-grades-view-add-button {
+    background-color: #FDB069; /* Accent color for buttons */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.teacher-grades-view-edit-button:hover,
+.teacher-grades-view-delete-button:hover,
+.teacher-grades-view-add-button:hover {
+    opacity: 0.9; /* Slightly darker on hover */
+}
+
+.teacher-grades-view-dialog-buttons {
+    margin-top: 20px;
+    justify-content: flex-end; /* Align buttons to the right */
+}
+
+.teacher-grades-view-edit-dialog,
+.teacher-grades-view-add-dialog,
+.teacher-grades-view-delete-dialog {
+    width: 400px; /* Fixed width for consistency */
+}
+
+.teacher-grades-view-grade-field,
+.teacher-grades-view-course-field,
+.teacher-grades-view-student-field {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.teacher-grades-view-confirm-delete-button,
+.teacher-grades-view-cancel-button {
+    background-color: #FDB069;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+.teacher-grades-view-confirm-delete-button:hover,
+.teacher-grades-view-cancel-button:hover {
+    opacity: 0.9; /* Slightly darker on hover */
+}
