@@ -38,14 +38,14 @@ public class HeaderView extends HorizontalLayout {
 
             // Teacher-specific links for updating student profiles and attendance tracking
             if (user instanceof com.studentinfo.data.entity.Teacher) {
-                attendanceTrackingLink = new RouterLink("Attendance Tracking", TeacherAttendanceTrackingView.class);
+                attendanceTrackingLink = new RouterLink("Attendance", TeacherAttendanceTrackingView.class);
                 attendanceTrackingLink.addClassName("router-link");
 
-                updateStudentProfilesLink = new RouterLink("Student Management", TeacherUpdateStudentProfileView.class);
+                updateStudentProfilesLink = new RouterLink("Students", TeacherUpdateStudentProfileView.class);
                 updateStudentProfilesLink.addClassName("router-link");
             }
 
-            RouterLink editProfileLink = new RouterLink("Edit Profile", EditProfileView.class);
+            RouterLink editProfileLink = new RouterLink("Profile", EditProfileView.class);
             editProfileLink.addClassName("router-link");
 
             // Logout button - directs to Spring Security's logout endpoint
