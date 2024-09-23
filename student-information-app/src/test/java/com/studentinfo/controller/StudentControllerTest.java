@@ -25,7 +25,7 @@ class StudentControllerTest {
     @InjectMocks
     private StudentController studentController;
 
-    Student mockStudent, createdStudent, updatedStudent, newStudent;
+    Student createdStudent, updatedStudent, newStudent;
 
 
     @BeforeAll
@@ -38,28 +38,32 @@ class StudentControllerTest {
         // create a mock instance of StudentService
         MockitoAnnotations.openMocks(this);
         studentController = new StudentController(studentService);
-        mockStudent = new Student();
+        newStudent = new Student();
         createdStudent = new Student();
         updatedStudent = new Student();
-        newStudent = new Student();
+
+        newStudent.setId(1L);
+        newStudent.setFirstName("John");
+        newStudent.setLastName("Doe");
+
+        updatedStudent = newStudent;
+        updatedStudent.setFirstName("Jane");
+        updatedStudent.setLastName("Wayne");
+
     }
 
     @AfterEach
     void tearDownEach() {
         studentController = null;
-        mockStudent = null;
+        newStudent = null;
         createdStudent = null;
         updatedStudent = null;
-        newStudent = null;
     }
 
 
     // unit test for StudentController.getAllStudents()
     @Test
     void testGetAllStudents() {
-        // Arrange
-        newStudent.setFirstName("John");
-        newStudent.setLastName("Doe");
         List<Student> studentList = List.of(newStudent);
 
         // Mock the studentService.list() method
@@ -77,10 +81,6 @@ class StudentControllerTest {
     // unit test for StudentController.getStudentById()
     @Test
     void testGetStudentById() {
-        // Arrange
-        newStudent.setId(1L);
-        newStudent.setFirstName("John");
-        newStudent.setLastName("Doe");
         List<Student> studentList = List.of(newStudent);
 
         // Mock the studentService.list() method
@@ -97,20 +97,25 @@ class StudentControllerTest {
     // unit test for StudentController.createStudent()
     @Test
     void testCreateStudent() {
-        // create a new student
-        newStudent.setFirstName("John");
-        newStudent.setLastName("Doe");
-
+        List<Student> studentList = List.of(newStudent);
         // save the new student by calling createStudent() method
-        when(studentController.createStudent(newStudent)).thenReturn(newStudent);
+        when(studentService.list()).thenReturn(studentList);
 
         // call the createStudent() method
         createdStudent = studentController.createStudent(newStudent);
 
-        // check if the new student is not null
+        // check if the new student is created
         assertNotNull(createdStudent);
-        assertEquals("John", createdStudent.getFirstName());
+        assertEquals("John", createdStudent.getStudentClass());
         assertEquals("Doe", createdStudent.getLastName());
+
+
+
+        // check if the new student is not null
+        assertNotNull(studentList);
+        assertEquals(studentList, studentController.getAllStudents());
+
+
     }
 
     // unit test for StudentController.updateStudent()

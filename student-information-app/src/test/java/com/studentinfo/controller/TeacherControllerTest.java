@@ -8,9 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.Arrays;
@@ -41,13 +39,11 @@ class TeacherControllerTest {
         teacher1 = new Teacher();
         teacher2 = new Teacher();
 
-        teacher1.setId(1L);
         teacher1.setFirstName("John");
         teacher1.setLastName("Doe");
         teacher1.setEmail("john.doe@email.com");
         teacher1.setPhoneNumber("0402223344");
 
-        teacher2.setId(2L);
         teacher2.setFirstName("Jane");
         teacher2.setLastName("Williams");
         teacher2.setEmail("jane.williams@email.com");
