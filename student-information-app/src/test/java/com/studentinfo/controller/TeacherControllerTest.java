@@ -1,90 +1,135 @@
 package com.studentinfo.controller;
 
 import com.studentinfo.data.entity.Teacher;
-import org.junit.jupiter.api.*;
-
-import java.util.List;
+import com.studentinfo.services.TeacherService;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import java.util.Arrays;
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 class TeacherControllerTest {
 
+    private MockMvc mockMvc;
+
+    @Mock
+    private TeacherService teacherService;
+
+    @InjectMocks
     private TeacherController teacherController;
 
-    @BeforeAll
-    static void setUp() {
-        System.out.println("Starting the teacherControllerTest class");
-    }
+    private Teacher teacher1, teacher2;
 
     @BeforeEach
-    void init() {
-        // create an instance of TeacherController
-        //teacherController = new TeacherController(/* tähän pitäis jotain keksii :/ */);
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        mockMvc = MockMvcBuilders.standaloneSetup(teacherController).build();
+
+        teacher1 = new Teacher();
+        teacher2 = new Teacher();
+
+        teacher1.setId(1L);
+        teacher1.setFirstName("John");
+        teacher1.setLastName("Doe");
+        teacher1.setEmail("john.doe@email.com");
+        teacher1.setPhoneNumber("0402223344");
+
+        teacher2.setId(2L);
+        teacher2.setFirstName("Jane");
+        teacher2.setLastName("Williams");
+        teacher2.setEmail("jane.williams@email.com");
+        teacher2.setPhoneNumber("0403334455");
     }
 
     @AfterEach
-    void tearDownEach() {
-        teacherController = null;
-    }
-
-    // unit test for TeacherController.getAllTeachers()
-    @Test
-    void testGetAllTeachers() {
-        // call the getAllTeachers() method
-        List<Teacher> teachers = teacherController.getAllTeachers();
-        // check if the list of teachers is not null
-        assertNotNull(teachers);
-    }
-
-    // unit test for TeacherController.getTeacherById()
-    @Test
-    void testGetTeacherById() {
-        // call the getTeacherById() method
-        Optional<Teacher> teacher = teacherController.getTeacherById(1L);
-        // check if the teacher is not null
-        assertNotNull(teacher);
-    }
-
-    // unit test for TeacherController.createTeacher()
-    @Test
-    void testCreateTeacher() {
-        // create a new teacher
-        Teacher teacher = new Teacher();
-        teacher.setId(1L);
-        teacher.setFirstName("John");
-        teacher.setLastName("Doe");
-        // call the createTeacher() method
-        Teacher newTeacher = teacherController.createTeacher(teacher);
-        // check if the new teacher is not null
-        assertNotNull(newTeacher);
-    }
-
-    // unit test for TeacherController.updateTeacher()
-    @Test
-    void testUpdateTeacher() {
-        // create a new teacher
-        Teacher teacher = new Teacher();
-        teacher.setId(1L);
-        teacher.setFirstName("John");
-        teacher.setLastName("Doe");
-        // call the updateTeacher() method
-        Teacher updatedTeacher = teacherController.updateTeacher(1L, teacher);
-        // check if the updated teacher is not null
-        assertNotNull(updatedTeacher);
+    void tearDown() {
+        teacher1 = null;
+        teacher2 = null;
     }
 
     @Test
-    void testDeleteTeacher() {
-        // call the deleteTeacher() method
-        teacherController.deleteTeacher(1L);
-        // check if the method runs without errors
-        assertTrue(true);
+    void testGetAllTeachers() throws Exception {
+
+        when(teacherService.list()).thenReturn(Arrays.asList(teacher1, teacher2));
+
+
+        mockMvc.perform(get("/teachers"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(1L))
+                .andExpect(jsonPath("$[0].firstName").value("John"))
+                .andExpect(jsonPath("$[1].id").value(2L))
+                .andExpect(jsonPath("$[1].firstName").value("Jane"));
+
+        verify(teacherService, times(1)).list();
     }
 
-    @AfterAll
-    static void tearDown() {
-        System.out.println("Completed the teacherControllerTest class");
+    @Test
+    void testGetTeacherById() throws Exception {
+
+        when(teacherService.get(1L)).thenReturn(Optional.of(teacher1));
+
+        mockMvc.perform(get("/teachers/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.firstName").value("John"));
+
+        verify(teacherService, times(1)).get(1L);
     }
 
+    @Test
+    void testCreateTeacher() throws Exception {
+
+        when(teacherService.save(any(Teacher.class))).thenReturn(teacher1);
+
+        String teacherJson = "{\"firstName\":\"John\",\"lastName\":\"Doe\",\"subject\":\"Math\"}";
+
+        mockMvc.perform(post("/teachers")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(teacherJson))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.firstName").value("John"));
+
+        verify(teacherService, times(1)).save(any(Teacher.class));
+    }
+
+    @Test
+    void testUpdateTeacher() throws Exception {
+
+        when(teacherService.save(any(Teacher.class))).thenReturn(teacher1);
+
+        String teacherJson = "{\"firstName\":\"John\",\"lastName\":\"Doe\",\"subject\":\"Math\"}";
+
+        mockMvc.perform(put("/teachers/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(teacherJson))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.firstName").value("John"));
+
+        verify(teacherService, times(1)).save(any(Teacher.class));
+    }
+
+    @Test
+    void testDeleteTeacher() throws Exception {
+        doNothing().when(teacherService).delete(1L);
+
+        mockMvc.perform(delete("/teachers/1"))
+                .andExpect(status().isOk());
+
+        verify(teacherService, times(1)).delete(1L);
+    }
 }
