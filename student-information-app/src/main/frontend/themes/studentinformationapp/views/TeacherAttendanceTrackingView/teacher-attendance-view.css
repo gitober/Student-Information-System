@@ -1,70 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Main container styling */
 .teacher-attendance-view-container {
-    background-color: #DEECECFF; /* Soft background */
+    background-color: #DEECECFF;
     padding: 20px;
     border-radius: 8px;
-    max-width: 100%; /* Ensure container width doesn't exceed parent */
-    margin: auto;
-    height: 100%; /* Allow the container to take full height */
-    overflow: auto; /* Enable both vertical and horizontal scrolling */
+    max-width: 98%;
+    margin: 80px auto;
+    min-height: 80vh;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: auto;
 }
 
-
-.teacher-attendance-view-title {
+/* Header styles */
+.teacher-attendance-header {
     font-size: 24px;
+    margin: 0;
+}
+
+.teacher-attendance-description {
     color: #333;
+    font-size: 14px;
     margin-bottom: 20px;
 }
 
+/* Search bar */
 .teacher-attendance-search {
-    width: 100%; /* Make the search bar take the full width */
-    max-width: 400px; /* Set a maximum width for the search bar */
-    margin-bottom: 20px; /* Space below the search bar */
-    border-radius: 5px; /* Optional: rounded corners */
-    padding: 10px; /* Add padding for better appearance */
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 400px;
 }
 
-
-.teacher-attendance-view-grid {
+/* Grid styling */
+.teacher-attendance-grid {
     width: 100%;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 8px;
+    margin-top: 20px;
     overflow: hidden;
 }
 
-.teacher-attendance-view-course-column,
-.teacher-attendance-view-student-column,
-.teacher-attendance-view-status-column,
-.teacher-attendance-view-date-column {
-    text-align: left;
-    padding: 10px;
+/* Form container (can be reused for dialogs or forms) */
+.form-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
 }
 
-.teacher-attendance-view-action-buttons {
+/* Button common styles */
+.teacher-attendance-save-button,
+.teacher-attendance-edit-button,
+.teacher-attendance-delete-button {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+}
+
+.teacher-attendance-save-button {
+    background-color: #FDB069;
+}
+
+.teacher-attendance-save-button:hover {
+    background-color: #e08d53;
+}
+
+/* Action buttons */
+.teacher-attendance-action-buttons {
+    display: inline-flex;
+    align-items: center;
     gap: 10px;
 }
 
-.teacher-attendance-add-button,
-.attendance-mark-button {
-    background-color: #FDB069; /* Accent color for buttons */
-    color: white;
+.teacher-attendance-edit-button {
+    background-color: #53a9e0;
+}
+
+.teacher-attendance-delete-button {
+    background-color: #e05353;
+}
+
+/* Hover effect for action buttons */
+.teacher-attendance-edit-button:hover,
+.teacher-attendance-delete-button:hover {
+    filter: brightness(0.9);
+}
+
+.dialog-close-button {
+    background-color: transparent;
+    color: #333;
     border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
+    font-size: 16px;
     cursor: pointer;
+    align-self: center; /* Aligns the button to the top right */
+}
+.dialog-close-button:hover {
+    color: #2bafc0;
 }
 
-.teacher-attendance-add-button:hover,
-.attendance-mark-button:hover {
-    opacity: 0.9; /* Slightly darker on hover */
-}
+/* Responsive design */
+@media (max-width: 768px) {
+    .teacher-attendance-view-container {
+        padding: 10px;
+    }
 
-.teacher-attendance-view-dialog-buttons {
-    margin-top: 20px;
-    justify-content: flex-end; /* Align buttons to the right */
-}
+    .form-container {
+        padding: 15px;
+    }
 
-.teacher-attendance-view-status-field,
-.teacher-attendance-view-date-field {
-    width: 100%;
-    margin-bottom: 10px;
+    .teacher-attendance-save-button {
+        font-size: 14px;
+        padding: 10px;
+    }
 }

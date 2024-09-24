@@ -2,6 +2,7 @@ package com.studentinfo.views.header;
 
 import com.studentinfo.security.AuthenticatedUser;
 import com.studentinfo.views.TeacherAttendanceTrackingView.TeacherAttendanceTrackingView;
+import com.studentinfo.views.TeacherUpdateStudentProfileView.TeacherUpdateStudentProfileView;
 import com.studentinfo.views.courses.CoursesView;
 import com.studentinfo.views.editprofile.EditProfileView;
 import com.studentinfo.views.grades.GradesView;

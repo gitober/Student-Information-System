@@ -34,10 +34,10 @@ public class RegistrationHandler {
             // Determine user type based on the role and create the appropriate object
             if ("Student".equalsIgnoreCase(role)) {
                 user = new Student();
-                ((Student) user).setGrade("Grade Example");
-                ((Student) user).setStudentClass("Class Example");
+                user.setUserType("STUDENT"); // Set userType for Student
             } else if ("Teacher".equalsIgnoreCase(role)) {
-                user = new Teacher(); // Create a basic Teacher instance without setting department or subject
+                user = new Teacher();
+                user.setUserType("TEACHER"); // Set userType for Teacher
             } else {
                 Notification.show("Invalid role selected.");
                 return false;
@@ -66,4 +66,5 @@ public class RegistrationHandler {
             return false;
         }
     }
+
 }

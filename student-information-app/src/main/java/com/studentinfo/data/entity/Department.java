@@ -8,8 +8,10 @@ public class Department {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "department_id") // Specify the column name
+    private Long departmentId; // Rename this field
 
+    @Column(name = "name") // Specify the column name if needed
     private String name;
 
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -26,19 +28,19 @@ public class Department {
     }
 
     // Getters and setters
-    public Long getId() {
-        return id;
+    public Long getDepartmentId() {
+        return departmentId; // Update this to match the renamed field
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId; // Update this to match the renamed field
     }
 
-    public String getName() {
+    public String getDepartmentName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setDepartmentName(String name) {
         this.name = name;
     }
 
