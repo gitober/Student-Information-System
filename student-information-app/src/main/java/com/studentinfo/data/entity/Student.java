@@ -1,16 +1,27 @@
 package com.studentinfo.data.entity;
 
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
 @Entity
-@DiscriminatorValue("STUDENT")  // This value will be stored in the `user_type` column for students
+@DiscriminatorValue("STUDENT")
 public class Student extends User {
 
+    private String address;
     private String grade;
     private String studentClass;
 
+    @Column(name = "student_number", unique = true)
+    private Long studentNumber;
+
     // Getters and setters
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public String getGrade() {
         return grade;
     }
@@ -25,5 +36,13 @@ public class Student extends User {
 
     public void setStudentClass(String studentClass) {
         this.studentClass = studentClass;
+    }
+
+    public Long getStudentNumber() {
+        return studentNumber;
+    }
+
+    public void setStudentNumber(Long studentNumber) {
+        this.studentNumber = studentNumber;
     }
 }

@@ -1,8 +1,12 @@
 package com.studentinfo.views.TeacherAttendanceTrackingView;
 
+import com.studentinfo.data.entity.AttendanceRecord;
+import com.studentinfo.data.entity.Course;
+import com.studentinfo.data.entity.Student;
 import com.studentinfo.security.AuthenticatedUser;
 import com.studentinfo.services.TeacherService;
 import com.studentinfo.views.mainlayout.MainLayout;
+import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -11,6 +15,7 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -21,6 +26,8 @@ import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,246 +36,201 @@ import java.util.stream.Collectors;
 @PageTitle("Attendance Tracking")
 @RolesAllowed("USER")
 @CssImport("./themes/studentinformationapp/views/TeacherAttendanceTrackingView/teacher-attendance-view.css")
-public class TeacherAttendanceTrackingView extends VerticalLayout {
+public class TeacherAttendanceTrackingView extends Composite<VerticalLayout> {
 
     private final TeacherService teacherService;
     private final AuthenticatedUser authenticatedUser;
 
     private List<AttendanceRecord> attendanceRecords;
     private Grid<AttendanceRecord> attendanceGrid;
+    private TextField searchField;
+    private Button addAttendanceButton;
 
     @Autowired
     public TeacherAttendanceTrackingView(TeacherService teacherService, AuthenticatedUser authenticatedUser) {
         this.teacherService = teacherService;
         this.authenticatedUser = authenticatedUser;
 
-        // Set layout properties
-        setSizeFull();
-        setPadding(false);
-        setMargin(false);
-        setSpacing(false);
-        setAlignItems(Alignment.START);
-        setJustifyContentMode(JustifyContentMode.START);
-        addClassName("teacher-attendance-view-container");
+        // Load attendance records
+        attendanceRecords = teacherService.getAttendanceRecords();
 
-        // Add padding to prevent content from sticking to or going under the header
-        getStyle().set("padding-top", "60px"); // Adjust based on header height
+        VerticalLayout mainLayout = getContent();
+        mainLayout.addClassName("teacher-attendance-view-container");
+        mainLayout.setPadding(false);
+        mainLayout.setSpacing(false);
+        mainLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.START);
 
-        // Create and add the page header with title and description
-        add(createPageHeader());
+        mainLayout.add(createPageHeader());
 
-        // Search bar for filtering attendance records
-        TextField searchField = new TextField("Search by Student or Course");
-        searchField.setValueChangeMode(ValueChangeMode.EAGER);
-        searchField.addValueChangeListener(event -> filterAttendance(event.getValue()));
-        searchField.addClassName("teacher-attendance-search");
-
-        // Configure and add the grid
+        configureSearchBar();
         configureGrid();
 
-        // Add mock data (Replace with backend later)
-        attendanceRecords = Arrays.asList(
-                new AttendanceRecord(1L, "Math 101", "Alice", "Present", LocalDate.now()),
-                new AttendanceRecord(2L, "Physics 101", "Bob", "Absent", LocalDate.now().minusDays(1)),
-                new AttendanceRecord(3L, "Chemistry 101", "Charlie", "Present", LocalDate.now().minusDays(2))
-        );
-        attendanceGrid.setItems(attendanceRecords);
+        attendanceGrid.setItems(attendanceRecords); // Set real data here
 
-        // Add "Add Attendance" button
-        Button addAttendanceButton = new Button("Add Attendance");
+        addAttendanceButton = new Button("Add Attendance", event -> openAddAttendanceDialog());
         addAttendanceButton.addClassName("teacher-attendance-add-button");
-        addAttendanceButton.addClickListener(event -> openAddAttendanceDialog());
-
-        // Add components to the view
-        add(searchField, attendanceGrid, addAttendanceButton);
+        mainLayout.add(addAttendanceButton);
     }
 
-    // Method to create the page header layout (title + description)
     private VerticalLayout createPageHeader() {
         VerticalLayout headerLayout = new VerticalLayout();
-        headerLayout.addClassName("page-header");
+        headerLayout.addClassName("teacher-attendance-page-header");
 
-        // Add the header text (title)
         H2 headerText = new H2("Attendance Tracking");
-        headerText.addClassName("attendance-tracking-header");
+        headerText.addClassName("teacher-attendance-header");
 
-        // Add description text
         Paragraph description = new Paragraph("Track and update student attendance records.");
-        description.addClassName("attendance-tracking-description");
+        description.addClassName("teacher-attendance-description");
 
         headerLayout.add(headerText, description);
-        headerLayout.setPadding(false); // Adjust padding if necessary
-        headerLayout.setAlignItems(Alignment.START); // Align to start
-
+        headerLayout.setPadding(false);
+        headerLayout.setAlignItems(FlexComponent.Alignment.START);
+        headerLayout.setWidthFull();
         return headerLayout;
     }
 
-    // Method to configure the grid for displaying attendance
+    private void configureSearchBar() {
+        searchField = new TextField("Search by Course or Student");
+        searchField.setValueChangeMode(ValueChangeMode.EAGER);
+        searchField.addValueChangeListener(event -> filterAttendance(event.getValue()));
+        searchField.setWidthFull();
+        searchField.addClassName("teacher-attendance-search");
+    }
+
     private void configureGrid() {
         attendanceGrid = new Grid<>(AttendanceRecord.class, false);
+        attendanceGrid.setItems(attendanceRecords);  // Set real data here
 
-        attendanceGrid.addColumn(AttendanceRecord::getCourse)
+        attendanceGrid.addColumn(record -> record.getCourse().getCourseName())
                 .setHeader("Course")
-                .setAutoWidth(true)
-                .setClassNameGenerator(record -> "attendance-grid-course-column");
+                .setAutoWidth(true);
 
-        attendanceGrid.addColumn(AttendanceRecord::getStudent)
+        attendanceGrid.addColumn(record -> record.getStudent().getFirstName() + " " + record.getStudent().getLastName())
                 .setHeader("Student")
-                .setAutoWidth(true)
-                .setClassNameGenerator(record -> "attendance-grid-student-column");
+                .setAutoWidth(true);
 
-        attendanceGrid.addColumn(AttendanceRecord::getStatus)
+        attendanceGrid.addColumn(AttendanceRecord::getAttendanceStatus)
                 .setHeader("Status")
-                .setAutoWidth(true)
-                .setClassNameGenerator(record -> "attendance-grid-status-column");
+                .setAutoWidth(true);
 
         attendanceGrid.addColumn(AttendanceRecord::getAttendanceDate)
                 .setHeader("Date")
-                .setAutoWidth(true)
-                .setClassNameGenerator(record -> "attendance-grid-date-column");
+                .setAutoWidth(true);
 
-        attendanceGrid.addClassName("attendance-grid");
+        attendanceGrid.addComponentColumn(attendanceRecord -> {
+            Button editButton = new Button("Edit");
+            editButton.addClassName("teacher-attendance-edit-button");
+            editButton.addClickListener(event -> openEditAttendanceDialog(attendanceRecord));
 
-        // Add mark attendance button for each entry
-        attendanceGrid.addComponentColumn(record -> {
-            Button markButton = new Button("Mark Attendance");
-            markButton.addClassName("attendance-mark-button");
+            Button deleteButton = new Button("Delete");
+            deleteButton.addClassName("teacher-attendance-delete-button");
+            deleteButton.addClickListener(event -> confirmDeleteAttendance(attendanceRecord));
 
-            // Add listeners for buttons
-            markButton.addClickListener(event -> openMarkAttendanceDialog(record));
-
-            HorizontalLayout actionButtons = new HorizontalLayout(markButton);
+            HorizontalLayout actionButtons = new HorizontalLayout(editButton, deleteButton);
+            actionButtons.addClassName("teacher-attendance-action-buttons");
             return actionButtons;
         }).setHeader("Actions");
+
+        attendanceGrid.setHeight("400px");
+        attendanceGrid.setWidthFull();
+        attendanceGrid.addClassName("teacher-attendance-grid");
     }
 
-    // Method to filter attendance records based on the search term
     private void filterAttendance(String searchTerm) {
         List<AttendanceRecord> filteredRecords = attendanceRecords.stream()
-                .filter(record -> record.getCourse().toLowerCase().contains(searchTerm.toLowerCase()) ||
-                        record.getStudent().toLowerCase().contains(searchTerm.toLowerCase()))
+                .filter(record -> record.getCourse().getCourseName().toLowerCase().contains(searchTerm.toLowerCase()) ||
+                        (record.getStudent().getFirstName() + " " + record.getStudent().getLastName()).toLowerCase().contains(searchTerm.toLowerCase()))
                 .collect(Collectors.toList());
         attendanceGrid.setItems(filteredRecords);
     }
 
-    // Method to open the Mark Attendance dialog
-    private void openMarkAttendanceDialog(AttendanceRecord record) {
-        Dialog markDialog = new Dialog();
-        markDialog.addClassName("mark-attendance-dialog");
-
-        // Dropdown for attendance status
-        ComboBox<String> statusField = new ComboBox<>("Attendance Status");
-        statusField.setItems("Present", "Absent");
-        statusField.setValue(record.getStatus());
-        statusField.addClassName("mark-attendance-status-field");
-
-        // Attendance date field
-        TextField dateField = new TextField("Date");
-        dateField.setValue(record.getAttendanceDate().toString());
-        dateField.addClassName("mark-attendance-date-field");
-
-        // Buttons
-        Button markButton = new Button("Mark", event -> {
-            record.setStatus(statusField.getValue());
-            record.setAttendanceDate(LocalDate.parse(dateField.getValue()));  // Update the record's date
-            attendanceGrid.getDataProvider().refreshAll();  // Refresh the grid
-            markDialog.close();
-        });
-        markButton.addClassName("mark-attendance-save-button");
-
-        Button cancelButton = new Button("Cancel", event -> markDialog.close());
-        cancelButton.addClassName("mark-attendance-cancel-button");
-
-        markDialog.add(
-                new H2("Mark Attendance"),
-                statusField,
-                dateField,
-                new HorizontalLayout(markButton, cancelButton)
-        );
-        markDialog.open();
-    }
-
-    // Method to open the Add Attendance dialog
     private void openAddAttendanceDialog() {
         Dialog addDialog = new Dialog();
-        addDialog.addClassName("add-attendance-dialog");
+        VerticalLayout dialogLayout = new VerticalLayout();
 
-        // Text fields for course and student
         TextField courseField = new TextField("Course");
-        courseField.addClassName("add-attendance-course-field");
-
         TextField studentField = new TextField("Student");
-        studentField.addClassName("add-attendance-student-field");
+        ComboBox<String> statusField = new ComboBox<>("Status", "Present", "Absent");
+        TextField dateField = new TextField("Date (dd.MM.yyyy)");
 
-        // Dropdown for attendance status
-        ComboBox<String> statusField = new ComboBox<>("Attendance Status");
-        statusField.setItems("Present", "Absent");
-        statusField.addClassName("add-attendance-status-field");
+        Button saveButton = new Button("Save", event -> {
+            try {
+                AttendanceRecord newRecord = new AttendanceRecord();
 
-        // Attendance date field
-        TextField dateField = new TextField("Date");
-        dateField.setValue(LocalDate.now().toString());  // Default to today's date
-        dateField.addClassName("add-attendance-date-field");
+                // DateTimeFormatter to parse the date field
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+                newRecord.setAttendanceDate(LocalDate.parse(dateField.getValue(), formatter));
+                newRecord.setAttendanceStatus(statusField.getValue());
 
-        // Buttons
-        Button addButton = new Button("Add", event -> {
-            Notification.show("Attendance added successfully.");
-            addDialog.close();
+                teacherService.saveAttendanceRecord(newRecord);
+                attendanceRecords = teacherService.getAttendanceRecords();
+                attendanceGrid.setItems(attendanceRecords);
+                addDialog.close();
+            } catch (DateTimeParseException e) {
+                Notification.show("Invalid date format. Please use dd.MM.yyyy.");
+            }
         });
-        addButton.addClassName("add-attendance-save-button");
 
-        Button cancelButton = new Button("Cancel", event -> addDialog.close());
-        cancelButton.addClassName("add-attendance-cancel-button");
+        // Add close button ("X")
+        Button closeButton = new Button("x", event -> addDialog.close());
+        closeButton.addClassName("dialog-close-button");
 
-        addDialog.add(
-                new H2("Add Attendance"),
-                courseField,
-                studentField,
-                statusField,
-                dateField,
-                new HorizontalLayout(addButton, cancelButton)
-        );
+        dialogLayout.add(closeButton, courseField, studentField, statusField, dateField, saveButton);
+        addDialog.add(dialogLayout);
         addDialog.open();
     }
 
-    // Mock AttendanceRecord class (Replace with backend later)
-    public static class AttendanceRecord {
-        private Long id;
-        private String course;
-        private String student;
-        private String status;
-        private LocalDate attendanceDate;
+    private void openEditAttendanceDialog(AttendanceRecord record) {
+        Dialog editDialog = new Dialog();
+        VerticalLayout dialogLayout = new VerticalLayout();
 
-        public AttendanceRecord(Long id, String course, String student, String status, LocalDate attendanceDate) {
-            this.id = id;
-            this.course = course;
-            this.student = student;
-            this.status = status;
-            this.attendanceDate = attendanceDate;
-        }
+        TextField courseField = new TextField("Course");
+        TextField studentField = new TextField("Student");
+        ComboBox<String> statusField = new ComboBox<>("Status", "Present", "Absent");
+        TextField dateField = new TextField("Date");
 
-        public String getCourse() {
-            return course;
-        }
+        courseField.setValue(record.getCourse().getCourseName());
+        studentField.setValue(record.getStudent().getFirstName() + " " + record.getStudent().getLastName());
+        statusField.setValue(record.getAttendanceStatus());
+        dateField.setValue(record.getAttendanceDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
 
-        public String getStudent() {
-            return student;
-        }
+        Button saveButton = new Button("Save", event -> {
+            record.setAttendanceStatus(statusField.getValue());
+            teacherService.saveAttendanceRecord(record);
+            attendanceRecords = teacherService.getAttendanceRecords();
+            attendanceGrid.setItems(attendanceRecords);
+            editDialog.close();
+        });
 
-        public String getStatus() {
-            return status;
-        }
+        // Add close button ("X")
+        Button closeButton = new Button("x", event -> editDialog.close());
+        closeButton.addClassName("dialog-close-button");
 
-        public void setStatus(String status) {
-            this.status = status;
-        }
-
-        public LocalDate getAttendanceDate() {
-            return attendanceDate;
-        }
-
-        public void setAttendanceDate(LocalDate attendanceDate) {
-            this.attendanceDate = attendanceDate;
-        }
+        dialogLayout.add(closeButton, courseField, studentField, statusField, dateField, saveButton);
+        editDialog.add(dialogLayout);
+        editDialog.open();
     }
+
+    private void confirmDeleteAttendance(AttendanceRecord record) {
+        Dialog confirmDialog = new Dialog();
+        confirmDialog.add(new Paragraph("Are you sure you want to delete this attendance record?"));
+
+        Button confirmButton = new Button("Delete", event -> {
+            teacherService.deleteAttendanceRecord(record);
+            attendanceRecords = teacherService.getAttendanceRecords();
+            attendanceGrid.setItems(attendanceRecords);
+            confirmDialog.close();
+        });
+        Button cancelButton = new Button("Cancel", event -> confirmDialog.close());
+
+        // Add close button ("X")
+        Button closeButton = new Button("x", event -> confirmDialog.close());
+        closeButton.addClassName("dialog-close-button");
+
+        HorizontalLayout buttonsLayout = new HorizontalLayout(confirmButton, cancelButton);
+        confirmDialog.add(closeButton, buttonsLayout);
+        confirmDialog.open();
+    }
+
+
 }

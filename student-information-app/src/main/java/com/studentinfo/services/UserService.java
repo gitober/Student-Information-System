@@ -1,5 +1,7 @@
 package com.studentinfo.services;
 
+import com.studentinfo.data.entity.Student;
+import com.studentinfo.data.entity.Teacher;
 import com.studentinfo.data.entity.User;
 import com.studentinfo.data.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,8 +64,18 @@ public class UserService {
 
     // Save or update a user
     public User save(User user) {
+        if (user instanceof Student) {
+            // Handle Student-specific fields
+            Student student = (Student) user;
+            // Set student-specific logic here
+        } else if (user instanceof Teacher) {
+            // Handle Teacher-specific fields
+            Teacher teacher = (Teacher) user;
+            // Set teacher-specific logic here
+        }
         return userRepository.save(user);
     }
+
 
     // Delete a user by ID
     public void delete(Long id) {

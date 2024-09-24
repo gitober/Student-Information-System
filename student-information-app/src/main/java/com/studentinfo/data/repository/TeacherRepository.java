@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import java.util.List;
 
 public interface TeacherRepository extends JpaRepository<Teacher, Long>, JpaSpecificationExecutor<Teacher> {
-    // Find a teacher by username, assuming you have a unique username field inherited from User
+    // Find a teacher by username
     Teacher findByUsername(String username);
 
     // Find teachers by department name

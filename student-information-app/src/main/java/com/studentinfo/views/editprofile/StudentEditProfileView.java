@@ -26,8 +26,6 @@ public class StudentEditProfileView extends VerticalLayout {
     private final Paragraph nameParagraph;
     private final Paragraph emailParagraph;
     private final Paragraph phoneNumberParagraph;
-    private final Paragraph gradeParagraph;
-    private final Paragraph studentClassParagraph;
 
     // Constructor accepting a Student object
     public StudentEditProfileView(Student student) {
@@ -59,22 +57,14 @@ public class StudentEditProfileView extends VerticalLayout {
 
         currentDetailsLayout.add(new H3("Current Details:"));
 
-
-
         nameParagraph = new Paragraph();
         nameParagraph.getElement().setProperty("innerHTML", "<span class='label'>Name </span>" + "<br>" + student.getFirstName() + " " + student.getLastName());
         emailParagraph = new Paragraph();
         emailParagraph.getElement().setProperty("innerHTML", "<span class='label'>Email </span>" + "<br>" + student.getEmail());
         phoneNumberParagraph = new Paragraph();
-        phoneNumberParagraph.getElement().setProperty("innerHTML", "<span class='label'>Phone Number </span>" + "<br>"+ student.getPhoneNumber());
-        gradeParagraph = new Paragraph();
-        gradeParagraph.getElement().setProperty("innerHTML", "<span class='label'>Grade </span>"+ "<br>" + student.getGrade());
-        studentClassParagraph = new Paragraph();
-        studentClassParagraph.getElement().setProperty("innerHTML", "<span class='label'>Student Class </span>"+ "<br>" + student.getStudentClass());
+        phoneNumberParagraph.getElement().setProperty("innerHTML", "<span class='label'>Phone Number </span>" + "<br>" + student.getPhoneNumber());
 
-        currentDetailsLayout.add(nameParagraph, emailParagraph, phoneNumberParagraph, gradeParagraph, studentClassParagraph);
-
-
+        currentDetailsLayout.add(nameParagraph, emailParagraph, phoneNumberParagraph);
 
         // Form section
         VerticalLayout formLayout = new VerticalLayout();
@@ -103,9 +93,7 @@ public class StudentEditProfileView extends VerticalLayout {
 
         // Add the wrapper layout to the main view
         add(wrapperLayout);
-
     }
-
 
     // Method to update student profile values
     private void updateStudentProfile() {
@@ -115,11 +103,10 @@ public class StudentEditProfileView extends VerticalLayout {
         if (!emailField.isEmpty()) student.setEmail(emailField.getValue());
 
         // Update displayed paragraphs with new values and retain HTML structure
-        nameParagraph.getElement().setProperty("innerHTML", "<span class='label'>Name </span>" + "<br>"+ student.getFirstName() + " " + student.getLastName());
+        nameParagraph.getElement().setProperty("innerHTML", "<span class='label'>Name </span>" + "<br>" + student.getFirstName() + " " + student.getLastName());
         emailParagraph.getElement().setProperty("innerHTML", "<span class='label'>Email </span>" + "<br>" + student.getEmail());
         phoneNumberParagraph.getElement().setProperty("innerHTML", "<span class='label'>Phone Number </span>" + "<br>" + student.getPhoneNumber());
     }
-
 
     // Listener to trigger the save operation outside of this class
     public void setSaveListener(Consumer<Student> saveListener) {
