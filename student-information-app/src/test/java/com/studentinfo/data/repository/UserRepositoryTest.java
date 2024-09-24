@@ -24,12 +24,17 @@ class UserRepositoryTest {
         // Create a test user
         testUser = new User();
         testUser.setUsername("john_doe");
-        testUser.setName("John Doe");
+        testUser.setFirstName("John");
+        testUser.setLastName("Doe");
         testUser.setEmail("john.doe@example.com");
+
+        // Add this line to set the user_type
+        testUser.setUserType("USER");
 
         // Save the user to the database
         userRepository.save(testUser);
     }
+
 
     @Test
     void findByUsername() {
@@ -37,7 +42,8 @@ class UserRepositoryTest {
 
         assertNotNull(user);
         assertEquals("john_doe", user.getUsername());
-        assertEquals("John Doe", user.getName());
+        assertEquals("John", user.getFirstName());
+        assertEquals("Doe", user.getLastName());
         assertEquals("john.doe@example.com", user.getEmail());
     }
 
@@ -47,7 +53,8 @@ class UserRepositoryTest {
 
         assertNotNull(user);
         assertEquals("john_doe", user.getUsername());
-        assertEquals("John Doe", user.getName());
+        assertEquals("John", user.getFirstName());
+        assertEquals("Doe", user.getLastName());
         assertEquals("john.doe@example.com", user.getEmail());
     }
 }
