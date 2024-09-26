@@ -7,19 +7,20 @@ import java.time.LocalDate;
 @Table(name = "grade")
 public class Grade {
 
+    // Fields
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "grade_id")
     private Integer gradeId;
 
-    @Column(name = "grade", nullable = false)
+    @Column(name = "grade", nullable = false, length = 5)
     private String grade;
 
     @Column(name = "grading_day", nullable = false)
     private LocalDate gradingDay;
 
     @Column(name = "student_number", nullable = false)
-    private Long studentNumber;  // Keep as Long
+    private Long studentNumber;
 
     @ManyToOne
     @JoinColumn(name = "course_id", referencedColumnName = "course_id", nullable = false)
@@ -50,11 +51,11 @@ public class Grade {
         this.gradingDay = gradingDay;
     }
 
-    public Long getStudentNumber() {  // Change Integer to Long
+    public Long getStudentNumber() {
         return studentNumber;
     }
 
-    public void setStudentNumber(Long studentNumber) {  // Change Integer to Long
+    public void setStudentNumber(Long studentNumber) {
         this.studentNumber = studentNumber;
     }
 

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -35,10 +37,11 @@ class UserRepositoryTest {
         userRepository.save(testUser);
     }
 
-
     @Test
     void findByUsername() {
-        User user = userRepository.findByUsername("john_doe");
+        Optional<User> userOpt = userRepository.findByUsername("john_doe");
+
+        User user = userOpt.orElseThrow(() -> new AssertionError("User not found"));
 
         assertNotNull(user);
         assertEquals("john_doe", user.getUsername());
@@ -49,7 +52,9 @@ class UserRepositoryTest {
 
     @Test
     void findByEmail() {
-        User user = userRepository.findByEmail("john.doe@example.com");
+        Optional<User> userOpt = userRepository.findByEmail("john.doe@example.com");
+
+        User user = userOpt.orElseThrow(() -> new AssertionError("User not found"));
 
         assertNotNull(user);
         assertEquals("john_doe", user.getUsername());

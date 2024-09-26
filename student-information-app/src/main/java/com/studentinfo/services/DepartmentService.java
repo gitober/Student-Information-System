@@ -11,6 +11,7 @@ import java.util.Optional;
 @Service
 public class DepartmentService {
 
+    // Repository
     private final DepartmentRepository departmentRepository;
 
     @Autowired
@@ -18,11 +19,16 @@ public class DepartmentService {
         this.departmentRepository = departmentRepository;
     }
 
+    // CRUD Operations
+
+    // Retrieve all departments
     public List<Department> findAll() {
         return departmentRepository.findAll();
     }
 
-    // Method to find a default department, creating one if none exists
+    // Additional Operations
+
+    // Find a default department, creating one if none exists
     public Department findDefaultDepartment() {
         Optional<Department> defaultDepartment = departmentRepository.findByName("Default Department");
         return defaultDepartment.orElseGet(() -> {

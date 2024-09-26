@@ -1,11 +1,14 @@
 package com.studentinfo.data.entity;
 
 import jakarta.persistence.*;
+import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "course")
 public class Course {
 
+    // Fields
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "course_id")
@@ -18,20 +21,21 @@ public class Course {
     private String coursePlan;
 
     @Column(name = "duration", nullable = false)
-    private Integer duration;  // Changed to Integer for flexibility
+    private Integer duration; // Duration in days
 
-    // Default constructor (required by JPA)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "teacher_courses",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "teacher_id")
+    )
+    private List<Teacher> teachers;
+
+    // Constructors
+    // Default constructor required by JPA
     public Course() {}
 
-    // Constructor with all fields
-    public Course(Long courseId, String courseName, String coursePlan, Integer duration) {
-        this.courseId = courseId;
-        this.courseName = courseName;
-        this.coursePlan = coursePlan;
-        this.duration = duration;
-    }
-
-    // Constructor without courseId
+    // Constructor accepting all fields (except for ID, which is auto-generated)
     public Course(String courseName, String coursePlan, Integer duration) {
         this.courseName = courseName;
         this.coursePlan = coursePlan;
@@ -71,13 +75,22 @@ public class Course {
         this.duration = duration;
     }
 
-    @Override
-    public String toString() {
-        return "Course{" +
-                "courseId=" + courseId +
-                ", courseName='" + courseName + '\'' +
-                ", coursePlan='" + coursePlan + '\'' +
-                ", duration=" + duration +
-                '}';
+    public List<Teacher> getTeachers() {
+        return teachers;
+    }
+
+    public void setTeachers(List<Teacher> teachers) {
+        this.teachers = teachers;
+    }
+
+    // Additional Methods
+    // Method to calculate and display start and end dates based on duration
+    public String getFormattedDateRange() {
+        LocalDate startDate = LocalDate.now();
+        LocalDate endDate = startDate.plusDays(duration);
+
+        // Format the date as "dd.MM.yyyy - dd.MM.yyyy"
+        return startDate.format(java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy")) +
+                " - " + endDate.format(java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy"));
     }
 }

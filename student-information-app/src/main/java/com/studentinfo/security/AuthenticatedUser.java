@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-import java.util.Set;
 
 @Component
 public class AuthenticatedUser {
@@ -36,25 +35,12 @@ public class AuthenticatedUser {
                 () -> logger.warn("No authenticated user found.")
         );
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null) {
-            logger.info("SecurityContextHolder contains: User - {}, Authorities - {}", auth.getName(), auth.getAuthorities());
-        } else {
-            logger.warn("SecurityContextHolder is empty.");
-        }
-
+        // Map UserDetails to your custom User entity by fetching from the repository
         return userDetailsOpt.flatMap(userDetails -> {
-            User user = userRepository.findByEmail(userDetails.getUsername());
-            if (user != null) {
-                logger.info("User found: {}, Roles: {}", user.getEmail(), user.getRoles());
-            } else {
-                logger.warn("User not found in repository for username: {}", userDetails.getUsername());
-            }
-            return Optional.ofNullable(user);
+            String email = userDetails.getUsername();
+            return userRepository.findByEmail(email);
         });
     }
-
-
 
     public void logout() {
         authenticationContext.logout();

@@ -1,16 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 .teacher-update-student-profile-view {
-    background-color: #DEECECFF;
+    background-color: #cde0ec;
     padding: 20px;
     border-radius: 8px;
     max-width: 98%;
-    margin: 80px auto;
+    margin: 76px auto;
     min-height: 80vh;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: auto;
 }
 
+/* Header styles */
 .teacher-update-student-profile-header {
     font-size: 24px;
     margin-bottom: 0px;
@@ -23,12 +24,14 @@
     margin-bottom: 20px;
 }
 
+/* Search bar */
 .teacher-update-student-search {
     margin-bottom: 20px;
     width: 100%;
     max-width: 400px;
 }
 
+/* Grid styling */
 .teacher-update-student-grid {
     width: 100%;
     border: 1px solid #ccc;
@@ -37,7 +40,8 @@
     margin-top: 20px;
 }
 
-.form-container {
+/* Form container */
+.teacher-update-student-form-container {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 8px;
@@ -45,6 +49,7 @@
     margin-top: 20px;
 }
 
+/* Form fields */
 .teacher-update-student-firstname,
 .teacher-update-student-lastname,
 .teacher-update-student-phone,
@@ -53,6 +58,7 @@
     margin-bottom: 10px;
 }
 
+/* Save button */
 .teacher-update-student-save-button {
     background-color: #FDB069;
     color: white;
@@ -74,7 +80,7 @@
         padding: 10px;
     }
 
-    .form-container {
+    .teacher-update-student-form-container {
         padding: 15px;
     }
 

@@ -78,17 +78,24 @@
     color: white; /* Text color set to white */
 }
 
-.student-courses-view-orange-button {
-    background-color: #FDB069; /* Orange */
+.student-courses-view-confirm-button {
+    background-color: #fdb069; /* Confirm button color */
     color: white;
 }
 
-.student-courses-view-action-buttons button:hover {
+.student-courses-view-cancel-button {
+    background-color: #e08d53; /* Cancel button color */
+    color: white;
+}
+
+.student-courses-view-action-buttons button:hover,
+.student-courses-view-confirm-button:hover,
+.student-courses-view-cancel-button:hover {
     background-color: #e08d53; /* Shared hover color */
     color: white; /* Text color set to white */
 }
 
-.student-courses-view-close-attendance-dialog-button{
+.student-courses-view-close-attendance-dialog-button {
     background-color: #FDB069; /* Orange */
     color: white;
 }
@@ -96,6 +103,32 @@
 .student-courses-view-close-attendance-dialog-button:hover {
     background-color: #e08d53; /* Shared hover color */
     color: white; /* Text color set to white */
+}
+
+/* Confirmation dialog specific styles */
+.student-courses-view-confirmation-dialog {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    max-width: 400px;
+}
+
+.student-courses-view-dialog-title {
+    font-size: 20px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.student-courses-view-course-field,
+.student-courses-view-teacher-field {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.student-courses-view-dialog-buttons {
+    margin-top: 10px;
+    text-align: center;
 }
 
 /* Responsive adjustments for smaller screens */
@@ -120,11 +153,6 @@
         flex-wrap: nowrap; /* Keep buttons in a single row */
         justify-content: flex-start; /* Align buttons to the left */
     }
-}
-
-.student-courses-view-dialog-buttons {
-    margin-top: 10px;
-    text-align: center;
 }
 
 .student-courses-view-add-button {

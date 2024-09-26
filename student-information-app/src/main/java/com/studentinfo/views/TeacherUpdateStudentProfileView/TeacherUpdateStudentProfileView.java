@@ -143,10 +143,19 @@ public class TeacherUpdateStudentProfileView extends Composite<VerticalLayout> {
     // Configure the form layout
     private void configureForm() {
         firstNameField = new TextField("First Name");
+        firstNameField.addClassName("teacher-update-student-firstname");
+
         lastNameField = new TextField("Last Name");
+        lastNameField.addClassName("teacher-update-student-lastname");
+
         emailField = new EmailField("Email");
+        emailField.addClassName("teacher-update-student-email");
+
         phoneNumberField = new TextField("Phone Number");
+        phoneNumberField.addClassName("teacher-update-student-phone");
+
         saveButton = new Button("Save changes", event -> saveStudent());
+        saveButton.addClassName("teacher-update-student-save-button");
 
         // Initially, the form is hidden
         setVisibleForm(false);
@@ -154,7 +163,7 @@ public class TeacherUpdateStudentProfileView extends Composite<VerticalLayout> {
 
     private VerticalLayout createFormLayout() {
         VerticalLayout formLayout = new VerticalLayout(firstNameField, lastNameField, emailField, phoneNumberField, saveButton);
-        formLayout.addClassName("form-container");
+        formLayout.addClassName("teacher-update-student-form-container");
         formLayout.setWidthFull();
         formLayout.setSpacing(true);
         formLayout.setPadding(true);
@@ -174,7 +183,6 @@ public class TeacherUpdateStudentProfileView extends Composite<VerticalLayout> {
         // Update the grid with the filtered students
         studentGrid.setItems(filteredStudents);
     }
-
 
     // Populate the form with selected student's data
     private void populateForm(Student student) {

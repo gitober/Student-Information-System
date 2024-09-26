@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Optional;
+
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
@@ -25,17 +27,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         logger.info("Attempting to find user by email: {}", email);
 
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
+        Optional<User> userOpt = userRepository.findByEmail(email); // Correctly use Optional<User>
+
+        User user = userOpt.orElseThrow(() -> {
             logger.error("No user found with email: {}", email);
-            throw new UsernameNotFoundException("No user present with email: " + email);
-        }
+            return new UsernameNotFoundException("No user present with email: " + email);
+        });
+
         logger.info("User found: {} with roles: {}", user.getEmail(), user.getAuthorities());
+
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
                 user.getHashedPassword(),
                 user.getAuthorities()
         );
     }
-
 }

@@ -3,6 +3,8 @@ package com.studentinfo.controller;
 import com.studentinfo.data.entity.Student;
 import com.studentinfo.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,23 +27,36 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Student> getStudentById(@PathVariable Long id) {
-        return studentService.get(id);
+    public ResponseEntity<Student> getStudentById(@PathVariable Long id) {
+        return studentService.get(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build()); // Return 404 if student not found
     }
 
     @PostMapping
-    public Student createStudent(@RequestBody Student student) {
-        return studentService.save(student);
+    public ResponseEntity<Student> createStudent(@RequestBody Student student) {
+        Student createdStudent = studentService.save(student);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdStudent); // Return 201 Created
     }
 
     @PutMapping("/{id}")
-    public Student updateStudent(@PathVariable Long id, @RequestBody Student student) {
+    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody Student student) {
+        Optional<Student> existingStudent = studentService.get(id);
+        if (existingStudent.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Return 404 if student not found
+        }
         student.setId(id); // Set the ID to ensure the existing student is updated
-        return studentService.save(student);
+        Student updatedStudent = studentService.save(student);
+        return ResponseEntity.ok(updatedStudent); // Return 200 OK with the updated student
     }
 
     @DeleteMapping("/{id}")
-    public void deleteStudent(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
+        Optional<Student> existingStudent = studentService.get(id);
+        if (existingStudent.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Return 404 if student not found
+        }
         studentService.delete(id);
+        return ResponseEntity.noContent().build(); // Return 204 No Content after successful deletion
     }
 }

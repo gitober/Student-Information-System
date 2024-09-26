@@ -13,7 +13,7 @@ import jakarta.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EditProfileDTO {
-    private Long id; // Add ID field for identifying the user
+    private Long id;
 
     @NotBlank(message = "First name is required")
     private String firstName;

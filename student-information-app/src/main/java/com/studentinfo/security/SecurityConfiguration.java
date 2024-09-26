@@ -82,12 +82,11 @@ public class SecurityConfiguration extends VaadinWebSecurity {
                 })
                 .logout(logout -> {
                     logout.logoutUrl("/logout")
-                            .invalidateHttpSession(true)  // Ensure session invalidation
-                            .clearAuthentication(true)   // Clear authentication
-                            .deleteCookies("JSESSIONID", "XSRF-TOKEN") // Delete cookies to avoid residual session data
-                            .logoutSuccessUrl("/login") // Redirect to login page after logout
+                            .invalidateHttpSession(true)
+                            .clearAuthentication(true)
+                            .deleteCookies("JSESSIONID", "XSRF-TOKEN")
+                            .logoutSuccessUrl("/login")
                             .addLogoutHandler((request, response, authentication) -> {
-                                // Additional cleanup if needed
                                 logger.info("Session invalidated during logout.");
                             })
                             .logoutSuccessHandler((request, response, authentication) -> {
@@ -104,15 +103,15 @@ public class SecurityConfiguration extends VaadinWebSecurity {
                         response.sendRedirect("/login");
                     });
                     logCurrentSecurityContext("After configuring exception handling");
-                });
+                })
+                .anonymous(anonymous -> anonymous.authorities("ROLE_ANONYMOUS"));
 
-        // Ensure correct filter placement: adding AnonymousAuthenticationFilter should not overwrite authenticated contexts
-        http.addFilterAfter(new AnonymousAuthenticationFilter("key"), SecurityContextPersistenceFilter.class);
-        logCurrentSecurityContext("After adding AnonymousAuthenticationFilter");
+        logCurrentSecurityContext("After anonymous configuration");
 
         super.configure(http);
         logCurrentSecurityContext("After super.configure(http)");
     }
+
 
     // Utility method to log the current security context
     private void logCurrentSecurityContext(String phase) {

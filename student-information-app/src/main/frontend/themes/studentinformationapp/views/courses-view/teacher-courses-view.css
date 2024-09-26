@@ -1,11 +1,11 @@
 .teacher-courses-view-container {
-    background-color: #cde0ec; /* Soft background */
+    background-color: #cde0ec;
     padding: 20px;
     border-radius: 8px;
-    max-width: 100%; /* Ensure container width doesn't exceed parent */
     margin: auto;
-    height: 100%; /* Allow the container to take full height */
-    overflow: auto; /* Enable both vertical and horizontal scrolling */
+    height: 100%;
+    max-width: 100%;
+    overflow: auto;
 }
 
 .teacher-courses-view-title {
@@ -22,111 +22,75 @@
 }
 
 .teacher-courses-view-grid {
+    width: 100%;
     display: flex;
-    flex-wrap: wrap; /* Allow columns to wrap */
-    justify-content: space-between; /* Distribute space between columns */
-    margin: 0; /* Remove any default margin */
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
-.teacher-courses-view-course-column,
-.teacher-courses-view-subject-column,
-.teacher-courses-view-students-column,
-.teacher-courses-view-duration-column,
-.teacher-courses-view-actions-column {
-    text-align: left;
-    padding: 5px; /* Reduce padding */
-    min-width: 80px; /* Set a lower minimum width */
-    flex: 1 1 0; /* Allow columns to grow/shrink */
-    white-space: nowrap; /* Prevent content wrapping */
-}
+/* Button styles */
 
-/* Styling for action buttons */
 .teacher-courses-view-action-buttons {
     display: flex;
-    flex-direction: column; /* Stack buttons vertically */
-    justify-content: flex-start; /* Align buttons to the top */
-    margin-top: 10px; /* Space above the button container */
-    overflow: visible; /* Allow full visibility */
-    white-space: nowrap; /* Prevent text wrapping */
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-top: 10px;
 }
 
-.teacher-courses-view-action-buttons button {
-    color: white;
+.teacher-courses-view-add-button {
+    color: #ffffff; /* Text color */
+    background-color: #FDB069; /* Button background color */
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    padding: 5px; /* Reduced padding for tighter buttons */
+    padding: 5px;
     font-size: 12px;
-    margin-bottom: 5px; /* Space between buttons */
-    min-width: 80px; /* Set a minimum width */
-    max-width: 100px; /* Set a maximum width */
-    flex: 1; /* Buttons take equal space */
+    margin-bottom: 5px;
+    flex: 1;
+    min-width: 120px; /* Adjust this value to control the button width */
 }
 
-
-
-.teacher-courses-view-add-button {
-    background-color: #FFD700; /* Golden Yellow */
+/* Hover effect for the add button */
+.teacher-courses-view-add-button:hover {
+    background-color: #e08d53; /* Hover background color */
 }
 
-.teacher-courses-view-action-buttons button:hover {
-    background-color: #e08d53; /* Shared hover color, adjust if needed */
-}
-
-
-.teacher-courses-view-action-buttons button:hover {
-    background-color: #e08d53;
-}
-
-/* Responsive adjustments for smaller screens */
-@media screen and (max-width: 1550px) {
-    .teacher-courses-view-grid {
-        display: block; /* Allow each column to stack vertically */
-        overflow-x: visible; /* Disable horizontal scrolling for small screens */
-    }
-
-    .teacher-courses-view-course-column,
-    .teacher-courses-view-subject-column,
-    .teacher-courses-view-students-column,
-    .teacher-courses-view-duration-column,
-    .teacher-courses-view-actions-column {
-        display: block; /* Stack each column vertically */
-        width: 100%; /* Take full width on small screens */
-        padding: 10px 0; /* Adjust padding for better spacing */
-        text-align: center; /* Center-align text for better readability */
-    }
-
-    .teacher-courses-view-action-buttons {
-        flex-wrap: nowrap; /* Keep buttons in a single row */
-        justify-content: flex-start; /* Align buttons to the left */
-    }
-}
 
 .teacher-courses-view-edit-button,
 .teacher-courses-view-details-button,
 .teacher-courses-view-delete-button,
-.teacher-courses-view-add-button,
 .teacher-courses-view-save-button,
 .teacher-courses-view-cancel-button,
-.teacher-courses-view-close-details-button {
-    background-color: #FDB069;
-    color: white;
+.teacher-courses-view-close-button,
+.teacher-courses-view-confirm-button,
+.teacher-courses-view-cancel-delete-button,
+.teacher-courses-view-add-save-button,
+.teacher-courses-view-add-cancel-button {
+    color: #ffffff; /* Text color */
+    background-color: #FDB069; /* Button background color */
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    padding: 2px 5px;
-    font-size: 14px;
+    padding: 5px;
+    font-size: 12px;
+    margin-bottom: 5px;
+    flex: 1;
 }
 
+/* Button hover effect */
 .teacher-courses-view-edit-button:hover,
 .teacher-courses-view-details-button:hover,
 .teacher-courses-view-delete-button:hover,
-.teacher-courses-view-add-button:hover,
 .teacher-courses-view-save-button:hover,
 .teacher-courses-view-cancel-button:hover,
-.teacher-courses-view-close-details-button:hover {
-    background-color: #e08d53;
+.teacher-courses-view-close-button:hover,
+.teacher-courses-view-confirm-button:hover,
+.teacher-courses-view-cancel-delete-button:hover,
+.teacher-courses-view-add-save-button:hover,
+.teacher-courses-view-add-cancel-button:hover {
+    background-color: #e08d53; /* Hover background color */
 }
+
 
 .teacher-courses-view-dialog-buttons {
     margin-top: 10px;
@@ -137,18 +101,56 @@
     margin-top: 15px;
 }
 
+/* Dialogs */
 .teacher-courses-view-edit-dialog,
 .teacher-courses-view-details-dialog,
 .teacher-courses-view-delete-dialog,
-.teacher-courses-view-add-course-dialog {
+.teacher-courses-view-add-dialog {
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 8px;
 }
 
+/* Form fields inside dialogs */
 .teacher-courses-view-course-name-field,
-.teacher-courses-view-subject-field,
-.teacher-courses-view-duration-field {
+.teacher-courses-view-course-plan-field,
+.teacher-courses-view-start-date-picker,
+.teacher-courses-view-end-date-picker,
+.teacher-courses-view-add-course-name,
+.teacher-courses-view-add-course-plan,
+.teacher-courses-view-add-start-date,
+.teacher-courses-view-add-end-date {
     width: 100%;
     margin-bottom: 10px;
+}
+
+/* Student grid in the details dialog */
+.teacher-courses-view-student-grid {
+    width: 100%;
+}
+
+.teacher-courses-view-student-firstname,
+.teacher-courses-view-student-lastname,
+.teacher-courses-view-student-email,
+.teacher-courses-view-student-phonenumber {
+    padding: 5px;
+    text-align: left;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 1550px) {
+    .teacher-courses-view-grid {
+        display: block;
+        overflow-x: visible;
+    }
+
+    .teacher-courses-view-course-column,
+    .teacher-courses-view-plan-column,
+    .teacher-courses-view-daterange-column,
+    .teacher-courses-view-actions-column {
+        display: block;
+        width: 100%;
+        padding: 10px 0;
+        text-align: center;
+    }
 }
