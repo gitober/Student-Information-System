@@ -1,5 +1,8 @@
 package com.studentinfo.views.grades;
 
+import com.studentinfo.data.entity.Grade;
+import com.studentinfo.services.GradeService;
+import com.studentinfo.services.UserService;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
@@ -7,18 +10,28 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.data.value.ValueChangeMode;
+import com.vaadin.flow.spring.annotation.SpringComponent;
+import com.vaadin.flow.spring.annotation.UIScope;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Arrays;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @CssImport("./themes/studentinformationapp/views/grades-view/student-grades-view.css")
+@SpringComponent
+@UIScope
 public class StudentGradesView extends Composite<VerticalLayout> {
 
-    private List<Course> mockCoursesData;
-    private Grid<Course> coursesGrid;
+    private final GradeService gradeService;
+    private final UserService userService;
+    private Grid<Grade> gradesGrid;
 
-    public StudentGradesView() {
+    @Autowired
+    public StudentGradesView(GradeService gradeService, UserService userService) {
+        this.gradeService = gradeService;
+        this.userService = userService;
+
         getContent().addClassName("student-grades-view-container");
 
         // Page title
@@ -29,58 +42,41 @@ public class StudentGradesView extends Composite<VerticalLayout> {
         TextField searchField = new TextField("Search Courses");
         searchField.addClassName("student-grades-view-search");
         searchField.setValueChangeMode(ValueChangeMode.EAGER);
-        searchField.addValueChangeListener(event -> filterCourses(event.getValue()));
+        searchField.addValueChangeListener(event -> filterGrades(event.getValue()));
 
-        // Grid for displaying courses
-        coursesGrid = new Grid<>();
-        coursesGrid.addColumn(Course::getCourseName).setHeader("Course").setClassNameGenerator(course -> "student-grades-view-course-column");
-        coursesGrid.addColumn(Course::getGrade).setHeader("Grade").setClassNameGenerator(course -> "student-grades-view-grade-column");
-        coursesGrid.addColumn(Course::getDate).setHeader("Date").setClassNameGenerator(course -> "student-grades-view-date-column");
-        coursesGrid.addClassName("student-grades-view-grid");
+        // Grid for displaying grades
+        gradesGrid = new Grid<>();
+        gradesGrid.addColumn(grade -> grade.getCourse().getCourseName()).setHeader("Course").setClassNameGenerator(grade -> "student-grades-view-course-column");
+        gradesGrid.addColumn(Grade::getGrade).setHeader("Grade").setClassNameGenerator(grade -> "student-grades-view-grade-column");
+        gradesGrid.addColumn(grade -> grade.getGradingDay().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                .setHeader("Date").setClassNameGenerator(grade -> "student-grades-view-date-column");
+        gradesGrid.addClassName("student-grades-view-grid");
 
-        // Mock data for courses (POISTA MOCK DATA MYÖHEMMIN KUN LISÄTÄÄN BACKEND)
-        mockCoursesData = Arrays.asList(
-                new Course("Math 101", "A", "2024-01-15"),
-                new Course("Physics 101", "B", "2024-01-18"),
-                new Course("Chemistry 101", "A-", "2024-02-01")
-        );
-        coursesGrid.setItems(mockCoursesData);
+        // Fetch and display grades for the current student
+        Long studentNumber = userService.getCurrentStudentNumber();
+        if (studentNumber != null) {
+            refreshGradesData(studentNumber);
+        } else {
+            System.out.println("Error: Unable to retrieve student information.");
+        }
 
         // Add components to the layout
-        getContent().add(title, searchField, coursesGrid);
+        getContent().add(title, searchField, gradesGrid);
     }
 
-    // Method to filter courses based on the search term
-    private void filterCourses(String searchTerm) {
-        List<Course> filteredCourses = mockCoursesData.stream()
-                .filter(course -> course.getCourseName().toLowerCase().contains(searchTerm.toLowerCase()))
+    // Method to fetch grades and populate the grid
+    private void refreshGradesData(Long studentNumber) {
+        List<Grade> studentGrades = gradeService.getGradesByStudentNumber(studentNumber);
+        gradesGrid.setItems(studentGrades); // Use actual data from service
+    }
+
+    // Method to filter grades based on the search term
+    private void filterGrades(String searchTerm) {
+        List<Grade> filteredGrades = gradesGrid.getListDataView().getItems().collect(Collectors.toList())
+                .stream()
+                .filter(grade -> grade.getCourse().getCourseName().toLowerCase().contains(searchTerm.toLowerCase()))
                 .collect(Collectors.toList());
 
-        coursesGrid.setItems(filteredCourses);
-    }
-
-    // Inner class for Course (POISTA MOCK DATA MYÖHEMMIN KUN LISÄTÄÄN BACKEND)
-    public static class Course {
-        private String courseName;
-        private String grade;
-        private String date;
-
-        public Course(String courseName, String grade, String date) {
-            this.courseName = courseName;
-            this.grade = grade;
-            this.date = date;
-        }
-
-        public String getCourseName() {
-            return courseName;
-        }
-
-        public String getGrade() {
-            return grade;
-        }
-
-        public String getDate() {
-            return date;
-        }
+        gradesGrid.setItems(filteredGrades);
     }
 }

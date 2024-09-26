@@ -5,8 +5,9 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "attendance")
-public class AttendanceRecord {
+public class Attendance {
 
+    // Fields
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "attendance_id")
@@ -26,18 +27,19 @@ public class AttendanceRecord {
     @JoinColumn(name = "course_id", referencedColumnName = "course_id", nullable = false)
     private Course course;
 
+    // Constructors
     // Default constructor (required by JPA)
-    public AttendanceRecord() {}
+    public Attendance() {}
 
     // Constructor with fields (excluding attendanceId)
-    public AttendanceRecord(String attendanceStatus, LocalDate attendanceDate, Student student, Course course) {
+    public Attendance(String attendanceStatus, LocalDate attendanceDate, Student student, Course course) {
         this.attendanceStatus = attendanceStatus;
         this.attendanceDate = attendanceDate;
         this.student = student;
         this.course = course;
     }
 
-    // Getters and setters
+    // Getters and Setters
     public Long getAttendanceId() {
         return attendanceId;
     }

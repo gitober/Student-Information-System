@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface StudentRepository extends JpaRepository<Student, Long>, JpaSpecificationExecutor<Student> {
 
@@ -19,4 +20,10 @@ public interface StudentRepository extends JpaRepository<Student, Long>, JpaSpec
 
     // Find students by both grade and studentClass
     List<Student> findByGradeAndStudentClass(String grade, String studentClass);
+
+    // Find students enrolled in a specific course (by course ID)
+    List<Student> findByCourses_CourseId(Long courseId); // Requires a Many-to-Many relationship
+
+    // Find a student by studentNumber
+    Optional<Student> findByStudentNumber(Long studentNumber); // Add this method
 }

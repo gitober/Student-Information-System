@@ -1,7 +1,14 @@
 package com.studentinfo.views.grades;
 
+import com.studentinfo.data.entity.Course;
+import com.studentinfo.data.entity.Grade;
+import com.studentinfo.data.entity.Student;
+import com.studentinfo.services.CourseService;
+import com.studentinfo.services.GradeService;
+import com.studentinfo.services.StudentService;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
@@ -11,18 +18,30 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
+import com.vaadin.flow.spring.annotation.SpringComponent;
+import com.vaadin.flow.spring.annotation.UIScope;
 
-import java.util.Arrays;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@SpringComponent
+@UIScope
 @CssImport("./themes/studentinformationapp/views/grades-view/teacher-grades-view.css")
 public class TeacherGradesView extends Composite<VerticalLayout> {
 
-    private List<GradeEntry> gradeEntries; // Store the grade data
-    private Grid<GradeEntry> gradesGrid;
+    private final GradeService gradeService;
+    private final CourseService courseService;
+    private final StudentService studentService;
 
-    public TeacherGradesView() {
+    private Grid<Grade> gradesGrid;
+    private List<Grade> gradeEntries;
+
+    public TeacherGradesView(GradeService gradeService, CourseService courseService, StudentService studentService) {
+        this.gradeService = gradeService;
+        this.courseService = courseService;
+        this.studentService = studentService;
+
         getContent().addClassName("teacher-grades-view-container");
 
         // Page title
@@ -31,167 +50,225 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
 
         // Search bar to filter grades by student or course
         TextField searchField = new TextField("Search by Student or Course");
-        searchField.addClassName("teacher-grades-view-search");
+        searchField.addClassName("teacher-grades-view-search-field");
         searchField.setValueChangeMode(ValueChangeMode.EAGER);
         searchField.addValueChangeListener(event -> filterGrades(event.getValue()));
 
-        // Grid for displaying grades (Course -> Student -> Grade)
-        gradesGrid = new Grid<>(GradeEntry.class, false);
-        gradesGrid.addColumn(GradeEntry::getCourse).setHeader("Course").setClassNameGenerator(entry -> "teacher-grades-view-course-column");
-        gradesGrid.addColumn(GradeEntry::getStudent).setHeader("Student").setClassNameGenerator(entry -> "teacher-grades-view-student-column");
-        gradesGrid.addColumn(GradeEntry::getGrade).setHeader("Grade").setClassNameGenerator(entry -> "teacher-grades-view-grade-column");
+        // Grid for displaying grades
+        gradesGrid = new Grid<>(Grade.class, false);
         gradesGrid.addClassName("teacher-grades-view-grid");
+        gradesGrid.addColumn(grade -> grade.getCourse().getCourseName())
+                .setHeader("Course")
+                .setClassNameGenerator(entry -> "teacher-grades-view-course-column");
 
-        // Add mock data (POISTA MOCK DATA MYÖHEMMIN KUN LISÄTÄÄN BACKEND)
-        gradeEntries = Arrays.asList(
-                new GradeEntry("Math 101", "Alice", "A"),
-                new GradeEntry("Physics 101", "Bob", "B"),
-                new GradeEntry("Chemistry 101", "Charlie", "C")
-        );
-        gradesGrid.setItems(gradeEntries);
+        // Display student's full name instead of student number
+        gradesGrid.addColumn(grade -> {
+            Student student = studentService.getStudentByNumber(grade.getStudentNumber());
+            return student != null ? student.getFirstName() + " " + student.getLastName() : "Unknown Student";
+        }).setHeader("Student").setClassNameGenerator(entry -> "teacher-grades-view-student-column");
 
-        // Add edit and delete buttons for each grade entry
-        gradesGrid.addComponentColumn(entry -> {
-            Button editButton = new Button("Edit");
-            editButton.addClassName("teacher-grades-view-edit-button");
+        gradesGrid.addColumn(Grade::getGrade)
+                .setHeader("Grade")
+                .setClassNameGenerator(entry -> "teacher-grades-view-grade-column");
 
-            Button deleteButton = new Button("Delete");
-            deleteButton.addClassName("teacher-grades-view-delete-button");
+        // Add action buttons to the grid
+        gradesGrid.addComponentColumn(this::createEditAndDeleteButtons).setHeader("Actions");
 
-            // Edit Button functionality
-            editButton.addClickListener(event -> openEditGradeDialog(entry));
+        // Load real data from the GradeService
+        refreshGradesData();
 
-            // Delete Button functionality
-            deleteButton.addClickListener(event -> openDeleteGradeConfirmationDialog(entry));
-
-            HorizontalLayout actionButtons = new HorizontalLayout(editButton, deleteButton);
-            actionButtons.addClassName("teacher-grades-view-action-buttons");
-            return actionButtons;
-        }).setHeader("Actions").setClassNameGenerator(entry -> "teacher-grades-view-actions-column");
-
-        // Add Grade Button with a dialog
+        // Add "Add Grade" button
         Button addGradeButton = new Button("Add Grade");
-        addGradeButton.addClassName("teacher-grades-view-add-button");
+        addGradeButton.addClassName("teacher-grades-view-add-grade-button");
         addGradeButton.addClickListener(event -> openAddGradeDialog());
 
-        // Adding components to the view
+        // Add components to the view
         getContent().add(title, searchField, gradesGrid, addGradeButton);
     }
 
-    // Mock GradeEntry class (POISTA MOCK DATA MYÖHEMMIN KUN LISÄTÄÄN BACKEND)
-    public static class GradeEntry {
-        private String course;
-        private String student;
-        private String grade;
-
-        public GradeEntry(String course, String student, String grade) {
-            this.course = course;
-            this.student = student;
-            this.grade = grade;
-        }
-
-        public String getCourse() {
-            return course;
-        }
-
-        public String getStudent() {
-            return student;
-        }
-
-        public String getGrade() {
-            return grade;
-        }
+    private void refreshGradesData() {
+        gradeEntries = gradeService.getGradesByCourseId(1L); // Replace with actual course ID
+        gradesGrid.setItems(gradeEntries); // Set grid data with real grades
     }
 
-    // Method to filter grades based on the search term
     private void filterGrades(String searchTerm) {
-        List<GradeEntry> filteredGrades = gradeEntries.stream()
-                .filter(entry -> entry.getCourse().toLowerCase().contains(searchTerm.toLowerCase()) ||
-                        entry.getStudent().toLowerCase().contains(searchTerm.toLowerCase()))
+        List<Grade> filteredGrades = gradeEntries.stream()
+                .filter(entry -> entry.getCourse().getCourseName().toLowerCase().contains(searchTerm.toLowerCase()) ||
+                        entry.getStudentNumber().toString().contains(searchTerm))
                 .collect(Collectors.toList());
 
-        // Update the grid with the filtered data
         gradesGrid.setItems(filteredGrades);
     }
 
-    // Method to open the Edit Grade dialog
-    private void openEditGradeDialog(GradeEntry entry) {
-        Dialog editDialog = new Dialog();
-        editDialog.addClassName("teacher-grades-view-edit-dialog");
+    private void openAddGradeDialog() {
+        Dialog addGradeDialog = new Dialog();
+        addGradeDialog.addClassName("teacher-grades-view-add-grade-dialog");
 
-        // Text field for editing grade
-        TextField gradeField = new TextField("Grade");
-        gradeField.setValue(entry.getGrade());
-        gradeField.addClassName("teacher-grades-view-grade-field");
+        // Dropdown for selecting the course
+        ComboBox<Course> courseComboBox = new ComboBox<>("Select Course");
+        courseComboBox.addClassName("teacher-grades-view-course-combobox");
+        courseComboBox.setItemLabelGenerator(Course::getCourseName);
+        courseComboBox.setItems(courseService.getAllCourses());
 
-        Button saveButton = new Button("Save", event -> {
-            Notification.show("Grade updated successfully.");
-            editDialog.close();
+        // Dropdown for selecting the student
+        ComboBox<Student> studentComboBox = new ComboBox<>("Select Student");
+        studentComboBox.addClassName("teacher-grades-view-student-combobox");
+        studentComboBox.setItemLabelGenerator(student -> student.getFirstName() + " " + student.getLastName());
+
+        // Populate students once a course is selected
+        courseComboBox.addValueChangeListener(event -> {
+            Course selectedCourse = event.getValue();
+            if (selectedCourse != null) {
+                List<Student> enrolledStudents = studentService.getStudentsByCourseId(selectedCourse.getCourseId());
+                studentComboBox.setItems(enrolledStudents);
+            } else {
+                studentComboBox.clear();
+            }
         });
-        saveButton.addClassName("teacher-grades-view-save-button");
 
-        Button cancelButton = new Button("Cancel", event -> editDialog.close());
-        cancelButton.addClassName("teacher-grades-view-cancel-edit-button");
+        // Text field for entering a numeric grade between 1-5 or "Fail"
+        TextField gradeField = new TextField("Grade (1.0 - 5.0 or 'Fail')");
+        gradeField.addClassName("teacher-grades-view-grade-field");
+        gradeField.setValueChangeMode(ValueChangeMode.EAGER);
+
+        // Save button to save the new grade
+        Button saveButton = new Button("Save");
+        saveButton.addClassName("teacher-grades-view-save-button");
+        saveButton.addClickListener(event -> {
+            Course selectedCourse = courseComboBox.getValue();
+            Student selectedStudent = studentComboBox.getValue();
+            String gradeValue = gradeField.getValue();
+
+            if (selectedCourse == null || selectedStudent == null || gradeValue.isEmpty()) {
+                Notification.show("Please select a course, a student, and enter a valid grade.");
+                return;
+            }
+
+            // Validate if grade is a number between 1.0 and 5.0 or "Fail"
+            if (!gradeValue.equalsIgnoreCase("Fail")) {
+                try {
+                    double numericGrade = Double.parseDouble(gradeValue);
+                    if (numericGrade < 1.0 || numericGrade > 5.0) {
+                        Notification.show("Grade must be between 1.0 and 5.0 or 'Fail'.");
+                        return;
+                    }
+                } catch (NumberFormatException e) {
+                    Notification.show("Invalid grade format. Please enter a number between 1.0 and 5.0 or 'Fail'.");
+                    return;
+                }
+            }
+
+            // Create a new grade entity
+            Grade newGrade = new Grade();
+            newGrade.setCourse(selectedCourse);
+            newGrade.setStudentNumber(selectedStudent.getStudentNumber());
+            newGrade.setGrade(gradeValue);
+            newGrade.setGradingDay(LocalDate.now());
+
+            // Save the grade via the GradeService
+            gradeService.saveGrade(newGrade);
+
+            // Refresh the grid with updated data
+            refreshGradesData();
+
+            // Notify user of successful addition
+            Notification.show("New grade added successfully.");
+
+            // Close the dialog
+            addGradeDialog.close();
+        });
+
+        // Cancel button
+        Button cancelButton = new Button("Cancel");
+        cancelButton.addClassName("teacher-grades-view-cancel-button");
+        cancelButton.addClickListener(event -> addGradeDialog.close());
 
         HorizontalLayout dialogButtons = new HorizontalLayout(saveButton, cancelButton);
         dialogButtons.addClassName("teacher-grades-view-dialog-buttons");
 
-        editDialog.add(new H2("Edit Grade"), gradeField, dialogButtons);
-        editDialog.open();
+        // Add components to the dialog
+        addGradeDialog.add(new H2("Add New Grade"), courseComboBox, studentComboBox, gradeField, dialogButtons);
+        addGradeDialog.open();
     }
 
-    // Method to open the Add Grade dialog
-    private void openAddGradeDialog() {
-        Dialog addDialog = new Dialog();
-        addDialog.addClassName("teacher-grades-view-add-dialog");
+    // Method to create the edit and delete buttons for each row in the grid
+    private HorizontalLayout createEditAndDeleteButtons(Grade grade) {
+        Button editButton = new Button("Edit");
+        editButton.addClassName("teacher-grades-view-edit-button");
+        editButton.addClickListener(event -> openEditGradeDialog(grade));
 
-        // Text fields for adding a new grade
-        TextField courseField = new TextField("Course");
-        courseField.addClassName("teacher-grades-view-course-field");
-
-        TextField studentField = new TextField("Student");
-        studentField.addClassName("teacher-grades-view-student-field");
-
-        TextField gradeField = new TextField("Grade");
-        gradeField.addClassName("teacher-grades-view-grade-field");
-
-        Button addButton = new Button("Add", event -> {
-            Notification.show("New grade added successfully.");
-            addDialog.close();
-            // Logic to add the grade to the grid/backend
-        });
-        addButton.addClassName("teacher-grades-view-add-button");
-
-        Button cancelButton = new Button("Cancel", event -> addDialog.close());
-        cancelButton.addClassName("teacher-grades-view-cancel-add-button");
-
-        HorizontalLayout dialogButtons = new HorizontalLayout(addButton, cancelButton);
-        dialogButtons.addClassName("teacher-grades-view-dialog-buttons");
-
-        addDialog.add(new H2("Add Grade"), courseField, studentField, gradeField, dialogButtons);
-        addDialog.open();
-    }
-
-    // Method to open the Delete confirmation dialog
-    private void openDeleteGradeConfirmationDialog(GradeEntry entry) {
-        Dialog confirmationDialog = new Dialog();
-        confirmationDialog.addClassName("teacher-grades-view-delete-dialog");
-
-        confirmationDialog.add(new H2("Confirm Grade Deletion"));
-
-        Button confirmButton = new Button("Confirm", event -> {
+        Button deleteButton = new Button("Delete");
+        deleteButton.addClassName("teacher-grades-view-delete-button");
+        deleteButton.addClickListener(event -> {
+            gradeService.deleteGrade(grade.getGradeId());
+            refreshGradesData();
             Notification.show("Grade deleted successfully.");
-            confirmationDialog.close();
         });
-        confirmButton.addClassName("teacher-grades-view-confirm-delete-button");
 
-        Button cancelButton = new Button("Cancel", event -> confirmationDialog.close());
-        cancelButton.addClassName("teacher-grades-view-cancel-button");
+        HorizontalLayout actionButtons = new HorizontalLayout(editButton, deleteButton);
+        actionButtons.addClassName("teacher-grades-view-action-buttons");
+        return actionButtons;
+    }
 
-        HorizontalLayout dialogButtons = new HorizontalLayout(confirmButton, cancelButton);
-        dialogButtons.addClassName("teacher-grades-view-dialog-buttons");
+    private void openEditGradeDialog(Grade grade) {
+        Dialog editGradeDialog = new Dialog();
+        editGradeDialog.addClassName("teacher-grades-view-edit-grade-dialog");
 
-        confirmationDialog.add(dialogButtons);
-        confirmationDialog.open();
+        // Text field for editing the grade
+        TextField gradeField = new TextField("Grade (1.0 - 5.0 or 'Fail')");
+        gradeField.setValue(grade.getGrade());
+        gradeField.addClassName("teacher-grades-view-edit-grade-field");
+        gradeField.setValueChangeMode(ValueChangeMode.EAGER);
+
+        // Save button to update the grade
+        Button saveButton = new Button("Save");
+        saveButton.addClassName("teacher-grades-view-edit-save-button");
+        saveButton.addClickListener(event -> {
+            String gradeValue = gradeField.getValue();
+
+            if (gradeValue.isEmpty()) {
+                Notification.show("Please enter a grade.");
+                return;
+            }
+
+            // Validate if grade is a number between 1.0 and 5.0 or "Fail"
+            if (!gradeValue.equalsIgnoreCase("Fail")) {
+                try {
+                    double numericGrade = Double.parseDouble(gradeValue);
+                    if (numericGrade < 1.0 || numericGrade > 5.0) {
+                        Notification.show("Grade must be between 1.0 and 5.0 or 'Fail'.");
+                        return;
+                    }
+                } catch (NumberFormatException e) {
+                    Notification.show("Invalid grade format. Please enter a number between 1.0 and 5.0 or 'Fail'.");
+                    return;
+                }
+            }
+
+            // Update the grade entity
+            grade.setGrade(gradeValue);
+            gradeService.saveGrade(grade);
+
+            // Refresh the grid with updated data
+            refreshGradesData();
+
+            // Notify user of successful update
+            Notification.show("Grade updated successfully.");
+
+            // Close the dialog
+            editGradeDialog.close();
+        });
+
+        // Cancel button
+        Button cancelButton = new Button("Cancel");
+        cancelButton.addClassName("teacher-grades-view-edit-cancel-button");
+        cancelButton.addClickListener(event -> editGradeDialog.close());
+
+        HorizontalLayout dialogButtons = new HorizontalLayout(saveButton, cancelButton);
+        dialogButtons.addClassName("teacher-grades-view-edit-dialog-buttons");
+
+        // Add components to the dialog
+        editGradeDialog.add(new H2("Edit Grade"), gradeField, dialogButtons);
+        editGradeDialog.open();
     }
 }

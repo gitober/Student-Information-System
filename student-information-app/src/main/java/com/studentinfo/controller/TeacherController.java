@@ -3,6 +3,8 @@ package com.studentinfo.controller;
 import com.studentinfo.data.entity.Teacher;
 import com.studentinfo.services.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,28 +22,42 @@ public class TeacherController {
     }
 
     @GetMapping
-    public List<Teacher> getAllTeachers() {
-        return teacherService.list();
+    public ResponseEntity<List<Teacher>> getAllTeachers() {
+        List<Teacher> teachers = teacherService.list();
+        return ResponseEntity.ok(teachers); // Return 200 OK with the list of teachers
     }
 
     @GetMapping("/{id}")
-    public Optional<Teacher> getTeacherById(@PathVariable Long id) {
-        return teacherService.get(id);
+    public ResponseEntity<Teacher> getTeacherById(@PathVariable Long id) {
+        return teacherService.get(id)
+                .map(ResponseEntity::ok) // Return 200 OK with the found teacher
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build()); // Return 404 Not Found if teacher not found
     }
 
     @PostMapping
-    public Teacher createTeacher(@RequestBody Teacher teacher) {
-        return teacherService.save(teacher);
+    public ResponseEntity<Teacher> createTeacher(@RequestBody Teacher teacher) {
+        Teacher createdTeacher = teacherService.save(teacher);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdTeacher); // Return 201 Created with the saved teacher
     }
 
     @PutMapping("/{id}")
-    public Teacher updateTeacher(@PathVariable Long id, @RequestBody Teacher teacher) {
+    public ResponseEntity<Teacher> updateTeacher(@PathVariable Long id, @RequestBody Teacher teacher) {
+        Optional<Teacher> existingTeacher = teacherService.get(id);
+        if (existingTeacher.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Return 404 if teacher not found
+        }
         teacher.setId(id); // Set the ID to ensure the existing teacher is updated
-        return teacherService.save(teacher);
+        Teacher updatedTeacher = teacherService.save(teacher);
+        return ResponseEntity.ok(updatedTeacher); // Return 200 OK with the updated teacher
     }
 
     @DeleteMapping("/{id}")
-    public void deleteTeacher(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteTeacher(@PathVariable Long id) {
+        Optional<Teacher> existingTeacher = teacherService.get(id);
+        if (existingTeacher.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Return 404 if teacher not found
+        }
         teacherService.delete(id);
+        return ResponseEntity.noContent().build(); // Return 204 No Content after successful deletion
     }
 }

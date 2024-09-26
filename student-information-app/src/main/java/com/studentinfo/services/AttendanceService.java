@@ -1,7 +1,7 @@
 package com.studentinfo.services;
 
-import com.studentinfo.data.entity.AttendanceRecord;
-import com.studentinfo.data.repository.AttendanceRecordRepository;
+import com.studentinfo.data.entity.Attendance;
+import com.studentinfo.data.repository.AttendanceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,31 +11,49 @@ import java.util.Optional;
 @Service
 public class AttendanceService {
 
+    // Repository
     @Autowired
-    private AttendanceRecordRepository attendanceRecordRepository;
+    private AttendanceRepository attendanceRepository;
 
-    public List<AttendanceRecord> getAllAttendance() {
-        return attendanceRecordRepository.findAll();
+    // CRUD Operations
+
+    // Retrieve all attendance records
+    public List<Attendance> getAllAttendance() {
+        return attendanceRepository.findAll();
     }
 
-    public Optional<AttendanceRecord> getAttendanceById(Long attendanceId) {
-        return attendanceRecordRepository.findById(attendanceId);
+    // Retrieve attendance by ID
+    public Optional<Attendance> getAttendanceById(Long attendanceId) {
+        return attendanceRepository.findById(attendanceId);
     }
 
-    public AttendanceRecord createAttendance(AttendanceRecord attendanceRecord) {
-        return attendanceRecordRepository.save(attendanceRecord);
+    // Create a new attendance record
+    public Attendance createAttendance(Attendance attendance) {
+        return attendanceRepository.save(attendance);
     }
 
-    public AttendanceRecord updateAttendance(Long attendanceId, AttendanceRecord attendanceRecord) {
-        // Check if attendance record exists
-        if (!attendanceRecordRepository.existsById(attendanceId)) {
+    // Update an existing attendance record
+    public Attendance updateAttendance(Long attendanceId, Attendance attendance) {
+        if (!attendanceRepository.existsById(attendanceId)) {
             throw new RuntimeException("Attendance record not found");
         }
-        attendanceRecord.setAttendanceId(attendanceId);
-        return attendanceRecordRepository.save(attendanceRecord);
+        attendance.setAttendanceId(attendanceId);
+        return attendanceRepository.save(attendance);
     }
 
-    public void deleteAttendance(Long attendanceId) {
-        attendanceRecordRepository.deleteById(attendanceId);
+    // Delete an attendance record
+    public boolean deleteAttendance(Long attendanceId) {
+        if (attendanceRepository.existsById(attendanceId)) {
+            attendanceRepository.deleteById(attendanceId);
+            return true; // Deletion was successful
+        }
+        return false; // Record not found, deletion not successful
+    }
+
+    // Additional Operations
+
+    // Retrieve attendance records by course ID
+    public List<Attendance> getAttendanceByCourseId(Long courseId) {
+        return attendanceRepository.findByCourse_CourseId(courseId);
     }
 }

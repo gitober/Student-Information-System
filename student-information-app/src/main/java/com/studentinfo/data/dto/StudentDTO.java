@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = false) // Added to avoid superclass call issue
+@EqualsAndHashCode(callSuper = false)
 public class StudentDTO extends UserDTO {
     private String grade;
     private String studentClass;
@@ -17,15 +17,12 @@ public class StudentDTO extends UserDTO {
     public String getGrade() {
         return grade;
     }
-
     public void setGrade(String grade) {
         this.grade = grade;
     }
-
     public String getStudentClass() {
         return studentClass;
     }
-
     public void setStudentClass(String studentClass) {
         this.studentClass = studentClass;
     }

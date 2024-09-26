@@ -10,9 +10,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional // Ensures all public methods are transactional
+@Transactional
 public class StudentService {
 
+    // Repository
     private final StudentRepository studentRepository;
 
     @Autowired
@@ -20,19 +21,37 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
+    // CRUD Operations
+
+    // Retrieve a student by ID
     public Optional<Student> get(Long id) {
         return studentRepository.findById(id);
     }
 
+    // Save or update a student
     public Student save(Student student) {
         return studentRepository.save(student);
     }
 
+    // Delete a student by ID
     public void delete(Long id) {
         studentRepository.deleteById(id);
     }
 
+    // Retrieve all students
     public List<Student> list() {
         return studentRepository.findAll();
+    }
+
+    // Additional Operations
+
+    // Retrieve students by course ID
+    public List<Student> getStudentsByCourseId(Long courseId) {
+        return studentRepository.findByCourses_CourseId(courseId);
+    }
+
+    // Retrieve a student by their student number
+    public Student getStudentByNumber(Long studentNumber) {
+        return studentRepository.findByStudentNumber(studentNumber).orElse(null);
     }
 }

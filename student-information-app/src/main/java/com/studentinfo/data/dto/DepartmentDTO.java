@@ -6,8 +6,8 @@ public class DepartmentDTO {
 
     private Long id;
     private String name;
-    private Set<Long> teacherIds; // Assuming you want to expose only teacher IDs
-    private Set<Long> subjectIds; // Assuming you want to expose only subject IDs
+    private Set<Long> teacherIds;
+    private Set<Long> subjectIds;
 
     // Default constructor
     public DepartmentDTO() {}
@@ -24,31 +24,24 @@ public class DepartmentDTO {
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public Set<Long> getTeacherIds() {
         return teacherIds;
     }
-
     public void setTeacherIds(Set<Long> teacherIds) {
         this.teacherIds = teacherIds;
     }
-
     public Set<Long> getSubjectIds() {
         return subjectIds;
     }
-
     public void setSubjectIds(Set<Long> subjectIds) {
         this.subjectIds = subjectIds;
     }

@@ -26,6 +26,14 @@ public class CoursesView extends Composite<VerticalLayout> {
         this.authenticatedUser = authenticatedUser;
         this.userContentLoader = userContentLoader;
 
+        // Debug statements to ensure proper injection
+        if (authenticatedUser == null) {
+            throw new IllegalStateException("AuthenticatedUser is not injected!");
+        }
+        if (userContentLoader == null) {
+            throw new IllegalStateException("UserContentLoader is not injected!");
+        }
+
         // Main layout setup
         VerticalLayout mainLayout = getContent();
         mainLayout.setPadding(false);
@@ -48,4 +56,5 @@ public class CoursesView extends Composite<VerticalLayout> {
         // Add the content layout to the main layout
         mainLayout.add(layoutColumn);
     }
+
 }

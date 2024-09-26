@@ -1,19 +1,27 @@
 package com.studentinfo.data.entity;
 
 import jakarta.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @DiscriminatorValue("STUDENT")
 public class Student extends User {
 
+    // Fields
     private String address;
     private String grade;
     private String studentClass;
 
-    @Column(name = "student_number", unique = true)
-    private Long studentNumber;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "registration",
+            joinColumns = @JoinColumn(name = "student_number", referencedColumnName = "student_number"),
+            inverseJoinColumns = @JoinColumn(name = "course_id", referencedColumnName = "course_id")
+    )
+    private Set<Course> courses = new HashSet<>();
 
-    // Getters and setters
+    // Getters and Setters
     public String getAddress() {
         return address;
     }
@@ -38,11 +46,11 @@ public class Student extends User {
         this.studentClass = studentClass;
     }
 
-    public Long getStudentNumber() {
-        return studentNumber;
+    public Set<Course> getCourses() {
+        return courses;
     }
 
-    public void setStudentNumber(Long studentNumber) {
-        this.studentNumber = studentNumber;
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
     }
 }

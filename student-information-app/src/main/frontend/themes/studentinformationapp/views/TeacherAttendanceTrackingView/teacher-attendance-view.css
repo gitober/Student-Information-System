@@ -2,24 +2,27 @@
 
 /* Main container styling */
 .teacher-attendance-view-container {
-    background-color: #DEECECFF;
+    background-color: #cde0ec;
     padding: 20px;
     border-radius: 8px;
     max-width: 98%;
-    margin: 80px auto;
+    margin: 76px auto;
     min-height: 80vh;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: auto;
+    font-family: 'Inter', sans-serif;
 }
 
 /* Header styles */
 .teacher-attendance-header {
     font-size: 24px;
     margin: 0;
+    color: white; /* Ensure the header text is white */
+    text-align: left;
 }
 
 .teacher-attendance-description {
-    color: #333;
+    color: white; /* Ensure the description text is white */
     font-size: 14px;
     margin-bottom: 20px;
 }
@@ -40,66 +43,121 @@
     overflow: hidden;
 }
 
-/* Form container (can be reused for dialogs or forms) */
-.form-container {
+/* Dialog styles */
+.teacher-attendance-dialog {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.teacher-attendance-dialog-layout {
+    gap: 10px;
+}
+
+.teacher-attendance-dialog-title {
+    font-size: 20px;
+    color: black; /* Ensure dialog title text is black */
+    margin-bottom: 20px;
+}
+
+/* Form fields */
+.teacher-attendance-student-combobox,
+.teacher-attendance-course-combobox,
+.teacher-attendance-status-combobox,
+.teacher-attendance-date-picker {
+    width: 100%;
+    color: black; /* Input field text color */
 }
 
 /* Button common styles */
-.teacher-attendance-save-button,
-.teacher-attendance-edit-button,
-.teacher-attendance-delete-button {
-    padding: 10px;
+.teacher-attendance-button {
+    padding: 10px 20px;
     font-size: 16px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    color: white;
+    color: white; /* Ensure button text is white */
+    transition: background-color 0.3s ease;
 }
 
+/* Add button */
+.teacher-attendance-add-button {
+    background-color: #e6a14d;
+    color: white; /* Ensure button text is white */
+}
+
+.teacher-attendance-add-button:hover {
+    background-color: #cc8c40;
+    color: white; /* Ensure button text remains white on hover */
+}
+
+/* Save button */
 .teacher-attendance-save-button {
     background-color: #FDB069;
+    color: white; /* Ensure button text is white */
 }
 
 .teacher-attendance-save-button:hover {
     background-color: #e08d53;
+    color: white; /* Ensure button text remains white on hover */
 }
 
-/* Action buttons */
-.teacher-attendance-action-buttons {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-}
-
+/* Edit button */
 .teacher-attendance-edit-button {
-    background-color: #53a9e0;
+    background-color: #FDB069;
+    color: white; /* Ensure button text is white */
 }
 
+.teacher-attendance-edit-button:hover {
+    background-color: #e08d53;
+    color: white; /* Ensure button text remains white on hover */
+}
+
+/* Delete button */
 .teacher-attendance-delete-button {
-    background-color: #e05353;
+    background-color: #fdb069;
+    color: white; /* Ensure button text is white */
 }
 
-/* Hover effect for action buttons */
-.teacher-attendance-edit-button:hover,
 .teacher-attendance-delete-button:hover {
-    filter: brightness(0.9);
+    background-color: #e08d53;
+    color: white; /* Ensure button text remains white on hover */
 }
 
-.dialog-close-button {
-    background-color: transparent;
-    color: #333;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    align-self: center; /* Aligns the button to the top right */
+/* Close button */
+.teacher-attendance-close-button {
+    background-color: #E08D53FF;
+    color: white; /* Ensure button text is white */
 }
-.dialog-close-button:hover {
-    color: #2bafc0;
+
+.teacher-attendance-close-button:hover {
+    background-color: #cc6b3a;
+    color: white; /* Ensure button text remains white on hover */
+}
+
+/* Action buttons container */
+.teacher-attendance-action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* Dialog button layout */
+.teacher-attendance-dialog-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Confirmation dialog specific styles */
+.teacher-attendance-dialog-instruction {
+    color: #333;
+    font-size: 14px;
+    margin-bottom: 10px;
 }
 
 /* Responsive design */
@@ -108,12 +166,17 @@
         padding: 10px;
     }
 
-    .form-container {
-        padding: 15px;
+    .teacher-attendance-dialog {
+        max-width: 90%;
     }
 
-    .teacher-attendance-save-button {
+    .teacher-attendance-dialog-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .teacher-attendance-button {
         font-size: 14px;
-        padding: 10px;
+        padding: 8px;
     }
 }

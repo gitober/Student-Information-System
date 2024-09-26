@@ -17,30 +17,17 @@ import java.util.stream.Collectors;
 @DiscriminatorValue("USER")
 public class User implements UserDetails {
 
+    // Fields
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id") // Use the exact column name from your schema
+    @Column(name = "user_id")
     private Long id;
 
-    @Column(unique = true, nullable = false) // Ensure username is unique and not null
+    @Column(unique = true, nullable = false)
     private String username;
 
-    private String name;
-
-    @Column(name = "user_type", nullable = false)
-    private String userType; // or use an enum if appropriate
-
-    // Getters and Setters for userType
-    public String getUserType() {
-        return userType;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType;
-    }
-
     @JsonIgnore
-    @Column(length = 60, name = "hashed_password") // Use the exact column name
+    @Column(length = 60, name = "hashed_password")
     private String hashedPassword;
 
     @Enumerated(EnumType.STRING)
@@ -49,15 +36,27 @@ public class User implements UserDetails {
     @Column(name = "roles")
     private Set<Role> roles;
 
+    @Column(name = "first_name")
     private String firstName;
+
+    @Column(name = "last_name")
     private String lastName;
+
     private LocalDate birthday;
+
+    @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(unique = true, nullable = false) // Email should be unique and not null
+    @Column(unique = true, nullable = false)
     private String email;
 
-    // No-argument constructor
+    @Column(name = "student_number")
+    private Long studentNumber;
+
+    @Column(name = "user_type", nullable = false)
+    private String userType;
+
+    // Constructors
     public User() {}
 
     // Getters and Setters
@@ -75,14 +74,6 @@ public class User implements UserDetails {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getHashedPassword() {
@@ -141,19 +132,35 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    // Convert roles to GrantedAuthority
+    public Long getStudentNumber() {
+        return studentNumber;
+    }
+
+    public void setStudentNumber(Long studentNumber) {
+        this.studentNumber = studentNumber;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    // Methods for Role Authorities
     private Set<GrantedAuthority> getRoleAuthorities() {
         return roles.stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
                 .collect(Collectors.toSet());
     }
 
-    // Implementations of UserDetails interface
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoleAuthorities();
     }
 
+    // Override methods from UserDetails
     @Override
     public String getPassword() {
         return getHashedPassword();
@@ -179,7 +186,7 @@ public class User implements UserDetails {
         return true;
     }
 
-    // Override equals and hashCode based on ID
+    // Override equals and hashCode
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -191,5 +198,11 @@ public class User implements UserDetails {
     @Override
     public int hashCode() {
         return 31;
+    }
+
+    // Override toString
+    @Override
+    public String toString() {
+        return this.firstName + " " + this.lastName;
     }
 }

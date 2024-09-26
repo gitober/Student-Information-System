@@ -6,12 +6,13 @@ import java.util.Set;
 @Entity
 public class Department {
 
+    // Fields
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "department_id") // Specify the column name
-    private Long departmentId; // Rename this field
+    @Column(name = "department_id")
+    private Long departmentId;
 
-    @Column(name = "name") // Specify the column name if needed
+    @Column(name = "name")
     private String name;
 
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -27,13 +28,13 @@ public class Department {
         this.name = name;
     }
 
-    // Getters and setters
+    // Getters and Setters
     public Long getDepartmentId() {
-        return departmentId; // Update this to match the renamed field
+        return departmentId;
     }
 
     public void setDepartmentId(Long departmentId) {
-        this.departmentId = departmentId; // Update this to match the renamed field
+        this.departmentId = departmentId;
     }
 
     public String getDepartmentName() {

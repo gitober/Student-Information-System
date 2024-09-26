@@ -1,9 +1,11 @@
 package com.studentinfo.data.entity;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@DiscriminatorValue("TEACHER")  // This value will be stored in the `user_type` column for teachers
+@DiscriminatorValue("TEACHER")
 public class Teacher extends User {
 
     @ManyToOne
@@ -14,7 +16,25 @@ public class Teacher extends User {
     @JoinColumn(name = "department_id", nullable = true)
     private Department department;
 
-    // Getters and setters
+    // Many-to-Many relationship with courses
+    @ManyToMany
+    @JoinTable(
+            name = "teacher_courses",
+            joinColumns = @JoinColumn(name = "teacher_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
+    private List<Course> courses = new ArrayList<>();
+
+    // Getters and setters for courses
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
+    // Getters and setters for subject and department
     public Subject getSubject() {
         return subject;
     }
@@ -30,4 +50,5 @@ public class Teacher extends User {
     public void setDepartment(Department department) {
         this.department = department;
     }
+
 }

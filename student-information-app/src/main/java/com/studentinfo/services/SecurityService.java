@@ -19,33 +19,49 @@ import java.util.stream.Collectors;
 @Service
 public class SecurityService {
 
+    // Dependencies
     private final AuthenticationManager authenticationManager;
 
     public SecurityService(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
 
+    // Public Methods
+
+    // Authenticate a user using their raw password and set the security context
     public void authenticateUser(User user, String rawPassword) {
         // Convert user roles to Spring Security authorities
-        Collection<SimpleGrantedAuthority> authorities = user.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
-                .collect(Collectors.toList());
+        Collection<SimpleGrantedAuthority> authorities = convertRolesToAuthorities(user);
 
-        // Create the authentication token with user email and raw password (not hashed password)
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                user.getEmail(), rawPassword, authorities);
-
-        // Authenticate the token using the AuthenticationManager
-        Authentication authentication = authenticationManager.authenticate(authToken);
+        // Create and authenticate the authentication token
+        Authentication authentication = authenticateToken(user.getEmail(), rawPassword, authorities);
 
         // Set the authenticated context in SecurityContextHolder
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        // Let Spring Security handle the session persistence
+        // Persist the security context to the session
+        saveSecurityContextToSession();
+    }
+
+    // Private Helper Methods
+
+    // Convert user roles to Spring Security authorities
+    private Collection<SimpleGrantedAuthority> convertRolesToAuthorities(User user) {
+        return user.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
+                .collect(Collectors.toList());
+    }
+
+    // Create and authenticate the token
+    private Authentication authenticateToken(String email, String rawPassword, Collection<SimpleGrantedAuthority> authorities) {
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(email, rawPassword, authorities);
+        return authenticationManager.authenticate(authToken);
+    }
+
+    // Save the security context to the session
+    private void saveSecurityContextToSession() {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
-
-        // Save the security context to the session (this is normally handled automatically)
         new HttpSessionSecurityContextRepository().saveContext(SecurityContextHolder.getContext(), request, response);
     }
 }
