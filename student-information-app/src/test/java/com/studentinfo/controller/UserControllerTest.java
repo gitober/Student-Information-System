@@ -57,7 +57,7 @@ public class UserControllerTest {
 
     @Test
     public void testCreateUser() throws Exception {
-        given(userService.createUser(ArgumentMatchers.any())).willAnswer((invocation -> invocation.getArgument(0)));
+        given(userController.createUser(ArgumentMatchers.any())).willAnswer((invocation -> invocation.getArgument(0)));
 
         ResultActions responce = mockMvc.perform(post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
