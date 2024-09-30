@@ -20,7 +20,7 @@
 }
 
 /* Dashboard grid container */
-.dashboard-grid {
+.student-dashboard-grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -28,7 +28,7 @@
 }
 
 /* Dashboard card styling */
-.dashboard-card {
+.student-dashboard-card {
     width: 250px;
     background-color: #cde0ec;
     padding: 20px;
@@ -39,22 +39,28 @@
     cursor: pointer;
 }
 
-.dashboard-card:hover {
+.student-dashboard-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 /* Card title and description */
-.dashboard-card-title {
+.student-dashboard-card-title {
     font-size: 18px;
     font-weight: bold;
     color: #333;
     margin-bottom: 10px;
 }
 
-.dashboard-card-description {
+.student-dashboard-card-description {
     font-size: 16px;
     color: #555;
+}
+
+/* Card link */
+.student-dashboard-card-link {
+    text-decoration: none;
+    color: inherit;
 }
 
 /* Attendance dialog styling */
@@ -69,7 +75,7 @@
     margin-bottom: 20px;
 }
 
-.attendance-grid {
+.student-attendance-grid {
     width: 100%;
     margin: 20px 0;
 }
@@ -88,7 +94,7 @@
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
-    .dashboard-grid {
+    .student-dashboard-grid {
         flex-direction: column;
         gap: 15px;
     }
@@ -97,7 +103,7 @@
         font-size: 28px;
     }
 
-    .dashboard-card {
+    .student-dashboard-card {
         width: 100%;
         max-width: 300px;
     }

@@ -1,9 +1,11 @@
 package com.studentinfo.views.homeprofilepage;
 
 import com.studentinfo.data.entity.Course;
+import com.studentinfo.data.entity.Student;
 import com.studentinfo.services.AttendanceService;
 import com.studentinfo.services.CourseService;
 import com.studentinfo.services.GradeService;
+import com.studentinfo.security.AuthenticatedUser;
 import com.studentinfo.views.courses.CoursesView;
 import com.studentinfo.views.editprofile.EditProfileView;
 import com.studentinfo.views.grades.GradesView;
@@ -37,14 +39,15 @@ public class StudentDashboardView extends Composite<VerticalLayout> {
     private final CourseService courseService;
     private final GradeService gradeService;
     private final AttendanceService attendanceService;
+    private final AuthenticatedUser authenticatedUser;
     private List<Course> enrolledCourses;
 
-
     @Autowired
-    public StudentDashboardView(CourseService courseService, GradeService gradeService, AttendanceService attendanceService) {
+    public StudentDashboardView(CourseService courseService, GradeService gradeService, AttendanceService attendanceService, AuthenticatedUser authenticatedUser) {
         this.courseService = courseService;
         this.gradeService = gradeService;
         this.attendanceService = attendanceService;
+        this.authenticatedUser = authenticatedUser;
 
         // Main layout setup
         getContent().addClassName("student-profile-page-view");
@@ -62,7 +65,7 @@ public class StudentDashboardView extends Composite<VerticalLayout> {
 
         // Dashboard Grid Container
         FlexLayout dashboardGrid = new FlexLayout();
-        dashboardGrid.addClassName("dashboard-grid");
+        dashboardGrid.addClassName("student-dashboard-grid");
         dashboardGrid.setFlexWrap(FlexLayout.FlexWrap.WRAP);
         dashboardGrid.setJustifyContentMode(FlexLayout.JustifyContentMode.CENTER);
 
@@ -81,6 +84,7 @@ public class StudentDashboardView extends Composite<VerticalLayout> {
 
         // Title for the dialog
         H1 title = new H1("Your Attendance");
+        title.addClassName("attendance-dialog-title");
         attendanceDialog.add(title);
 
         // Fetch the current student's number
@@ -88,6 +92,7 @@ public class StudentDashboardView extends Composite<VerticalLayout> {
 
         // Create a grid to display attendance records
         Grid<Attendance> attendanceGrid = new Grid<>(Attendance.class);
+        attendanceGrid.addClassName("student-attendance-grid");
         attendanceGrid.removeAllColumns(); // Clear existing columns
         attendanceGrid.addColumn(attendance -> attendance.getCourse().getCourseName()).setHeader("Course Name");
         attendanceGrid.addColumn(Attendance::getAttendanceDate).setHeader("Date");
@@ -108,27 +113,28 @@ public class StudentDashboardView extends Composite<VerticalLayout> {
 
         // Close button
         Button closeButton = new Button("Close", event -> attendanceDialog.close());
+        closeButton.addClassName("attendance-dialog-close-button");
         attendanceDialog.add(new HorizontalLayout(closeButton));
 
         // Open the attendance dialog
         attendanceDialog.open();
     }
 
-
     private Div createDashboardCard(String title, String description, Class<? extends Component> navigationTarget) {
         Div card = new Div();
-        card.addClassName("dashboard-card");
+        card.addClassName("student-dashboard-card");
 
         // Title
         Paragraph cardTitle = new Paragraph(title);
-        cardTitle.addClassName("dashboard-card-title");
+        cardTitle.addClassName("student-dashboard-card-title");
 
         // Description
         Paragraph cardDescription = new Paragraph(description);
-        cardDescription.addClassName("dashboard-card-description");
+        cardDescription.addClassName("student-dashboard-card-description");
 
         if (navigationTarget != null) {
             RouterLink link = new RouterLink();
+            link.addClassName("student-dashboard-card-link");
             link.setRoute(navigationTarget);
             link.add(cardTitle, cardDescription);
             card.add(link);
@@ -145,11 +151,12 @@ public class StudentDashboardView extends Composite<VerticalLayout> {
         return card;
     }
 
-
-
     private Long getCurrentStudentNumber() {
-        // Placeholder method: Replace with logic to fetch the current student number
-        // For example: return userService.getCurrentStudentNumber();
-        return 123L; // Temporary static student number for demonstration
+        return authenticatedUser.get().map(user -> {
+            if (user instanceof Student) {
+                return ((Student) user).getStudentNumber();
+            }
+            return null;
+        }).orElse(null);
     }
 }
