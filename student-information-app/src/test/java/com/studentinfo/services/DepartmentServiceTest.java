@@ -1,0 +1,60 @@
+package com.studentinfo.services;
+
+import com.studentinfo.data.entity.Department;
+import com.studentinfo.data.repository.DepartmentRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Optional;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+class DepartmentServiceTest {
+
+    @Mock
+    private DepartmentRepository departmentRepository;
+
+    @InjectMocks
+    private DepartmentService departmentService;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    void testFindDefaultDepartment() {
+        Department defaultDepartment = new Department("Default Department");
+
+        when(departmentRepository.findByName("Default Department")).thenReturn(Optional.of(defaultDepartment));
+
+        Department result = departmentService.findDefaultDepartment();
+
+        assertEquals(defaultDepartment, result);
+        verify(departmentRepository, times(1)).findByName("Default Department");
+    }
+
+    @Test
+    void testFindDefaultDepartmentNotFound() {
+        Department defaultDepartment = new Department("Default Department");
+
+        when(departmentRepository.findByName("Default Department")).thenReturn(Optional.empty());
+        when(departmentRepository.save(any(Department.class))).thenReturn(defaultDepartment);
+
+        Department result = departmentService.findDefaultDepartment();
+
+        assertEquals(defaultDepartment, result);
+        verify(departmentRepository, times(1)).findByName("Default Department");
+        verify(departmentRepository, times(1)).save(any(Department.class));
+    }
+
+}
