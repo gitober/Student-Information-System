@@ -23,8 +23,9 @@ class StudentRepositoryTest {
     public void setUp() {
         testStudent = new Student();
         testStudent.setUsername("John_doe");
-        testStudent.setName("John Doe");
+        testStudent.setFirstName("John");
         testStudent.setEmail("john.doe.email.com");
+        testStudent.setUserType("STUDENT");
 
         // Save the student to the database
         studentRepository.save(testStudent);
@@ -37,7 +38,8 @@ class StudentRepositoryTest {
 
         assertNotNull(student);
         assertEquals("John_doe", student.getUsername());
-        assertEquals("John Doe", student.getName());
+        assertEquals("John", student.getFirstName());
         assertEquals("john.doe.email.com", student.getEmail());
+        assertEquals("STUDENT", student.getUserType());
     }
 }

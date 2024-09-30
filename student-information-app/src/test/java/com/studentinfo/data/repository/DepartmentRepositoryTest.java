@@ -22,7 +22,7 @@ class DepartmentRepositoryTest {
     void setUp() {
         // Create a test department
         testDepartment = new Department();
-        testDepartment.setName("Science");
+        testDepartment.setDepartmentName("Science");
 
         // Save the department to the database
         departmentRepository.save(testDepartment);
@@ -34,7 +34,7 @@ class DepartmentRepositoryTest {
         Department department = departmentRepository.findByName("Science").orElse(null);
 
         assertNotNull(department);
-        assertEquals("Science", department.getName());
+        assertEquals("Science", department.getDepartmentName());
     }
 
 }

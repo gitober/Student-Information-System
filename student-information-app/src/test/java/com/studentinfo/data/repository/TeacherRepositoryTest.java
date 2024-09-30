@@ -8,8 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @ActiveProfiles("test")
@@ -26,6 +27,7 @@ class TeacherRepositoryTest {
         testTeacher.setUsername("John_doe");
         testTeacher.setFirstName("John");
         testTeacher.setEmail("john.doe.email.com");
+        testTeacher.setUserType("TEACHER");
 
         // Save the teacher to the database
         teacherRepository.save(testTeacher);
@@ -33,12 +35,16 @@ class TeacherRepositoryTest {
 
     @Test
     public void testFindByUsername() {
-        Teacher teacher = teacherRepository.findByUsername("John_doe");
+        Optional<Teacher> optionalTeacher = teacherRepository.findByUsername("John_doe");
+
+        assertTrue(optionalTeacher.isPresent(), "Teacher should be present");
+        Teacher teacher = optionalTeacher.get();
 
         assertNotNull(teacher);
         assertEquals("John_doe", teacher.getUsername());
-        assertEquals("John Doe", teacher.getFirstName());
+        assertEquals("John", teacher.getFirstName());
         assertEquals("john.doe.email.com", teacher.getEmail());
+        assertEquals("TEACHER", teacher.getUserType());
     }
 
 }

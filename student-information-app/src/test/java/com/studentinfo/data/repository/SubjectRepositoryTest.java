@@ -30,8 +30,8 @@ class SubjectRepositoryTest {
     @BeforeEach
     public void setUp() {
         testDepartment = new Department();
-        testDepartment.setId(1L);
-        testDepartment.setName("Science");
+        testDepartment.setDepartmentId(1L);
+        testDepartment.setDepartmentName("Science");
 
         // Save the department to the database
         departmentRepository.save(testDepartment);
