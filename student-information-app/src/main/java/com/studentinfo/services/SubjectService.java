@@ -11,6 +11,7 @@ import java.util.Optional;
 @Service
 public class SubjectService {
 
+    // Repository
     private final SubjectRepository subjectRepository;
 
     @Autowired
@@ -18,11 +19,16 @@ public class SubjectService {
         this.subjectRepository = subjectRepository;
     }
 
+    // CRUD Operations
+
+    // Retrieve all subjects
     public List<Subject> findAll() {
         return subjectRepository.findAll();
     }
 
-    // Method to find a default subject, creating one if none exists
+    // Additional Operations
+
+    // Find a default subject, creating one if none exists
     public Subject findDefaultSubject() {
         Optional<Subject> defaultSubject = subjectRepository.findByName("Default Subject");
         return defaultSubject.orElseGet(() -> {

@@ -14,21 +14,41 @@ import com.studentinfo.views.editprofile.TeacherEditProfileView;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserContentLoader {
 
+    // Dependencies
     private final AuthenticatedUser authenticatedUser;
     private final TeacherService teacherService;
     private final StudentService studentService;
     private final DepartmentService departmentService;
     private final SubjectService subjectService;
 
-    // Constructor injection for AuthenticatedUser, TeacherService, StudentService, DepartmentService, and SubjectService
+    // Lazy-Loaded Views
     @Autowired
-    public UserContentLoader(AuthenticatedUser authenticatedUser, TeacherService teacherService, StudentService studentService,
-                             DepartmentService departmentService, SubjectService subjectService) {
+    @Lazy
+    private TeacherCoursesView teacherCoursesView;
+
+    @Autowired
+    @Lazy
+    private StudentCoursesView studentCoursesView;
+
+    @Autowired
+    @Lazy
+    private TeacherGradesView teacherGradesView;
+
+    @Autowired
+    @Lazy
+    private StudentGradesView studentGradesView;
+
+    // Constructor for dependency injection
+    @Autowired
+    public UserContentLoader(AuthenticatedUser authenticatedUser, TeacherService teacherService,
+                             StudentService studentService, DepartmentService departmentService,
+                             SubjectService subjectService) {
         this.authenticatedUser = authenticatedUser;
         this.teacherService = teacherService;
         this.studentService = studentService;
@@ -36,10 +56,11 @@ public class UserContentLoader {
         this.subjectService = subjectService;
     }
 
-    // Method to load profile content
-    public void loadContent(VerticalLayout layout) {
+    // Methods to Load Content
+
+    // Load profile content based on user role
+    public void loadProfileContent(VerticalLayout layout) {
         authenticatedUser.get().ifPresentOrElse(user -> {
-            // Check if the user is a Teacher or Student based on instance
             if (user instanceof Teacher) {
                 layout.add(new TeacherDashboardView());
             } else if (user instanceof Student) {
@@ -47,66 +68,51 @@ public class UserContentLoader {
             } else {
                 layout.add(new Paragraph("Role not recognized. Please contact support."));
             }
-        }, () -> {
-            layout.add(new Paragraph("User not found. Please log in again."));
-        });
+        }, () -> layout.add(new Paragraph("User not found. Please log in again.")));
     }
 
-    // Method to load courses content
+    // Load courses content based on user role
     public void loadCoursesContent(VerticalLayout layout) {
         authenticatedUser.get().ifPresentOrElse(user -> {
-            // Check if the user is a Teacher or Student based on instance
             if (user instanceof Teacher) {
-                layout.add(new TeacherCoursesView());
+                layout.add(teacherCoursesView);
             } else if (user instanceof Student) {
-                layout.add(new StudentCoursesView());
+                layout.add(studentCoursesView);
             } else {
                 layout.add(new Paragraph("Role not recognized. Please contact support."));
             }
-        }, () -> {
-            layout.add(new Paragraph("User not found. Please log in again."));
-        });
+        }, () -> layout.add(new Paragraph("User not found. Please log in again.")));
     }
 
-    // Method to load grades content
+    // Load grades content based on user role
     public void loadGradesContent(VerticalLayout layout) {
         authenticatedUser.get().ifPresentOrElse(user -> {
-            System.out.println("User found: " + user.getUsername()); // Debugging log
             if (user instanceof Teacher) {
-                layout.add(new TeacherGradesView());
+                layout.add(teacherGradesView);
             } else if (user instanceof Student) {
-                layout.add(new StudentGradesView());
+                layout.add(studentGradesView);
             } else {
                 layout.add(new Paragraph("Role not recognized. Please contact support."));
             }
-        }, () -> {
-            layout.add(new Paragraph("User not found. Please log in again."));
-        });
+        }, () -> layout.add(new Paragraph("User not found. Please log in again.")));
     }
 
-    // Method to load edit profile content
+    // Load edit profile content based on user role
     public void loadEditProfileContent(VerticalLayout layout) {
         authenticatedUser.get().ifPresentOrElse(user -> {
             if (user instanceof Teacher) {
                 Teacher teacher = (Teacher) user;
-                // Pass the Teacher, DepartmentService, and SubjectService to the view
                 TeacherEditProfileView teacherView = new TeacherEditProfileView(teacher, departmentService, subjectService);
-                teacherView.setSaveListener(updatedTeacher -> {
-                    teacherService.save(updatedTeacher); // Save updated profile
-                });
+                teacherView.setSaveListener(updatedTeacher -> teacherService.save(updatedTeacher));
                 layout.add(teacherView);
             } else if (user instanceof Student) {
                 Student student = (Student) user;
                 StudentEditProfileView studentView = new StudentEditProfileView(student);
-                studentView.setSaveListener(updatedStudent -> {
-                    studentService.save(updatedStudent); // Save updated profile
-                });
+                studentView.setSaveListener(updatedStudent -> studentService.save(updatedStudent));
                 layout.add(studentView);
             } else {
                 layout.add(new Paragraph("Role not recognized. Please contact support."));
             }
-        }, () -> {
-            layout.add(new Paragraph("User not found. Please log in again."));
-        });
+        }, () -> layout.add(new Paragraph("User not found. Please log in again.")));
     }
 }

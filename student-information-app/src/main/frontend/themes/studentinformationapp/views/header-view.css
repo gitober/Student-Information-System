@@ -8,7 +8,7 @@
 .header {
     width: 100%;
     height: var(--header-height, 60px); /* Fallback height */
-    background-color: var(--primary-color, #007BFF); /* Fallback color */
+    background-color: black; /* Fallback color */
     display: flex;
     align-items: center;
     padding: 0 20px;
@@ -41,6 +41,28 @@
     display: inline-block; /* Ensure Home link is always visible */
 }
 
+.logout-button {
+    background-color: #5ea9f4;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+/* Logout button hover */
+.logout-button:hover {
+    background-color: #4076aa;
+}
+
+/* Container for logo and title */
+.logo-title-container {
+    display: flex;
+    align-items: center;
+}
+
+
 /* Hide other links on smaller screens */
 @media (max-width: 576px) {
     .router-link {
@@ -55,23 +77,4 @@
 }
 
 /* Logout button styles */
-.logout-button {
-    background-color: #e6a14d;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-}
 
-/* Logout button hover */
-.logout-button:hover {
-    background-color: #d89441;
-}
-
-/* Container for logo and title */
-.logo-title-container {
-    display: flex;
-    align-items: center;
-}

@@ -59,13 +59,17 @@ public class TeacherEditProfileView extends VerticalLayout {
 
         departmentComboBox = new ComboBox<>("Department");
         departmentComboBox.setItems(departmentService.findAll());
-        departmentComboBox.setItemLabelGenerator(Department::getName);
+        System.out.println("Departments: " + departmentService.findAll());
+        departmentComboBox.setItemLabelGenerator(department ->
+                department != null && department.getDepartmentName() != null ? department.getDepartmentName() : "N/A");
         departmentComboBox.setValue(teacher.getDepartment());
         departmentComboBox.addClassName("teacher-edit-profile-view-combobox");
 
         subjectComboBox = new ComboBox<>("Subject");
         subjectComboBox.setItems(subjectService.findAll());
-        subjectComboBox.setItemLabelGenerator(Subject::getName);
+        System.out.println("Subjects: " + subjectService.findAll());
+        subjectComboBox.setItemLabelGenerator(subject ->
+                subject != null && subject.getName() != null ? subject.getName() : "N/A");
         subjectComboBox.setValue(teacher.getSubject());
         subjectComboBox.addClassName("teacher-edit-profile-view-combobox");
 
@@ -106,7 +110,7 @@ public class TeacherEditProfileView extends VerticalLayout {
         currentDetailsLayout.add(createDetailLayout("Name", teacher.getFirstName() + " " + teacher.getLastName()));
         currentDetailsLayout.add(createDetailLayout("Email", teacher.getEmail()));
         currentDetailsLayout.add(createDetailLayout("Phone Number", teacher.getPhoneNumber()));
-        currentDetailsLayout.add(createDetailLayout("Department", teacher.getDepartment() != null ? teacher.getDepartment().getName() : "N/A"));
+        currentDetailsLayout.add(createDetailLayout("Department", teacher.getDepartment() != null ? teacher.getDepartment().getDepartmentName() : "N/A"));
         currentDetailsLayout.add(createDetailLayout("Subject", teacher.getSubject() != null ? teacher.getSubject().getName() : "N/A"));
     }
 

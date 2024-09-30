@@ -19,20 +19,20 @@ import java.util.stream.Collectors;
 @Builder
 @Entity
 @Table(name = "users")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
-@DiscriminatorValue("USER")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User implements UserDetails {
 
+    // Fields
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
 
+    @Column(unique = true, nullable = false)
     private String username;
-    private String name;
 
     @JsonIgnore
-    @Column(length = 60)
+    @Column(length = 60, name = "hashed_password")
     private String hashedPassword;
 
     @Enumerated(EnumType.STRING)
@@ -41,30 +41,60 @@ public class User implements UserDetails {
     @Column(name = "roles")
     private Set<Role> roles;
 
+    @Column(name = "first_name")
     private String firstName;
+
+    @Column(name = "last_name")
     private String lastName;
+
     private LocalDate birthday;
+
+    @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(unique = true, nullable = false) // Adding email as a unique and not-nullable field
+    @Column(unique = true, nullable = false)
     private String email;
 
-    // Getters and Setters for the new field
-    public String getEmail() {
-        return email;
-    }
+    @Column(name = "student_number", unique = true, nullable = true)
+    private Long studentNumber;
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    @Column(name = "user_type", nullable = false)
+    private String userType;
 
-    // Getters and setters
+    // Constructors
+    public User() {}
+
+    // Getters and Setters
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getHashedPassword() {
+        return hashedPassword;
+    }
+
+    public void setHashedPassword(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public String getFirstName() {
@@ -99,52 +129,43 @@ public class User implements UserDetails {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getName() {
-        return name;
+    public Long getStudentNumber() {
+        return studentNumber;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setStudentNumber(Long studentNumber) {
+        this.studentNumber = studentNumber;
     }
 
-    public String getHashedPassword() {
-        return hashedPassword;
+    public String getUserType() {
+        return userType;
     }
 
-    public void setHashedPassword(String hashedPassword) {
-        this.hashedPassword = hashedPassword;
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    // Method to convert roles to GrantedAuthority
-    public Set<GrantedAuthority> getRoleAuthorities() {
-        // Prefix each role with "ROLE_" to match Spring Security conventions
+    // Methods for Role Authorities
+    private Set<GrantedAuthority> getRoleAuthorities() {
         return roles.stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
                 .collect(Collectors.toSet());
     }
 
-    // Implementations of UserDetails interface
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoleAuthorities();
     }
 
+    // Override methods from UserDetails
     @Override
     public String getPassword() {
         return getHashedPassword();
@@ -168,5 +189,25 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    // Override equals and hashCode
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return id != null && id.equals(user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 31;
+    }
+
+    // Override toString
+    @Override
+    public String toString() {
+        return this.firstName + " " + this.lastName;
     }
 }

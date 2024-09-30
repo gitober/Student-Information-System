@@ -17,13 +17,12 @@ public class TeacherDashboardView extends VerticalLayout {
 
         // Add welcome text
         H1 welcomeText = new H1("Teacher Dashboard");
-        welcomeText.addClassName("welcome-text"); // Add a class for custom styles
+        welcomeText.addClassName("welcome-text");
         add(welcomeText);
 
-        // Add smaller description text
+        // Add description text
         Paragraph descriptionText = new Paragraph("Manage courses, view student performance, and much more.");
         descriptionText.addClassName("description-text");
         add(descriptionText);
-
     }
 }

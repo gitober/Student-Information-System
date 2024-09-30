@@ -3,8 +3,13 @@ package com.studentinfo.data.repository;
 import com.studentinfo.data.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
-    User findByUsername(String username); // Existing method
-    User findByEmail(String email); // New method to find users by email
+
+    // Find a user by username
+    Optional<User> findByUsername(String username);
+
+    // Find a user by email
+    Optional<User> findByEmail(String email);
 }

@@ -4,23 +4,26 @@
     align-items: center;
     justify-content: flex-start;
     min-height: calc(100vh - 60px);
-    background-color: #ffffff;
+    background-image: url('./images/koulu.jpg'); /* Aseta taustakuva */
+    background-size: cover; /* Peittää koko alueen */
+    background-position: center; /* Keskittää kuvan */
     padding: 20px;
+    color: black; /* Tekstin väri mustaksi */
 }
 
 .teacher-edit-profile-view-title {
     font-size: 36px;
     font-weight: bold;
-    color: #333;
     margin-bottom: 20px;
 }
+
 
 .teacher-edit-profile-view-current-details-layout {
     flex: 1;
     max-width: 35%; /* Restrict the maximum width to make it smaller */
     min-width: 0;
     padding: 13px; /* Reduce padding to make it more compact */
-    background-color: #E8F5E9FF;
+    background-color: #cde0ec;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -67,7 +70,7 @@
     max-width: 35%; /* Ensure the form layout has a bit more space */
     min-width: 0;
     padding: 20px;
-    background-color: #E8F5E9FF;
+    background-color: #cde0ec;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);

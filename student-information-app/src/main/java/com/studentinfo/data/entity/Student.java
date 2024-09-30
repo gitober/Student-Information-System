@@ -1,16 +1,35 @@
 package com.studentinfo.data.entity;
 
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@DiscriminatorValue("STUDENT")  // This value will be stored in the `user_type` column for students
+@DiscriminatorValue("STUDENT")
 public class Student extends User {
 
+    // Fields
+    private String address;
     private String grade;
     private String studentClass;
 
-    // Getters and setters
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "registration",
+            joinColumns = @JoinColumn(name = "student_number", referencedColumnName = "student_number"),
+            inverseJoinColumns = @JoinColumn(name = "course_id", referencedColumnName = "course_id")
+    )
+    private Set<Course> courses = new HashSet<>();
+
+    // Getters and Setters
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public String getGrade() {
         return grade;
     }
@@ -25,5 +44,13 @@ public class Student extends User {
 
     public void setStudentClass(String studentClass) {
         this.studentClass = studentClass;
+    }
+
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
     }
 }

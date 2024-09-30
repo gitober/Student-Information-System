@@ -1,0 +1,199 @@
+.teacher-grades-view-container {
+    background-color: #cde0ec;
+    padding: 20px;
+    border-radius: 8px;
+    margin: auto;
+    height: 100%;
+    max-width: 100%;
+    overflow: auto;
+}
+
+.teacher-grades-view-title {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.teacher-grades-view-description {
+    font-size: 14px; /* Adjust font size as needed */
+    color: #333; /* Lighter color for description */
+    margin-bottom: 20px; /* Space below the description */
+}
+
+.teacher-grades-view-search-field {
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 400px; /* Set a maximum width */
+    padding: 10px; /* Padding for better appearance */
+    border: none; /* Remove border style */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #f9f9f9; /* Background color */
+    transition: border-color 0.3s ease; /* Transition for border color on focus */
+}
+
+.teacher-grades-view-grid {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.teacher-grades-view-course-combobox,
+.teacher-grades-view-student-combobox,
+.teacher-grades-view-course-combobox-dialog,
+.teacher-grades-view-student-combobox-dialog {
+    margin-bottom: 20px; /* Space below the dropdown */
+    width: 100%; /* Fill the container */
+    max-width: 400px; /* Match the maximum width of other inputs */
+    padding: 10px; /* Consistent padding */
+    border: none; /* Remove border style */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #f9f9f9; /* Match the background color */
+    transition: border-color 0.3s ease; /* Transition for border color on focus */
+}
+
+.teacher-grades-view-course-combobox-dialog:focus,
+.teacher-grades-view-student-combobox-dialog:focus {
+    border-color: #007bff; /* Change border color on focus */
+    outline: none; /* Remove outline */
+}
+
+.teacher-grades-view-course-column,
+.teacher-grades-view-student-column,
+.teacher-grades-view-grade-column {
+    text-align: left;
+    padding: 10px;
+}
+
+.teacher-grades-view-action-buttons {
+    gap: 10px;
+}
+
+.teacher-grades-view-edit-button,
+.teacher-grades-view-delete-button,
+.teacher-grades-view-add-grade-button {
+    background-color: #FDB069; /* Accent color for buttons */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition effect */
+}
+
+.teacher-grades-view-edit-button:hover,
+.teacher-grades-view-delete-button:hover,
+.teacher-grades-view-add-grade-button:hover {
+    background-color: #e08d53; /* Slightly darker on hover */
+}
+
+.teacher-grades-view-dialog-buttons {
+    margin-top: 20px;
+    justify-content: center; /* Center buttons in dialogs */
+}
+
+/* Dialog style */
+.teacher-grades-view-edit-grade-dialog,
+.teacher-grades-view-add-grade-dialog {
+    width: 400px; /* Fixed width for consistency */
+    background-color: #ffffff; /* White background for the dialog */
+    padding: 20px; /* Padding around the content */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+/* Add a backdrop to the dialog */
+.v-dialog-container {
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent dark background for contrast */
+}
+
+.teacher-grades-view-grade-field {
+    width: 100%;
+    margin-bottom: 10px; /* Space below the input */
+    padding: 10px; /* Padding for better appearance */
+    border: none; /* Remove border style */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #f9f9f9; /* Match the background color */
+    transition: border-color 0.3s ease; /* Transition for border color on focus */
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 1200px) {
+    .teacher-grades-view-title {
+        font-size: 22px; /* Adjust title size for smaller screens */
+    }
+
+    .teacher-grades-view-search-field {
+        max-width: 300px; /* Reduce search field width */
+    }
+
+    .teacher-grades-view-grid {
+        border: 1px solid #ddd;
+    }
+
+    .teacher-grades-view-edit-button,
+    .teacher-grades-view-delete-button,
+    .teacher-grades-view-add-grade-button {
+        padding: 5px 8px; /* Smaller button padding */
+    }
+
+    .teacher-grades-view-edit-grade-dialog,
+    .teacher-grades-view-add-grade-dialog {
+        width: 90%; /* Make dialog width responsive */
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .teacher-grades-view-container {
+        padding: 10px; /* Reduce padding for smaller screens */
+    }
+
+    .teacher-grades-view-title {
+        font-size: 20px;
+        text-align: center; /* Center the title on smaller screens */
+    }
+
+    .teacher-grades-view-grid {
+        width: 100%;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .teacher-grades-view-edit-button,
+    .teacher-grades-view-delete-button,
+    .teacher-grades-view-add-grade-button {
+        width: 100%;
+        padding: 5px 10px; /* Full-width buttons on smaller screens */
+    }
+
+    .teacher-grades-view-dialog-buttons {
+        justify-content: center; /* Center buttons in dialogs */
+    }
+
+    .teacher-grades-view-edit-grade-dialog,
+    .teacher-grades-view-add-grade-dialog {
+        width: 100%; /* Full width on mobile */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .teacher-grades-view-title {
+        font-size: 18px; /* Smaller title font size */
+    }
+
+    .teacher-grades-view-search-field {
+        max-width: 100%; /* Full-width search bar on very small screens */
+    }
+
+    .teacher-grades-view-grid {
+        width: 100%;
+    }
+
+    .teacher-grades-view-edit-button,
+    .teacher-grades-view-delete-button,
+    .teacher-grades-view-add-grade-button {
+        font-size: 10px; /* Smaller font for buttons */
+        padding: 4px 8px; /* Smaller padding */
+    }
+}

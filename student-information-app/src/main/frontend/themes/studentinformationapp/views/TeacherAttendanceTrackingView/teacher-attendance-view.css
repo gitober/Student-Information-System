@@ -1,1 +1,182 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Main container styling */
+.teacher-attendance-view-container {
+    background-color: #cde0ec;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 98%;
+    margin: 76px auto;
+    min-height: 80vh;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: auto;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Header styles */
+.teacher-attendance-header {
+    font-size: 24px;
+    margin: 0;
+    color: black;
+    text-align: left;
+}
+
+.teacher-attendance-description {
+    color: black;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+/* Search bar */
+.teacher-attendance-search {
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Grid styling */
+.teacher-attendance-grid {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+/* Dialog styles */
+.teacher-attendance-dialog {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+}
+
+.teacher-attendance-dialog-layout {
+    gap: 10px;
+}
+
+.teacher-attendance-dialog-title {
+    font-size: 20px;
+    color: black; /* Ensure dialog title text is black */
+    margin-bottom: 20px;
+}
+
+/* Form fields */
+.teacher-attendance-student-combobox,
+.teacher-attendance-course-combobox,
+.teacher-attendance-status-combobox,
+.teacher-attendance-date-picker {
+    width: 100%;
+    color: black; /* Input field text color */
+}
+
+/* Button common styles */
+.teacher-attendance-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white; /* Ensure button text is white */
+    transition: background-color 0.3s ease;
+}
+
+/* Add button */
+.teacher-attendance-add-button {
+    background-color: #e6a14d;
+    color: white; /* Ensure button text is white */
+}
+
+.teacher-attendance-add-button:hover {
+    background-color: #cc8c40;
+    color: white; /* Ensure button text remains white on hover */
+}
+
+/* Save button */
+.teacher-attendance-save-button {
+    background-color: #FDB069;
+    color: white; /* Ensure button text is white */
+}
+
+.teacher-attendance-save-button:hover {
+    background-color: #e08d53;
+    color: white; /* Ensure button text remains white on hover */
+}
+
+/* Edit button */
+.teacher-attendance-edit-button {
+    background-color: #FDB069;
+    color: white; /* Ensure button text is white */
+}
+
+.teacher-attendance-edit-button:hover {
+    background-color: #e08d53;
+    color: white; /* Ensure button text remains white on hover */
+}
+
+/* Delete button */
+.teacher-attendance-delete-button {
+    background-color: #fdb069;
+    color: white; /* Ensure button text is white */
+}
+
+.teacher-attendance-delete-button:hover {
+    background-color: #e08d53;
+    color: white; /* Ensure button text remains white on hover */
+}
+
+/* Close button */
+.teacher-attendance-close-button {
+    background-color: #E08D53FF;
+    color: white; /* Ensure button text is white */
+}
+
+.teacher-attendance-close-button:hover {
+    background-color: #cc6b3a;
+    color: white; /* Ensure button text remains white on hover */
+}
+
+/* Action buttons container */
+.teacher-attendance-action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* Dialog button layout */
+.teacher-attendance-dialog-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Confirmation dialog specific styles */
+.teacher-attendance-dialog-instruction {
+    color: #333;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .teacher-attendance-view-container {
+        padding: 10px;
+    }
+
+    .teacher-attendance-dialog {
+        max-width: 90%;
+    }
+
+    .teacher-attendance-dialog-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .teacher-attendance-button {
+        font-size: 14px;
+        padding: 8px;
+    }
+}

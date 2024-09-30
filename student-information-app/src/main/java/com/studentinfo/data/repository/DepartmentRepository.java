@@ -8,6 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface DepartmentRepository extends JpaRepository<Department, Long> {
+
     // Add the findByName method to find a department by its name
     Optional<Department> findByName(String name);
 }

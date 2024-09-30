@@ -1,7 +1,9 @@
 package com.studentinfo.services;
 
+import com.studentinfo.data.entity.Student;
 import com.studentinfo.data.entity.User;
 import com.studentinfo.data.repository.UserRepository;
+import com.studentinfo.security.AuthenticatedUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,35 +22,69 @@ import java.util.Optional;
 @Service
 public class UserService {
 
+    // Dependencies
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager; // Use Spring Security's AuthenticationManager
+    private final AuthenticationManager authenticationManager;
+    private final AuthenticatedUser authenticatedUser;
 
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder,
+                       AuthenticationManager authenticationManager, AuthenticatedUser authenticatedUser) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.authenticatedUser = authenticatedUser;
     }
 
-    // Authenticate user based on username and password
-    public Optional<User> authenticate(String username, String password) {
-        // Perform authentication using Spring Security's AuthenticationManager
+    // Public Methods
+
+    // Get the current authenticated user's student number
+    public Long getCurrentStudentNumber() {
+        Optional<User> currentUser = authenticatedUser.get();
+
+        if (currentUser.isPresent()) {
+            User user = currentUser.get();
+            System.out.println("Debug: Current user is present, user type: " + user.getClass().getSimpleName());
+
+            if (user instanceof Student) {
+                Long studentNumber = ((Student) user).getStudentNumber();
+                System.out.println("Debug: Retrieved student number: " + studentNumber);
+                return studentNumber;
+            } else {
+                System.out.println("Debug: Current user is not a student.");
+            }
+        } else {
+            System.out.println("Debug: No current user found.");
+        }
+
+        return null; // Return null if no student is found
+    }
+
+    // Authenticate user based on email and password
+    public Optional<User> authenticate(String email, String password) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(username, password)
+                new UsernamePasswordAuthenticationToken(email, password)
         );
 
-        // Set the authenticated user in the SecurityContext
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        // Fetch the user from the repository after authentication is successful
-        Optional<User> userOptional = Optional.ofNullable(userRepository.findByUsername(username));
-
-        // Logging authenticated roles (for debugging)
-        userOptional.ifPresent(user -> System.out.println("Authenticated user roles: " + authentication.getAuthorities()));
-
-        return userOptional;
+        return userRepository.findByEmail(email);
     }
+
+    // CRUD Operations
+
+    // Find a user by email
+    public User findByUsername(String username) {
+        Optional<User> userOptional = userRepository.findByUsername(username);
+        return userOptional.orElse(null); // Return the user if found, or null if not found
+    }
+
+    // Get the current authenticated user
+    public User getCurrentUser() {
+        Optional<User> currentUser = authenticatedUser.get(); // Assuming authenticatedUser is set up correctly
+        return currentUser.orElse(null);
+    }
+
 
     // List all users
     public List<User> list() {
@@ -70,7 +106,9 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    // Helper method to get the current HttpServletRequest
+    // Private Helper Methods
+
+    // Get the current HttpServletRequest
     private HttpServletRequest getRequest() {
         try {
             ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
@@ -80,7 +118,7 @@ public class UserService {
         }
     }
 
-    // Helper method to get the current HttpServletResponse
+    // Get the current HttpServletResponse
     private HttpServletResponse getResponse() {
         try {
             ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();

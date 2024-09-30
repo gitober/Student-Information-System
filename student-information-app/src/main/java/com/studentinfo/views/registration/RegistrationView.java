@@ -51,13 +51,13 @@ public class RegistrationView extends Composite<VerticalLayout> {
         mainLayout.add(header);
 
         // Add padding to ensure content starts below the header
-        mainLayout.getStyle().set("padding-top", "60px"); // Adjust padding to match header height
+        mainLayout.getStyle().set("padding-top", "60px");
 
         // Layout for form and content
         VerticalLayout layoutColumn2 = new VerticalLayout();
         layoutColumn2.setWidth("100%");
         layoutColumn2.setMaxWidth("800px");
-        layoutColumn2.setHeight("min-content"); // UNDER HEADER STOP
+        layoutColumn2.setHeight("min-content");
         layoutColumn2.setAlignItems(Alignment.CENTER);
         layoutColumn2.setJustifyContentMode(JustifyContentMode.CENTER);
         layoutColumn2.addClassName("registration-form");
@@ -136,6 +136,6 @@ public class RegistrationView extends Composite<VerticalLayout> {
         layoutColumn2.add(buttonLayout);
 
         // Add the form layout to the main layout
-        mainLayout.addAndExpand(layoutColumn2); // Expands the content layout to fill available space
+        mainLayout.addAndExpand(layoutColumn2);
     }
 }

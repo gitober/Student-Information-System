@@ -1,0 +1,156 @@
+.teacher-courses-view-container {
+    background-color: #cde0ec;
+    padding: 20px;
+    border-radius: 8px;
+    margin: auto;
+    height: 100%;
+    max-width: 100%;
+    overflow: auto;
+}
+
+.teacher-courses-view-title {
+    color: #333;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.teacher-courses-view-search {
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 15px;
+}
+
+.teacher-courses-view-grid {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+/* Button styles */
+
+.teacher-courses-view-action-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-top: 10px;
+}
+
+.teacher-courses-view-add-button {
+    color: #ffffff; /* Text color */
+    background-color: #FDB069; /* Button background color */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 12px;
+    margin-bottom: 5px;
+    flex: 1;
+    min-width: 120px; /* Adjust this value to control the button width */
+}
+
+/* Hover effect for the add button */
+.teacher-courses-view-add-button:hover {
+    background-color: #e08d53; /* Hover background color */
+}
+
+
+.teacher-courses-view-edit-button,
+.teacher-courses-view-details-button,
+.teacher-courses-view-delete-button,
+.teacher-courses-view-save-button,
+.teacher-courses-view-cancel-button,
+.teacher-courses-view-close-button,
+.teacher-courses-view-confirm-button,
+.teacher-courses-view-cancel-delete-button,
+.teacher-courses-view-add-save-button,
+.teacher-courses-view-add-cancel-button {
+    color: #ffffff; /* Text color */
+    background-color: #FDB069; /* Button background color */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 12px;
+    margin-bottom: 5px;
+    flex: 1;
+}
+
+/* Button hover effect */
+.teacher-courses-view-edit-button:hover,
+.teacher-courses-view-details-button:hover,
+.teacher-courses-view-delete-button:hover,
+.teacher-courses-view-save-button:hover,
+.teacher-courses-view-cancel-button:hover,
+.teacher-courses-view-close-button:hover,
+.teacher-courses-view-confirm-button:hover,
+.teacher-courses-view-cancel-delete-button:hover,
+.teacher-courses-view-add-save-button:hover,
+.teacher-courses-view-add-cancel-button:hover {
+    background-color: #e08d53; /* Hover background color */
+}
+
+
+.teacher-courses-view-dialog-buttons {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.teacher-courses-view-add-button {
+    margin-top: 15px;
+}
+
+/* Dialogs */
+.teacher-courses-view-edit-dialog,
+.teacher-courses-view-details-dialog,
+.teacher-courses-view-delete-dialog,
+.teacher-courses-view-add-dialog {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+/* Form fields inside dialogs */
+.teacher-courses-view-course-name-field,
+.teacher-courses-view-course-plan-field,
+.teacher-courses-view-start-date-picker,
+.teacher-courses-view-end-date-picker,
+.teacher-courses-view-add-course-name,
+.teacher-courses-view-add-course-plan,
+.teacher-courses-view-add-start-date,
+.teacher-courses-view-add-end-date {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* Student grid in the details dialog */
+.teacher-courses-view-student-grid {
+    width: 100%;
+}
+
+.teacher-courses-view-student-firstname,
+.teacher-courses-view-student-lastname,
+.teacher-courses-view-student-email,
+.teacher-courses-view-student-phonenumber {
+    padding: 5px;
+    text-align: left;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 1550px) {
+    .teacher-courses-view-grid {
+        display: block;
+        overflow-x: visible;
+    }
+
+    .teacher-courses-view-course-column,
+    .teacher-courses-view-plan-column,
+    .teacher-courses-view-daterange-column,
+    .teacher-courses-view-actions-column {
+        display: block;
+        width: 100%;
+        padding: 10px 0;
+        text-align: center;
+    }
+}

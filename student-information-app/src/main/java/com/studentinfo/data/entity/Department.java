@@ -6,10 +6,13 @@ import java.util.Set;
 @Entity
 public class Department {
 
+    // Fields
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "department_id")
+    private Long departmentId;
 
+    @Column(name = "department_name")
     private String name;
 
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -25,20 +28,20 @@ public class Department {
         this.name = name;
     }
 
-    // Getters and setters
-    public Long getId() {
-        return id;
+    // Getters and Setters
+    public Long getDepartmentId() {
+        return departmentId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
     }
 
-    public String getName() {
+    public String getDepartmentName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setDepartmentName(String name) {
         this.name = name;
     }
 

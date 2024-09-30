@@ -1,0 +1,170 @@
+.student-courses-view-container {
+    background-color: #FFF5BA; /* Soft background */
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 100%; /* Ensure container width doesn't exceed parent */
+    margin: auto;
+    height: 100%; /* Allow the container to take full height */
+    overflow: auto; /* Enable both vertical and horizontal scrolling */
+}
+
+.student-courses-view-title {
+    color: #333;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 5px; /* Reduce margin */
+}
+
+.student-courses-view-search {
+    width: 100%;
+    max-width: 400px;
+    margin-top: 5px; /* Add some space above if needed */
+}
+
+.student-courses-view-grid {
+    display: flex;
+    flex-wrap: wrap; /* Allow columns to wrap */
+    justify-content: space-between; /* Distribute space between columns */
+    margin: 0; /* Remove any default margin */
+}
+
+.student-courses-view-course-column,
+.student-courses-view-subject-column,
+.student-courses-view-teacher-column,
+.student-courses-view-duration-column,
+.student-courses-view-actions-column {
+    text-align: left;
+    padding: 5px; /* Reduce padding */
+    min-width: 80px; /* Set a lower minimum width */
+    flex: 1 1 0; /* Allow columns to grow/shrink */
+    white-space: nowrap; /* Prevent content wrapping */
+}
+
+.student-courses-view-attendance-button {
+    background-color: #FDB069; /* Same background color as other buttons */
+    color: white; /* Text color set to white */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 5px 10px; /* Padding for better appearance */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth transition effect */
+}
+
+.student-courses-view-attendance-button:hover {
+    background-color: #e08d53; /* Change color on hover */
+}
+
+
+/* Styling for action buttons */
+.student-courses-view-action-buttons {
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    justify-content: flex-start; /* Align buttons to the top */
+    margin-top: 10px; /* Space above the button container */
+    overflow: visible; /* Allow full visibility */
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+.student-courses-view-action-buttons button {
+    color: white; /* Text color set to white */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 5px; /* Reduced padding for tighter buttons */
+    font-size: 12px;
+    margin-bottom: 5px; /* Space between buttons */
+    min-width: 80px; /* Set a minimum width */
+    max-width: 100px; /* Set a maximum width */
+    flex: 1; /* Buttons take equal space */
+}
+
+/* Enrollment button styles */
+.student-courses-view-enroll-button {
+    background-color: #FDB069; /* Enroll button color */
+    color: white; /* Text color set to white */
+}
+
+.student-courses-view-enroll-button:hover {
+    background-color: #e08d53; /* Shared hover color */
+}
+
+/* Attendance button styles */
+.student-courses-view-attendance-button {
+    background-color: #FDB069; /* Golden Yellow */
+    color: white; /* Text color set to white */
+}
+
+.student-courses-view-attendance-button:hover {
+    background-color: #e08d53; /* Shared hover color */
+    color: white; /* Text color set to white */
+}
+
+/* Confirmation dialog specific styles */
+.student-courses-view-confirmation-dialog {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    max-width: 400px;
+}
+
+.student-courses-view-dialog-title {
+    font-size: 20px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.student-courses-view-course-field,
+.student-courses-view-teacher-field {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.student-courses-view-dialog-buttons {
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* Responsive adjustments for smaller screens */
+@media screen and (max-width: 1550px) {
+    .student-courses-view-grid {
+        display: block; /* Allow each column to stack vertically */
+        overflow-x: visible; /* Disable horizontal scrolling for small screens */
+    }
+
+    .student-courses-view-course-column,
+    .student-courses-view-subject-column,
+    .student-courses-view-teacher-column,
+    .student-courses-view-duration-column,
+    .student-courses-view-actions-column {
+        display: block; /* Stack each column vertically */
+        width: 100%; /* Take full width on small screens */
+        padding: 10px 0; /* Adjust padding for better spacing */
+        text-align: center; /* Center-align text for better readability */
+    }
+
+    .student-courses-view-action-buttons {
+        flex-wrap: nowrap; /* Keep buttons in a single row */
+        justify-content: flex-start; /* Align buttons to the left */
+    }
+}
+
+.student-courses-view-add-button {
+    margin-top: 15px;
+}
+
+.student-courses-view-edit-dialog,
+.student-courses-view-details-dialog,
+.student-courses-view-delete-dialog,
+.student-courses-view-add-course-dialog {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.student-courses-view-course-name-field,
+.student-courses-view-subject-field,
+.student-courses-view-duration-field {
+    width: 100%;
+    margin-bottom: 10px;
+}
