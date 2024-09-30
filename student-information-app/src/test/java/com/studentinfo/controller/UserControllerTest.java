@@ -48,7 +48,7 @@ public class UserControllerTest {
 
         user = User.builder()
                 .id(1L)
-                .name("John").username("johndoe")
+                .firstName("John").username("johndoe")
                 .build();
         userDTO = UserDTO.builder()
                 .name("John").username("johndoe")

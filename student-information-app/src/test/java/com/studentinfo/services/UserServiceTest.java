@@ -47,7 +47,7 @@ public class UserServiceTest {
         Authentication auth = mock(Authentication.class);
 
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenReturn(auth);
-        when(userRepository.findByUsername(username)).thenReturn(user);
+        when(userRepository.findByUsername(username)).thenReturn(Optional.of(user));
 
         Optional<User> result = userService.authenticate(username, password);
 

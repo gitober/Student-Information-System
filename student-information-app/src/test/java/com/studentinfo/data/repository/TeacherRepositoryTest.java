@@ -24,7 +24,7 @@ class TeacherRepositoryTest {
     public void setUp() {
         testTeacher = new Teacher();
         testTeacher.setUsername("John_doe");
-        testTeacher.setName("John Doe");
+        testTeacher.setFirstName("John");
         testTeacher.setEmail("john.doe.email.com");
 
         // Save the teacher to the database
@@ -37,7 +37,7 @@ class TeacherRepositoryTest {
 
         assertNotNull(teacher);
         assertEquals("John_doe", teacher.getUsername());
-        assertEquals("John Doe", teacher.getName());
+        assertEquals("John Doe", teacher.getFirstName());
         assertEquals("john.doe.email.com", teacher.getEmail());
     }
 
