@@ -9,11 +9,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -44,6 +44,7 @@ class TeacherControllerTest {
         teacher1.setLastName("Doe");
         teacher1.setEmail("john.doe@email.com");
         teacher1.setPhoneNumber("0402223344");
+        teacher1.setRoles(new HashSet<>());  // Initialize roles to prevent null errors
 
         teacher2 = new Teacher();
         teacher2.setId(2L);
@@ -51,6 +52,7 @@ class TeacherControllerTest {
         teacher2.setLastName("Williams");
         teacher2.setEmail("jane.williams@email.com");
         teacher2.setPhoneNumber("0403334455");
+        teacher2.setRoles(new HashSet<>());  // Initialize roles to prevent null errors
     }
 
     @AfterEach
@@ -89,7 +91,7 @@ class TeacherControllerTest {
     void testCreateTeacher() throws Exception {
         when(teacherService.save(any(Teacher.class))).thenReturn(teacher1);
 
-        String teacherJson = "{\"firstName\":\"John\",\"lastName\":\"Doe\",\"email\":\"john.doe@email.com\",\"phoneNumber\":\"0402223344\"}";
+        String teacherJson = "{\"firstName\":\"John\",\"lastName\":\"Doe\",\"email\":\"john.doe@email.com\",\"phoneNumber\":\"0402223344\",\"roles\":[]}";
 
         mockMvc.perform(post("/teachers")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -106,7 +108,7 @@ class TeacherControllerTest {
         when(teacherService.get(1L)).thenReturn(Optional.of(teacher1));
         when(teacherService.save(any(Teacher.class))).thenReturn(teacher1);
 
-        String teacherJson = "{\"firstName\":\"John\",\"lastName\":\"Doe\",\"email\":\"john.doe@email.com\",\"phoneNumber\":\"0402223344\"}";
+        String teacherJson = "{\"firstName\":\"John\",\"lastName\":\"Doe\",\"email\":\"john.doe@email.com\",\"phoneNumber\":\"0402223344\",\"roles\":[]}";
 
         mockMvc.perform(put("/teachers/1")
                         .contentType(MediaType.APPLICATION_JSON)

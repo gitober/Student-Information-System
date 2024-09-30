@@ -16,10 +16,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import java.util.HashSet;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(controllers = UserController.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -44,6 +46,7 @@ public class UserControllerTest {
                 .id(1L)
                 .firstName("John")
                 .username("johndoe")
+                .roles(new HashSet<>())  // Initialize roles to prevent null errors
                 .build();
 
         userDTO = UserDTO.builder()
@@ -57,13 +60,14 @@ public class UserControllerTest {
         // Mock the userService.save() method to return the created user
         given(userService.save(ArgumentMatchers.any(User.class))).willReturn(user);
 
+        // Convert the userDTO to JSON and include roles as an empty set to match the entity structure
         ResultActions response = mockMvc.perform(post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userDTO)));
 
         // Validate the response
-        response.andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("John"));
+        response.andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.firstName").value("John"));
     }
 }

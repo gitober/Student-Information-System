@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -24,6 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(GradeController.class)
+@AutoConfigureMockMvc(addFilters = false) // Disable security filters for testing
 public class GradeControllerTest {
 
     @Autowired
@@ -44,10 +46,12 @@ public class GradeControllerTest {
         course1 = new Course();
         course1.setCourseId(200L);
         course1.setCourseName("Mathematics");
+        course1.setDuration(90); // Set duration to prevent NullPointerException
 
         course2 = new Course();
         course2.setCourseId(201L);
         course2.setCourseName("Physics");
+        course2.setDuration(120); // Set duration to prevent NullPointerException
 
         // Set up grades
         grade1 = new Grade();
@@ -112,20 +116,28 @@ public class GradeControllerTest {
 
     @Test
     public void testUpdateGrade() throws Exception {
-        given(gradeService.updateGrade(1, grade1)).willReturn(grade1);
+        // Mock the updateGrade method to simulate finding and updating the grade
+        given(gradeService.updateGrade(ArgumentMatchers.eq(1), ArgumentMatchers.any(Grade.class))).willReturn(grade1);
 
+        // Convert the grade object to JSON
         String gradeJson = objectMapper.writeValueAsString(grade1);
 
+        // Perform the PUT request to update the grade
         mockMvc.perform(put("/api/grades/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(gradeJson))
-                .andExpect(status().isOk())
+                .andExpect(status().isOk()) // Expect 200 OK
                 .andExpect(jsonPath("$.gradeId").value(1))
                 .andExpect(jsonPath("$.grade").value("A"))
                 .andExpect(jsonPath("$.gradingDay").value("2024-09-30"))
                 .andExpect(jsonPath("$.studentNumber").value(100L))
                 .andExpect(jsonPath("$.course.courseId").value(200L));
     }
+
+
+
+
+
 
     @Test
     public void testDeleteGrade() throws Exception {
