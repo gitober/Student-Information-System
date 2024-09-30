@@ -39,17 +39,17 @@ public class UserServiceTest {
 
     @Test
     void testAuthenticateSuccess() {
-        String username = "testUser";
+        String userEmail = "test@email.com";
         String password = "testPassword";
         User user = new User();
-        user.setUsername(username);
+        user.setEmail(userEmail);
 
-        Authentication auth = mock(Authentication.class);
+        Authentication auth = new UsernamePasswordAuthenticationToken(userEmail, password);
 
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenReturn(auth);
-        when(userRepository.findByUsername(username)).thenReturn(Optional.of(user));
+        when(userRepository.findByEmail(userEmail)).thenReturn(Optional.of(user));
 
-        Optional<User> result = userService.authenticate(username, password);
+        Optional<User> result = userService.authenticate(userEmail, password);
 
         assertTrue(result.isPresent());
         assertEquals(user, result.get());
