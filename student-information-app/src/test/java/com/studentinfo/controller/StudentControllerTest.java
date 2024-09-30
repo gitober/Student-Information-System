@@ -6,8 +6,8 @@ import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,8 +15,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-@DataJpaTest
-@ActiveProfiles("test")
 class StudentControllerTest {
 
     @Mock
@@ -25,17 +23,15 @@ class StudentControllerTest {
     @InjectMocks
     private StudentController studentController;
 
-    Student createdStudent, updatedStudent, newStudent;
-
+    private Student newStudent, createdStudent, updatedStudent;
 
     @BeforeAll
     static void setUp() {
-        System.out.println("Starting the studentControllerTest class");
+        System.out.println("Starting the StudentControllerTest class");
     }
 
     @BeforeEach
     void init() {
-        // create a mock instance of StudentService
         MockitoAnnotations.openMocks(this);
         studentController = new StudentController(studentService);
         newStudent = new Student();
@@ -46,10 +42,10 @@ class StudentControllerTest {
         newStudent.setFirstName("John");
         newStudent.setLastName("Doe");
 
-        updatedStudent = newStudent;
+        updatedStudent = new Student();
+        updatedStudent.setId(1L);
         updatedStudent.setFirstName("Jane");
         updatedStudent.setLastName("Wayne");
-
     }
 
     @AfterEach
@@ -60,123 +56,75 @@ class StudentControllerTest {
         updatedStudent = null;
     }
 
-
-    // unit test for StudentController.getAllStudents()
+    // Unit test for StudentController.getAllStudents()
     @Test
     void testGetAllStudents() {
         List<Student> studentList = List.of(newStudent);
 
-        // Mock the studentService.list() method
         when(studentService.list()).thenReturn(studentList);
 
-        // Act
         List<Student> students = studentController.getAllStudents();
 
-        // Assert
         assertNotNull(students);
-        assertEquals(students, studentController.getAllStudents());
-        assertEquals(studentService.list(), studentController.getAllStudents());
+        assertEquals(1, students.size());
+        assertEquals(studentList, students);
     }
 
-    // unit test for StudentController.getStudentById()
+    // Unit test for StudentController.getStudentById()
     @Test
     void testGetStudentById() {
-        List<Student> studentList = List.of(newStudent);
+        when(studentService.get(1L)).thenReturn(Optional.of(newStudent));
 
-        // Mock the studentService.list() method
-        when(studentService.list()).thenReturn(studentList);
+        ResponseEntity<Student> response = studentController.getStudentById(1L);
 
-        // Act
-        Optional<Student> student = studentController.getStudentById(1L);
-
-        // check if the student is not null
-        assertNotNull(student);
-        System.out.println("Student: " + student);
+        assertNotNull(response);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertTrue(response.hasBody());
+        assertEquals(newStudent, response.getBody());
     }
 
-    // unit test for StudentController.createStudent()
+    // Unit test for StudentController.createStudent()
     @Test
     void testCreateStudent() {
-        List<Student> studentList = List.of(newStudent);
-        // save the new student by calling createStudent() method
-        when(studentService.list()).thenReturn(studentList);
+        when(studentService.save(newStudent)).thenReturn(newStudent);
 
-        // call the createStudent() method
-        createdStudent = studentController.createStudent(newStudent);
+        ResponseEntity<Student> response = studentController.createStudent(newStudent);
 
-        // check if the new student is created
-        assertNotNull(createdStudent);
-        assertEquals("John", createdStudent.getStudentClass());
-        assertEquals("Doe", createdStudent.getLastName());
-
-
-
-        // check if the new student is not null
-        assertNotNull(studentList);
-        assertEquals(studentList, studentController.getAllStudents());
-
-
+        assertNotNull(response);
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertTrue(response.hasBody());
+        assertEquals("John", response.getBody().getFirstName());
+        assertEquals("Doe", response.getBody().getLastName());
     }
 
-    // unit test for StudentController.updateStudent()
+    // Unit test for StudentController.updateStudent()
     @Test
     void testUpdateStudent() {
-        // create a new student
-        newStudent.setFirstName("John");
-        newStudent.setLastName("Doe");
+        when(studentService.get(1L)).thenReturn(Optional.of(newStudent));
+        when(studentService.save(updatedStudent)).thenReturn(updatedStudent);
 
-        // save the new student by calling createStudent() method
-        when(studentController.createStudent(newStudent)).thenReturn(newStudent);
+        ResponseEntity<Student> response = studentController.updateStudent(1L, updatedStudent);
 
-        // call the createStudent() method
-        createdStudent = studentController.createStudent(newStudent);
-
-        // test if the new student is created
-        assertEquals("John", newStudent.getFirstName());
-        assertEquals("Doe", newStudent.getLastName());
-
-        // update the student
-        newStudent.setFirstName("Jane");
-        newStudent.setLastName("Wayne");
-
-        // call the updateStudent() method
-        updatedStudent = studentController.updateStudent(1L, newStudent);
-
-        // check if the updated student is not null
-        assertNotNull(updatedStudent);
-        assertEquals("Jane", updatedStudent.getFirstName());
-        assertEquals("Wayne", updatedStudent.getLastName());
+        assertNotNull(response);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertTrue(response.hasBody());
+        assertEquals("Jane", response.getBody().getFirstName());
+        assertEquals("Wayne", response.getBody().getLastName());
     }
 
-    // unit test for StudentController.deleteStudent()
+    // Unit test for StudentController.deleteStudent()
     @Test
     void testDeleteStudent() {
-        newStudent.setId(1L);
-        newStudent.setFirstName("John");
-        newStudent.setLastName("Doe");
+        when(studentService.get(1L)).thenReturn(Optional.of(newStudent));
 
-        // mock the save() method of StudentService
-        when(studentController.createStudent(newStudent)).thenReturn(newStudent);
+        ResponseEntity<Void> response = studentController.deleteStudent(1L);
 
-        // call the createStudent() method
-        createdStudent = studentController.createStudent(newStudent);
-
-        // test if the new student is created
-        assertEquals("John", newStudent.getFirstName());
-        assertEquals("Doe", newStudent.getLastName());
-        assertEquals(1L, newStudent.getId());
-
-        // call the deleteStudent() method
-        studentController.deleteStudent(1L);
-
-        // check if the student is deleted
-        //assertNull(studentController.getStudentById(1L));
-        assertEquals(Optional.empty(), studentController.getStudentById(1L));
+        assertNotNull(response);
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
     }
 
     @AfterAll
     static void tearDown() {
-        System.out.println("Finishing the studentControllerTest class");
+        System.out.println("Finishing the StudentControllerTest class");
     }
-
 }

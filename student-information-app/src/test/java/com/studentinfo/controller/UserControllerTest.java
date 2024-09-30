@@ -17,10 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.web.servlet.view.groovy.GroovyMarkupViewResolver;
 
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
@@ -35,37 +32,38 @@ public class UserControllerTest {
     @MockBean
     private UserService userService;
 
-    @MockBean
-    private UserController userController;
-
     @Autowired
     private ObjectMapper objectMapper;
+
     private User user;
     private UserDTO userDTO;
 
     @BeforeEach
     void setUp() {
-
         user = User.builder()
                 .id(1L)
-                .firstName("John").username("johndoe")
+                .firstName("John")
+                .username("johndoe")
                 .build();
+
         userDTO = UserDTO.builder()
-                .name("John").username("johndoe")
+                .name("John")
+                .username("johndoe")
                 .build();
     }
 
     @Test
     public void testCreateUser() throws Exception {
-        given(userController.createUser(ArgumentMatchers.any())).willAnswer((invocation -> invocation.getArgument(0)));
+        // Mock the userService.save() method to return the created user
+        given(userService.save(ArgumentMatchers.any(User.class))).willReturn(user);
 
-        ResultActions responce = mockMvc.perform(post("/users")
+        ResultActions response = mockMvc.perform(post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userDTO)));
 
-        responce.andExpect(MockMvcResultMatchers.status().isCreated());
-
+        // Validate the response
+        response.andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("John"));
     }
-
-
 }
