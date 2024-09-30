@@ -1,12 +1,104 @@
+/* Main dashboard view */
 .student-profile-page-view {
-    background-image: url('./images/aa.jpg'); /* Aseta taustakuva */
-    background-size: cover; /* Peittää koko alueen */
-    background-position: center; /* Keskittää kuvan */
-    min-height: 100vh; /* Varmistaa, että alue kattaa koko näkymän */
-    color: white; /* Varmistaa, että teksti erottuu taustasta */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    min-height: calc(100vh - 60px);
+    background-image: url('./images/aa.jpg');
+    background-size: cover;
+    background-position: center;
 }
 
-.student-profile-page-view h1,
-.student-profile-page-view p {
-    color: black; /* Varmistaa, että kaikki h1- ja p-elementit ovat mustia */
+/* Welcome text styling */
+.student-dashboard-welcome-text {
+    font-size: 36px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Dashboard grid container */
+.dashboard-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Dashboard card styling */
+.dashboard-card {
+    width: 250px;
+    background-color: #cde0ec;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Card title and description */
+.dashboard-card-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.dashboard-card-description {
+    font-size: 16px;
+    color: #555;
+}
+
+/* Attendance dialog styling */
+.student-attendance-dialog {
+    max-width: 600px;
+}
+
+.attendance-dialog-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.attendance-grid {
+    width: 100%;
+    margin: 20px 0;
+}
+
+/* Close button in attendance dialog */
+.attendance-dialog-close-button {
+    background-color: #FDB069;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.attendance-dialog-close-button:hover {
+    background-color: #e08d53;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .dashboard-grid {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .student-dashboard-welcome-text {
+        font-size: 28px;
+    }
+
+    .dashboard-card {
+        width: 100%;
+        max-width: 300px;
+    }
 }

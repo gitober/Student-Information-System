@@ -4,13 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="49cfb8af-12fd-4a91-b702-3553d39bf1cc" name="Changes" comment="merge main">
+    <list default="true" id="49cfb8af-12fd-4a91-b702-3553d39bf1cc" name="Changes" comment="updated controller tests">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/controller/StudentControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/controller/StudentControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/data/repository/DepartmentRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/data/repository/DepartmentRepositoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/data/repository/StudentRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/data/repository/StudentRepositoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/data/repository/SubjectRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/data/repository/SubjectRepositoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/data/repository/TeacherRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/data/repository/TeacherRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/bundles/dev.bundle" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/bundles/dev.bundle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/home-profile-page-view/student-profile-page-view.css" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/home-profile-page-view/student-profile-page-view.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/home-profile-page-view/teacher-profile-page-view.css" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/home-profile-page-view/teacher-profile-page-view.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/data/repository/AttendanceRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/data/repository/AttendanceRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/services/AttendanceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/services/AttendanceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/services/UserContentLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/services/UserContentLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/homeprofilepage/StudentDashboardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/homeprofilepage/StudentDashboardView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/homeprofilepage/TeacherDashboardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/homeprofilepage/TeacherDashboardView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +65,7 @@
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "JUnit.ApplicationTest.executor": "Run",
+    "JUnit.AttendanceServiceTest.executor": "Run",
     "JUnit.DepartmentRepositoryTest.executor": "Run",
     "JUnit.StudentControllerTest.executor": "Run",
     "JUnit.StudentControllerTest.testCreateStudent.executor": "Run",
@@ -75,6 +80,7 @@
     "JUnit.UserServiceTest.executor": "Run",
     "JUnit.java in student-information-app.executor": "Run",
     "JUnit.repository in student-information-app.executor": "Run",
+    "JUnit.services in student-information-app.executor": "Run",
     "Maven.student-information-app [clean].executor": "Run",
     "Maven.student-information-app [install].executor": "Run",
     "RequestMappingsPanelOrder0": "0",
@@ -85,7 +91,7 @@
     "Spring Boot.Application.executor": "Run",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "branch-for-tests",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/bober/OneDrive/Työpöytä/Student Information System/student-information-app/src/main/frontend/themes/studentinformationapp/images",
@@ -131,29 +137,18 @@
       <command value="mvn install" />
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.java in student-information-app">
-    <configuration name="SubjectRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Spring Boot.Application">
+    <configuration name="AttendanceServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="student-information-app" />
-      <shortenClasspath name="MANIFEST" />
+      <shortenClasspath name="ARGS_FILE" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.studentinfo.data.repository.*" />
+          <option name="PATTERN" value="com.studentinfo.services.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <extension name="net.ashald.envfile">
-        <option name="IS_ENABLED" value="false" />
-        <option name="IS_SUBST" value="false" />
-        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
-        <option name="IS_IGNORE_MISSING_FILES" value="false" />
-        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
-        <ENTRIES>
-          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
-        </ENTRIES>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.studentinfo.data.repository" />
-      <option name="MAIN_CLASS_NAME" value="com.studentinfo.data.repository.SubjectRepositoryTest" />
-      <option name="METHOD_NAME" value="" />
+      <option name="PACKAGE_NAME" value="com.studentinfo.services" />
+      <option name="MAIN_CLASS_NAME" value="com.studentinfo.services.AttendanceServiceTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -257,23 +252,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="repository in student-information-app" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="services in student-information-app" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="student-information-app" />
-      <shortenClasspath name="MANIFEST" />
-      <extension name="net.ashald.envfile">
-        <option name="IS_ENABLED" value="false" />
-        <option name="IS_SUBST" value="false" />
-        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
-        <option name="IS_IGNORE_MISSING_FILES" value="false" />
-        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
-        <ENTRIES>
-          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
-        </ENTRIES>
-      </extension>
-      <option name="MAIN_CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
+      <shortenClasspath name="ARGS_FILE" />
       <option name="TEST_OBJECT" value="directory" />
-      <dir value="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/data/repository" />
+      <dir value="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/services" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -286,13 +269,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="JUnit.UserRepositoryTest" />
+      <item itemvalue="JUnit.AttendanceServiceTest" />
+      <item itemvalue="JUnit.services in student-information-app" />
+      <item itemvalue="JUnit.java in student-information-app" />
+      <item itemvalue="JUnit.TeacherControllerTest" />
+      <item itemvalue="JUnit.UserServiceTest" />
+      <item itemvalue="Spring Boot.Application" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.AttendanceServiceTest" />
+        <item itemvalue="JUnit.services in student-information-app" />
         <item itemvalue="JUnit.java in student-information-app" />
         <item itemvalue="JUnit.UserServiceTest" />
         <item itemvalue="JUnit.TeacherControllerTest" />
-        <item itemvalue="JUnit.repository in student-information-app" />
-        <item itemvalue="JUnit.SubjectRepositoryTest" />
       </list>
     </recent_temporary>
   </component>
@@ -381,7 +373,8 @@
     <MESSAGE value="I dont know what to do" />
     <MESSAGE value="UserServiceTest done, pom updated" />
     <MESSAGE value="merge main" />
-    <option name="LAST_COMMIT_MESSAGE" value="merge main" />
+    <MESSAGE value="updated controller tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated controller tests" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
