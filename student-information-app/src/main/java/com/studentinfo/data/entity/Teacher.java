@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@DiscriminatorValue("TEACHER")
+@PrimaryKeyJoinColumn(name = "user_id")
 public class Teacher extends User {
 
     @ManyToOne
@@ -16,8 +16,7 @@ public class Teacher extends User {
     @JoinColumn(name = "department_id", nullable = true)
     private Department department;
 
-    // Many-to-Many relationship with courses
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "teacher_courses",
             joinColumns = @JoinColumn(name = "teacher_id"),
@@ -25,7 +24,18 @@ public class Teacher extends User {
     )
     private List<Course> courses = new ArrayList<>();
 
-    // Getters and setters for courses
+
+    // Constructor
+    public Teacher() {
+        super(); // Call the parent class (User) constructor
+    }
+
+    // Method to retrieve teacher_id
+    public Long getTeacherId() {
+        return super.getId(); // Assuming 'id' in the User class corresponds to the teacher_id in the database
+    }
+
+    // Getters and setters for courses, subject, and department
     public List<Course> getCourses() {
         return courses;
     }
@@ -34,7 +44,6 @@ public class Teacher extends User {
         this.courses = courses;
     }
 
-    // Getters and setters for subject and department
     public Subject getSubject() {
         return subject;
     }
@@ -51,4 +60,7 @@ public class Teacher extends User {
         this.department = department;
     }
 
+    public String getFullName() {
+        return this.getFirstName() + " " + this.getLastName();
+    }
 }

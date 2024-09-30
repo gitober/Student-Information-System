@@ -1,10 +1,13 @@
 package com.studentinfo.views.courses;
 
 import com.studentinfo.data.entity.Student;
+import com.studentinfo.data.entity.Teacher;
 import com.studentinfo.services.CourseService;
 import com.studentinfo.data.entity.Course;
+import com.studentinfo.services.TeacherService;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
@@ -29,12 +32,14 @@ import java.util.stream.Collectors;
 public class TeacherCoursesView extends Composite<VerticalLayout> {
 
     private final CourseService courseService;
+    private final TeacherService teacherService;
     private List<Course> courses; // Store the courses data
     private Grid<Course> coursesGrid;
 
     @Autowired
-    public TeacherCoursesView(CourseService courseService) {
+    public TeacherCoursesView(CourseService courseService, TeacherService teacherService) {
         this.courseService = courseService;
+        this.teacherService = teacherService;
 
         // Main layout setup
         getContent().addClassName("teacher-courses-view-container");
@@ -43,7 +48,7 @@ public class TeacherCoursesView extends Composite<VerticalLayout> {
         H2 title = new H2("Course Management");
         title.addClassName("teacher-courses-view-title");
 
-        // Search bar to filter courses by course name, subject, or duration
+        // Search bar to filter courses by course name or plan
         TextField searchField = new TextField("Search Courses");
         searchField.addClassName("teacher-courses-view-search");
         searchField.setValueChangeMode(ValueChangeMode.EAGER);
@@ -60,20 +65,14 @@ public class TeacherCoursesView extends Composite<VerticalLayout> {
         coursesGrid.addComponentColumn(course -> {
             Button editButton = new Button("Edit");
             editButton.addClassName("teacher-courses-view-edit-button");
+            editButton.addClickListener(event -> openEditDialog(course));
 
             Button viewDetailsButton = new Button("View Details");
             viewDetailsButton.addClassName("teacher-courses-view-details-button");
+            viewDetailsButton.addClickListener(event -> openViewDetailsDialog(course));
 
             Button deleteButton = new Button("Delete");
             deleteButton.addClassName("teacher-courses-view-delete-button");
-
-            // Edit Button functionality
-            editButton.addClickListener(event -> openEditDialog(course));
-
-            // View Details Button functionality
-            viewDetailsButton.addClickListener(event -> openViewDetailsDialog(course));
-
-            // Delete Button functionality
             deleteButton.addClickListener(event -> openDeleteConfirmationDialog(course));
 
             HorizontalLayout actionButtons = new HorizontalLayout(editButton, viewDetailsButton, deleteButton);
@@ -116,6 +115,7 @@ public class TeacherCoursesView extends Composite<VerticalLayout> {
         Dialog editDialog = new Dialog();
         editDialog.addClassName("teacher-courses-view-edit-dialog");
 
+        // Create and configure input fields for editing course details
         TextField courseNameField = new TextField("Course Name");
         courseNameField.setValue(course.getCourseName());
         courseNameField.addClassName("teacher-courses-view-course-name-field");
@@ -124,39 +124,75 @@ public class TeacherCoursesView extends Composite<VerticalLayout> {
         coursePlanField.setValue(course.getCoursePlan());
         coursePlanField.addClassName("teacher-courses-view-plan-field");
 
-        // DatePickers for editing start and end dates
+        // DatePicker for the start date
         DatePicker startDatePicker = new DatePicker("Start Date");
         startDatePicker.setValue(LocalDate.now());
         startDatePicker.addClassName("teacher-courses-view-start-date-picker");
 
+        // Calculate end date using the duration
         DatePicker endDatePicker = new DatePicker("End Date");
-        endDatePicker.setValue(LocalDate.now().plusDays(course.getDuration()));
+        endDatePicker.setValue(startDatePicker.getValue().plusDays(course.getDuration()));
         endDatePicker.addClassName("teacher-courses-view-end-date-picker");
 
+        // ComboBox for selecting teachers
+        ComboBox<Teacher> teacherComboBox = new ComboBox<>("Select Teacher");
+        teacherComboBox.setItems(teacherService.getAllTeachers());
+        teacherComboBox.setItemLabelGenerator(Teacher::getFullName);
+        // Set the initially selected teacher
+        teacherComboBox.setValue(course.getTeachers().isEmpty() ? null : course.getTeachers().get(0));
+        teacherComboBox.addClassName("teacher-courses-view-add-teacher");
+
+        // Button to save the changes
         Button saveButton = new Button("Save");
         saveButton.addClassName("teacher-courses-view-save-button");
         saveButton.addClickListener(event -> {
+            // Update course details
             course.setCourseName(courseNameField.getValue());
             course.setCoursePlan(coursePlanField.getValue());
 
-            // Calculate the duration based on selected dates
+            // Calculate duration based on selected dates
             long durationInDays = java.time.temporal.ChronoUnit.DAYS.between(startDatePicker.getValue(), endDatePicker.getValue());
             course.setDuration((int) durationInDays);
 
-            courseService.saveCourse(course);  // Save the course
-            coursesGrid.setItems(courseService.getAllCourses());  // Refresh grid
-            Notification.show("Course updated");
-            editDialog.close();
+            // Get the selected teacher from the ComboBox
+            Teacher selectedTeacher = teacherComboBox.getValue();
+            if (selectedTeacher != null) {
+                System.out.println("Selected teacher ID: " + selectedTeacher.getId());
+            } else {
+                System.out.println("No teacher selected!");
+            }
+
+            // Log the selected teacher ID
+            System.out.println("Saving course with teacher (user id): " + selectedTeacher.getId());
+
+            // Set the selected teacher for the course
+            course.setTeachers(List.of(selectedTeacher));
+
+            // Save the course with updated details
+            Course savedCourse = courseService.saveCourse(course, course.getTeachers());
+            if (savedCourse != null) {
+                System.out.println("Saving course with teacher (user id): " + (selectedTeacher != null ? selectedTeacher.getId() : "None"));
+                coursesGrid.setItems(courseService.getAllCourses());  // Refresh the grid
+                Notification.show("Course updated");
+            } else {
+                Notification.show("Error updating course. Please try again.");
+            }
+
+            editDialog.close(); // Close the dialog
         });
 
+        // Button to cancel editing
         Button cancelButton = new Button("Cancel");
         cancelButton.addClassName("teacher-courses-view-cancel-button");
         cancelButton.addClickListener(event -> editDialog.close());
 
+        // Layout for dialog buttons
         HorizontalLayout dialogButtons = new HorizontalLayout(saveButton, cancelButton);
         dialogButtons.addClassName("teacher-courses-view-dialog-buttons");
-        editDialog.add(courseNameField, coursePlanField, startDatePicker, endDatePicker, dialogButtons);
-        editDialog.open();
+
+        // Add all components to the dialog
+        editDialog.add(courseNameField, coursePlanField, startDatePicker, endDatePicker, teacherComboBox, dialogButtons);
+        editDialog.open(); // Open the dialog
     }
 
     private void openViewDetailsDialog(Course course) {
@@ -246,8 +282,13 @@ public class TeacherCoursesView extends Composite<VerticalLayout> {
         startDatePicker.addClassName("teacher-courses-view-add-start-date");
 
         DatePicker endDatePicker = new DatePicker("End Date");
-        endDatePicker.setValue(LocalDate.now().plusDays(30));
+        endDatePicker.setValue(startDatePicker.getValue().plusDays(30)); // Default duration of 30 days
         endDatePicker.addClassName("teacher-courses-view-add-end-date");
+
+        // ComboBox for selecting teachers
+        ComboBox<Teacher> teacherComboBox = new ComboBox<>("Select Teacher");
+        teacherComboBox.setItems(teacherService.getAllTeachers());
+        teacherComboBox.setItemLabelGenerator(Teacher::getFullName);
 
         Button saveButton = new Button("Save");
         saveButton.addClassName("teacher-courses-view-add-save-button");
@@ -261,15 +302,28 @@ public class TeacherCoursesView extends Composite<VerticalLayout> {
                 return;
             }
 
+            // Validate teacher selection
+            Teacher selectedTeacher = teacherComboBox.getValue();
+            if (selectedTeacher == null) {
+                Notification.show("Please select a teacher.");
+                return; // Exit if no teacher is selected
+            }
+
             // Calculate the duration in days
             long durationInDays = java.time.temporal.ChronoUnit.DAYS.between(startDate, endDate);
 
             // Create the new course
             Course newCourse = new Course(courseNameField.getValue(), coursePlanField.getValue(), (int) durationInDays);
-            courseService.saveCourse(newCourse);
 
-            coursesGrid.setItems(courseService.getAllCourses());  // Refresh the grid
-            Notification.show("New course added");
+            try {
+                // Save the course with the selected teacher
+                courseService.saveCourse(newCourse, List.of(selectedTeacher));
+                coursesGrid.setItems(courseService.getAllCourses());  // Refresh the grid
+                Notification.show("New course added");
+            } catch (Exception e) {
+                Notification.show("Error adding course: " + e.getMessage());
+            }
+
             addCourseDialog.close();
         });
 
@@ -278,8 +332,8 @@ public class TeacherCoursesView extends Composite<VerticalLayout> {
         cancelButton.addClickListener(event -> addCourseDialog.close());
 
         HorizontalLayout dialogButtons = new HorizontalLayout(saveButton, cancelButton);
-        dialogButtons.addClassName("teacher-courses-view-add-dialog-buttons");
-        addCourseDialog.add(courseNameField, coursePlanField, startDatePicker, endDatePicker, dialogButtons);
+        addCourseDialog.add(courseNameField, coursePlanField, startDatePicker, endDatePicker, teacherComboBox, dialogButtons);
         addCourseDialog.open();
     }
+
 }

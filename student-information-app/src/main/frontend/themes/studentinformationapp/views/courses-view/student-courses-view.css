@@ -40,6 +40,21 @@
     white-space: nowrap; /* Prevent content wrapping */
 }
 
+.student-courses-view-attendance-button {
+    background-color: #FDB069; /* Same background color as other buttons */
+    color: white; /* Text color set to white */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 5px 10px; /* Padding for better appearance */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth transition effect */
+}
+
+.student-courses-view-attendance-button:hover {
+    background-color: #e08d53; /* Change color on hover */
+}
+
+
 /* Styling for action buttons */
 .student-courses-view-action-buttons {
     display: flex;
@@ -63,44 +78,23 @@
     flex: 1; /* Buttons take equal space */
 }
 
+/* Enrollment button styles */
+.student-courses-view-enroll-button {
+    background-color: #FDB069; /* Enroll button color */
+    color: white; /* Text color set to white */
+}
+
+.student-courses-view-enroll-button:hover {
+    background-color: #e08d53; /* Shared hover color */
+}
+
+/* Attendance button styles */
 .student-courses-view-attendance-button {
     background-color: #FDB069; /* Golden Yellow */
     color: white; /* Text color set to white */
 }
 
 .student-courses-view-attendance-button:hover {
-    background-color: #e08d53; /* Shared hover color */
-    color: white; /* Text color set to white */
-}
-
-.student-courses-view-enroll-button {
-    background-color: #FDB069; /* Enroll button color */
-    color: white; /* Text color set to white */
-}
-
-.student-courses-view-confirm-button {
-    background-color: #fdb069; /* Confirm button color */
-    color: white;
-}
-
-.student-courses-view-cancel-button {
-    background-color: #e08d53; /* Cancel button color */
-    color: white;
-}
-
-.student-courses-view-action-buttons button:hover,
-.student-courses-view-confirm-button:hover,
-.student-courses-view-cancel-button:hover {
-    background-color: #e08d53; /* Shared hover color */
-    color: white; /* Text color set to white */
-}
-
-.student-courses-view-close-attendance-dialog-button {
-    background-color: #FDB069; /* Orange */
-    color: white;
-}
-
-.student-courses-view-close-attendance-dialog-button:hover {
     background-color: #e08d53; /* Shared hover color */
     color: white; /* Text color set to white */
 }

@@ -26,4 +26,5 @@ public interface StudentRepository extends JpaRepository<Student, Long>, JpaSpec
 
     // Find a student by studentNumber
     Optional<Student> findByStudentNumber(Long studentNumber); // Add this method
+
 }

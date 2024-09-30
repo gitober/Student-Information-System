@@ -8,6 +8,7 @@ import com.studentinfo.data.repository.AttendanceRepository;
 import com.studentinfo.data.repository.CourseRepository;
 import com.studentinfo.data.repository.StudentRepository;
 import com.studentinfo.data.repository.TeacherRepository;
+import jakarta.persistence.Column;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,10 +38,15 @@ public class TeacherService {
 
     // CRUD Operations for Teacher
 
+    @Column(name = "address", nullable = true)
+    private String address;
+
+
     // Retrieve a teacher by their ID
     public Optional<Teacher> get(Long id) {
         return teacherRepository.findById(id);
     }
+
 
     // Retrieve a teacher by their username
     public Optional<Teacher> getTeacherByUsername(String username) {
@@ -125,10 +131,21 @@ public class TeacherService {
         return Collections.emptyList();
     }
 
+    // Retrieve a list of teachers by their IDs
+    public List<Teacher> listByIds(List<Long> ids) {
+        return teacherRepository.findAllById(ids);
+    }
+
+    // Retrieve all teachers from the database
+    public List<Teacher> getAllTeachers() {
+        return teacherRepository.findAll();
+    }
+
     // Operations for Students
 
     // Retrieve all students
     public List<Student> getAllStudents() {
         return studentRepository.findAll();
     }
+
 }

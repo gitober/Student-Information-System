@@ -59,13 +59,17 @@ public class TeacherEditProfileView extends VerticalLayout {
 
         departmentComboBox = new ComboBox<>("Department");
         departmentComboBox.setItems(departmentService.findAll());
-        departmentComboBox.setItemLabelGenerator(Department::getDepartmentName);
+        System.out.println("Departments: " + departmentService.findAll());
+        departmentComboBox.setItemLabelGenerator(department ->
+                department != null && department.getDepartmentName() != null ? department.getDepartmentName() : "N/A");
         departmentComboBox.setValue(teacher.getDepartment());
         departmentComboBox.addClassName("teacher-edit-profile-view-combobox");
 
         subjectComboBox = new ComboBox<>("Subject");
         subjectComboBox.setItems(subjectService.findAll());
-        subjectComboBox.setItemLabelGenerator(Subject::getName);
+        System.out.println("Subjects: " + subjectService.findAll());
+        subjectComboBox.setItemLabelGenerator(subject ->
+                subject != null && subject.getName() != null ? subject.getName() : "N/A");
         subjectComboBox.setValue(teacher.getSubject());
         subjectComboBox.addClassName("teacher-edit-profile-view-combobox");
 

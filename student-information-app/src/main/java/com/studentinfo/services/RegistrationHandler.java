@@ -20,11 +20,15 @@ public class RegistrationHandler {
     // Dependencies
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
+    private final StudentService studentService;
+    private final TeacherService teacherService;
 
     @Autowired
-    public RegistrationHandler(UserService userService, PasswordEncoder passwordEncoder) {
+    public RegistrationHandler(StudentService studentService, TeacherService teacherService, UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
+        this.studentService = studentService;
+        this.teacherService = teacherService;
     }
 
     // Public Methods
@@ -50,11 +54,17 @@ public class RegistrationHandler {
             // Save the user using UserService
             userService.save(user);
             return true;
+        } catch (IllegalArgumentException e) {
+            Logger.getLogger(getClass().getName()).log(Level.WARNING, "Invalid input", e);
+            Notification.show("Registration failed: " + e.getMessage());
+            return false;
         } catch (Exception e) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "Registration failed", e);
+            Notification.show("Registration failed due to an unexpected error.");
             return false;
         }
     }
+
 
     // Private Helper Methods
 
@@ -73,11 +83,18 @@ public class RegistrationHandler {
         return null; // Invalid role
     }
 
-    // Generate a student number (You can modify this logic as per your requirements)
     private Long generateStudentNumber() {
-        // Example: Generate a random student number or implement a logic to get the next available number
-        return System.currentTimeMillis(); // Using current time for simplicity
+        // Find the maximum student number from the database using the student service
+        Long maxStudentNumber = studentService.list().stream()
+                .map(Student::getStudentNumber)
+                .filter(num -> num != null)
+                .max(Long::compare)
+                .orElse(0L); // If no student numbers exist, start from 0
+
+        // Return the next available student number
+        return maxStudentNumber + 1;
     }
+
 
     // Set common attributes for the User
     private void setUserAttributes(User user, String firstName, String lastName, LocalDate birthday,

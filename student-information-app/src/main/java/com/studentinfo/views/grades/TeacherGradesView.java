@@ -13,6 +13,7 @@ import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -23,6 +24,7 @@ import com.vaadin.flow.spring.annotation.UIScope;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @SpringComponent
@@ -36,6 +38,7 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
 
     private Grid<Grade> gradesGrid;
     private List<Grade> gradeEntries;
+    private ComboBox<Course> courseComboBox;
 
     public TeacherGradesView(GradeService gradeService, CourseService courseService, StudentService studentService) {
         this.gradeService = gradeService;
@@ -48,31 +51,47 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
         H2 title = new H2("Grades Management");
         title.addClassName("teacher-grades-view-title");
 
-        // Search bar to filter grades by student or course
-        TextField searchField = new TextField("Search by Student or Course");
+        // User manual/description
+        Paragraph description = new Paragraph("Manage and update student grades for selected courses.");
+        description.addClassName("teacher-grades-view-description");
+
+        // Dropdown for selecting the course
+        courseComboBox = new ComboBox<>("Select Course");
+        courseComboBox.addClassName("teacher-grades-view-course-combobox");
+        courseComboBox.setItemLabelGenerator(Course::getCourseName);
+        courseComboBox.setItems(courseService.getAllCourses());
+        courseComboBox.addValueChangeListener(event -> refreshGradesData());
+
+        // Search bar to filter grades by student
+        TextField searchField = new TextField("Search by Student");
         searchField.addClassName("teacher-grades-view-search-field");
         searchField.setValueChangeMode(ValueChangeMode.EAGER);
-        searchField.addValueChangeListener(event -> filterGrades(event.getValue()));
+        searchField.addValueChangeListener(event -> filterGradesByStudent(event.getValue()));
 
         // Grid for displaying grades
         gradesGrid = new Grid<>(Grade.class, false);
         gradesGrid.addClassName("teacher-grades-view-grid");
+
+        // Add columns to the grid
         gradesGrid.addColumn(grade -> grade.getCourse().getCourseName())
                 .setHeader("Course")
                 .setClassNameGenerator(entry -> "teacher-grades-view-course-column");
 
         // Display student's full name instead of student number
         gradesGrid.addColumn(grade -> {
-            Student student = studentService.getStudentByNumber(grade.getStudentNumber());
-            return student != null ? student.getFirstName() + " " + student.getLastName() : "Unknown Student";
-        }).setHeader("Student").setClassNameGenerator(entry -> "teacher-grades-view-student-column");
+                    Optional<Student> studentOpt = Optional.ofNullable(studentService.getStudentByNumber(grade.getStudentNumber()));
+                    return studentOpt.map(student -> student.getFirstName() + " " + student.getLastName())
+                            .orElse("Unknown Student");
+                }).setHeader("Student")
+                .setClassNameGenerator(entry -> "teacher-grades-view-student-column");
 
         gradesGrid.addColumn(Grade::getGrade)
                 .setHeader("Grade")
                 .setClassNameGenerator(entry -> "teacher-grades-view-grade-column");
 
         // Add action buttons to the grid
-        gradesGrid.addComponentColumn(this::createEditAndDeleteButtons).setHeader("Actions");
+        gradesGrid.addComponentColumn(this::createEditAndDeleteButtons).setHeader("Actions")
+                .setClassNameGenerator(entry -> "teacher-grades-view-action-column");
 
         // Load real data from the GradeService
         refreshGradesData();
@@ -83,18 +102,27 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
         addGradeButton.addClickListener(event -> openAddGradeDialog());
 
         // Add components to the view
-        getContent().add(title, searchField, gradesGrid, addGradeButton);
+        getContent().add(title, description, courseComboBox, searchField, gradesGrid, addGradeButton);
     }
 
     private void refreshGradesData() {
-        gradeEntries = gradeService.getGradesByCourseId(1L); // Replace with actual course ID
+        Course selectedCourse = courseComboBox.getValue(); // Get the selected course
+        if (selectedCourse != null) {
+            gradeEntries = gradeService.getGradesByCourseId(selectedCourse.getCourseId());
+        } else {
+            gradeEntries = List.of(); // Clear grades if no course is selected
+        }
         gradesGrid.setItems(gradeEntries); // Set grid data with real grades
     }
 
-    private void filterGrades(String searchTerm) {
+    private void filterGradesByStudent(String searchTerm) {
         List<Grade> filteredGrades = gradeEntries.stream()
-                .filter(entry -> entry.getCourse().getCourseName().toLowerCase().contains(searchTerm.toLowerCase()) ||
-                        entry.getStudentNumber().toString().contains(searchTerm))
+                .filter(entry -> {
+                    Optional<Student> studentOpt = Optional.ofNullable(studentService.getStudentByNumber(entry.getStudentNumber()));
+                    return studentOpt.map(student ->
+                                    (student.getFirstName() + " " + student.getLastName()).toLowerCase().contains(searchTerm.toLowerCase()))
+                            .orElse(false);
+                })
                 .collect(Collectors.toList());
 
         gradesGrid.setItems(filteredGrades);
@@ -104,15 +132,15 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
         Dialog addGradeDialog = new Dialog();
         addGradeDialog.addClassName("teacher-grades-view-add-grade-dialog");
 
-        // Dropdown for selecting the course
+        // Dropdown for selecting the course (only inside the dialog)
         ComboBox<Course> courseComboBox = new ComboBox<>("Select Course");
-        courseComboBox.addClassName("teacher-grades-view-course-combobox");
+        courseComboBox.addClassName("teacher-grades-view-course-combobox-dialog");
         courseComboBox.setItemLabelGenerator(Course::getCourseName);
         courseComboBox.setItems(courseService.getAllCourses());
 
         // Dropdown for selecting the student
         ComboBox<Student> studentComboBox = new ComboBox<>("Select Student");
-        studentComboBox.addClassName("teacher-grades-view-student-combobox");
+        studentComboBox.addClassName("teacher-grades-view-student-combobox-dialog");
         studentComboBox.setItemLabelGenerator(student -> student.getFirstName() + " " + student.getLastName());
 
         // Populate students once a course is selected
@@ -191,7 +219,6 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
         addGradeDialog.open();
     }
 
-    // Method to create the edit and delete buttons for each row in the grid
     private HorizontalLayout createEditAndDeleteButtons(Grade grade) {
         Button editButton = new Button("Edit");
         editButton.addClassName("teacher-grades-view-edit-button");

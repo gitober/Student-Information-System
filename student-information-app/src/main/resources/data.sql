@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS users (
                                      first_name VARCHAR(255) DEFAULT NULL,
                                      last_name VARCHAR(255) DEFAULT NULL,
                                      full_name VARCHAR(255) DEFAULT NULL,
-                                     phone_number VARCHAR(255) DEFAULT NULL,
+                                     phone_number VARCHAR(20) DEFAULT NULL,
                                      username VARCHAR(255) UNIQUE NOT NULL,
                                      user_type VARCHAR(255) NOT NULL,
                                      grade VARCHAR(255) DEFAULT NULL,
@@ -15,7 +15,6 @@ CREATE TABLE IF NOT EXISTS users (
                                      email VARCHAR(255) UNIQUE NOT NULL,
                                      address VARCHAR(255) DEFAULT NULL,
                                      student_number BIGINT DEFAULT NULL,
-                                     dtype VARCHAR(31) DEFAULT NULL,
                                      hashed_password VARCHAR(60) DEFAULT NULL,
                                      PRIMARY KEY (user_id),
                                      FOREIGN KEY (department_id) REFERENCES department(department_id) ON DELETE SET NULL ON UPDATE CASCADE,
@@ -25,8 +24,9 @@ CREATE TABLE IF NOT EXISTS users (
 -- Create the 'department' table
 CREATE TABLE IF NOT EXISTS department (
                                           department_id BIGINT NOT NULL AUTO_INCREMENT,
-                                          department_name VARCHAR(255) UNIQUE NOT NULL,
-                                          PRIMARY KEY (department_id)
+                                          department_name VARCHAR(255) NOT NULL,
+                                          PRIMARY KEY (department_id),
+                                          UNIQUE (department_name)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Create the 'subject' table
@@ -41,14 +41,9 @@ CREATE TABLE IF NOT EXISTS subject (
 -- Create the 'student' table
 CREATE TABLE IF NOT EXISTS student (
                                        student_number BIGINT NOT NULL AUTO_INCREMENT,
-                                       first_name VARCHAR(255) NOT NULL,
-                                       last_name VARCHAR(255) NOT NULL,
-                                       email VARCHAR(255) NOT NULL,
-                                       birthday DATE NOT NULL,
-                                       address VARCHAR(255) NOT NULL,
-                                       phone_number VARCHAR(20) NOT NULL,
+                                       address VARCHAR(255) DEFAULT NULL,
                                        user_id BIGINT DEFAULT NULL,
-                                       grade VARCHAR(255) DEFAULT NULL,
+                                       grade VARCHAR(2) DEFAULT NULL,
                                        student_class VARCHAR(255) DEFAULT NULL,
                                        PRIMARY KEY (student_number),
                                        FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE SET NULL ON UPDATE CASCADE
@@ -57,8 +52,8 @@ CREATE TABLE IF NOT EXISTS student (
 -- Create the 'teacher' table
 CREATE TABLE IF NOT EXISTS teacher (
                                        teacher_id BIGINT NOT NULL AUTO_INCREMENT,
-                                       address VARCHAR(255) NOT NULL,
-                                       phone_number VARCHAR(20) NOT NULL,
+                                       address VARCHAR(255) DEFAULT NULL,
+                                       phone_number VARCHAR(20) DEFAULT NULL,
                                        user_id BIGINT DEFAULT NULL,
                                        department_id BIGINT DEFAULT NULL,
                                        subject_id BIGINT DEFAULT NULL,
@@ -66,14 +61,6 @@ CREATE TABLE IF NOT EXISTS teacher (
                                        FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE SET NULL ON UPDATE CASCADE,
                                        FOREIGN KEY (department_id) REFERENCES department(department_id) ON DELETE SET NULL ON UPDATE CASCADE,
                                        FOREIGN KEY (subject_id) REFERENCES subject(subject_id) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Create the 'user_roles' table
-CREATE TABLE IF NOT EXISTS user_roles (
-                                          user_id BIGINT NOT NULL,
-                                          roles ENUM('STUDENT', 'TEACHER', 'USER') NOT NULL,
-                                          PRIMARY KEY (user_id, roles),
-                                          FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Create the 'course' table
@@ -120,7 +107,7 @@ CREATE TABLE IF NOT EXISTS attendance (
 -- Create the 'grade' table
 CREATE TABLE IF NOT EXISTS grade (
                                      grade_id BIGINT NOT NULL AUTO_INCREMENT,
-                                     grade VARCHAR(2) NOT NULL,
+                                     grade VARCHAR(5) NULL,
                                      grading_day DATE NOT NULL,
                                      student_number BIGINT NOT NULL,
                                      course_id BIGINT NOT NULL,
@@ -159,4 +146,19 @@ CREATE TABLE IF NOT EXISTS teacher_courses (
                                                PRIMARY KEY (teacher_id, course_id),
                                                FOREIGN KEY (teacher_id) REFERENCES teacher(teacher_id) ON DELETE CASCADE ON UPDATE CASCADE,
                                                FOREIGN KEY (course_id) REFERENCES course(course_id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Create the 'idgenerator' table
+CREATE TABLE IF NOT EXISTS idgenerator (
+                                           sequence_name VARCHAR(255) NOT NULL,
+                                           next_val BIGINT NOT NULL,
+                                           PRIMARY KEY (sequence_name)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Create the 'user_roles' table
+CREATE TABLE IF NOT EXISTS user_roles (
+                                          user_id BIGINT NOT NULL,
+                                          roles ENUM('STUDENT', 'TEACHER', 'USER') NOT NULL,
+                                          PRIMARY KEY (user_id, roles),
+                                          FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

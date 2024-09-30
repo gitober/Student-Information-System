@@ -17,12 +17,12 @@
 .teacher-attendance-header {
     font-size: 24px;
     margin: 0;
-    color: white; /* Ensure the header text is white */
+    color: black;
     text-align: left;
 }
 
 .teacher-attendance-description {
-    color: white; /* Ensure the description text is white */
+    color: black;
     font-size: 14px;
     margin-bottom: 20px;
 }

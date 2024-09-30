@@ -11,6 +11,9 @@ import java.util.Optional;
 
 public interface TeacherRepository extends JpaRepository<Teacher, Long>, JpaSpecificationExecutor<Teacher> {
 
+    // Fetch a teacher by their ID
+    Optional<Teacher> findById(Long id);
+
     // Find a teacher by username
     Optional<Teacher> findByUsername(String username);
 
@@ -30,5 +33,4 @@ public interface TeacherRepository extends JpaRepository<Teacher, Long>, JpaSpec
     // Fetch teacher with courses eagerly
     @Query("SELECT t FROM Teacher t LEFT JOIN FETCH t.courses WHERE t.username = :username")
     Optional<Teacher> findTeacherByUsernameWithCourses(@Param("username") String username);
-
 }

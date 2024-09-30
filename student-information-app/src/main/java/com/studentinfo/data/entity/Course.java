@@ -42,6 +42,8 @@ public class Course {
         this.duration = duration;
     }
 
+
+
     // Getters and Setters
     public Long getCourseId() {
         return courseId;

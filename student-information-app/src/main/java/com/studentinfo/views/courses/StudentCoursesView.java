@@ -59,7 +59,7 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
         enrolledCoursesGrid = new Grid<>(Course.class);
         enrolledCoursesGrid.removeAllColumns(); // Clear existing columns
 
-        // Add only the necessary columns
+        // Add necessary columns
         enrolledCoursesGrid.addColumn(Course::getCourseName).setHeader("Course Name");
         enrolledCoursesGrid.addColumn(Course::getCoursePlan).setHeader("Course Plan");
         enrolledCoursesGrid.addColumn(course -> course.getFormattedDateRange()).setHeader("Duration");
@@ -71,6 +71,14 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
                 return "No teacher assigned";
             }
         }).setHeader("Teacher");
+
+        // Button to view attendance for each course
+        enrolledCoursesGrid.addComponentColumn(course -> {
+            Button attendanceButton = new Button("View Attendance");
+            attendanceButton.addClassName("student-courses-view-attendance-button"); // Add this line for styling
+            attendanceButton.addClickListener(event -> openAttendanceDialog(course));
+            return attendanceButton;
+        }).setHeader("Attendance");
 
         // Initialize the grid for available courses
         availableCoursesGrid = new Grid<>(Course.class);
@@ -171,7 +179,10 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
         dialogLayout.add(courseField);
 
         // Teacher field (read-only)
-        TextField teacherField = new TextField("Teacher", course.getTeachers().isEmpty() ? "No teacher assigned" : course.getTeachers().get(0).getFirstName() + " " + course.getTeachers().get(0).getLastName(), "");
+        TextField teacherField = new TextField("Teacher",
+                course.getTeachers().isEmpty() ? "No teacher assigned" :
+                        course.getTeachers().get(0).getFirstName() + " " + course.getTeachers().get(0).getLastName(),
+                "");
         teacherField.addClassName("student-courses-view-teacher-field");
         teacherField.setReadOnly(true);
         dialogLayout.add(teacherField);
@@ -187,14 +198,27 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
                 return;
             }
 
-            // Enroll the student in the selected course (passing null for batch_id)
-            courseService.enrollInCourse(studentNumber, null, course.getCourseId(), 0.0);
+            // Ensure batchId and coursePayment are handled properly.
+            // You may want to fetch a valid batchId instead of passing null if required.
+            Long batchId = null; // Replace with a valid batch ID if needed
+            double coursePayment = 0.0; // Adjust based on your business logic
 
-            // Refresh the course data after enrollment
-            refreshCourseData(studentNumber);
+            try {
+                // Debug log before enrolling
+                System.out.println("Debug: Enrolling student " + studentNumber + " in course ID " + course.getCourseId());
 
-            // Show notification to confirm enrollment
-            Notification.show("Successfully enrolled in " + course.getCourseName());
+                // Enroll the student in the selected course
+                courseService.enrollInCourse(studentNumber, batchId, course.getCourseId(), coursePayment);
+
+                // Refresh the course data after enrollment
+                refreshCourseData(studentNumber);
+                // Show notification to confirm enrollment
+                Notification.show("Successfully enrolled in " + course.getCourseName());
+            } catch (Exception e) {
+                // Show error notification if enrollment fails
+                Notification.show("Enrollment failed: " + e.getMessage());
+                e.printStackTrace(); // Log stack trace for debugging
+            }
 
             // Close the dialog
             confirmationDialog.close();
@@ -216,4 +240,40 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
         // Open the dialog
         confirmationDialog.open();
     }
+
+    private void openAttendanceDialog(Course course) {
+        Dialog attendanceDialog = new Dialog();
+        attendanceDialog.addClassName("student-courses-view-attendance-dialog");
+
+        // Title for the dialog
+        H2 title = new H2("Attendance for " + course.getCourseName());
+        attendanceDialog.add(title);
+
+        // Fetch attendance records for the selected course
+        List<Attendance> attendanceRecords = attendanceService.getAttendanceByCourseId(course.getCourseId());
+
+        // Create a grid to display attendance records
+        Grid<Attendance> attendanceGrid = new Grid<>(Attendance.class);
+        attendanceGrid.removeAllColumns(); // Clear existing columns
+
+        attendanceGrid.addColumn(Attendance::getAttendanceDate).setHeader("Date");
+        attendanceGrid.addColumn(Attendance::getAttendanceStatus).setHeader("Status");
+
+        // Set items in the attendance grid
+        attendanceGrid.setItems(attendanceRecords);
+
+        // Add attendance grid to the dialog
+        attendanceDialog.add(attendanceGrid);
+
+        // Close button
+        Button closeButton = new Button("Close", event -> attendanceDialog.close());
+        HorizontalLayout dialogButtons = new HorizontalLayout(closeButton);
+        attendanceDialog.add(dialogButtons);
+
+        // Open the attendance dialog
+        attendanceDialog.open();
+    }
+
+
+
 }

@@ -13,8 +13,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorValue("USER")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User implements UserDetails {
 
     // Fields
@@ -50,7 +49,7 @@ public class User implements UserDetails {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(name = "student_number")
+    @Column(name = "student_number", unique = true, nullable = true)
     private Long studentNumber;
 
     @Column(name = "user_type", nullable = false)

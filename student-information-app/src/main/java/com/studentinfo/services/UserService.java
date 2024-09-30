@@ -73,6 +73,19 @@ public class UserService {
 
     // CRUD Operations
 
+    // Find a user by email
+    public User findByUsername(String username) {
+        Optional<User> userOptional = userRepository.findByUsername(username);
+        return userOptional.orElse(null); // Return the user if found, or null if not found
+    }
+
+    // Get the current authenticated user
+    public User getCurrentUser() {
+        Optional<User> currentUser = authenticatedUser.get(); // Assuming authenticatedUser is set up correctly
+        return currentUser.orElse(null);
+    }
+
+
     // List all users
     public List<User> list() {
         return userRepository.findAll();

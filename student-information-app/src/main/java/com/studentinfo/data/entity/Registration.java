@@ -7,7 +7,6 @@ import java.time.LocalDate;
 @Table(name = "registration")
 public class Registration {
 
-    // Fields
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long registrationId;
@@ -16,10 +15,14 @@ public class Registration {
     private LocalDate registrationDay;
 
     @Column(name = "course_payment")
-    private double coursePayment;
+    private Double coursePayment; // Allow null values
 
     @Column(name = "student_number")
-    private Long studentNumber;
+    private Long studentNumber; // Added studentNumber field
+
+    @ManyToOne
+    @JoinColumn(name = "student_number", referencedColumnName = "student_number", insertable = false, updatable = false)
+    private Student student;
 
     @Column(name = "batch_id", nullable = true)
     private Long batchId;
@@ -28,10 +31,11 @@ public class Registration {
     private Long courseId;
 
     @ManyToOne
-    @JoinColumn(name = "student_number", referencedColumnName = "student_number", insertable = false, updatable = false)
-    private Student student;
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private User user;
 
     // Getters and Setters
+
     public Long getRegistrationId() {
         return registrationId;
     }
@@ -48,20 +52,28 @@ public class Registration {
         this.registrationDay = registrationDay;
     }
 
-    public double getCoursePayment() {
+    public Double getCoursePayment() {
         return coursePayment;
     }
 
-    public void setCoursePayment(double coursePayment) {
+    public void setCoursePayment(Double coursePayment) {
         this.coursePayment = coursePayment;
     }
 
     public Long getStudentNumber() {
-        return studentNumber;
+        return studentNumber; // Corrected getter for studentNumber
     }
 
     public void setStudentNumber(Long studentNumber) {
-        this.studentNumber = studentNumber;
+        this.studentNumber = studentNumber; // Corrected setter for studentNumber
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
     public Long getBatchId() {
@@ -80,11 +92,11 @@ public class Registration {
         this.courseId = courseId;
     }
 
-    public Student getStudent() {
-        return student;
+    public User getUser() {
+        return user;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

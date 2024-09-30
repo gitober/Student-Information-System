@@ -20,6 +20,11 @@ public class GradeService {
 
     // CRUD Operations
 
+    // Retrieve all grades
+    public List<Grade> getAllGrades() {
+        return gradeRepository.findAll(); // Assumes the repository has a findAll method
+    }
+
     // Save or create a new grade
     public Grade saveGrade(Grade grade) {
         return gradeRepository.save(grade);

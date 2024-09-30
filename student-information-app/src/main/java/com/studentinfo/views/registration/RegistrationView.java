@@ -118,7 +118,6 @@ public class RegistrationView extends Composite<VerticalLayout> {
                     emailField.getValue(),
                     passwordField.getValue(),
                     roleComboBox.getValue()
-                    // No studentGrade and studentClass parameters anymore
             );
 
             if (registrationSuccessful) {
