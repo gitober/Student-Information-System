@@ -27,6 +27,7 @@ import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.vaadin.flow.component.html.Image;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -70,13 +71,54 @@ public class StudentDashboardView extends Composite<VerticalLayout> {
         dashboardGrid.setJustifyContentMode(FlexLayout.JustifyContentMode.CENTER);
 
         // Add cards with navigation links
-        dashboardGrid.add(createDashboardCard("Your Courses", courseService.getAllCourses().size() + " Enrolled", CoursesView.class));
-        dashboardGrid.add(createDashboardCard("Grades", gradeService.getAllGrades().size() + " Records", GradesView.class));
-        dashboardGrid.add(createDashboardCard("Attendance", "View Attendance", null)); // Opens the attendance dialog
-        dashboardGrid.add(createDashboardCard("Edit Profile", "Update Your Information", EditProfileView.class));
+        dashboardGrid.add(createDashboardCard("Courses", courseService.getAllCourses().size() + " Enrolled", CoursesView.class, "./icons/Your_Courses.png"));
+        dashboardGrid.add(createDashboardCard("Grades", gradeService.getAllGrades().size() + " Records", GradesView.class, "./icons/Recent_Grades.png"));
+        dashboardGrid.add(createDashboardCard("Attendance", "View Attendance", null, "./icons/Manage_Attendance.png")); // Opens the attendance dialog
+        dashboardGrid.add(createDashboardCard("Edit Profile", "Update Your Information", EditProfileView.class, "./icons/Quick_Links.png"));
 
         getContent().add(dashboardGrid);
     }
+
+    private Div createDashboardCard(String title, String description, Class<? extends Component> navigationTarget, String iconUrl) {
+        Div card = new Div();
+        card.addClassName("student-dashboard-card");
+
+        // Unique class for each card based on title
+        String uniqueClassName = "student-dashboard-card-" + title.toLowerCase().replace(" ", "-");
+        card.addClassName(uniqueClassName);
+
+        // Add the image icon at the top of the card
+        Image cardIcon = new Image(iconUrl, title + " Icon");
+        cardIcon.addClassName("student-dashboard-card-icon"); // New class for the icon
+        card.add(cardIcon); // Add icon before title
+
+        // Title
+        Paragraph cardTitle = new Paragraph(title);
+        cardTitle.addClassName("student-dashboard-card-title");
+
+        // Description
+        Paragraph cardDescription = new Paragraph(description);
+        cardDescription.addClassName("student-dashboard-card-description");
+
+        if (navigationTarget != null) {
+            RouterLink link = new RouterLink();
+            link.addClassName("student-dashboard-card-link");
+            link.setRoute(navigationTarget);
+            link.add(cardIcon, cardTitle, cardDescription); // Include icon in the link
+            card.add(link);
+        } else {
+            // Add click listener to open the dialog when the card is clicked
+            card.addClickListener(event -> {
+                if (title.equals("Attendance")) {
+                    openAttendanceDialog(); // No arguments needed
+                }
+            });
+            card.add(cardIcon, cardTitle, cardDescription); // Include icon when no navigation target
+        }
+
+        return card;
+    }
+
 
     private void openAttendanceDialog() {
         Dialog attendanceDialog = new Dialog();
@@ -118,37 +160,6 @@ public class StudentDashboardView extends Composite<VerticalLayout> {
 
         // Open the attendance dialog
         attendanceDialog.open();
-    }
-
-    private Div createDashboardCard(String title, String description, Class<? extends Component> navigationTarget) {
-        Div card = new Div();
-        card.addClassName("student-dashboard-card");
-
-        // Title
-        Paragraph cardTitle = new Paragraph(title);
-        cardTitle.addClassName("student-dashboard-card-title");
-
-        // Description
-        Paragraph cardDescription = new Paragraph(description);
-        cardDescription.addClassName("student-dashboard-card-description");
-
-        if (navigationTarget != null) {
-            RouterLink link = new RouterLink();
-            link.addClassName("student-dashboard-card-link");
-            link.setRoute(navigationTarget);
-            link.add(cardTitle, cardDescription);
-            card.add(link);
-        } else {
-            // Add click listener to open the dialog when the card is clicked
-            card.addClickListener(event -> {
-                if (title.equals("Attendance")) {
-                    openAttendanceDialog(); // No arguments needed
-                }
-            });
-            card.add(cardTitle, cardDescription);
-        }
-
-        return card;
     }
 
     private Long getCurrentStudentNumber() {

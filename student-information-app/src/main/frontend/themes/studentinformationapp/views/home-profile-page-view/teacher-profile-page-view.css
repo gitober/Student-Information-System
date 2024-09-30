@@ -17,7 +17,6 @@
     font-weight: bold;
     color: #333;
     margin-bottom: 30px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Adds a shadow for better readability */
 }
 
 /* Grid container styling */
@@ -30,17 +29,24 @@
     width: 100%;
 }
 
-/* Card styling */
+/* Default Card Styling */
 .dashboard-card {
-    width: 250px;
+    width: 400px;
+    height: auto; /* Allow dynamic height depending on content */
     background-color: #cde0ec;
     padding: 20px;
-    border-radius: 12px; /* Softer rounded corners */
+    border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add hover effects */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
-    backdrop-filter: blur(5px); /* Slight blur effect for a frosted glass look */
+    backdrop-filter: blur(5px);
+}
+
+/* Icon styling */
+.dashboard-card-icon {
+    width: 65px; /* Adjust size as needed */
+    height: auto; /* Keep aspect ratio */
 }
 
 /* Hover effects */
@@ -51,15 +57,16 @@
 
 /* Card title styling */
 .dashboard-card-title {
-    font-size: 20px;
+    font-size: 32px;
     font-weight: bold;
     color: #333;
+    margin-top: 1px; /* Add space below the icon */
     margin-bottom: 15px;
 }
 
 /* Card description styling */
 .dashboard-card-description {
-    font-size: 16px;
+    font-size: 15px;
     color: #555;
 }
 
