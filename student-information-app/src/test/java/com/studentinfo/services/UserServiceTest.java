@@ -1,24 +1,33 @@
 package com.studentinfo.services;
 
-import static org.mockito.Mockito.when;
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.studentinfo.data.entity.User;
 import com.studentinfo.data.repository.UserRepository;
-import net.bytebuddy.implementation.bind.annotation.IgnoreForBinding;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 public class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
+
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
+    @Mock
+    private AuthenticationManager authenticationManager;
 
     @InjectMocks
     private UserService userService;
@@ -28,66 +37,76 @@ public class UserServiceTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    @AfterEach
-    void tearDown() {
-        // Not in use
+    @Test
+    void testAuthenticateSuccess() {
+        String username = "testUser";
+        String password = "testPassword";
+        User user = new User();
+        user.setUsername(username);
+
+        Authentication auth = mock(Authentication.class);
+
+        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenReturn(auth);
+        when(userRepository.findByUsername(username)).thenReturn(user);
+
+        Optional<User> result = userService.authenticate(username, password);
+
+        assertTrue(result.isPresent());
+        assertEquals(user, result.get());
+        verify(authenticationManager, times(1)).authenticate(any(UsernamePasswordAuthenticationToken.class));
     }
 
     @Test
-    public void testUserSaved() {
-        // Arrange
-        User user = User.builder()
-                .username("user1")
-                .email("user1@email.com").build();
+    void testListUsers() {
+        User user1 = new User();
+        User user2 = new User();
+        List<User> users = List.of(user1, user2);
+
+        when(userRepository.findAll()).thenReturn(users);
+
+        List<User> result = userService.list();
+
+        assertEquals(2, result.size());
+        assertTrue(result.contains(user1));
+        assertTrue(result.contains(user2));
+        verify(userRepository, times(1)).findAll();
+    }
+
+    @Test
+    void testGetUserById() {
+        Long id = 1L;
+        User user = new User();
+        user.setId(id);
+
+        when(userRepository.findById(id)).thenReturn(Optional.of(user));
+
+        Optional<User> result = userService.get(id);
+
+        assertTrue(result.isPresent());
+        assertEquals(user, result.get());
+        verify(userRepository, times(1)).findById(id);
+    }
+
+    @Test
+    void testSaveUser() {
+        User user = new User();
 
         when(userRepository.save(user)).thenReturn(user);
 
-        // Act
+        User result = userService.save(user);
 
-        User savedUser = userService.save(user);
-
-        // Assert
-        assertNotNull(savedUser, "User should be saved");
-        assertEquals("user1", savedUser.getUsername(), "Username should be user1");
-        assertEquals("user1@email.com", savedUser.getEmail(), "Email should be user1...");
-
+        assertEquals(user, result);
+        verify(userRepository, times(1)).save(user);
     }
 
     @Test
-    public void testGetById() {
-        // Arrange
-        User user = User.builder()
-                .id(1L)
-                .username("user1")
-                .email("user1@email.com").build();
+    void testDeleteUser() {
+        Long id = 1L;
 
-        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        doNothing().when(userRepository).deleteById(id);
 
-        // Act
-        Optional<User> foundUser = userService.get(1L);
+        userService.delete(id);
 
-        // Assert
-        assertTrue(foundUser.isPresent(), "User should be found");
-        assertEquals("user1", foundUser.get().getUsername(), "Username should be user1");
-        assertEquals("user1@email.com", foundUser.get().getEmail(), "Email should be user1...");
-
+        verify(userRepository, times(1)).deleteById(id);
     }
-
-    @Test
-    public void testDelete() {
-        // Arrange
-        User user = User.builder()
-                .id(1L)
-                .username("user1")
-                .email("user1@email.com").build();
-
-
-        // Act
-        userService.delete(1L);
-
-        // Assert
-        assertFalse(userRepository.findById(1L).isPresent(), "User should be deleted");
-
-    }
-
 }
