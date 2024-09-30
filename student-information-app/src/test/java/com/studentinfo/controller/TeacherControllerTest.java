@@ -9,12 +9,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
 import java.util.Arrays;
 import java.util.Optional;
+
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -37,13 +39,14 @@ class TeacherControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(teacherController).build();
 
         teacher1 = new Teacher();
-        teacher2 = new Teacher();
-
+        teacher1.setId(1L);
         teacher1.setFirstName("John");
         teacher1.setLastName("Doe");
         teacher1.setEmail("john.doe@email.com");
         teacher1.setPhoneNumber("0402223344");
 
+        teacher2 = new Teacher();
+        teacher2.setId(2L);
         teacher2.setFirstName("Jane");
         teacher2.setLastName("Williams");
         teacher2.setEmail("jane.williams@email.com");
@@ -58,12 +61,10 @@ class TeacherControllerTest {
 
     @Test
     void testGetAllTeachers() throws Exception {
-
         when(teacherService.list()).thenReturn(Arrays.asList(teacher1, teacher2));
 
-
         mockMvc.perform(get("/teachers"))
-                //.andExpect(status().isOk())
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1L))
                 .andExpect(jsonPath("$[0].firstName").value("John"))
                 .andExpect(jsonPath("$[1].id").value(2L))
@@ -74,7 +75,6 @@ class TeacherControllerTest {
 
     @Test
     void testGetTeacherById() throws Exception {
-
         when(teacherService.get(1L)).thenReturn(Optional.of(teacher1));
 
         mockMvc.perform(get("/teachers/1"))
@@ -87,15 +87,14 @@ class TeacherControllerTest {
 
     @Test
     void testCreateTeacher() throws Exception {
-
         when(teacherService.save(any(Teacher.class))).thenReturn(teacher1);
 
-        String teacherJson = "{\"firstName\":\"John\",\"lastName\":\"Doe\",\"subject\":\"Math\"}";
+        String teacherJson = "{\"firstName\":\"John\",\"lastName\":\"Doe\",\"email\":\"john.doe@email.com\",\"phoneNumber\":\"0402223344\"}";
 
         mockMvc.perform(post("/teachers")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(teacherJson))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.firstName").value("John"));
 
@@ -104,10 +103,10 @@ class TeacherControllerTest {
 
     @Test
     void testUpdateTeacher() throws Exception {
-
+        when(teacherService.get(1L)).thenReturn(Optional.of(teacher1));
         when(teacherService.save(any(Teacher.class))).thenReturn(teacher1);
 
-        String teacherJson = "{\"firstName\":\"John\",\"lastName\":\"Doe\",\"subject\":\"Math\"}";
+        String teacherJson = "{\"firstName\":\"John\",\"lastName\":\"Doe\",\"email\":\"john.doe@email.com\",\"phoneNumber\":\"0402223344\"}";
 
         mockMvc.perform(put("/teachers/1")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -121,10 +120,11 @@ class TeacherControllerTest {
 
     @Test
     void testDeleteTeacher() throws Exception {
+        when(teacherService.get(1L)).thenReturn(Optional.of(teacher1));
         doNothing().when(teacherService).delete(1L);
 
         mockMvc.perform(delete("/teachers/1"))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
 
         verify(teacherService, times(1)).delete(1L);
     }
