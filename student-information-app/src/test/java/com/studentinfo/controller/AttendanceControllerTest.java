@@ -6,10 +6,8 @@ import com.studentinfo.services.AttendanceService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -20,12 +18,11 @@ import java.util.Arrays;
 import java.util.Optional;
 
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(AttendanceController.class)
+@AutoConfigureMockMvc(addFilters = false) // Disable security filters for testing
 public class AttendanceControllerTest {
 
     @Autowired
@@ -41,8 +38,6 @@ public class AttendanceControllerTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
-
         attendance1 = new Attendance();
         attendance1.setAttendanceId(1L);
         attendance1.setAttendanceStatus("Present");
@@ -91,7 +86,11 @@ public class AttendanceControllerTest {
 
     @Test
     public void testUpdateAttendance() throws Exception {
-        given(attendanceService.updateAttendance(1L, attendance1)).willReturn(attendance1);
+        // Mock finding the attendance by ID to ensure it exists
+        given(attendanceService.getAttendanceById(1L)).willReturn(Optional.of(attendance1));
+
+        // Mock the update method to return the updated attendance
+        given(attendanceService.updateAttendance(ArgumentMatchers.eq(1L), ArgumentMatchers.any(Attendance.class))).willReturn(attendance1);
 
         String attendanceJson = objectMapper.writeValueAsString(attendance1);
 
@@ -103,10 +102,14 @@ public class AttendanceControllerTest {
                 .andExpect(jsonPath("$.attendanceStatus").value("Present"));
     }
 
+
+
+
+
     @Test
     public void testDeleteAttendance() throws Exception {
+        // Mock the service method to return true for successful deletion
         given(attendanceService.deleteAttendance(1L)).willReturn(true);
-        doNothing().when(attendanceService).deleteAttendance(1L);
 
         mockMvc.perform(delete("/api/attendance/1"))
                 .andExpect(status().isNoContent());

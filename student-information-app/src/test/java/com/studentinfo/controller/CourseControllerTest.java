@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -20,12 +21,11 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(CourseController.class)
+@AutoConfigureMockMvc(addFilters = false) // Disable security for testing
 public class CourseControllerTest {
 
     @Autowired
@@ -48,10 +48,12 @@ public class CourseControllerTest {
         course1 = new Course();
         course1.setCourseId(1L);
         course1.setCourseName("Mathematics");
+        course1.setDuration(30); // Set duration to avoid null pointer exception
 
         course2 = new Course();
         course2.setCourseId(2L);
         course2.setCourseName("Physics");
+        course2.setDuration(45); // Set duration to avoid null pointer exception
 
         teacher1 = new Teacher();
         teacher1.setId(1L);
@@ -104,12 +106,20 @@ public class CourseControllerTest {
 
     @Test
     public void testUpdateCourse() throws Exception {
-        given(teacherService.listByIds(Arrays.asList(1L, 2L))).willReturn(Arrays.asList(teacher1, teacher2));
-        given(courseService.updateCourse(1L, course1, Arrays.asList(teacher1, teacher2))).willReturn(course1);
+        // Mock the service to return an existing course when retrieving by ID
+        given(courseService.getCourseById(1L)).willReturn(Optional.of(course1));
 
+        // Mock the teacher list retrieval
+        given(teacherService.listByIds(Arrays.asList(1L, 2L))).willReturn(Arrays.asList(teacher1, teacher2));
+
+        // Mock the service to return the updated course
+        given(courseService.updateCourse(ArgumentMatchers.eq(1L), ArgumentMatchers.any(Course.class), ArgumentMatchers.anyList())).willReturn(course1);
+
+        // Prepare the JSON content for the update request
         String courseJson = objectMapper.writeValueAsString(course1);
         String teacherIds = "1,2";
 
+        // Perform the PUT request to update the course
         mockMvc.perform(put("/api/courses/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .param("teacherIds", teacherIds)
@@ -119,10 +129,14 @@ public class CourseControllerTest {
                 .andExpect(jsonPath("$.courseName").value("Mathematics"));
     }
 
+
+
+
+
     @Test
     public void testDeleteCourse() throws Exception {
+        // Mock the service method to return true
         given(courseService.deleteCourse(1L)).willReturn(true);
-        doNothing().when(courseService).deleteCourse(1L);
 
         mockMvc.perform(delete("/api/courses/1"))
                 .andExpect(status().isNoContent());
