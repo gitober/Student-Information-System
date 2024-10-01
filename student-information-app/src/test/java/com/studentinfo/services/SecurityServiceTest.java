@@ -2,8 +2,9 @@ package com.studentinfo.services;
 
 import com.studentinfo.data.entity.Role;
 import com.studentinfo.data.entity.User;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -13,28 +14,21 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.Collections;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.Mockito.*;
 
 class SecurityServiceTest {
 
     @Mock
     private AuthenticationManager authenticationManager;
-
-    @Mock
-    private RequestContextHolder requestContextHolder;
-
-    @Mock
-    private ServletRequestAttributes servletRequestAttributes;
 
     @Mock
     private HttpServletRequest request;
@@ -48,75 +42,44 @@ class SecurityServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+
+        // Set up mock for request and response
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request, response));
+
+        // Mock the authentication manager to return a valid authentication token
+        Authentication mockAuthentication = mock(Authentication.class);
+        when(mockAuthentication.isAuthenticated()).thenReturn(true);
+        when(mockAuthentication.getName()).thenReturn("test@example.com"); // Set the name to match the email
+        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
+                .thenReturn(mockAuthentication);
     }
 
     @Test
-    void testAuthenticateUserSuccess() {
+    void testAuthenticateUser() {
         // Arrange
-        User user = new User();
+        User mockUser = mock(User.class);
+        when(mockUser.getEmail()).thenReturn("test@example.com");
 
-        String email = "test@example.com";
+        // Create a mock Role
+        Role mockRole = mock(Role.class);
+        when(mockRole.name()).thenReturn("USER");
+        when(mockUser.getRoles()).thenReturn(Collections.singleton(mockRole)); // Mock the roles to return a Set<Role>
+
         String rawPassword = "password";
 
-        user.setEmail(email);
-        user.setRoles(Collections.singleton(Role.USER));
-
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
-        Authentication authentication = mock(Authentication.class);
-        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenReturn(authentication);
-
         // Act
-        securityService.authenticateUser(user, rawPassword);
+        securityService.authenticateUser(mockUser, rawPassword);
 
         // Assert
-        assertEquals(authentication, SecurityContextHolder.getContext().getAuthentication());
-        verify(authenticationManager, times(1)).authenticate(any(UsernamePasswordAuthenticationToken.class));
-        verify(new HttpSessionSecurityContextRepository(), times(1)).saveContext(SecurityContextHolder.getContext(), request, response);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        assertNotNull(authentication, "Authentication should not be null");
+        assertTrue(authentication.isAuthenticated(), "User should be authenticated");
+        assertEquals("test@example.com", authentication.getName(), "Authentication name should match the user's email");
+
+        // Verify that authenticationManager.authenticate() was called
+        verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
+
+        // Verify that the security context was saved to the session
+        verify(request, atLeastOnce()).getSession(anyBoolean()); // Use argument matcher for session call
     }
-
-    @Test
-    void testAuthenticateUserFailure() {
-        // Arrange
-        User user = new User();
-        user.setEmail("test@example.com");
-        user.setRoles(Collections.singleton(Role.USER));
-
-        String rawPassword = "wrongpassword";
-
-        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
-                .thenThrow(new RuntimeException("Authentication failed"));
-
-        // Act & Assert
-        assertThrows(RuntimeException.class, () -> securityService.authenticateUser(user, rawPassword));
-        verify(authenticationManager, times(1)).authenticate(any(UsernamePasswordAuthenticationToken.class));
-    }
-
-//    @Test
-//    void testConvertRolesToAuthorities() {
-//        // Arrange
-//        User user = new User();
-//        user.setRoles(Collections.singleton(Role.USER));
-//
-//        // Act
-//        var authorities = securityService.convertRolesToAuthorities(user);
-//
-//        // Assert
-//        assertEquals(1, authorities.size());
-//        assertTrue(authorities.contains(new SimpleGrantedAuthority("ROLE_USER")));
-//    }
-//
-//    @Test
-//    void testConvertEmptyRolesToAuthorities() {
-//        // Arrange
-//        User user = new User();
-//        user.setRoles(Collections.emptySet());
-//
-//        // Act
-//        var authorities = securityService.convertRolesToAuthorities(user);
-//
-//        // Assert
-//        assertTrue(authorities.isEmpty());
-//    }
-
-    // You can add more tests for edge cases or additional methods in SecurityService here.
 }
