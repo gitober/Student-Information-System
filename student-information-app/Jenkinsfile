@@ -12,14 +12,14 @@ pipeline {
         }
         stage('Build') {
             steps {
-                dir ('student-information-system') {
+                dir ('student-information-app') {
                     bat 'mvn clean package'
                 }
             }
         }
         stage('Run Unit Tests') {
             steps {
-                dir('student-information-system') {  // Ensure we are in the correct directory
+                dir('student-information-app') {  // Ensure we are in the correct directory
                     bat 'mvn test'
                 }
             }
@@ -31,7 +31,7 @@ pipeline {
         }
         stage('Code Coverage Report') {
             steps {
-                dir('student-information-system') {  // Ensure we are in the correct directory
+                dir('student-information-app') {  // Ensure we are in the correct directory
                     bat 'mvn jacoco:report'
                 }
             }
