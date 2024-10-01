@@ -6,6 +6,23 @@
   <component name="ChangeListManager">
     <list default="true" id="49cfb8af-12fd-4a91-b702-3553d39bf1cc" name="Changes" comment="Jenkinsfile repo url edit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< Updated upstream
+=======
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/bundles/dev.bundle" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/bundles/dev.bundle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/TeacherAttendanceTrackingView/teacher-attendance-view.css" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/TeacherAttendanceTrackingView/teacher-attendance-view.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/TeacherUpdateStudentProfile/teacher-update-student-profile.css" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/TeacherUpdateStudentProfile/teacher-update-student-profile.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/courses-view/student-courses-view.css" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/courses-view/student-courses-view.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/courses-view/teacher-courses-view.css" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/courses-view/teacher-courses-view.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/edit-profile-view/student-edit-profile-view.css" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/edit-profile-view/student-edit-profile-view.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/grades-view/student-grades-view.css" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/grades-view/student-grades-view.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/grades-view/teacher-grades-view.css" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/grades-view/teacher-grades-view.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/home-profile-page-view/student-profile-page-view.css" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/home-profile-page-view/student-profile-page-view.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/courses/StudentCoursesView.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/courses/StudentCoursesView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/courses/TeacherCoursesView.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/courses/TeacherCoursesView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/editprofile/StudentEditProfileView.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/editprofile/StudentEditProfileView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/grades/StudentGradesView.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/grades/StudentGradesView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/homeprofilepage/StudentDashboardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/homeprofilepage/StudentDashboardView.java" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +101,7 @@
     "Spring Boot.Application.executor": "Run",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "jenkins-branch",
+    "git-widget-placeholder": "branch-Eetu",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/bober/OneDrive/Työpöytä/Student Information System/student-information-app/src/main/frontend/themes/studentinformationapp/images",
@@ -262,11 +279,19 @@
     </list>
     <recent_temporary>
       <list>
+<<<<<<< Updated upstream
         <item itemvalue="JUnit.java in student-information-app" />
         <item itemvalue="JUnit.services in student-information-app" />
         <item itemvalue="JUnit.com.studentinfo.services in student-information-app" />
         <item itemvalue="JUnit.AttendanceServiceTest" />
         <item itemvalue="JUnit.UserServiceTest" />
+=======
+        <item itemvalue="JUnit.UserServiceTest" />
+        <item itemvalue="JUnit.All in student-information-app (1)" />
+        <item itemvalue="JUnit.All in student-information-app" />
+        <item itemvalue="JUnit.SubjectRepositoryTest" />
+        <item itemvalue="JUnit.All in student-information-app (2)" />
+>>>>>>> Stashed changes
       </list>
     </recent_temporary>
   </component>
