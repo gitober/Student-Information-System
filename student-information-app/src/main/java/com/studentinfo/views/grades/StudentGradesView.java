@@ -6,6 +6,7 @@ import com.studentinfo.services.UserService;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -38,6 +39,9 @@ public class StudentGradesView extends Composite<VerticalLayout> {
         H2 title = new H2("Grades Overview");
         title.addClassName("student-grades-view-title");
 
+        Paragraph description = new Paragraph("View your grades for the courses you have taken.");
+        description.addClassName("student-grades-view-description");
+
         // Search bar to filter courses
         TextField searchField = new TextField("Search Courses");
         searchField.addClassName("student-grades-view-search");
@@ -61,7 +65,7 @@ public class StudentGradesView extends Composite<VerticalLayout> {
         }
 
         // Add components to the layout
-        getContent().add(title, searchField, gradesGrid);
+        getContent().add(title, description , searchField, gradesGrid);
     }
 
     // Method to fetch grades and populate the grid

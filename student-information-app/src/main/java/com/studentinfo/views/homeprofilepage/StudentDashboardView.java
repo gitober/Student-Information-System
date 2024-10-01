@@ -134,7 +134,8 @@ public class StudentDashboardView extends Composite<VerticalLayout> {
 
         // Create a grid to display attendance records
         Grid<Attendance> attendanceGrid = new Grid<>(Attendance.class);
-        attendanceGrid.addClassName("student-attendance-grid");
+        attendanceGrid.addClassName("student-attendance-grid"); // Existing class
+        attendanceGrid.addClassName("custom-attendance-grid"); // New class for styling
         attendanceGrid.removeAllColumns(); // Clear existing columns
         attendanceGrid.addColumn(attendance -> attendance.getCourse().getCourseName()).setHeader("Course Name");
         attendanceGrid.addColumn(Attendance::getAttendanceDate).setHeader("Date");

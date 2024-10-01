@@ -76,19 +76,18 @@
 
 /* Attendance dialog styling */
 .student-attendance-dialog {
-    max-width: 600px;
+    max-width: 1500px;
 }
 
 .attendance-dialog-title {
-    font-size: 24px;
+    font-size: 30px;
     font-weight: bold;
     color: #333;
     margin-bottom: 20px;
 }
 
 .student-attendance-grid {
-    width: 100%;
-    margin: 20px 0;
+    width: 1200px;
 }
 
 /* Close button in attendance dialog */
@@ -97,6 +96,13 @@
     color: white;
     cursor: pointer;
     transition: background-color 0.3s;
+}
+
+/* Attendance grid styling */
+.custom-attendance-grid {
+    border: 3px solid #F7E6A9; /* Example border */
+    border-radius: 10px; /* Smooth border corners */
+    overflow: hidden; /* Prevent overflow for child elements */
 }
 
 .attendance-dialog-close-button:hover {

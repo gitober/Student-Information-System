@@ -12,6 +12,7 @@ import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -48,6 +49,9 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
         // Page title
         H2 title = new H2("My Courses");
         title.addClassName("student-courses-view-title");
+
+        Paragraph description = new Paragraph("View and enroll in courses below.");
+        description.addClassName("student-courses-view-description");
 
         // Search bar to filter courses by course name
         TextField searchField = new TextField("Search Courses");
@@ -118,7 +122,7 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
         refreshCourseData(studentNumber);
 
         // Add components to layout
-        getContent().add(title, searchField, new H2("Enrolled Courses"), enrolledCoursesGrid,
+        getContent().add(title, description, searchField, new H2("Enrolled Courses"), enrolledCoursesGrid,
                 new H2("Available Courses"), availableCoursesGrid);
     }
 
