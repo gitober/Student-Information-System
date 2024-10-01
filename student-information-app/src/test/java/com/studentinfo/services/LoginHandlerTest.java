@@ -49,7 +49,6 @@ class LoginHandlerTest {
     }
 
     @Test
-    @Disabled
     void testSuccessfulLogin() {
         // Arrange
         String email = "test@example.com";
@@ -87,7 +86,6 @@ class LoginHandlerTest {
     }
 
     @Test
-    @Disabled
     void testFailedLogin() {
         // Arrange
         String email = "invalid@example.com";
