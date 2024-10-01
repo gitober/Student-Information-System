@@ -1,43 +1,51 @@
 pipeline {
     agent any
-
+    tools {
+        maven 'Maven3'  // Ensure Maven is installed
+        jdk 'Java_Home'     // Ensure JDK is installed
+    }
     stages {
-        stage('Checkout') {
+        stage('Checkout Code') {
             steps {
-                git url: 'https://github.com/gitober/Student-Information-System.git', branch: 'main'
+                git url: 'https://github.com/gitober/Student-Information-System.git',branch:'jenkins-branch'
             }
         }
-
         stage('Build') {
             steps {
-                // Use 'bat' for Windows, 'sh' for Unix-based systems
-                bat 'mvn clean install'
+                dir ('student-information-app') {
+                    bat 'mvn clean package'
+                }
             }
         }
-
-        stage('Test') {
+        stage('Run Unit Tests') {
             steps {
-                bat 'mvn test'
+                dir('student-information-app') {  // Ensure we are in the correct directory
+                    bat 'mvn test'
+                }
+            }
+            post {
+                always {
+                    dir('student-information-app') {  // Ensure we are in the correct directory
+                        junit 'target/surefire-reports/*.xml'  // Capture test reports
+                    }
+                }
             }
         }
-
-        stage('Code Coverage') {
+        stage('Code Coverage Report') {
             steps {
-                bat 'mvn jacoco:report'
+                dir('student-information-app') {  // Ensure we are in the correct directory
+                    bat 'mvn jacoco:report'
+                }
             }
-        }
-    }
-
-    post {
-        always {
-            // Publish JUnit test results
-            junit '**/target/surefire-reports/*.xml'
-
-            // Publish JaCoCo code coverage report
-            jacoco execPattern: '**/target/jacoco.exec',
-                   classPattern: '**/target/classes',
-                   sourcePattern: '**/src/main/java',
-                   inclusionPattern: '**/*.class'
+            post {
+                always {
+                    dir('student-information-app') {  // Ensure we are in the correct directory
+                        jacoco(execPattern: 'target/jacoco.exec')
+                    }
+                }
+            }
         }
     }
 }
+
+

@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="49cfb8af-12fd-4a91-b702-3553d39bf1cc" name="Changes" comment="securityservicetest ok">
+    <list default="true" id="49cfb8af-12fd-4a91-b702-3553d39bf1cc" name="Changes" comment="Jenkinsfile repo url edit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/Jenkinsfile" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/Jenkinsfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/bundles/dev.bundle" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/bundles/dev.bundle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/data/repository/SubjectRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/data/repository/SubjectRepositoryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,11 +22,6 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="branch-for-tests" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -64,9 +55,6 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
-    "JUnit.All in student-information-app (1).executor": "Run",
-    "JUnit.All in student-information-app (2).executor": "Run",
-    "JUnit.All in student-information-app.executor": "Run",
     "JUnit.ApplicationTest.executor": "Run",
     "JUnit.AttendanceServiceTest.executor": "Run",
     "JUnit.DepartmentRepositoryTest.executor": "Run",
@@ -81,11 +69,13 @@
     "JUnit.UserControllerTest.executor": "Run",
     "JUnit.UserRepositoryTest.executor": "Run",
     "JUnit.UserServiceTest.executor": "Run",
+    "JUnit.com.studentinfo.services in student-information-app.executor": "Run",
     "JUnit.java in student-information-app.executor": "Run",
     "JUnit.repository in student-information-app.executor": "Run",
     "JUnit.services in student-information-app.executor": "Run",
     "Maven.student-information-app [clean].executor": "Run",
     "Maven.student-information-app [install].executor": "Run",
+    "Maven.student-information-app [test].executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
@@ -94,7 +84,7 @@
     "Spring Boot.Application.executor": "Run",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "jenkins-branch",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/bober/OneDrive/Työpöytä/Student Information System/student-information-app/src/main/frontend/themes/studentinformationapp/images",
@@ -138,94 +128,21 @@
     <option name="myCommands">
       <command value="mvn clean" />
       <command value="mvn install" />
+      <command value="mvn test" />
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.SubjectRepositoryTest">
-    <configuration name="All in student-information-app (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.java in student-information-app">
+    <configuration name="AttendanceServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="student-information-app" />
-      <shortenClasspath name="MANIFEST" />
-      <extension name="net.ashald.envfile">
-        <option name="IS_ENABLED" value="false" />
-        <option name="IS_SUBST" value="false" />
-        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
-        <option name="IS_IGNORE_MISSING_FILES" value="false" />
-        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
-        <ENTRIES>
-          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
-        </ENTRIES>
-      </extension>
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="All in student-information-app (2)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="student-information-app" />
-      <shortenClasspath name="MANIFEST" />
-      <extension name="net.ashald.envfile">
-        <option name="IS_ENABLED" value="false" />
-        <option name="IS_SUBST" value="false" />
-        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
-        <option name="IS_IGNORE_MISSING_FILES" value="false" />
-        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
-        <ENTRIES>
-          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
-        </ENTRIES>
-      </extension>
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="All in student-information-app" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="student-information-app" />
-      <shortenClasspath name="MANIFEST" />
-      <extension name="net.ashald.envfile">
-        <option name="IS_ENABLED" value="false" />
-        <option name="IS_SUBST" value="false" />
-        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
-        <option name="IS_IGNORE_MISSING_FILES" value="false" />
-        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
-        <ENTRIES>
-          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
-        </ENTRIES>
-      </extension>
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SubjectRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="student-information-app" />
-      <shortenClasspath name="MANIFEST" />
+      <shortenClasspath name="ARGS_FILE" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.studentinfo.data.repository.*" />
+          <option name="PATTERN" value="com.studentinfo.services.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <extension name="net.ashald.envfile">
-        <option name="IS_ENABLED" value="false" />
-        <option name="IS_SUBST" value="false" />
-        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
-        <option name="IS_IGNORE_MISSING_FILES" value="false" />
-        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
-        <ENTRIES>
-          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
-        </ENTRIES>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.studentinfo.data.repository" />
-      <option name="MAIN_CLASS_NAME" value="com.studentinfo.data.repository.SubjectRepositoryTest" />
-      <option name="METHOD_NAME" value="" />
+      <option name="PACKAGE_NAME" value="com.studentinfo.services" />
+      <option name="MAIN_CLASS_NAME" value="com.studentinfo.services.AttendanceServiceTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -275,6 +192,29 @@
       </method>
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
+      <shortenClasspath name="ARGS_FILE" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="com.studentinfo.services in student-information-app" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="student-information-app" />
+      <shortenClasspath name="ARGS_FILE" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.studentinfo.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.studentinfo.services" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="java in student-information-app" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="student-information-app" />
       <shortenClasspath name="MANIFEST" />
       <extension name="net.ashald.envfile">
         <option name="IS_ENABLED" value="false" />
@@ -288,7 +228,17 @@
       </extension>
       <option name="MAIN_CLASS_NAME" value="" />
       <option name="METHOD_NAME" value="" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/student-information-app/src/test/java" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="services in student-information-app" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="student-information-app" />
+      <shortenClasspath name="ARGS_FILE" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/services" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -303,20 +253,20 @@
     </configuration>
     <list>
       <item itemvalue="JUnit.UserRepositoryTest" />
-      <item itemvalue="JUnit.All in student-information-app (2)" />
-      <item itemvalue="JUnit.SubjectRepositoryTest" />
-      <item itemvalue="JUnit.All in student-information-app" />
-      <item itemvalue="JUnit.All in student-information-app (1)" />
+      <item itemvalue="JUnit.com.studentinfo.services in student-information-app" />
+      <item itemvalue="JUnit.AttendanceServiceTest" />
+      <item itemvalue="JUnit.services in student-information-app" />
+      <item itemvalue="JUnit.java in student-information-app" />
       <item itemvalue="JUnit.UserServiceTest" />
       <item itemvalue="Spring Boot.Application" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.SubjectRepositoryTest" />
-        <item itemvalue="JUnit.All in student-information-app" />
-        <item itemvalue="JUnit.All in student-information-app (2)" />
-        <item itemvalue="JUnit.All in student-information-app (1)" />
-        <item itemvalue="JUnit.All in student-information-app (1)" />
+        <item itemvalue="JUnit.java in student-information-app" />
+        <item itemvalue="JUnit.services in student-information-app" />
+        <item itemvalue="JUnit.com.studentinfo.services in student-information-app" />
+        <item itemvalue="JUnit.AttendanceServiceTest" />
+        <item itemvalue="JUnit.UserServiceTest" />
       </list>
     </recent_temporary>
   </component>
@@ -381,7 +331,35 @@
       <option name="presentableId" value="LOCAL−00005" />
       <updated>1727683711090</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL−00006" summary="Jenkinsfile add repo url">
+      <option name="closed" value="true" />
+      <created>1727772779921</created>
+      <option name="number" value="LOCAL−00006" />
+      <option name="presentableId" value="LOCAL−00006" />
+      <updated>1727772779921</updated>
+    </task>
+    <task id="LOCAL−00007" summary="Update Jenkinsfile repo url">
+      <option name="closed" value="true" />
+      <created>1727773104378</created>
+      <option name="number" value="LOCAL−00007" />
+      <option name="presentableId" value="LOCAL−00007" />
+      <updated>1727773104378</updated>
+    </task>
+    <task id="LOCAL−00008" summary="service tests done (81/81)">
+      <option name="closed" value="true" />
+      <created>1727779493829</created>
+      <option name="number" value="LOCAL−00008" />
+      <option name="presentableId" value="LOCAL−00008" />
+      <updated>1727779493829</updated>
+    </task>
+    <task id="LOCAL−00009" summary="Jenkinsfile repo url edit">
+      <option name="closed" value="true" />
+      <created>1727779787754</created>
+      <option name="number" value="LOCAL−00009" />
+      <option name="presentableId" value="LOCAL−00009" />
+      <updated>1727779787754</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -406,7 +384,21 @@
     <MESSAGE value="UserServiceTest done, pom updated" />
     <MESSAGE value="merge main" />
     <MESSAGE value="updated controller tests" />
-    <MESSAGE value="securityservicetest ok" />
-    <option name="LAST_COMMIT_MESSAGE" value="securityservicetest ok" />
+    <MESSAGE value="Jenkinsfile add repo url" />
+    <MESSAGE value="Update Jenkinsfile repo url" />
+    <MESSAGE value="service tests done (81/81)" />
+    <MESSAGE value="Jenkinsfile repo url edit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Jenkinsfile repo url edit" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/data/entity/User.java</url>
+          <line>17</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
