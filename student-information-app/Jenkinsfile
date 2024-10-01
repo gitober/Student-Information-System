@@ -15,8 +15,9 @@ pipeline {
         }
         stage('Build') {
             steps {
-            dir ('student-information-system') {
-                bat 'mvn clean package'
+                dir ('student-information-system') {
+                    bat 'mvn clean package'
+                }
             }
         }
         stage('Run Unit Tests') {
