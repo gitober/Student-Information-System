@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/gitober/Student-Information-System/student-information-app.git',branch:'jenkins-branch'
+                git url: 'https://github.com/gitober/Student-Information-System/student-information-app.git',branch:'jenkins-branch'
             }
         }
         stage('Build') {
