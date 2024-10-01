@@ -19,7 +19,9 @@ pipeline {
         }
         stage('Run Unit Tests') {
             steps {
-                bat 'mvn test'
+                dir('student-information-system') {  // Ensure we are in the correct directory
+                    bat 'mvn test'
+                }
             }
             post {
                 always {
@@ -29,7 +31,9 @@ pipeline {
         }
         stage('Code Coverage Report') {
             steps {
-                bat 'mvn jacoco:report'
+                dir('student-information-system') {  // Ensure we are in the correct directory
+                    bat 'mvn jacoco:report'
+                }
             }
             post {
                 always {
