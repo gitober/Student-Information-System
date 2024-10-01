@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/gitober/Student-Information-System.git'
+                git 'https://github.com/gitober/Student-Information-System/student-information-app.git'
             }
         }
         stage('Build') {
