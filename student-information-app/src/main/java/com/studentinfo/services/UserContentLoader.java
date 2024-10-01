@@ -70,15 +70,16 @@ public class UserContentLoader {
     // Load profile content based on user role
     public void loadProfileContent(VerticalLayout layout) {
         authenticatedUser.get().ifPresentOrElse(user -> {
-            if (user instanceof Teacher) {
+            if (user instanceof Teacher && teacherDashboardView != null) {
                 layout.add(teacherDashboardView); // Use injected view
-            } else if (user instanceof Student) {
+            } else if (user instanceof Student && studentDashboardView != null) {
                 layout.add(studentDashboardView); // Use injected view
             } else {
                 layout.add(new Paragraph("Role not recognized. Please contact support."));
             }
         }, () -> layout.add(new Paragraph("User not found. Please log in again.")));
     }
+
 
     // Load courses content based on user role
     public void loadCoursesContent(VerticalLayout layout) {

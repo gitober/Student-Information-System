@@ -30,17 +30,15 @@ class SubjectRepositoryTest {
     @BeforeEach
     public void setUp() {
         testDepartment = new Department();
-        testDepartment.setDepartmentId(1L);
         testDepartment.setDepartmentName("Science");
 
-        // Save the department to the database
-        departmentRepository.save(testDepartment);
+        // Save the department to the database and retrieve the auto-generated ID
+        testDepartment = departmentRepository.save(testDepartment);
 
         // Create a test subject
         testSubject = new Subject();
-        testSubject.setId(1L);
         testSubject.setName("Mathematics");
-        testSubject.setDepartment(testDepartment);
+        testSubject.setDepartment(testDepartment); // Set the department relationship
 
         // Save the subject to the database
         subjectRepository.save(testSubject);
