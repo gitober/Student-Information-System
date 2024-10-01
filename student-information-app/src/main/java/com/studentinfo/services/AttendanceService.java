@@ -56,4 +56,16 @@ public class AttendanceService {
     public List<Attendance> getAttendanceByCourseId(Long courseId) {
         return attendanceRepository.findByCourse_CourseId(courseId);
     }
+
+    // Retrieve attendance records by student number and course ID
+    public List<Attendance> getAttendanceByStudentNumberAndCourseId(Long studentNumber, Long courseId) {
+        return attendanceRepository.findByStudent_StudentNumberAndCourse_CourseId(studentNumber, courseId);
+    }
+
+    public List<Attendance> findByStudent_StudentNumberAndCourse_CourseId(Long studentNumber, Long courseId) {
+        return attendanceRepository.findByStudent_StudentNumberAndCourse_CourseId(studentNumber, courseId);
+    }
+
+
+
 }

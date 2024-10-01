@@ -1,8 +1,122 @@
-.teacher-profile-page-view {
-    background-image: url('./images/koulu.jpg'); /* Lisää taustakuva */
-    background-size: cover; /* Peittää koko alueen */
-    background-position: center; /* Keskittää kuvan */
-    min-height: 100vh; /* Varmistaa, että näkymä kattaa koko korkeuden */
-    color: black; /* Tekstin väri, jotta se erottuu taustasta */
-    padding: 20px; /* Lisätään hieman tyhjää tilaa */
+.teacher-dashboard-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    min-height: calc(100vh - 60px); /* Adjust height considering header */
+    background-image: url('./images/koulu.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Adds a parallax effect */
+}
+
+/* Welcome text styling */
+.teacher-dashboard-welcome-text {
+    font-size: 36px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+/* Grid container styling */
+.dashboard-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px; /* More spacing between cards */
+    max-width: 1200px;
+    width: 100%;
+}
+
+/* Default Card Styling */
+.dashboard-card {
+    width: 400px;
+    height: auto; /* Allow dynamic height depending on content */
+    background-color: #cde0ec;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+}
+
+/* Icon styling */
+.dashboard-card-icon {
+    width: 65px; /* Adjust size as needed */
+    height: auto; /* Keep aspect ratio */
+}
+
+/* Hover effects */
+.dashboard-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Card title styling */
+.dashboard-card-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 1px; /* Add space below the icon */
+    margin-bottom: 15px;
+}
+
+/* Card description styling */
+.dashboard-card-description {
+    font-size: 15px;
+    color: #555;
+}
+
+/* Media Queries for responsiveness */
+@media screen and (max-width: 768px) {
+    .teacher-dashboard-welcome-text {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .dashboard-card {
+        width: 200px;
+        padding: 15px;
+    }
+
+    .dashboard-card-title {
+        font-size: 18px;
+    }
+
+    .dashboard-card-description {
+        font-size: 14px;
+    }
+
+    .dashboard-grid {
+        gap: 20px; /* Adjust spacing for smaller screens */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .teacher-dashboard-welcome-text {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .dashboard-card {
+        width: 90%; /* Full width with padding on small screens */
+        padding: 10px;
+    }
+
+    .dashboard-card-title {
+        font-size: 16px;
+    }
+
+    .dashboard-card-description {
+        font-size: 14px;
+    }
+
+    .dashboard-grid {
+        flex-direction: column; /* Stack cards vertically on very small screens */
+        align-items: center;
+        gap: 15px;
+    }
 }

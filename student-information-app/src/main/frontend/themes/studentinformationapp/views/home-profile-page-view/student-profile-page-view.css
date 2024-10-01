@@ -1,12 +1,121 @@
+/* Main dashboard view */
 .student-profile-page-view {
-    background-image: url('./images/aa.jpg'); /* Aseta taustakuva */
-    background-size: cover; /* Peittää koko alueen */
-    background-position: center; /* Keskittää kuvan */
-    min-height: 100vh; /* Varmistaa, että alue kattaa koko näkymän */
-    color: white; /* Varmistaa, että teksti erottuu taustasta */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    min-height: calc(100vh - 60px);
+    background-image: url('./images/aa.jpg');
+    background-size: cover;
+    background-position: center;
 }
 
-.student-profile-page-view h1,
-.student-profile-page-view p {
-    color: black; /* Varmistaa, että kaikki h1- ja p-elementit ovat mustia */
+/* Welcome text styling */
+.student-dashboard-welcome-text {
+    font-size: 36px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 30px; /* Increased margin for consistency */
+}
+
+/* Dashboard grid container */
+.student-dashboard-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px; /* Increased spacing between cards for consistency */
+    max-width: 1200px;
+    width: 100%;
+}
+
+/* Dashboard card styling */
+.student-dashboard-card {
+    width: 400px; /* Increased width for consistency with teacher cards */
+    background-color: #FFF5BA;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    backdrop-filter: blur(5px); /* Added backdrop filter for consistency */
+}
+
+/* Hover effects */
+.student-dashboard-card:hover {
+    transform: translateY(-8px); /* Increased hover effect for consistency */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Icon styling */
+.student-dashboard-card-icon {
+    width: 65px; /* Adjust size as needed, consistent with teacher cards */
+    height: auto; /* Keep aspect ratio */
+}
+
+/* Card title and description */
+.student-dashboard-card-title {
+    font-size: 32px; /* Increased font size for consistency */
+    font-weight: bold;
+    color: #333;
+    margin-top: 1px; /* Add space below the icon */
+    margin-bottom: 15px; /* Increased margin for consistency */
+}
+
+.student-dashboard-card-description {
+    font-size: 15px; /* Consistent with teacher cards */
+    color: #555;
+}
+
+/* Card link */
+.student-dashboard-card-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Attendance dialog styling */
+.student-attendance-dialog {
+    max-width: 600px;
+}
+
+.attendance-dialog-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.student-attendance-grid {
+    width: 100%;
+    margin: 20px 0;
+}
+
+/* Close button in attendance dialog */
+.attendance-dialog-close-button {
+    background-color: #FDB069;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.attendance-dialog-close-button:hover {
+    background-color: #e08d53;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .student-dashboard-grid {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .student-dashboard-welcome-text {
+        font-size: 28px;
+    }
+
+    .student-dashboard-card {
+        width: 100%;
+        max-width: 300px; /* Maintain responsive design */
+    }
 }

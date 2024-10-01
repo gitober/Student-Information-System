@@ -44,6 +44,14 @@ public class UserContentLoader {
     @Lazy
     private StudentGradesView studentGradesView;
 
+    @Autowired
+    @Lazy
+    private TeacherDashboardView teacherDashboardView; // Add this line
+
+    @Autowired
+    @Lazy
+    private StudentDashboardView studentDashboardView; // Add this line
+
     // Constructor for dependency injection
     @Autowired
     public UserContentLoader(AuthenticatedUser authenticatedUser, TeacherService teacherService,
@@ -56,15 +64,16 @@ public class UserContentLoader {
         this.subjectService = subjectService;
     }
 
+
     // Methods to Load Content
 
     // Load profile content based on user role
     public void loadProfileContent(VerticalLayout layout) {
         authenticatedUser.get().ifPresentOrElse(user -> {
             if (user instanceof Teacher) {
-                layout.add(new TeacherDashboardView());
+                layout.add(teacherDashboardView); // Use injected view
             } else if (user instanceof Student) {
-                layout.add(new StudentDashboardView());
+                layout.add(studentDashboardView); // Use injected view
             } else {
                 layout.add(new Paragraph("Role not recognized. Please contact support."));
             }
