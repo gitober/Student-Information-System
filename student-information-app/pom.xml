@@ -11,6 +11,7 @@
     <properties>
         <java.version>21</java.version>
         <vaadin.version>24.4.10</vaadin.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <parent>
@@ -151,11 +152,13 @@
     <build>
         <defaultGoal>spring-boot:run</defaultGoal>
         <plugins>
+            <!-- Spring Boot Plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
+            <!-- Vaadin Plugin -->
             <plugin>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-maven-plugin</artifactId>
@@ -175,18 +178,17 @@
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.12</version>
                 <executions>
-                    <!-- Attach the JaCoCo agent to test phase -->
+                    <!-- Attach the JaCoCo agent to the test phase -->
                     <execution>
                         <id>prepare-agent</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
-
                     <!-- Create the coverage report after the tests run -->
                     <execution>
                         <id>report</id>
-                        <phase>verify</phase> <!-- ensure this runs in the verify phase after tests -->
+                        <phase>verify</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
@@ -200,8 +202,30 @@
                 </executions>
             </plugin>
 
+            <!-- Compiler Plugin for setting the Java version -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
 
-
+            <!-- JAR Plugin for configuring the manifest file -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.4.1</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.studentinfo.StudentInformationApp</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
