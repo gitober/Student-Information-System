@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @DataJpaTest
-@ActiveProfiles("test") // application-test.properties used
+@ActiveProfiles("test")
 class UserRepositoryTest {
 
     @Autowired

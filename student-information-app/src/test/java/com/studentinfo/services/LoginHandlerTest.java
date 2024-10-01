@@ -5,7 +5,6 @@ import com.studentinfo.data.entity.Role;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.notification.Notification;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -46,6 +45,9 @@ class LoginHandlerTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(httpServletRequest, httpServletResponse));
+
+        // Clear the SecurityContextHolder before each test
+        SecurityContextHolder.clearContext();
     }
 
     @Test
@@ -104,10 +106,14 @@ class LoginHandlerTest {
             // Assert
             verify(userService, times(1)).authenticate(email, password);
             verify(authenticationManager, never()).authenticate(any(UsernamePasswordAuthenticationToken.class));
+
+            // Assert that the SecurityContextHolder is null after failed login
             assertNull(SecurityContextHolder.getContext().getAuthentication());
 
-            // Verify Notification.show was called with failed message
+            // Verify Notification.show was called with the correct message
             mockedNotification.verify(() -> Notification.show("Authentication failed. Please check your credentials."), times(1));
         }
     }
+
+
 }
