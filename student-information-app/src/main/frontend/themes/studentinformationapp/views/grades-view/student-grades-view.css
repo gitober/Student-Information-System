@@ -5,9 +5,16 @@
 }
 
 .student-grades-view-title {
-    font-size: 24px;
+    font-size: 30px;
     color: #333;
     margin-bottom: 20px;
+}
+
+.student-grades-view-description {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+
 }
 
 .student-grades-view-search {

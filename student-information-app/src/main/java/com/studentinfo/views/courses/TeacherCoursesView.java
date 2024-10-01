@@ -12,6 +12,7 @@ import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -47,6 +48,9 @@ public class TeacherCoursesView extends Composite<VerticalLayout> {
         // Page title
         H2 title = new H2("Course Management");
         title.addClassName("teacher-courses-view-title");
+
+        Paragraph description = new Paragraph("Manage your courses here. You can add, edit, view, and delete courses.");
+        description.addClassName("teacher-courses-view-description");
 
         // Search bar to filter courses by course name or plan
         TextField searchField = new TextField("Search Courses");
@@ -86,7 +90,7 @@ public class TeacherCoursesView extends Composite<VerticalLayout> {
         addCourseButton.addClickListener(event -> openAddCourseDialog());
 
         // Adding components to the view
-        getContent().add(title, searchField, coursesGrid, addCourseButton);
+        getContent().add(title, description, searchField, coursesGrid, addCourseButton);
 
         // Load the courses during initialization
         refreshCourseData();
@@ -335,5 +339,6 @@ public class TeacherCoursesView extends Composite<VerticalLayout> {
         addCourseDialog.add(courseNameField, coursePlanField, startDatePicker, endDatePicker, teacherComboBox, dialogButtons);
         addCourseDialog.open();
     }
+
 
 }

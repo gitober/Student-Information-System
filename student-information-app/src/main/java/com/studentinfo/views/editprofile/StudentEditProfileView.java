@@ -55,7 +55,10 @@ public class StudentEditProfileView extends VerticalLayout {
         VerticalLayout currentDetailsLayout = new VerticalLayout();
         currentDetailsLayout.addClassName("student-current-details-layout");
 
-        currentDetailsLayout.add(new H3("Current Details:"));
+        H3 currentDetailsHeading = new H3("Current Details:");
+        currentDetailsHeading.addClassName("current-details-title");
+        currentDetailsLayout.add(currentDetailsHeading);
+
 
         nameParagraph = new Paragraph();
         nameParagraph.getElement().setProperty("innerHTML", "<span class='label'>Name </span>" + "<br>" + student.getFirstName() + " " + student.getLastName());

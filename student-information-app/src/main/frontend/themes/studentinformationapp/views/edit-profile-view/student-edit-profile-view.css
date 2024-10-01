@@ -24,16 +24,13 @@
     background-color: rgba(222, 236, 207, 0.9); /* Lisää läpinäkyvyys */
 }
 
-
-
-
-
 /* Main layout containing both sections */
 .student-edit-profile-main-layout {
     display: flex;
     gap: 1.5rem;
-    width: 90%;
-    max-width: 1200px;
+    width: 100%;
+    max-width: 1100px;
+    height: 550px;
     margin: auto;
     align-items: stretch; /* Stretch children to equal heights */
     flex: 1 1 auto; /* Allows the layout to stretch */
@@ -42,8 +39,8 @@
 /* Current details section */
 .student-current-details-layout {
     padding: 1rem;
-    background-color: white;
-    border-radius: 8px;
+    background-color: #F7E6A9;
+    border-radius: 10px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     flex: 1; /* Ensure both sections grow equally */
     display: flex;
@@ -52,16 +49,24 @@
     min-height: 100%; /* Ensures the box stretches to the full available height */
 }
 
+.current-details-title {
+    margin-top: 30px; /* Adjust this value to set the desired space above the heading */
+    margin-bottom: 15px; /* Optional: space below the heading */
+    font-size: 26px; /* Optional: adjust font size if needed */
+    color: #333; /* Optional: adjust text color */
+}
+
+
 /* Styling for the detail paragraphs */
 .student-current-details-layout p {
-    font-size: 19px; /* Font size for detail text */
+    font-size: 20px; /* Font size for detail text */
     color: #333; /* Text color */
     margin: 0.5rem 0; /* Spacing between paragraphs */
 }
 
 .student-current-details-layout p span.label {
     font-weight: bold; /* Make the title bold */
-    font-size: 18px; /* Adjust the font size */
+    font-size: 16px; /* Adjust the font size */
 }
 
 /* Title for current details */
@@ -71,20 +76,20 @@
     margin-bottom: 1rem; /* Space below the title */
 }
 
-
-
 /* Layout for the form */
 .student-edit-profile-form-layout {
     padding: 1rem;
-    background-color: white;
-    border-radius: 8px;
+    background-color: #F7E6A9;
+    border-radius: 10px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     flex: 1; /* Ensure both sections grow equally */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* Adjust to balance content if needed */
+    display: grid;
+    grid-template-columns: 0.7fr; /* Ensures a single column layout */
+    gap: 0.1rem; /* Adjust this value to change the gap between items */
     min-height: 100%; /* Ensures the box stretches to the full available height */
+    justify-content: center;
 }
+
 
 /* Title styling for the student edit profile view */
 .student-edit-profile-title {
@@ -96,17 +101,15 @@
     padding-bottom: 0.25rem; /* Adds some spacing below the title */
 }
 
-.student-edit-profile-save-button{
+.student-edit-profile-save-button {
     background-color: #FDB069; /* Golden Yellow */
     color: white; /* White text */
 }
 
-student-edit-profile-save-button:hover {
+.student-edit-profile-save-button:hover {
     background-color: #e08d53; /* Orange */
     color: white; /* White text */
 }
-
-
 
 /* Responsive Adjustments */
 

@@ -17,7 +17,6 @@
     margin-bottom: 20px;
 }
 
-
 .teacher-edit-profile-view-current-details-layout {
     flex: 1;
     max-width: 35%; /* Restrict the maximum width to make it smaller */
@@ -31,7 +30,6 @@
     flex-direction: column;
     align-items: flex-start;
     box-sizing: border-box;
-    height: 150%;
 }
 
 .teacher-edit-profile-view-current-details-title {
@@ -88,8 +86,6 @@
     border-radius: 5px; /* Rounded corners */
     cursor: pointer; /* Pointer cursor on hover */
     transition: background-color 0.3s ease; /* Smooth hover effect */
-
-    /* Centering */
     display: block; /* Make button a block-level element */
     margin: 20px auto; /* Center horizontally with auto margins and add some vertical spacing */
 }
@@ -100,4 +96,59 @@
 
 .teacher-edit-profile-view-save-button:focus {
     outline: none; /* Remove outline on focus */
+}
+
+/* Media Queries for Responsive Design */
+@media screen and (max-width: 768px) {
+    .teacher-edit-profile-view-container {
+        flex-direction: column; /* Stack layout vertically */
+    }
+
+    .teacher-edit-profile-view-current-details-layout,
+    .teacher-edit-profile-view-form-layout {
+        max-width: 85%; /* Increased width for smaller screens */
+        padding: 8px; /* Adjust padding */
+    }
+
+    .teacher-edit-profile-view-title {
+        font-size: 22px; /* Further reduced title font size */
+    }
+
+    .teacher-edit-profile-view-label {
+        font-size: 16px; /* Further reduced label font size */
+    }
+
+    .teacher-edit-profile-view-value {
+        font-size: 12px; /* Further reduced value font size */
+    }
+
+    .teacher-edit-profile-view-save-button {
+        font-size: 12px; /* Adjust button font size */
+        padding: 6px 12px; /* Adjust button padding */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .teacher-edit-profile-view-current-details-layout,
+    .teacher-edit-profile-view-form-layout {
+        max-width: 100%; /* Use full width on very small screens */
+        padding: 4px; /* Further reduced padding */
+    }
+
+    .teacher-edit-profile-view-title {
+        font-size: 18px; /* Further reduce title font size */
+    }
+
+    .teacher-edit-profile-view-label {
+        font-size: 14px; /* Further reduce label font size */
+    }
+
+    .teacher-edit-profile-view-value {
+        font-size: 10px; /* Further reduce value font size */
+    }
+
+    .teacher-edit-profile-view-save-button {
+        font-size: 10px; /* Further adjust button font size */
+        padding: 4px 8px; /* Further adjust button padding */
+    }
 }
