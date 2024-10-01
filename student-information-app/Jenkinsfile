@@ -25,7 +25,9 @@ pipeline {
             }
             post {
                 always {
-                    junit 'target/surefire-reports/*.xml'  // Capture test reports
+                    dir('student-information-app') {  // Ensure we are in the correct directory
+                        junit 'target/surefire-reports/*.xml'  // Capture test reports
+                    }
                 }
             }
         }
@@ -37,7 +39,9 @@ pipeline {
             }
             post {
                 always {
-                    jacoco execPattern: 'target/jacoco.exec'
+                    dir('student-information-app') {  // Ensure we are in the correct directory
+                        jacoco(execPattern: 'target/jacoco.exec')
+                    }
                 }
             }
         }
