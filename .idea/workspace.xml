@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="49cfb8af-12fd-4a91-b702-3553d39bf1cc" name="Changes" comment="Update Jenkinsfile repo url">
+    <list default="true" id="49cfb8af-12fd-4a91-b702-3553d39bf1cc" name="Changes" comment="Jenkinsfile repo url edit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -69,11 +69,13 @@
     "JUnit.UserControllerTest.executor": "Run",
     "JUnit.UserRepositoryTest.executor": "Run",
     "JUnit.UserServiceTest.executor": "Run",
+    "JUnit.com.studentinfo.services in student-information-app.executor": "Run",
     "JUnit.java in student-information-app.executor": "Run",
     "JUnit.repository in student-information-app.executor": "Run",
     "JUnit.services in student-information-app.executor": "Run",
     "Maven.student-information-app [clean].executor": "Run",
     "Maven.student-information-app [install].executor": "Run",
+    "Maven.student-information-app [test].executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
@@ -126,9 +128,10 @@
     <option name="myCommands">
       <command value="mvn clean" />
       <command value="mvn install" />
+      <command value="mvn test" />
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.Application">
+  <component name="RunManager" selected="JUnit.java in student-information-app">
     <configuration name="AttendanceServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="student-information-app" />
       <shortenClasspath name="ARGS_FILE" />
@@ -140,33 +143,6 @@
       </extension>
       <option name="PACKAGE_NAME" value="com.studentinfo.services" />
       <option name="MAIN_CLASS_NAME" value="com.studentinfo.services.AttendanceServiceTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TeacherControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="student-information-app" />
-      <shortenClasspath name="MANIFEST" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.studentinfo.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <extension name="net.ashald.envfile">
-        <option name="IS_ENABLED" value="false" />
-        <option name="IS_SUBST" value="false" />
-        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
-        <option name="IS_IGNORE_MISSING_FILES" value="false" />
-        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
-        <ENTRIES>
-          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
-        </ENTRIES>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.studentinfo.controller" />
-      <option name="MAIN_CLASS_NAME" value="com.studentinfo.controller.TeacherControllerTest" />
-      <option name="METHOD_NAME" value="" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -222,6 +198,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="com.studentinfo.services in student-information-app" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="student-information-app" />
+      <shortenClasspath name="ARGS_FILE" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.studentinfo.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.studentinfo.services" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="java in student-information-app" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="student-information-app" />
       <shortenClasspath name="MANIFEST" />
@@ -262,20 +253,20 @@
     </configuration>
     <list>
       <item itemvalue="JUnit.UserRepositoryTest" />
+      <item itemvalue="JUnit.com.studentinfo.services in student-information-app" />
       <item itemvalue="JUnit.AttendanceServiceTest" />
       <item itemvalue="JUnit.services in student-information-app" />
       <item itemvalue="JUnit.java in student-information-app" />
-      <item itemvalue="JUnit.TeacherControllerTest" />
       <item itemvalue="JUnit.UserServiceTest" />
       <item itemvalue="Spring Boot.Application" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.AttendanceServiceTest" />
-        <item itemvalue="JUnit.services in student-information-app" />
         <item itemvalue="JUnit.java in student-information-app" />
+        <item itemvalue="JUnit.services in student-information-app" />
+        <item itemvalue="JUnit.com.studentinfo.services in student-information-app" />
+        <item itemvalue="JUnit.AttendanceServiceTest" />
         <item itemvalue="JUnit.UserServiceTest" />
-        <item itemvalue="JUnit.TeacherControllerTest" />
       </list>
     </recent_temporary>
   </component>
@@ -354,7 +345,21 @@
       <option name="presentableId" value="LOCAL−00007" />
       <updated>1727773104378</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL−00008" summary="service tests done (81/81)">
+      <option name="closed" value="true" />
+      <created>1727779493829</created>
+      <option name="number" value="LOCAL−00008" />
+      <option name="presentableId" value="LOCAL−00008" />
+      <updated>1727779493829</updated>
+    </task>
+    <task id="LOCAL−00009" summary="Jenkinsfile repo url edit">
+      <option name="closed" value="true" />
+      <created>1727779787754</created>
+      <option name="number" value="LOCAL−00009" />
+      <option name="presentableId" value="LOCAL−00009" />
+      <updated>1727779787754</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -381,7 +386,9 @@
     <MESSAGE value="updated controller tests" />
     <MESSAGE value="Jenkinsfile add repo url" />
     <MESSAGE value="Update Jenkinsfile repo url" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update Jenkinsfile repo url" />
+    <MESSAGE value="service tests done (81/81)" />
+    <MESSAGE value="Jenkinsfile repo url edit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Jenkinsfile repo url edit" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
