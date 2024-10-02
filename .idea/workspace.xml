@@ -4,151 +4,45 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="49cfb8af-12fd-4a91-b702-3553d39bf1cc" name="Changes" comment="Jenkinsfile repo url edit">
+    <list default="true" id="764fc70a-79c6-44da-a2e5-bccd6c639a77" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-<<<<<<< Updated upstream
-=======
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/bundles/dev.bundle" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/bundles/dev.bundle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/TeacherAttendanceTrackingView/teacher-attendance-view.css" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/TeacherAttendanceTrackingView/teacher-attendance-view.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/TeacherUpdateStudentProfile/teacher-update-student-profile.css" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/TeacherUpdateStudentProfile/teacher-update-student-profile.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/courses-view/student-courses-view.css" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/courses-view/student-courses-view.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/courses-view/teacher-courses-view.css" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/courses-view/teacher-courses-view.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/edit-profile-view/student-edit-profile-view.css" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/edit-profile-view/student-edit-profile-view.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/grades-view/student-grades-view.css" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/grades-view/student-grades-view.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/grades-view/teacher-grades-view.css" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/grades-view/teacher-grades-view.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/home-profile-page-view/student-profile-page-view.css" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/home-profile-page-view/student-profile-page-view.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/courses/StudentCoursesView.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/courses/StudentCoursesView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/courses/TeacherCoursesView.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/courses/TeacherCoursesView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/editprofile/StudentEditProfileView.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/editprofile/StudentEditProfileView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/grades/StudentGradesView.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/grades/StudentGradesView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/homeprofilepage/StudentDashboardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/homeprofilepage/StudentDashboardView.java" afterDir="false" />
->>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="CSS File" />
-        <option value="Class" />
-        <option value="JUnit5 Test Class" />
-      </list>
-    </option>
-  </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;gitober&quot;
-  }
-}</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/gitober/Student-Information-System.git&quot;,
-    &quot;accountId&quot;: &quot;a1772b69-0a5a-41cb-8001-3ea2d759f6fe&quot;
-  }
-}</component>
-  <component name="KubernetesApiPersistence">{}</component>
-  <component name="KubernetesApiProvider">{
-  &quot;isMigrated&quot;: true
-}</component>
-  <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 0
-}</component>
-  <component name="ProjectId" id="2lFjwOecjK4GG4KbyfOTKOROABE" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
-  </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "JUnit.ApplicationTest.executor": "Run",
-    "JUnit.AttendanceServiceTest.executor": "Run",
-    "JUnit.DepartmentRepositoryTest.executor": "Run",
-    "JUnit.StudentControllerTest.executor": "Run",
-    "JUnit.StudentControllerTest.testCreateStudent.executor": "Run",
-    "JUnit.StudentRepositoryTest.executor": "Run",
-    "JUnit.SubjectRepositoryTest.executor": "Run",
-    "JUnit.TeacherControllerTest.executor": "Run",
-    "JUnit.TeacherControllerTest.testCreateTeacher1.executor": "Run",
-    "JUnit.TeacherControllerTest.testGetAllTeachers.executor": "Run",
-    "JUnit.TeacherRepositoryTest.executor": "Run",
-    "JUnit.UserControllerTest.executor": "Run",
-    "JUnit.UserRepositoryTest.executor": "Run",
-    "JUnit.UserServiceTest.executor": "Run",
-    "JUnit.com.studentinfo.services in student-information-app.executor": "Run",
-    "JUnit.java in student-information-app.executor": "Run",
-    "JUnit.repository in student-information-app.executor": "Run",
-    "JUnit.services in student-information-app.executor": "Run",
-    "Maven.student-information-app [clean].executor": "Run",
-    "Maven.student-information-app [install].executor": "Run",
-    "Maven.student-information-app [test].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.Application.executor": "Run",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "branch-Eetu",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/bober/OneDrive/Työpöytä/Student Information System/student-information-app/src/main/frontend/themes/studentinformationapp/images",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "ts.external.directory.path": "C:\\Users\\bober\\OneDrive\\Työpöytä\\Student Information System\\student-information-app\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
-  },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
-    ]
+    "git-widget-placeholder": "main",
+    "node.js.selected.package.tslint": "(autodetect)"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\bober\OneDrive\Työpöytä\Student Information System\student-information-app\src\main\frontend\themes\studentinformationapp\images" />
-      <recent name="C:\Users\bober\OneDrive\Työpöytä\Student Information System\student-information-app\src\main\resources\META-INF\resources\icons" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\George\Documents\Koulu\Year_2\Period_3\StudentInformationSystemRepo\student-information-app\src\main\resources" />
-      <recent name="C:\Users\George\IdeaProjects\Student-Information-System\student-information-app\src\main\resources" />
-      <recent name="C:\Users\bober\OneDrive\Työpöytä\Student Information System\student-information-app\src\main\resources\META-INF\resources\images" />
-      <recent name="C:\Users\bober\OneDrive\Työpöytä\Student Information System\student-information-app\src\main\resources\META-INF\resources\icons" />
-      <recent name="C:\Users\bober\OneDrive\Työpöytä\Student Information System\student-information-app\src\main\resources\META-INF\resources\icons\images" />
-    </key>
-    <key name="CreateTestDialog.Recents.Supers">
-      <recent name="" />
-    </key>
-    <key name="CreateTestDialog.RecentsKey">
-      <recent name="com.studentinfo.data.repository" />
-    </key>
-  </component>
-  <component name="RunAnythingCache">
-    <option name="myCommands">
-      <command value="mvn clean" />
-      <command value="mvn install" />
-      <command value="mvn test" />
-    </option>
-  </component>
-  <component name="RunManager" selected="JUnit.java in student-information-app">
+  <component name="RunManager" selected="JUnit.AttendanceServiceTest">
+    <configuration name="All in student-information-app" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="student-information-app" />
+      <shortenClasspath name="MANIFEST" />
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+        </ENTRIES>
+      </extension>
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="AttendanceServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="student-information-app" />
       <shortenClasspath name="ARGS_FILE" />
@@ -165,133 +59,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserRepositoryTest" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
-      <module name="student-information-app" />
-      <shortenClasspath name="MANIFEST" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.studentinfo.data.repository.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <extension name="net.ashald.envfile">
-        <option name="IS_ENABLED" value="false" />
-        <option name="IS_SUBST" value="false" />
-        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
-        <option name="IS_IGNORE_MISSING_FILES" value="false" />
-        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
-        <ENTRIES>
-          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
-        </ENTRIES>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.studentinfo.data.repository" />
-      <option name="MAIN_CLASS_NAME" value="com.studentinfo.data.repository.UserRepositoryTest" />
-      <option name="METHOD_NAME" value="" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UserServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="student-information-app" />
-      <shortenClasspath name="ARGS_FILE" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.studentinfo.services.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.studentinfo.services" />
-      <option name="MAIN_CLASS_NAME" value="com.studentinfo.services.UserServiceTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="JUnit" factoryName="JUnit">
-      <shortenClasspath name="ARGS_FILE" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="com.studentinfo.services in student-information-app" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="student-information-app" />
-      <shortenClasspath name="ARGS_FILE" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.studentinfo.services.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.studentinfo.services" />
-      <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="java in student-information-app" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="student-information-app" />
-      <shortenClasspath name="MANIFEST" />
-      <extension name="net.ashald.envfile">
-        <option name="IS_ENABLED" value="false" />
-        <option name="IS_SUBST" value="false" />
-        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
-        <option name="IS_IGNORE_MISSING_FILES" value="false" />
-        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
-        <ENTRIES>
-          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
-        </ENTRIES>
-      </extension>
-      <option name="MAIN_CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="TEST_OBJECT" value="directory" />
-      <dir value="$PROJECT_DIR$/student-information-app/src/test/java" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="services in student-information-app" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="student-information-app" />
-      <shortenClasspath name="ARGS_FILE" />
-      <option name="TEST_OBJECT" value="directory" />
-      <dir value="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/services" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="student-information-app" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.studentinfo.Application" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
-      <item itemvalue="JUnit.UserRepositoryTest" />
-      <item itemvalue="JUnit.com.studentinfo.services in student-information-app" />
       <item itemvalue="JUnit.AttendanceServiceTest" />
-      <item itemvalue="JUnit.services in student-information-app" />
-      <item itemvalue="JUnit.java in student-information-app" />
-      <item itemvalue="JUnit.UserServiceTest" />
-      <item itemvalue="Spring Boot.Application" />
+      <item itemvalue="JUnit.All in student-information-app" />
     </list>
     <recent_temporary>
       <list>
-<<<<<<< Updated upstream
-        <item itemvalue="JUnit.java in student-information-app" />
-        <item itemvalue="JUnit.services in student-information-app" />
-        <item itemvalue="JUnit.com.studentinfo.services in student-information-app" />
         <item itemvalue="JUnit.AttendanceServiceTest" />
-        <item itemvalue="JUnit.UserServiceTest" />
-=======
-        <item itemvalue="JUnit.UserServiceTest" />
-        <item itemvalue="JUnit.All in student-information-app (1)" />
         <item itemvalue="JUnit.All in student-information-app" />
-        <item itemvalue="JUnit.SubjectRepositoryTest" />
-        <item itemvalue="JUnit.All in student-information-app (2)" />
->>>>>>> Stashed changes
       </list>
     </recent_temporary>
   </component>
