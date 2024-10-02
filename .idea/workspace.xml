@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="764fc70a-79c6-44da-a2e5-bccd6c639a77" name="Changes" comment="">
+    <list default="true" id="764fc70a-79c6-44da-a2e5-bccd6c639a77" name="Changes" comment="workspace korjaus">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -17,11 +17,12 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Docker.student-information-app/Dockerfile build.executor": "Run",
     "git-widget-placeholder": "main",
     "node.js.selected.package.tslint": "(autodetect)"
   }
 }]]></component>
-  <component name="RunManager" selected="JUnit.AttendanceServiceTest">
+  <component name="RunManager" selected="Docker.student-information-app/Dockerfile build">
     <configuration name="All in student-information-app" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="student-information-app" />
       <shortenClasspath name="MANIFEST" />
@@ -59,12 +60,29 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
+      <deployment type="dockerfile" />
+      <method v="2" />
+    </configuration>
+    <configuration name="student-information-app/Dockerfile build" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="imageTag" value="mavenlatest_build" />
+          <option name="buildCliOptions" value="--target build" />
+          <option name="buildOnly" value="true" />
+          <option name="sourceFilePath" value="student-information-app/Dockerfile" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
     <list>
+      <item itemvalue="Docker.student-information-app/Dockerfile build" />
       <item itemvalue="JUnit.AttendanceServiceTest" />
       <item itemvalue="JUnit.All in student-information-app" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Docker.student-information-app/Dockerfile build" />
         <item itemvalue="JUnit.AttendanceServiceTest" />
         <item itemvalue="JUnit.All in student-information-app" />
       </list>
@@ -159,7 +177,15 @@
       <option name="presentableId" value="LOCAL−00009" />
       <updated>1727779787754</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="workspace korjaus">
+      <option name="closed" value="true" />
+      <created>1727864402987</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1727864402987</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -188,7 +214,8 @@
     <MESSAGE value="Update Jenkinsfile repo url" />
     <MESSAGE value="service tests done (81/81)" />
     <MESSAGE value="Jenkinsfile repo url edit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Jenkinsfile repo url edit" />
+    <MESSAGE value="workspace korjaus" />
+    <option name="LAST_COMMIT_MESSAGE" value="workspace korjaus" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
