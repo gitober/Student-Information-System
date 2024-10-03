@@ -1,5 +1,5 @@
-# Use an official Maven image as a parent image
-FROM maven:latest
+# Use a Maven image with JDK 21 to build the application
+FROM maven:3.9.4-eclipse-temurin-21 AS builder
 
 # Set the working directory
 WORKDIR /app
@@ -23,7 +23,7 @@ FROM eclipse-temurin:21-jre
 LABEL authors="bober"
 
 # Copy the jar file from the build stage
-COPY --from=build /app/target/student-information-app-1.0-SNAPSHOT.jar /app/app.jar
+COPY --from=builder /app/target/student-information-app-1.0-SNAPSHOT.jar /app/app.jar
 
 # Expose the application port
 EXPOSE 8080
