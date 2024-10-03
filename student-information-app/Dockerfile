@@ -1,5 +1,5 @@
-# Use an official Maven image as a parent image
-FROM maven:latest
+# Use a specific Maven image with JDK 17 to build the application
+FROM maven:3.9.4-eclipse-temurin-17 AS build
 
 # Set the working directory
 WORKDIR /app
