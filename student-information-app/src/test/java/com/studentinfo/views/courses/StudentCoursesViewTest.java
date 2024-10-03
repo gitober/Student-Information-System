@@ -45,8 +45,6 @@ public class StudentCoursesViewTest {
 
         // Instantiate the view with mocked services
         studentCoursesView = new StudentCoursesView(courseService, attendanceService, userService);
-
-        System.out.println("Test environment setup complete.");
     }
 
     @Test

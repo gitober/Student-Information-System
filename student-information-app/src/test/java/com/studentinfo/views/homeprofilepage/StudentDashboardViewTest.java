@@ -1,13 +1,13 @@
 package com.studentinfo.views.homeprofilepage;
 
+import com.studentinfo.data.entity.Attendance;
 import com.studentinfo.data.entity.Course;
 import com.studentinfo.data.entity.Grade;
 import com.studentinfo.data.entity.Student;
+import com.studentinfo.security.AuthenticatedUser;
+import com.studentinfo.services.AttendanceService;
 import com.studentinfo.services.CourseService;
 import com.studentinfo.services.GradeService;
-import com.studentinfo.services.StudentService;
-import com.studentinfo.views.TeacherAttendanceView.TeacherAttendanceView;
-import com.studentinfo.views.TeacherUpdateStudentProfileView.TeacherUpdateStudentProfileView;
 import com.studentinfo.views.courses.CoursesView;
 import com.studentinfo.views.editprofile.EditProfileView;
 import com.studentinfo.views.grades.GradesView;
@@ -34,21 +34,23 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
-public class TeacherDashboardViewTest {
+public class StudentDashboardViewTest {
 
-    private TeacherDashboardView teacherDashboardView;
+    private StudentDashboardView studentDashboardView;
 
     @BeforeEach
     public void setUp() {
         // Mock the services
         CourseService courseService = Mockito.mock(CourseService.class);
-        StudentService studentService = Mockito.mock(StudentService.class);
         GradeService gradeService = Mockito.mock(GradeService.class);
+        AttendanceService attendanceService = Mockito.mock(AttendanceService.class);
+        AuthenticatedUser authenticatedUser = Mockito.mock(AuthenticatedUser.class);
 
         // Mock service methods
-        when(studentService.list()).thenReturn(new ArrayList<>(List.of(new Student(), new Student())));
-        when(gradeService.getAllGrades()).thenReturn(new ArrayList<>(List.of(new Grade(), new Grade(), new Grade())));
         when(courseService.getAllCourses()).thenReturn(new ArrayList<>(List.of(new Course(), new Course())));
+        when(gradeService.getAllGrades()).thenReturn(new ArrayList<>(List.of(new Grade(), new Grade(), new Grade())));
+        when(attendanceService.getAttendanceByCourseId(Mockito.anyLong())).thenReturn(new ArrayList<>(List.of(new Attendance(), new Attendance())));
+        when(authenticatedUser.get()).thenReturn(Optional.of(new Student()));
 
         // Setting up a mocked Vaadin environment
         VaadinService vaadinServiceMock = Mockito.mock(VaadinService.class);
@@ -65,39 +67,34 @@ public class TeacherDashboardViewTest {
         Mockito.when(routerMock.getRegistry()).thenReturn(routeRegistryMock);
 
         // Register the routes in the mocked RouteRegistry
-        Mockito.when(routeRegistryMock.getTargetUrl(TeacherUpdateStudentProfileView.class, new RouteParameters()))
-                .thenReturn(Optional.of("teacher-update-student-profile"));
-        Mockito.when(routeRegistryMock.getTargetUrl(GradesView.class, new RouteParameters()))
-                .thenReturn(Optional.of("grades"));
         Mockito.when(routeRegistryMock.getTargetUrl(CoursesView.class, new RouteParameters()))
                 .thenReturn(Optional.of("courses"));
-        Mockito.when(routeRegistryMock.getTargetUrl(TeacherAttendanceView.class, new RouteParameters()))
-                .thenReturn(Optional.of("attendance"));
+        Mockito.when(routeRegistryMock.getTargetUrl(GradesView.class, new RouteParameters()))
+                .thenReturn(Optional.of("grades"));
         Mockito.when(routeRegistryMock.getTargetUrl(EditProfileView.class, new RouteParameters()))
                 .thenReturn(Optional.of("edit-profile"));
 
-        // Creating the TeacherDashboardView instance with mocked services
-        teacherDashboardView = new TeacherDashboardView(courseService, studentService, gradeService);
+        // Creating the StudentDashboardView instance with mocked services
+        studentDashboardView = new StudentDashboardView(courseService, gradeService, attendanceService, authenticatedUser);
     }
 
     @Test
-    public void testTeacherDashboardViewInitialization() {
+    public void testStudentDashboardViewInitialization() {
         // Check if the main title is present
-        H1 title = (H1) teacherDashboardView.getContent().getComponentAt(0);
+        H1 title = (H1) studentDashboardView.getContent().getComponentAt(0);
         assertNotNull(title);
-        assertEquals("Teacher Dashboard", title.getText());
+        assertEquals("Student Dashboard", title.getText());
 
         // Check if the dashboard grid is present
-        FlexLayout dashboardGrid = (FlexLayout) teacherDashboardView.getContent().getComponentAt(1);
+        FlexLayout dashboardGrid = (FlexLayout) studentDashboardView.getContent().getComponentAt(1);
         assertNotNull(dashboardGrid);
-        assertEquals(5, dashboardGrid.getComponentCount()); // Should have 5 dashboard cards
+        assertEquals(4, dashboardGrid.getComponentCount()); // Should have 4 dashboard cards
 
         // Check if the correct number of cards is displayed with expected titles
-        checkCardTitle(dashboardGrid.getComponentAt(0), "Students");
-        checkCardTitle(dashboardGrid.getComponentAt(1), "Grading");
-        checkCardTitle(dashboardGrid.getComponentAt(2), "Manage Courses");
-        checkCardTitle(dashboardGrid.getComponentAt(3), "Manage Attendance");
-        checkCardTitle(dashboardGrid.getComponentAt(4), "Quick Links");
+        checkCardTitle(dashboardGrid.getComponentAt(0), "Courses");
+        checkCardTitle(dashboardGrid.getComponentAt(1), "Grades");
+        checkCardTitle(dashboardGrid.getComponentAt(2), "Attendance");
+        checkCardTitle(dashboardGrid.getComponentAt(3), "Edit Profile");
     }
 
     private void checkCardTitle(Component card, String expectedTitle) {

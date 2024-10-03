@@ -130,7 +130,7 @@ public class TeacherCoursesViewTest {
         Button addCourseButton = new Button("Add Course");
         addCourseButton.addClickListener(event -> Notification.show("Add Course button clicked"));
 
-        assertDoesNotThrow(() -> addCourseButton.click(), "Clicking the 'Add Course' button should not throw an exception.");
+        assertDoesNotThrow(addCourseButton::click, "Clicking the 'Add Course' button should not throw an exception.");
         System.out.println("'Add Course' button click simulation completed.");
     }
 }

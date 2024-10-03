@@ -71,7 +71,7 @@ public class TeacherAttendanceViewTest {
         assertNotNull(searchField, "Search field should be present in the teacher attendance view.");
 
         // Check if the attendance grid is present
-        Grid<Attendance> attendanceGrid = findComponent(Grid.class, null);
+        Grid attendanceGrid = findComponent(Grid.class, null);
         assertNotNull(attendanceGrid, "Attendance grid should be present in the teacher attendance view.");
 
         // Check if the 'Add Attendance' button is present
@@ -86,12 +86,18 @@ public class TeacherAttendanceViewTest {
 
     private <T> T findComponentInTree(com.vaadin.flow.component.Component component, Class<T> componentClass, String labelText) {
         if (componentClass.isInstance(component)) {
-            if (component instanceof TextField && labelText.equals(((TextField) component).getLabel())) {
-                return componentClass.cast(component);
-            } else if (component instanceof Button && labelText.equals(((Button) component).getText())) {
-                return componentClass.cast(component);
-            } else if (component instanceof Grid) {
-                return componentClass.cast(component);
+            switch (component) {
+                case TextField textField when labelText.equals(textField.getLabel()) -> {
+                    return componentClass.cast(component);
+                }
+                case Button button when labelText.equals(button.getText()) -> {
+                    return componentClass.cast(component);
+                }
+                case Grid grid -> {
+                    return componentClass.cast(component);
+                }
+                default -> {
+                }
             }
         }
 

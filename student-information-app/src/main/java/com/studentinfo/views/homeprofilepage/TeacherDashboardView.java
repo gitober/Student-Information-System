@@ -87,14 +87,11 @@ public class TeacherDashboardView extends Composite<VerticalLayout> {
         if (navigationTarget != null) {
             RouterLink link = new RouterLink();
             link.setRoute(navigationTarget);
-            link.add(cardIcon, cardTitle, cardDescription); // Include icon in the link
-            card.add(link);
+            link.add(cardTitle, cardDescription); // Include title and description in the link
+            card.add(cardIcon, link); // Add icon and link to the card
         } else {
             card.add(cardIcon, cardTitle, cardDescription);
         }
-
         return card;
     }
-
-
 }

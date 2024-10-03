@@ -13,14 +13,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ProfilePageViewTest {
 
     private ProfilePageView profilePageView;
-    private AuthenticatedUser authenticatedUser;
-    private UserContentLoader userContentLoader;
 
     @BeforeEach
     public void setUp() {
         // Create mocks for AuthenticatedUser and UserContentLoader
-        authenticatedUser = Mockito.mock(AuthenticatedUser.class);
-        userContentLoader = Mockito.mock(UserContentLoader.class);
+        AuthenticatedUser authenticatedUser = Mockito.mock(AuthenticatedUser.class);
+        UserContentLoader userContentLoader = Mockito.mock(UserContentLoader.class);
 
         // Initialize ProfilePageView with mocked dependencies
         profilePageView = new ProfilePageView(authenticatedUser, userContentLoader);
@@ -35,7 +33,7 @@ public class ProfilePageViewTest {
         assertNotNull(mainLayout, "Main layout should not be null.");
 
         // Check if the HeaderView is added to the layout
-        assertTrue(mainLayout.getComponentAt(0) instanceof HeaderView, "First component should be an instance of HeaderView.");
+        assertInstanceOf(HeaderView.class, mainLayout.getComponentAt(0), "First component should be an instance of HeaderView.");
 
         // Check the total number of components in the layout
         int expectedComponentCount = 2; // One for HeaderView and one for layoutColumn

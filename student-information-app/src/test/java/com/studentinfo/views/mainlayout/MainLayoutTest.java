@@ -1,17 +1,16 @@
 package com.studentinfo.views.mainlayout;
 
-import com.studentinfo.views.header.HeaderView;
 import com.studentinfo.security.AuthenticatedUser;
+import com.studentinfo.views.header.HeaderView;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.router.RouterLayout;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
 
 public class MainLayoutTest {
 
@@ -24,27 +23,16 @@ public class MainLayoutTest {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
+        mainLayout = new MainLayout(authenticatedUser); // Initialize MainLayout with the mocked AuthenticatedUser
     }
 
     @Test
     public void testHeaderViewIsAddedToMainLayout() {
-        // Arrange
-        String expectedHeaderTitle = "EduBird";
-
-        // Mock the necessary behavior of AuthenticatedUser if needed
-        // For example: when(authenticatedUser.getRole()).thenReturn("ROLE_USER");
-
         // Act
-        Div content = mainLayout.getContent(); // This should initialize HeaderView in MainLayout
+        Div content = mainLayout.getContent(); // This retrieves the root layout of MainLayout
 
-        // Assert
+        // Assert that MainLayout contains components and the first one is an instance of HeaderView
         assertTrue(content.getComponentCount() > 0, "MainLayout should contain components.");
-        assertTrue(content.getComponentAt(0) instanceof HeaderView, "The first component should be a HeaderView.");
-        HeaderView headerView = (HeaderView) content.getComponentAt(0);
-
-        // Assert the title of HeaderView (modify according to your actual method)
-        // You should replace getTitle() with the correct method from HeaderView that retrieves the title
-        // For example:
-        // assertEquals(expectedHeaderTitle, headerView.getTitle(), "HeaderView title should be 'EduBird'.");
+        assertInstanceOf(HeaderView.class, content.getComponentAt(0), "The first component should be a HeaderView.");
     }
 }

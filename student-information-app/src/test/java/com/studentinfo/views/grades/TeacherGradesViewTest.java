@@ -28,14 +28,13 @@ public class TeacherGradesViewTest {
     private TeacherGradesView teacherGradesView;
     private GradeService gradeService;
     private CourseService courseService;
-    private StudentService studentService;
 
     @BeforeEach
     public void setUp() {
         // Mock the services
         gradeService = Mockito.mock(GradeService.class);
         courseService = Mockito.mock(CourseService.class);
-        studentService = Mockito.mock(StudentService.class);
+        StudentService studentService = Mockito.mock(StudentService.class);
 
         // Mock service methods
         Course mockCourse = new Course("Mathematics", "MATH101", 3);
@@ -81,11 +80,11 @@ public class TeacherGradesViewTest {
                 "Description should be 'Manage and update student grades for selected courses.'");
 
         // Check if the course ComboBox is present
-        ComboBox<Course> courseComboBox = getComboBoxField("courseComboBox"); // Assuming it's named courseComboBox
+        ComboBox<Course> courseComboBox = getComboBoxField(); // Assuming it's named courseComboBox
         assertNotNull(courseComboBox, "Course ComboBox should not be null.");
 
         // Check if the grades grid is initialized
-        Grid<Grade> gradesGrid = getPrivateField("gradesGrid");
+        Grid<Grade> gradesGrid = getPrivateField();
         assertNotNull(gradesGrid, "Grades grid should not be null.");
     }
 
@@ -101,7 +100,7 @@ public class TeacherGradesViewTest {
         when(gradeService.getGradesByCourseId(mockCourse.getCourseId())).thenReturn(List.of(mockGrade));
 
         // Set items in the ComboBox before setting a value
-        ComboBox<Course> courseComboBox = getComboBoxField("courseComboBox");
+        ComboBox<Course> courseComboBox = getComboBoxField();
         courseComboBox.setItems(List.of(mockCourse)); // Set the items in the ComboBox
         courseComboBox.setValue(mockCourse); // Now you can set the value
 
@@ -111,7 +110,7 @@ public class TeacherGradesViewTest {
         refreshDataMethod.invoke(teacherGradesView); // Call the method
 
         // Verify that the gradesGrid is updated with the mock grade
-        Grid<Grade> gradesGrid = getPrivateField("gradesGrid");
+        Grid<Grade> gradesGrid = getPrivateField();
         ListDataProvider<Grade> dataProvider = (ListDataProvider<Grade>) gradesGrid.getDataProvider();
 
         // Check the size of items in the data provider
@@ -119,9 +118,9 @@ public class TeacherGradesViewTest {
     }
 
 
-    private ComboBox<Course> getComboBoxField(String fieldName) {
+    private ComboBox<Course> getComboBoxField() {
         try {
-            Field field = TeacherGradesView.class.getDeclaredField(fieldName);
+            Field field = TeacherGradesView.class.getDeclaredField("courseComboBox");
             field.setAccessible(true);
             return (ComboBox<Course>) field.get(teacherGradesView);
         } catch (NoSuchFieldException | IllegalAccessException e) {
@@ -129,9 +128,9 @@ public class TeacherGradesViewTest {
         }
     }
 
-    private Grid<Grade> getPrivateField(String fieldName) {
+    private Grid<Grade> getPrivateField() {
         try {
-            Field field = TeacherGradesView.class.getDeclaredField(fieldName);
+            Field field = TeacherGradesView.class.getDeclaredField("gradesGrid");
             field.setAccessible(true);
             return (Grid<Grade>) field.get(teacherGradesView);
         } catch (NoSuchFieldException | IllegalAccessException e) {

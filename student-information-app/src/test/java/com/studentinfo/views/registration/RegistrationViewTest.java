@@ -62,14 +62,21 @@ public class RegistrationViewTest {
 
     private <T> T findComponentInTree(com.vaadin.flow.component.Component component, Class<T> componentClass, String labelText) {
         if (componentClass.isInstance(component)) {
-            if (component instanceof TextField && labelText.equals(((TextField) component).getLabel())) {
-                return componentClass.cast(component);
-            } else if (component instanceof PasswordField && labelText.equals(((PasswordField) component).getLabel())) {
-                return componentClass.cast(component);
-            } else if (component instanceof Button && labelText.equals(((Button) component).getText())) {
-                return componentClass.cast(component);
-            } else if (component instanceof EmailField && labelText.equals(((EmailField) component).getLabel())) {
-                return componentClass.cast(component);
+            switch (component) {
+                case TextField textField when labelText.equals(textField.getLabel()) -> {
+                    return componentClass.cast(component);
+                }
+                case PasswordField passwordField when labelText.equals(passwordField.getLabel()) -> {
+                    return componentClass.cast(component);
+                }
+                case Button button when labelText.equals(button.getText()) -> {
+                    return componentClass.cast(component);
+                }
+                case EmailField emailField when labelText.equals(emailField.getLabel()) -> {
+                    return componentClass.cast(component);
+                }
+                default -> {
+                }
             }
         }
 

@@ -8,7 +8,6 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.Query;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,13 +27,12 @@ public class StudentGradesViewTest {
 
     private StudentGradesView studentGradesView;
     private GradeService gradeService;
-    private UserService userService;
 
     @BeforeEach
     public void setUp() {
         // Mock the services
         gradeService = Mockito.mock(GradeService.class);
-        userService = Mockito.mock(UserService.class);
+        UserService userService = Mockito.mock(UserService.class);
 
         // Mock service methods
         when(userService.getCurrentStudentNumber()).thenReturn(1L);  // Mock a student number
@@ -76,7 +74,7 @@ public class StudentGradesViewTest {
         assertEquals("Search Courses", searchField.getLabel(), "Search field label should be 'Search Courses'.");
 
         // Check if the grades grid is initialized
-        Grid<Grade> gradesGrid = getPrivateField("gradesGrid");
+        Grid<Grade> gradesGrid = getPrivateField();
         assertNotNull(gradesGrid, "Grades grid should not be null.");
     }
 
@@ -108,9 +106,9 @@ public class StudentGradesViewTest {
 
 
 
-    private Grid<Grade> getPrivateField(String fieldName) {
+    private Grid<Grade> getPrivateField() {
         try {
-            Field field = StudentGradesView.class.getDeclaredField(fieldName);
+            Field field = StudentGradesView.class.getDeclaredField("gradesGrid");
             field.setAccessible(true);
             return (Grid<Grade>) field.get(studentGradesView);
         } catch (NoSuchFieldException | IllegalAccessException e) {

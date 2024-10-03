@@ -16,14 +16,13 @@ import static org.mockito.Mockito.when;
 
 public class EditProfileViewTest {
 
-    private UserContentLoader userContentLoader;
     private EditProfileView editProfileView;
 
     @BeforeEach
     public void setUp() {
         // Mock the dependencies
         AuthenticatedUser authenticatedUser = Mockito.mock(AuthenticatedUser.class);
-        userContentLoader = Mockito.mock(UserContentLoader.class);
+        UserContentLoader userContentLoader = Mockito.mock(UserContentLoader.class);
 
         // Initialize a Vaadin UI context
         UI ui = new UI();
