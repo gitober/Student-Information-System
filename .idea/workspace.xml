@@ -4,25 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="764fc70a-79c6-44da-a2e5-bccd6c639a77" name="Changes" comment="views testejä">
-      <change afterPath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/TeacherAttendanceView/teacher-attendance-view.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/TeacherAttendanceView/TeacherAttendanceView.java" afterDir="false" />
+    <list default="true" id="764fc70a-79c6-44da-a2e5-bccd6c639a77" name="Changes" comment="view tests ok all tests ok">
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/student-information-app/src/main/bundles/dev.bundle" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/bundles/dev.bundle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/TeacherAttendanceTrackingView/teacher-attendance-view.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/courses-view/teacher-courses-view.css" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/courses-view/teacher-courses-view.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/grades-view/teacher-grades-view.css" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/grades-view/teacher-grades-view.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/data/entity/Teacher.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/data/entity/Teacher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/services/CourseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/services/CourseService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/services/UserContentLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/services/UserContentLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/TeacherAttendanceTrackingView/TeacherAttendanceTrackingView.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/courses/CoursesView.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/courses/CoursesView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/editprofile/EditProfileView.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/editprofile/EditProfileView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/grades/GradesView.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/grades/GradesView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/grades/TeacherGradesView.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/grades/TeacherGradesView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/header/HeaderView.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/header/HeaderView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/homeprofilepage/TeacherDashboardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/homeprofilepage/TeacherDashboardView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,6 +37,10 @@
     "accountId": "f956999b-175b-400e-8c3e-ceaea04b9f1f"
   }
 }]]></component>
+  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
   <component name="ProjectColorInfo"><![CDATA[{
   "associatedIndex": 8
 }]]></component>
@@ -65,18 +55,34 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Docker.student-information-app/Dockerfile build.executor": "Run",
+    "Docker.student-information-app/Dockerfile.executor": "Run",
+    "JUnit.All in student-information-app (1).executor": "Run",
     "JUnit.All in student-information-app.executor": "Run",
     "JUnit.ApplicationTest.executor": "Run",
     "JUnit.CoursesViewTest.executor": "Run",
     "JUnit.EditProfileViewTest.testEditProfileViewComponents.executor": "Run",
+    "JUnit.HeaderViewTest.executor": "Run",
+    "JUnit.LoginPageViewTest.executor": "Run",
+    "JUnit.LogoutViewTest.executor": "Run",
+    "JUnit.MainLayoutTest.executor": "Run",
+    "JUnit.ProfilePageViewTest.executor": "Run",
+    "JUnit.RegistrationViewTest.executor": "Run",
     "JUnit.StudentCoursesViewTest.executor": "Run",
+    "JUnit.StudentDashboardViewTest.executor": "Run",
     "JUnit.StudentEditProfileViewTest.executor": "Run",
+    "JUnit.StudentGradesViewTest.executor": "Run",
+    "JUnit.TeacherAttendanceViewTest.executor": "Run",
     "JUnit.TeacherCoursesViewTest.executor": "Run",
     "JUnit.TeacherCoursesViewTest.testOpenEditDialog.executor": "Run",
+    "JUnit.TeacherDashboardViewTest.executor": "Run",
     "JUnit.TeacherEditProfileViewTest.executor": "Run",
+    "JUnit.TeacherGradesViewTest.executor": "Run",
+    "JUnit.TeacherUpdateStudentProfileViewTest.executor": "Run",
+    "JUnit.TeacherUpdateStudentProfileViewTest.testComponentsPresence.executor": "Run",
     "JUnit.courses in student-information-app.executor": "Run",
     "JUnit.editprofile in student-information-app.executor": "Run",
     "JUnit.java in student-information-app.executor": "Run",
+    "JUnit.views in student-information-app.executor": "Run",
     "Maven.student-information-app [clean].executor": "Run",
     "Maven.student-information-app [install].executor": "Run",
     "RequestMappingsPanelOrder0": "0",
@@ -100,8 +106,29 @@
       <command value="mvn install" />
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.Application">
-    <configuration name="CoursesViewTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Docker.student-information-app/Dockerfile">
+    <configuration name="All in student-information-app" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="student-information-app" />
+      <shortenClasspath name="MANIFEST" />
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+        </ENTRIES>
+      </extension>
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StudentCoursesViewTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="student-information-app" />
       <shortenClasspath name="MANIFEST" />
       <extension name="coverage">
@@ -121,19 +148,19 @@
         </ENTRIES>
       </extension>
       <option name="PACKAGE_NAME" value="com.studentinfo.views.courses" />
-      <option name="MAIN_CLASS_NAME" value="com.studentinfo.views.courses.CoursesViewTest" />
+      <option name="MAIN_CLASS_NAME" value="com.studentinfo.views.courses.StudentCoursesViewTest" />
       <option name="METHOD_NAME" value="" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TeacherEditProfileViewTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TeacherAttendanceViewTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="student-information-app" />
       <shortenClasspath name="MANIFEST" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.studentinfo.views.editprofile.*" />
+          <option name="PATTERN" value="com.studentinfo.views.TeacherAttendanceView.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -147,15 +174,15 @@
           <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
         </ENTRIES>
       </extension>
-      <option name="PACKAGE_NAME" value="com.studentinfo.views.editprofile" />
-      <option name="MAIN_CLASS_NAME" value="com.studentinfo.views.editprofile.TeacherEditProfileViewTest" />
+      <option name="PACKAGE_NAME" value="com.studentinfo.views.TeacherAttendanceView" />
+      <option name="MAIN_CLASS_NAME" value="com.studentinfo.views.TeacherAttendanceView.TeacherAttendanceViewTest" />
       <option name="METHOD_NAME" value="" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="courses in student-information-app" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="views in student-information-app" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="student-information-app" />
       <shortenClasspath name="MANIFEST" />
       <extension name="net.ashald.envfile">
@@ -171,49 +198,7 @@
       <option name="MAIN_CLASS_NAME" value="" />
       <option name="METHOD_NAME" value="" />
       <option name="TEST_OBJECT" value="directory" />
-      <dir value="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/views/courses" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="editprofile in student-information-app" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="student-information-app" />
-      <shortenClasspath name="MANIFEST" />
-      <extension name="net.ashald.envfile">
-        <option name="IS_ENABLED" value="false" />
-        <option name="IS_SUBST" value="false" />
-        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
-        <option name="IS_IGNORE_MISSING_FILES" value="false" />
-        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
-        <ENTRIES>
-          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
-        </ENTRIES>
-      </extension>
-      <option name="MAIN_CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="TEST_OBJECT" value="directory" />
-      <dir value="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/views/editprofile" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="java in student-information-app" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="student-information-app" />
-      <shortenClasspath name="MANIFEST" />
-      <extension name="net.ashald.envfile">
-        <option name="IS_ENABLED" value="false" />
-        <option name="IS_SUBST" value="false" />
-        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
-        <option name="IS_IGNORE_MISSING_FILES" value="false" />
-        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
-        <ENTRIES>
-          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
-        </ENTRIES>
-      </extension>
-      <option name="MAIN_CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="TEST_OBJECT" value="directory" />
-      <dir value="$PROJECT_DIR$/student-information-app/src/test/java" />
+      <dir value="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/views" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -232,21 +217,29 @@
       </deployment>
       <method v="2" />
     </configuration>
+    <configuration name="student-information-app/Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="sourceFilePath" value="student-information-app/Dockerfile" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
     <list>
-      <item itemvalue="JUnit.CoursesViewTest" />
-      <item itemvalue="JUnit.TeacherEditProfileViewTest" />
-      <item itemvalue="JUnit.courses in student-information-app" />
-      <item itemvalue="JUnit.editprofile in student-information-app" />
-      <item itemvalue="JUnit.java in student-information-app" />
+      <item itemvalue="Docker.student-information-app/Dockerfile" />
+      <item itemvalue="JUnit.StudentCoursesViewTest" />
+      <item itemvalue="JUnit.TeacherAttendanceViewTest" />
+      <item itemvalue="JUnit.views in student-information-app" />
+      <item itemvalue="JUnit.All in student-information-app" />
       <item itemvalue="Spring Boot.Application" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.java in student-information-app" />
-        <item itemvalue="JUnit.CoursesViewTest" />
-        <item itemvalue="JUnit.TeacherEditProfileViewTest" />
-        <item itemvalue="JUnit.editprofile in student-information-app" />
-        <item itemvalue="JUnit.courses in student-information-app" />
+        <item itemvalue="Docker.student-information-app/Dockerfile" />
+        <item itemvalue="JUnit.All in student-information-app" />
+        <item itemvalue="JUnit.views in student-information-app" />
+        <item itemvalue="JUnit.StudentCoursesViewTest" />
+        <item itemvalue="JUnit.TeacherAttendanceViewTest" />
       </list>
     </recent_temporary>
   </component>
@@ -275,7 +268,7 @@
       <workItem from="1725348183775" duration="2589000" />
       <workItem from="1727086505997" duration="10519000" />
       <workItem from="1727282347856" duration="321000" />
-      <workItem from="1727941414123" duration="14439000" />
+      <workItem from="1727941414123" duration="32204000" />
     </task>
     <task id="LOCAL−00001" summary="UserRepositoryTest works">
       <option name="closed" value="true" />
@@ -364,7 +357,39 @@
       <option name="project" value="LOCAL" />
       <updated>1727944301275</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="fixes to pages, missing components fixed">
+      <option name="closed" value="true" />
+      <created>1727956842751</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1727956842751</updated>
+    </task>
+    <task id="LOCAL-00014" summary="headerview, loginpageview, logoutview and reg.view tests ok">
+      <option name="closed" value="true" />
+      <created>1727968290809</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1727968290809</updated>
+    </task>
+    <task id="LOCAL-00015" summary="teacher view testit ok">
+      <option name="closed" value="true" />
+      <created>1727969837937</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1727969837937</updated>
+    </task>
+    <task id="LOCAL-00016" summary="view tests ok all tests ok">
+      <option name="closed" value="true" />
+      <created>1727976299050</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1727976299050</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -396,7 +421,11 @@
     <MESSAGE value="workspace korjaus" />
     <MESSAGE value="testi dockers" />
     <MESSAGE value="views testejä" />
-    <option name="LAST_COMMIT_MESSAGE" value="views testejä" />
+    <MESSAGE value="fixes to pages, missing components fixed" />
+    <MESSAGE value="headerview, loginpageview, logoutview and reg.view tests ok" />
+    <MESSAGE value="teacher view testit ok" />
+    <MESSAGE value="view tests ok all tests ok" />
+    <option name="LAST_COMMIT_MESSAGE" value="view tests ok all tests ok" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
