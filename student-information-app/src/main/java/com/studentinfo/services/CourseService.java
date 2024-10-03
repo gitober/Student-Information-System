@@ -143,4 +143,13 @@ public class CourseService {
         List<Student> students = registrationRepository.findStudentsByCourseId(courseId);
         return students;
     }
+
+    public List<Course> getCoursesByTeacherId(Long teacherId) {
+        // Find the teacher by their ID
+        Teacher teacher = teacherRepository.findById(teacherId)
+                .orElseThrow(() -> new IllegalArgumentException("Teacher not found with ID: " + teacherId));
+
+        // Return the list of courses associated with this teacher
+        return teacher.getCourses();
+    }
 }

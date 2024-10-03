@@ -1,13 +1,12 @@
 package com.studentinfo.views.header;
 
 import com.studentinfo.security.AuthenticatedUser;
-import com.studentinfo.views.TeacherAttendanceTrackingView.TeacherAttendanceTrackingView;
+import com.studentinfo.views.TeacherAttendanceView.TeacherAttendanceView;
 import com.studentinfo.views.TeacherUpdateStudentProfileView.TeacherUpdateStudentProfileView;
 import com.studentinfo.views.courses.CoursesView;
 import com.studentinfo.views.editprofile.EditProfileView;
 import com.studentinfo.views.grades.GradesView;
 import com.studentinfo.views.homeprofilepage.ProfilePageView;
-import com.studentinfo.views.TeacherUpdateStudentProfileView.TeacherUpdateStudentProfileView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Image;
@@ -39,7 +38,7 @@ public class HeaderView extends HorizontalLayout {
 
             // Teacher-specific links for updating student profiles and attendance tracking
             if (user instanceof com.studentinfo.data.entity.Teacher) {
-                attendanceTrackingLink = new RouterLink("Attendance", TeacherAttendanceTrackingView.class);
+                attendanceTrackingLink = new RouterLink("Attendance", TeacherAttendanceView.class);
                 attendanceTrackingLink.addClassName("router-link");
 
                 updateStudentProfilesLink = new RouterLink("Students", TeacherUpdateStudentProfileView.class);

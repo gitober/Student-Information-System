@@ -33,6 +33,9 @@ public class EditProfileView extends Composite<VerticalLayout> {
         mainLayout.setAlignItems(FlexComponent.Alignment.CENTER); // Center content horizontally
         mainLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.START); // Align content to start vertically
 
+        // Ensure the main layout occupies full height
+        mainLayout.setSizeFull();
+
         // Add padding to avoid content going under the fixed header
         mainLayout.getStyle().set("padding-top", "60px"); // Adjust padding based on actual header height
 
@@ -41,6 +44,7 @@ public class EditProfileView extends Composite<VerticalLayout> {
 
         // Create a container for user-specific content
         VerticalLayout layoutColumn = new VerticalLayout();
+        layoutColumn.setSizeFull(); // Ensure it fills the available space
 
         // Load user-specific content using UserContentLoader
         userContentLoader.loadEditProfileContent(layoutColumn);
@@ -48,5 +52,8 @@ public class EditProfileView extends Composite<VerticalLayout> {
         // Add the content layout to the main layout
         mainLayout.add(layoutColumn);
 
+        // Set layoutColumn to expand to fill available space
+        mainLayout.setFlexGrow(1, layoutColumn);
     }
+
 }

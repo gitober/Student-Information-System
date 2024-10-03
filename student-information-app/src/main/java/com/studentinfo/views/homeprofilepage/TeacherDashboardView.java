@@ -3,7 +3,7 @@ package com.studentinfo.views.homeprofilepage;
 import com.studentinfo.services.CourseService;
 import com.studentinfo.services.StudentService;
 import com.studentinfo.services.GradeService;
-import com.studentinfo.views.TeacherAttendanceTrackingView.TeacherAttendanceTrackingView;
+import com.studentinfo.views.TeacherAttendanceView.TeacherAttendanceView;
 import com.studentinfo.views.TeacherUpdateStudentProfileView.TeacherUpdateStudentProfileView;
 import com.studentinfo.views.courses.CoursesView;
 import com.studentinfo.views.editprofile.EditProfileView;
@@ -57,7 +57,7 @@ public class TeacherDashboardView extends Composite<VerticalLayout> {
         dashboardGrid.add(createDashboardCard("Students", studentService.list().size() + " Students", TeacherUpdateStudentProfileView.class, "./icons/Students.png"));
         dashboardGrid.add(createDashboardCard("Grading", gradeService.getAllGrades().size() + " Grades", GradesView.class, "./icons/Recent_Grades.png"));
         dashboardGrid.add(createDashboardCard("Manage Courses", courseService.getAllCourses().size() + " Classes", CoursesView.class, "./icons/Your_Courses.png"));
-        dashboardGrid.add(createDashboardCard("Manage Attendance", "Click to Manage", TeacherAttendanceTrackingView.class, "./icons/Manage_Attendance.png"));
+        dashboardGrid.add(createDashboardCard("Manage Attendance", "Click to Manage", TeacherAttendanceView.class, "./icons/Manage_Attendance.png"));
         dashboardGrid.add(createDashboardCard("Quick Links", "Access Tools", EditProfileView.class, "./icons/Quick_Links.png"));
 
         getContent().add(dashboardGrid);

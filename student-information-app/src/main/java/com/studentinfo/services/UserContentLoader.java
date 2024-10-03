@@ -3,6 +3,7 @@ package com.studentinfo.services;
 import com.studentinfo.data.entity.Student;
 import com.studentinfo.data.entity.Teacher;
 import com.studentinfo.security.AuthenticatedUser;
+import com.studentinfo.views.TeacherAttendanceView.TeacherAttendanceView;
 import com.studentinfo.views.courses.StudentCoursesView;
 import com.studentinfo.views.courses.TeacherCoursesView;
 import com.studentinfo.views.homeprofilepage.StudentDashboardView;
@@ -16,6 +17,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+
 
 @Component
 public class UserContentLoader {
@@ -46,11 +48,15 @@ public class UserContentLoader {
 
     @Autowired
     @Lazy
-    private TeacherDashboardView teacherDashboardView; // Add this line
+    private TeacherDashboardView teacherDashboardView;
 
     @Autowired
     @Lazy
-    private StudentDashboardView studentDashboardView; // Add this line
+    private StudentDashboardView studentDashboardView;
+
+    @Autowired
+    @Lazy
+    private TeacherAttendanceView teacherAttendanceView;
 
     // Constructor for dependency injection
     @Autowired
@@ -125,4 +131,16 @@ public class UserContentLoader {
             }
         }, () -> layout.add(new Paragraph("User not found. Please log in again.")));
     }
+
+    // Load attendance content based on user role
+    public void loadAttendanceContent(VerticalLayout layout) {
+        authenticatedUser.get().ifPresentOrElse(user -> {
+            if (user instanceof Teacher) {
+                layout.add(teacherAttendanceView);
+            } else {
+                layout.add(new Paragraph("Role not recognized. Only teachers can access attendance tracking."));
+            }
+        }, () -> layout.add(new Paragraph("User not found. Please log in again.")));
+    }
+
 }

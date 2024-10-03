@@ -41,6 +41,9 @@ public class CoursesView extends Composite<VerticalLayout> {
         mainLayout.setAlignItems(FlexComponent.Alignment.CENTER);
         mainLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.START);
 
+        // Ensure the main layout occupies full height
+        mainLayout.setSizeFull();
+
         // Add padding to avoid content sticking to or going under the header
         mainLayout.getStyle().set("padding-top", "60px");
 
@@ -49,12 +52,15 @@ public class CoursesView extends Composite<VerticalLayout> {
 
         // Create a container for user-specific content
         VerticalLayout layoutColumn = new VerticalLayout();
+        layoutColumn.setSizeFull(); // Ensure it fills the available space
 
         // Load user-specific content for courses
         userContentLoader.loadCoursesContent(layoutColumn);
 
         // Add the content layout to the main layout
         mainLayout.add(layoutColumn);
-    }
 
+        // Set layoutColumn to expand to fill available space
+        mainLayout.setFlexGrow(1, layoutColumn);
+    }
 }

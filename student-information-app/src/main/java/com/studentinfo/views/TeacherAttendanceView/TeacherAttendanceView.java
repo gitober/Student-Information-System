@@ -1,4 +1,4 @@
-package com.studentinfo.views.TeacherAttendanceTrackingView;
+package com.studentinfo.views.TeacherAttendanceView;
 
 import com.studentinfo.data.entity.Attendance;
 import com.studentinfo.data.entity.Course;
@@ -41,8 +41,8 @@ import java.util.stream.Collectors;
 @Route(value = "teacher/attendance-tracking", layout = MainLayout.class)
 @PageTitle("Attendance Tracking")
 @RolesAllowed("USER")
-@CssImport("./themes/studentinformationapp/views/TeacherAttendanceTrackingView/teacher-attendance-view.css")
-public class TeacherAttendanceTrackingView extends Composite<VerticalLayout> {
+@CssImport("./themes/studentinformationapp/views/TeacherAttendanceView/teacher-attendance-view.css")
+public class TeacherAttendanceView extends Composite<VerticalLayout> {
 
     private final TeacherService teacherService;
     private final CourseService courseService;
@@ -54,7 +54,7 @@ public class TeacherAttendanceTrackingView extends Composite<VerticalLayout> {
     private Button addAttendanceButton;
 
     @Autowired
-    public TeacherAttendanceTrackingView(TeacherService teacherService, CourseService courseService, AuthenticatedUser authenticatedUser) {
+    public TeacherAttendanceView(TeacherService teacherService, CourseService courseService, AuthenticatedUser authenticatedUser) {
         this.teacherService = teacherService;
         this.courseService = courseService;
         this.authenticatedUser = authenticatedUser;

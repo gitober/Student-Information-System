@@ -16,7 +16,7 @@ public class Teacher extends User {
     @JoinColumn(name = "department_id", nullable = true)
     private Department department;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "teacher_courses",
             joinColumns = @JoinColumn(name = "teacher_id"),

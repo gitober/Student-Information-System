@@ -28,10 +28,13 @@ public class GradesView extends Composite<VerticalLayout> {
 
         // Main layout setup
         VerticalLayout mainLayout = getContent();
-        mainLayout.setPadding(false); // Disable default padding if set by Vaadin
+        mainLayout.setPadding(false); // Disable default padding
         mainLayout.setSpacing(false); // Disable spacing between elements
         mainLayout.setAlignItems(FlexComponent.Alignment.CENTER); // Center the content horizontally
         mainLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.START); // Align content to start vertically
+
+        // Ensure the main layout occupies full height
+        mainLayout.setSizeFull();
 
         // Add padding to avoid content sticking to or going under the header
         mainLayout.getStyle().set("padding-top", "60px"); // Adjust based on header height
@@ -41,11 +44,15 @@ public class GradesView extends Composite<VerticalLayout> {
 
         // Create a container for user-specific content
         VerticalLayout layoutColumn = new VerticalLayout();
+        layoutColumn.setSizeFull(); // Ensure it fills the available space
 
         // Load user-specific content for grades
         userContentLoader.loadGradesContent(layoutColumn);
 
         // Add the content layout to the main layout
         mainLayout.add(layoutColumn);
+
+        // Set layoutColumn to expand to fill available space
+        mainLayout.setFlexGrow(1, layoutColumn);
     }
 }
