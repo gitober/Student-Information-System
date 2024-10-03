@@ -265,7 +265,7 @@
       <workItem from="1725348183775" duration="2589000" />
       <workItem from="1727086505997" duration="10519000" />
       <workItem from="1727282347856" duration="321000" />
-      <workItem from="1727941414123" duration="32881000" />
+      <workItem from="1727941414123" duration="33603000" />
     </task>
     <task id="LOCAL−00001" summary="UserRepositoryTest works">
       <option name="closed" value="true" />
@@ -394,7 +394,23 @@
       <option name="project" value="LOCAL" />
       <updated>1727982484995</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="testing dockers">
+      <option name="closed" value="true" />
+      <created>1727983037584</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1727983037584</updated>
+    </task>
+    <task id="LOCAL-00019" summary="testing dockers">
+      <option name="closed" value="true" />
+      <created>1727983313993</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1727983313993</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
