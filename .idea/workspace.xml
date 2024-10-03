@@ -4,26 +4,167 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="764fc70a-79c6-44da-a2e5-bccd6c639a77" name="Changes" comment="workspace korjaus">
+    <list default="true" id="764fc70a-79c6-44da-a2e5-bccd6c639a77" name="Changes" comment="testi dockers">
+      <change afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/views/courses/CoursesViewTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/views/courses/StudentCoursesViewTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/views/courses/TeacherCoursesViewTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/views/editprofile/EditProfileViewTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/views/editprofile/StudentEditProfileViewTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/views/editprofile/TeacherEditProfileViewTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/_template__of_JUnit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/_template__of_JUnit.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/_template__of_JUnit2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/_template__of_JUnit2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/_template__of_JUnit3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/_template__of_JUnit3.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/Dockerfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "gitober"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/gitober/Student-Information-System.git",
+    "accountId": "f956999b-175b-400e-8c3e-ceaea04b9f1f"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8
+}]]></component>
+  <component name="ProjectId" id="2muzmOTEAe0PhthpYTTTZyw9euN" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Docker.student-information-app/Dockerfile build.executor": "Run",
+    "JUnit.All in student-information-app.executor": "Run",
+    "JUnit.CoursesViewTest.executor": "Run",
+    "JUnit.EditProfileViewTest.testEditProfileViewComponents.executor": "Run",
+    "JUnit.StudentCoursesViewTest.executor": "Run",
+    "JUnit.StudentEditProfileViewTest.executor": "Run",
+    "JUnit.TeacherCoursesViewTest.executor": "Run",
+    "JUnit.TeacherCoursesViewTest.testOpenEditDialog.executor": "Run",
+    "JUnit.TeacherEditProfileViewTest.executor": "Run",
+    "JUnit.courses in student-information-app.executor": "Run",
+    "JUnit.editprofile in student-information-app.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
-    "node.js.selected.package.tslint": "(autodetect)"
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Docker.student-information-app/Dockerfile build">
-    <configuration name="All in student-information-app" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.CoursesViewTest">
+    <configuration name="CoursesViewTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="student-information-app" />
+      <shortenClasspath name="MANIFEST" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.studentinfo.views.courses.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+        </ENTRIES>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.studentinfo.views.courses" />
+      <option name="MAIN_CLASS_NAME" value="com.studentinfo.views.courses.CoursesViewTest" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StudentCoursesViewTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="student-information-app" />
+      <shortenClasspath name="MANIFEST" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.studentinfo.views.courses.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+        </ENTRIES>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.studentinfo.views.courses" />
+      <option name="MAIN_CLASS_NAME" value="com.studentinfo.views.courses.StudentCoursesViewTest" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TeacherEditProfileViewTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="student-information-app" />
+      <shortenClasspath name="MANIFEST" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.studentinfo.views.editprofile.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+        </ENTRIES>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.studentinfo.views.editprofile" />
+      <option name="MAIN_CLASS_NAME" value="com.studentinfo.views.editprofile.TeacherEditProfileViewTest" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="courses in student-information-app" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="student-information-app" />
       <shortenClasspath name="MANIFEST" />
       <extension name="net.ashald.envfile">
@@ -36,70 +177,79 @@
           <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
         </ENTRIES>
       </extension>
-      <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="" />
       <option name="METHOD_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/views/courses" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AttendanceServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="editprofile in student-information-app" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="student-information-app" />
-      <shortenClasspath name="ARGS_FILE" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.studentinfo.services.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
+      <shortenClasspath name="MANIFEST" />
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+        </ENTRIES>
       </extension>
-      <option name="PACKAGE_NAME" value="com.studentinfo.services" />
-      <option name="MAIN_CLASS_NAME" value="com.studentinfo.services.AttendanceServiceTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/views/editprofile" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="student-information-app" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.studentinfo.Application" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
-      <deployment type="dockerfile" />
-      <method v="2" />
-    </configuration>
-    <configuration name="student-information-app/Dockerfile build" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
       <deployment type="dockerfile">
-        <settings>
-          <option name="imageTag" value="mavenlatest_build" />
-          <option name="buildCliOptions" value="--target build" />
-          <option name="buildOnly" value="true" />
-          <option name="sourceFilePath" value="student-information-app/Dockerfile" />
-        </settings>
+        <settings />
       </deployment>
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Docker.student-information-app/Dockerfile build" />
-      <item itemvalue="JUnit.AttendanceServiceTest" />
-      <item itemvalue="JUnit.All in student-information-app" />
+      <item itemvalue="JUnit.CoursesViewTest" />
+      <item itemvalue="JUnit.StudentCoursesViewTest" />
+      <item itemvalue="JUnit.TeacherEditProfileViewTest" />
+      <item itemvalue="JUnit.courses in student-information-app" />
+      <item itemvalue="JUnit.editprofile in student-information-app" />
+      <item itemvalue="Spring Boot.Application" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Docker.student-information-app/Dockerfile build" />
-        <item itemvalue="JUnit.AttendanceServiceTest" />
-        <item itemvalue="JUnit.All in student-information-app" />
+        <item itemvalue="JUnit.CoursesViewTest" />
+        <item itemvalue="JUnit.TeacherEditProfileViewTest" />
+        <item itemvalue="JUnit.editprofile in student-information-app" />
+        <item itemvalue="JUnit.courses in student-information-app" />
+        <item itemvalue="JUnit.StudentCoursesViewTest" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
-        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
       </set>
     </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="49cfb8af-12fd-4a91-b702-3553d39bf1cc" name="Changes" comment="" />
+      <changelist id="764fc70a-79c6-44da-a2e5-bccd6c639a77" name="Changes" comment="testi dockers" />
       <created>1724782958059</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -113,6 +263,7 @@
       <workItem from="1725348183775" duration="2589000" />
       <workItem from="1727086505997" duration="10519000" />
       <workItem from="1727282347856" duration="321000" />
+      <workItem from="1727941414123" duration="2594000" />
     </task>
     <task id="LOCAL−00001" summary="UserRepositoryTest works">
       <option name="closed" value="true" />
@@ -185,7 +336,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727864402987</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="testi dockers">
+      <option name="closed" value="true" />
+      <created>1727864862924</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1727864862924</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -215,7 +374,8 @@
     <MESSAGE value="service tests done (81/81)" />
     <MESSAGE value="Jenkinsfile repo url edit" />
     <MESSAGE value="workspace korjaus" />
-    <option name="LAST_COMMIT_MESSAGE" value="workspace korjaus" />
+    <MESSAGE value="testi dockers" />
+    <option name="LAST_COMMIT_MESSAGE" value="testi dockers" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
