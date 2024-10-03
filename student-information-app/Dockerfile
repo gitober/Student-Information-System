@@ -1,5 +1,5 @@
-# Use an official Maven image to build the application
-FROM maven:3.8.6-eclipse-temurin-21 AS build
+# Use an official Maven image as a parent image
+FROM maven:latest
 
 # Set the working directory
 WORKDIR /app
