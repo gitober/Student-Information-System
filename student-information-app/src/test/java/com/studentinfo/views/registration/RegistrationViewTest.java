@@ -1,0 +1,84 @@
+package com.studentinfo.views.registration;
+
+import com.studentinfo.services.RegistrationHandler;
+import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.textfield.EmailField;
+import com.vaadin.flow.component.textfield.PasswordField;
+import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.server.VaadinSession;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
+
+public class RegistrationViewTest {
+
+    private RegistrationView registrationView;
+
+    @BeforeEach
+    public void setUp() {
+        // Mock the RegistrationHandler
+        RegistrationHandler mockRegistrationHandler = Mockito.mock(RegistrationHandler.class);
+
+        // Set up the UI context for Vaadin
+        UI ui = new UI();
+        UI.setCurrent(ui);
+
+        // Create a mock VaadinSession and attach it to the UI
+        VaadinSession mockSession = mock(VaadinSession.class);
+        VaadinSession.setCurrent(mockSession);
+        ui.getInternals().setSession(mockSession);
+
+        // Instantiate the RegistrationView
+        registrationView = new RegistrationView(mockRegistrationHandler);
+    }
+
+    @Test
+    public void testRegistrationViewComponents() {
+        // Check if the email field is present
+        EmailField emailField = findComponent(EmailField.class, "Email");
+        assertNotNull(emailField, "Email field should be present in the registration view.");
+
+        // Check if the password fields are present
+        PasswordField passwordField = findComponent(PasswordField.class, "Create Password");
+        PasswordField confirmPasswordField = findComponent(PasswordField.class, "Confirm Password");
+        assertNotNull(passwordField, "Password field should be present in the registration view.");
+        assertNotNull(confirmPasswordField, "Confirm password field should be present in the registration view.");
+
+        // Check if the register button is present
+        Button registerButton = findComponent(Button.class, "Register");
+        assertNotNull(registerButton, "Register button should be present in the registration view.");
+    }
+
+    // Recursive utility method to find components by class type and label text
+    private <T> T findComponent(Class<T> componentClass, String labelText) {
+        return findComponentInTree(registrationView.getContent(), componentClass, labelText);
+    }
+
+    private <T> T findComponentInTree(com.vaadin.flow.component.Component component, Class<T> componentClass, String labelText) {
+        if (componentClass.isInstance(component)) {
+            if (component instanceof TextField && labelText.equals(((TextField) component).getLabel())) {
+                return componentClass.cast(component);
+            } else if (component instanceof PasswordField && labelText.equals(((PasswordField) component).getLabel())) {
+                return componentClass.cast(component);
+            } else if (component instanceof Button && labelText.equals(((Button) component).getText())) {
+                return componentClass.cast(component);
+            } else if (component instanceof EmailField && labelText.equals(((EmailField) component).getLabel())) {
+                return componentClass.cast(component);
+            }
+        }
+
+        // Recursively search through the children of the current component
+        Optional<T> foundComponent = component.getChildren()
+                .map(child -> findComponentInTree(child, componentClass, labelText))
+                .filter(java.util.Objects::nonNull)
+                .findFirst();
+
+        return foundComponent.orElse(null);
+    }
+}
