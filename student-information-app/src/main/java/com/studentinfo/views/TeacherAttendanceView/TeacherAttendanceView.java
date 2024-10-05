@@ -257,7 +257,7 @@ public class TeacherAttendanceView extends Composite<VerticalLayout> {
 
     private void openEditAttendanceDialog(Attendance record) {
         Dialog editDialog = new Dialog();
-        editDialog.addClassName("teacher-attendance-edit-dialog");
+        editDialog.addClassName("teacher-attendance-dialog-edit-unique");
 
         VerticalLayout dialogLayout = new VerticalLayout();
 
@@ -271,6 +271,7 @@ public class TeacherAttendanceView extends Composite<VerticalLayout> {
         statusField.setValue(record.getAttendanceStatus());
         dateField.setValue(record.getAttendanceDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
 
+        // Assign more unique class names to buttons for styling
         Button saveButton = new Button("Save", event -> {
             record.setAttendanceStatus(statusField.getValue());
             teacherService.saveAttendanceRecord(record);
@@ -278,14 +279,16 @@ public class TeacherAttendanceView extends Composite<VerticalLayout> {
             attendanceGrid.setItems(attendanceRecords);
             editDialog.close();
         });
+        saveButton.addClassName("teacher-attendance-save-btn-unique");
 
         Button closeButton = new Button("Close", event -> editDialog.close());
-        closeButton.addClassName("teacher-attendance-close-button");
+        closeButton.addClassName("teacher-attendance-close-btn-unique");
 
         dialogLayout.add(courseField, studentField, statusField, dateField, new HorizontalLayout(saveButton, closeButton));
         editDialog.add(dialogLayout);
         editDialog.open();
     }
+
 
     private void confirmDeleteAttendance(Attendance record) {
         Dialog confirmDialog = new Dialog();
@@ -299,8 +302,10 @@ public class TeacherAttendanceView extends Composite<VerticalLayout> {
             attendanceGrid.setItems(attendanceRecords);
             confirmDialog.close();
         });
+        confirmButton.addClassName("teacher-attendance-delete-button");  // Apply the delete button class
 
         Button cancelButton = new Button("Cancel", event -> confirmDialog.close());
+        cancelButton.addClassName("teacher-attendance-close-button");  // Apply the close button class
 
         HorizontalLayout buttonsLayout = new HorizontalLayout(confirmButton, cancelButton);
         confirmDialog.add(buttonsLayout);

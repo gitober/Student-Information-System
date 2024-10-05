@@ -14,6 +14,7 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -203,7 +204,6 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
             }
 
             // Ensure batchId and coursePayment are handled properly.
-            // You may want to fetch a valid batchId instead of passing null if required.
             Long batchId = null; // Replace with a valid batch ID if needed
             double coursePayment = 0.0; // Adjust based on your business logic
 
@@ -233,9 +233,11 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
         Button cancelButton = new Button("Cancel", event -> confirmationDialog.close());
         cancelButton.addClassName("student-courses-view-cancel-button");
 
-        // Add buttons to the dialog
+        // Add buttons to the dialog with adjusted styles
         HorizontalLayout dialogButtons = new HorizontalLayout(confirmButton, cancelButton);
         dialogButtons.addClassName("student-courses-view-dialog-buttons");
+        dialogButtons.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER); // Center align buttons
+        dialogButtons.setSpacing(true); // Add spacing between buttons
         dialogLayout.add(dialogButtons);
 
         // Add layout to the dialog
@@ -244,6 +246,7 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
         // Open the dialog
         confirmationDialog.open();
     }
+
 
     private void openAttendanceDialog(Course course) {
         Dialog attendanceDialog = new Dialog();
@@ -269,14 +272,17 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
         // Add attendance grid to the dialog
         attendanceDialog.add(attendanceGrid);
 
-        // Close button
+        // Close button with a custom class name
         Button closeButton = new Button("Close", event -> attendanceDialog.close());
+        closeButton.addClassName("student-courses-view-attendance-close-button");
+
         HorizontalLayout dialogButtons = new HorizontalLayout(closeButton);
         attendanceDialog.add(dialogButtons);
 
         // Open the attendance dialog
         attendanceDialog.open();
     }
+
 
 
 

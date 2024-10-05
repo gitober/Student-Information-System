@@ -60,7 +60,6 @@
     background-color: #e08d53; /* Change color on hover */
 }
 
-
 /* Styling for action buttons */
 .student-courses-view-action-buttons {
     display: flex;
@@ -84,25 +83,20 @@
     flex: 1; /* Buttons take equal space */
 }
 
-/* Enrollment button styles */
-.student-courses-view-enroll-button {
-    background-color: #FDB069; /* Enroll button color */
-    color: white; /* Text color set to white */
+/* Close button styles for attendance dialog */
+.student-courses-view-attendance-close-button {
+    background-color: #FDB069; /* Same background color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.student-courses-view-enroll-button:hover {
-    background-color: #e08d53; /* Shared hover color */
-}
-
-/* Attendance button styles */
-.student-courses-view-attendance-button {
-    background-color: #FDB069; /* Golden Yellow */
-    color: white; /* Text color set to white */
-}
-
-.student-courses-view-attendance-button:hover {
-    background-color: #e08d53; /* Shared hover color */
-    color: white; /* Text color set to white */
+.student-courses-view-attendance-close-button:hover {
+    background-color: #e08d53;
+    color: white;
 }
 
 /* Confirmation dialog specific styles */
@@ -129,6 +123,22 @@
 .student-courses-view-dialog-buttons {
     margin-top: 10px;
     text-align: center;
+}
+
+.student-courses-view-confirm-button,
+.student-courses-view-cancel-button {
+    background-color: #FDB069; /* Same background color for buttons */
+    color: white; /* Text color set to white */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 5px 10px; /* Padding for better appearance */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth transition effect */
+}
+
+.student-courses-view-confirm-button:hover,
+.student-courses-view-cancel-button:hover {
+    background-color: #e08d53; /* Change color on hover */
 }
 
 /* Responsive adjustments for smaller screens */
@@ -168,9 +178,18 @@
     border-radius: 8px;
 }
 
-.student-courses-view-course-name-field,
-.student-courses-view-subject-field,
-.student-courses-view-duration-field {
-    width: 100%;
-    margin-bottom: 10px;
+/* New Enroll Button Styles */
+.student-courses-view-enroll-button {
+    background-color: #FDB069; /* Green background for enroll button */
+    color: white; /* Text color set to white */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 15px; /* Padding for better appearance */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth transition effect */
+    font-size: 14px; /* Font size for better readability */
+}
+
+.student-courses-view-enroll-button:hover {
+    background-color: #e08d53; /* Darker green on hover */
 }

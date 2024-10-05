@@ -43,7 +43,7 @@
 }
 
 /* Dialog styles */
-.teacher-attendance-dialog {
+.teacher-attendance-dialog-edit {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 8px;
@@ -58,7 +58,7 @@
 
 .teacher-attendance-dialog-title {
     font-size: 20px;
-    color: black; /* Ensure dialog title text is black */
+    color: black;
     margin-bottom: 20px;
 }
 
@@ -68,7 +68,7 @@
 .teacher-attendance-status-combobox,
 .teacher-attendance-date-picker {
     width: 100%;
-    color: black; /* Input field text color */
+    color: black;
 }
 
 /* Button common styles */
@@ -78,63 +78,85 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    color: white; /* Ensure button text is white */
+    color: white;
     transition: background-color 0.3s ease;
 }
 
 /* Add button */
 .teacher-attendance-add-button {
     background-color: #e6a14d;
-    color: white; /* Ensure button text is white */
+    color: white;
 }
 
 .teacher-attendance-add-button:hover {
     background-color: #cc8c40;
-    color: white; /* Ensure button text remains white on hover */
+    color: white;
 }
 
 /* Save button */
 .teacher-attendance-save-button {
     background-color: #FDB069;
-    color: white; /* Ensure button text is white */
+    color: white;
 }
 
 .teacher-attendance-save-button:hover {
     background-color: #e08d53;
-    color: white; /* Ensure button text remains white on hover */
+    color: white;
+}
+
+/* Save edit button for dialog */
+.teacher-attendance-save-btn {
+    background-color: #fdb069;
+    color: white;
+}
+
+.teacher-attendance-save-btn:hover {
+    background-color: #e08d53;
+    color: white;
 }
 
 /* Edit button */
 .teacher-attendance-edit-button {
     background-color: #FDB069;
-    color: white; /* Ensure button text is white */
+    color: white;
 }
 
 .teacher-attendance-edit-button:hover {
     background-color: #e08d53;
-    color: white; /* Ensure button text remains white on hover */
+    color: white;
 }
 
 /* Delete button */
 .teacher-attendance-delete-button {
-    background-color: #fdb069;
-    color: white; /* Ensure button text is white */
+    background-color: #E08D53FF;
+    color: white;
 }
 
 .teacher-attendance-delete-button:hover {
-    background-color: #e08d53;
-    color: white; /* Ensure button text remains white on hover */
+    background-color: #cc6b3a;
+    color: white;
 }
 
 /* Close button */
 .teacher-attendance-close-button {
     background-color: #E08D53FF;
-    color: white; /* Ensure button text is white */
+    color: white;
 }
 
 .teacher-attendance-close-button:hover {
     background-color: #cc6b3a;
-    color: white; /* Ensure button text remains white on hover */
+    color: white;
+}
+
+/* Close edit button for dialog */
+.teacher-attendance-close-btn {
+    background-color: #E08D53FF;
+    color: white;
+}
+
+.teacher-attendance-close-btn:hover {
+    background-color: #cc6b3a;
+    color: white;
 }
 
 /* Action buttons container */
@@ -165,7 +187,7 @@
         padding: 10px;
     }
 
-    .teacher-attendance-dialog {
+    .teacher-attendance-dialog-edit {
         max-width: 90%;
     }
 
