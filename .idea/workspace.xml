@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="764fc70a-79c6-44da-a2e5-bccd6c639a77" name="Changes" comment="testing dockers">
-      <change beforePath="$PROJECT_DIR$/student-information-app/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/_template__of_JUnit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/_template__of_JUnit.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/_template__of_JUnit2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/_template__of_JUnit2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/_template__of_JUnit3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/_template__of_JUnit3.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,25 +25,25 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "gitober"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;gitober&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/gitober/Student-Information-System.git",
-    "accountId": "f956999b-175b-400e-8c3e-ceaea04b9f1f"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/gitober/Student-Information-System.git&quot;,
+    &quot;accountId&quot;: &quot;f956999b-175b-400e-8c3e-ceaea04b9f1f&quot;
   }
-}]]></component>
-  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 8
-}]]></component>
+}</component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="2muzmOTEAe0PhthpYTTTZyw9euN" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -49,61 +52,83 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Docker.student-information-app/Dockerfile build.executor": "Run",
-    "Docker.student-information-app/Dockerfile.executor": "Run",
-    "JUnit.All in student-information-app (1).executor": "Run",
-    "JUnit.All in student-information-app.executor": "Run",
-    "JUnit.ApplicationTest.executor": "Run",
-    "JUnit.CoursesViewTest.executor": "Run",
-    "JUnit.EditProfileViewTest.testEditProfileViewComponents.executor": "Run",
-    "JUnit.HeaderViewTest.executor": "Run",
-    "JUnit.LoginPageViewTest.executor": "Run",
-    "JUnit.LogoutViewTest.executor": "Run",
-    "JUnit.MainLayoutTest.executor": "Run",
-    "JUnit.ProfilePageViewTest.executor": "Run",
-    "JUnit.RegistrationViewTest.executor": "Run",
-    "JUnit.StudentCoursesViewTest.executor": "Run",
-    "JUnit.StudentDashboardViewTest.executor": "Run",
-    "JUnit.StudentEditProfileViewTest.executor": "Run",
-    "JUnit.StudentGradesViewTest.executor": "Run",
-    "JUnit.TeacherAttendanceViewTest.executor": "Run",
-    "JUnit.TeacherCoursesViewTest.executor": "Run",
-    "JUnit.TeacherCoursesViewTest.testOpenEditDialog.executor": "Run",
-    "JUnit.TeacherDashboardViewTest.executor": "Run",
-    "JUnit.TeacherEditProfileViewTest.executor": "Run",
-    "JUnit.TeacherGradesViewTest.executor": "Run",
-    "JUnit.TeacherUpdateStudentProfileViewTest.executor": "Run",
-    "JUnit.TeacherUpdateStudentProfileViewTest.testComponentsPresence.executor": "Run",
-    "JUnit.courses in student-information-app.executor": "Run",
-    "JUnit.editprofile in student-information-app.executor": "Run",
-    "JUnit.java in student-information-app.executor": "Run",
-    "JUnit.views in student-information-app.executor": "Run",
-    "Maven.student-information-app [clean].executor": "Run",
-    "Maven.student-information-app [install].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.Application.executor": "Run",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Docker.student-information-app/Dockerfile build.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.student-information-app/Dockerfile.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.All in student-information-app (1).executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.All in student-information-app.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ApplicationTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CoursesViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.EditProfileViewTest.testEditProfileViewComponents.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.HeaderViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LoginPageViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LogoutViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MainLayoutTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ProfilePageViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.RegistrationViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.StudentCoursesViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.StudentDashboardViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.StudentEditProfileViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.StudentGradesViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TeacherAttendanceViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TeacherCoursesViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TeacherCoursesViewTest.testOpenEditDialog.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TeacherDashboardViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TeacherEditProfileViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TeacherGradesViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TeacherUpdateStudentProfileViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TeacherUpdateStudentProfileViewTest.testComponentsPresence.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.courses in student-information-app.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.editprofile in student-information-app.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.java in student-information-app.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.views in student-information-app.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.student-information-app [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.student-information-app [install].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.Application.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="mvn clean" />
       <command value="mvn install" />
     </option>
   </component>
-  <component name="RunManager" selected="Docker.student-information-app/Dockerfile">
+  <component name="RunManager" selected="JUnit.All in student-information-app (1)">
+    <configuration name="All in student-information-app (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="student-information-app" />
+      <shortenClasspath name="MANIFEST" />
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+        </ENTRIES>
+      </extension>
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="All in student-information-app" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="student-information-app" />
       <shortenClasspath name="MANIFEST" />
@@ -146,33 +171,6 @@
       </extension>
       <option name="PACKAGE_NAME" value="com.studentinfo.views.courses" />
       <option name="MAIN_CLASS_NAME" value="com.studentinfo.views.courses.StudentCoursesViewTest" />
-      <option name="METHOD_NAME" value="" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TeacherAttendanceViewTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="student-information-app" />
-      <shortenClasspath name="MANIFEST" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.studentinfo.views.TeacherAttendanceView.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <extension name="net.ashald.envfile">
-        <option name="IS_ENABLED" value="false" />
-        <option name="IS_SUBST" value="false" />
-        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
-        <option name="IS_IGNORE_MISSING_FILES" value="false" />
-        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
-        <ENTRIES>
-          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
-        </ENTRIES>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.studentinfo.views.TeacherAttendanceView" />
-      <option name="MAIN_CLASS_NAME" value="com.studentinfo.views.TeacherAttendanceView.TeacherAttendanceViewTest" />
       <option name="METHOD_NAME" value="" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
@@ -224,19 +222,19 @@
     </configuration>
     <list>
       <item itemvalue="Docker.student-information-app/Dockerfile" />
+      <item itemvalue="JUnit.All in student-information-app (1)" />
       <item itemvalue="JUnit.StudentCoursesViewTest" />
-      <item itemvalue="JUnit.TeacherAttendanceViewTest" />
       <item itemvalue="JUnit.views in student-information-app" />
       <item itemvalue="JUnit.All in student-information-app" />
       <item itemvalue="Spring Boot.Application" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.All in student-information-app (1)" />
         <item itemvalue="Docker.student-information-app/Dockerfile" />
         <item itemvalue="JUnit.All in student-information-app" />
         <item itemvalue="JUnit.views in student-information-app" />
         <item itemvalue="JUnit.StudentCoursesViewTest" />
-        <item itemvalue="JUnit.TeacherAttendanceViewTest" />
       </list>
     </recent_temporary>
   </component>
@@ -265,7 +263,9 @@
       <workItem from="1725348183775" duration="2589000" />
       <workItem from="1727086505997" duration="10519000" />
       <workItem from="1727282347856" duration="321000" />
-      <workItem from="1727941414123" duration="33603000" />
+      <workItem from="1727941414123" duration="35317000" />
+      <workItem from="1728023087126" duration="994000" />
+      <workItem from="1728024241597" duration="97000" />
     </task>
     <task id="LOCAL−00001" summary="UserRepositoryTest works">
       <option name="closed" value="true" />
@@ -410,7 +410,23 @@
       <option name="project" value="LOCAL" />
       <updated>1727983313993</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="testing dockers">
+      <option name="closed" value="true" />
+      <created>1727983761227</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1727983761227</updated>
+    </task>
+    <task id="LOCAL-00021" summary="testing dockers">
+      <option name="closed" value="true" />
+      <created>1727984502581</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1727984502581</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
