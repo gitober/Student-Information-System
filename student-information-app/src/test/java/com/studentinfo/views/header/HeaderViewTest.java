@@ -9,8 +9,10 @@ import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.RouterLink;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.mockito.MockedConstruction;
 import org.mockito.Mockito;
 
@@ -20,9 +22,11 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@TestInstance(TestInstance.Lifecycle.PER_METHOD)
 public class HeaderViewTest {
 
     private HeaderView headerView;
+    private MockedConstruction<RouterLink> mockedRouterLink;
 
     @BeforeEach
     public void setUp() {
@@ -35,12 +39,22 @@ public class HeaderViewTest {
         UI.setCurrent(new UI());
 
         // Mock the RouterLink creation to avoid "Element to insert must not be null" error
-        try (MockedConstruction<RouterLink> mockedRouterLink = Mockito.mockConstruction(RouterLink.class, (mock, context) -> {
-            // Stub the necessary methods
-            when(mock.getElement()).thenReturn(new Span().getElement());  // Mocking a simple element
-        })) {
-            // Instantiate HeaderView with the mocked user
-            headerView = new HeaderView("Student Information System", authenticatedUser);
+        mockedRouterLink = Mockito.mockConstruction(RouterLink.class, (mock, context) -> {
+            when(mock.getElement()).thenReturn(new Span().getElement());  // Complete stubbing for the mock
+        });
+
+        // Instantiate HeaderView with the mocked user
+        headerView = new HeaderView("Student Information System", authenticatedUser);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        // Clean up the UI context
+        UI.setCurrent(null);
+
+        // Close the mocked construction to avoid state leaks
+        if (mockedRouterLink != null) {
+            mockedRouterLink.close();
         }
     }
 
