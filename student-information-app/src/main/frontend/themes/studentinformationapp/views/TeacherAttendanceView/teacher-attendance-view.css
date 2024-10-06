@@ -148,6 +148,26 @@
     color: white;
 }
 
+.teacher-attendance-dialog-edit-button-save {
+    background-color: #FDB069;
+    color: white;
+}
+
+.teacher-attendance-dialog-edit-button-save:hover {
+    background-color: #e08d53;
+    color: white;
+}
+
+.teacher-attendance-dialog-edit-button-close {
+    background-color: #E08D53FF;
+    color: white;
+}
+
+.teacher-attendance-dialog-edit-button-close:hover {
+    background-color: #cc6b3a;
+    color: white;
+}
+
 /* Close edit button for dialog */
 .teacher-attendance-close-btn {
     background-color: #E08D53FF;

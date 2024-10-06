@@ -257,7 +257,7 @@ public class TeacherAttendanceView extends Composite<VerticalLayout> {
 
     private void openEditAttendanceDialog(Attendance record) {
         Dialog editDialog = new Dialog();
-        editDialog.addClassName("teacher-attendance-dialog-edit-unique");
+        editDialog.addClassName("teacher-attendance-dialog-edit-button");
 
         VerticalLayout dialogLayout = new VerticalLayout();
 
@@ -279,10 +279,10 @@ public class TeacherAttendanceView extends Composite<VerticalLayout> {
             attendanceGrid.setItems(attendanceRecords);
             editDialog.close();
         });
-        saveButton.addClassName("teacher-attendance-save-btn-unique");
+        saveButton.addClassName("teacher-attendance-dialog-edit-button-save");
 
         Button closeButton = new Button("Close", event -> editDialog.close());
-        closeButton.addClassName("teacher-attendance-close-btn-unique");
+        closeButton.addClassName("teacher-attendance-dialog-edit-button-close");
 
         dialogLayout.add(courseField, studentField, statusField, dateField, new HorizontalLayout(saveButton, closeButton));
         editDialog.add(dialogLayout);

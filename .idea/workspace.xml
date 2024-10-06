@@ -7,7 +7,9 @@
     <list default="true" id="764fc70a-79c6-44da-a2e5-bccd6c639a77" name="Changes" comment="testing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/student-information-app/src/main/bundles/dev.bundle" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/bundles/dev.bundle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/services/UserContentLoaderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/test/java/com/studentinfo/services/UserContentLoaderTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/TeacherAttendanceView/teacher-attendance-view.css" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/TeacherAttendanceView/teacher-attendance-view.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/courses-view/student-courses-view.css" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/frontend/themes/studentinformationapp/views/courses-view/student-courses-view.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/TeacherAttendanceView/TeacherAttendanceView.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-information-app/src/main/java/com/studentinfo/views/TeacherAttendanceView/TeacherAttendanceView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,7 +115,7 @@
       <command value="mvn install" />
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.All in student-information-app (3)">
+  <component name="RunManager" selected="Spring Boot.Application">
     <configuration name="All in student-information-app (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="student-information-app" />
       <shortenClasspath name="MANIFEST" />
@@ -468,7 +470,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728150183900</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="testing">
+      <option name="closed" value="true" />
+      <created>1728219900294</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1728219900294</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
