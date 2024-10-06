@@ -1,6 +1,7 @@
 package com.studentinfo.views.editprofile;
 
 import com.studentinfo.data.entity.Student;
+import com.studentinfo.services.UserService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.H3;
@@ -8,7 +9,9 @@ import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
+import lombok.Setter;
 
 import java.util.function.Consumer;
 
@@ -19,17 +22,24 @@ public class StudentEditProfileView extends VerticalLayout {
     private final TextField lastNameField;
     private final TextField phoneNumberField;
     private final TextField emailField;
+    private final PasswordField newPasswordField; // New field for the password
     private final Button saveButton;
     private final Student student;
+    private final UserService userService; // Reference to UserService
+
+    // Consumer to handle save actions
+    @Setter
+    private Consumer<Student> saveListener; // Define a variable to hold the listener
 
     // Paragraphs to display current details
     private final Paragraph nameParagraph;
     private final Paragraph emailParagraph;
     private final Paragraph phoneNumberParagraph;
 
-    // Constructor accepting a Student object
-    public StudentEditProfileView(Student student) {
-        this.student = student;
+    // Constructor accepting a Student object and UserService
+    public StudentEditProfileView(Student studentData, UserService userService) {
+        this.student = studentData; // Use the new parameter name
+        this.userService = userService; // Store the UserService reference
 
         setSizeFull(); // Makes the layout take the full size of the parent
         setPadding(false); // Removes any padding
@@ -43,14 +53,6 @@ public class StudentEditProfileView extends VerticalLayout {
         H3 h3 = new H3("Edit Student Profile");
         h3.addClassName("student-edit-profile-title");
 
-        // Wrapper layout for the title and main content
-        VerticalLayout wrapperLayout = new VerticalLayout();
-        wrapperLayout.setSpacing(false); // Remove extra spacing between title and main content
-        wrapperLayout.setPadding(false); // Remove padding
-        wrapperLayout.setMargin(false); // Remove margin
-        wrapperLayout.setAlignItems(Alignment.CENTER); // Center align content
-        wrapperLayout.setWidthFull(); // Use full width
-
         // Current details section
         VerticalLayout currentDetailsLayout = new VerticalLayout();
         currentDetailsLayout.addClassName("student-current-details-layout");
@@ -58,7 +60,6 @@ public class StudentEditProfileView extends VerticalLayout {
         H3 currentDetailsHeading = new H3("Current Details:");
         currentDetailsHeading.addClassName("current-details-title");
         currentDetailsLayout.add(currentDetailsHeading);
-
 
         nameParagraph = new Paragraph();
         nameParagraph.getElement().setProperty("innerHTML", "<span class='label'>Name </span>" + "<br>" + student.getFirstName() + " " + student.getLastName());
@@ -77,11 +78,12 @@ public class StudentEditProfileView extends VerticalLayout {
         lastNameField = new TextField("Last Name");
         phoneNumberField = new TextField("Phone Number");
         emailField = new TextField("Email");
+        newPasswordField = new PasswordField("New Password"); // New field for updating password
 
         saveButton = new Button("Save");
         saveButton.addClassName("student-edit-profile-save-button");
 
-        formLayout.add(firstNameField, lastNameField, phoneNumberField, emailField, saveButton);
+        formLayout.add(firstNameField, lastNameField, phoneNumberField, emailField, newPasswordField, saveButton); // Include the password field
 
         // Combine current details and form into a main layout
         HorizontalLayout mainLayout = new HorizontalLayout(currentDetailsLayout, formLayout);
@@ -92,37 +94,35 @@ public class StudentEditProfileView extends VerticalLayout {
         mainLayout.addClassName("student-edit-profile-main-layout");
 
         // Add title and main layout to the wrapper layout
-        wrapperLayout.add(h3, mainLayout);
+        add(h3, mainLayout);
 
-        // Add the wrapper layout to the main view
-        add(wrapperLayout);
+        // Add save listener
+        saveButton.addClickListener(event -> {
+            updateStudentProfile(); // Call to update student profile with new values
+            if (saveListener != null) {
+                saveListener.accept(student); // Trigger the save listener
+            }
+            Notification.show("Profile updated successfully", 3000, Notification.Position.TOP_CENTER);
+        });
     }
 
-    // Method to update student profile values
     private void updateStudentProfile() {
+        // Update student fields
         if (!firstNameField.isEmpty()) student.setFirstName(firstNameField.getValue());
         if (!lastNameField.isEmpty()) student.setLastName(lastNameField.getValue());
         if (!phoneNumberField.isEmpty()) student.setPhoneNumber(phoneNumberField.getValue());
         if (!emailField.isEmpty()) student.setEmail(emailField.getValue());
 
-        // Update displayed paragraphs with new values and retain HTML structure
+        // Update password if provided
+        String newPassword = newPasswordField.getValue();
+        if (!newPassword.isEmpty()) {
+            System.out.println("Updating password for email: " + student.getEmail()); // Debugging statement
+            userService.updatePassword(student.getEmail(), newPassword); // Update password using UserService
+        }
+
+        // Update displayed paragraphs with new values
         nameParagraph.getElement().setProperty("innerHTML", "<span class='label'>Name </span>" + "<br>" + student.getFirstName() + " " + student.getLastName());
         emailParagraph.getElement().setProperty("innerHTML", "<span class='label'>Email </span>" + "<br>" + student.getEmail());
         phoneNumberParagraph.getElement().setProperty("innerHTML", "<span class='label'>Phone Number </span>" + "<br>" + student.getPhoneNumber());
-    }
-
-    // Listener to trigger the save operation outside of this class
-    public void setSaveListener(Consumer<Student> saveListener) {
-        saveButton.addClickListener(event -> {
-            updateStudentProfile();
-            saveListener.accept(student);
-            Notification.show("Profile updated successfully", 3000, Notification.Position.TOP_CENTER);
-
-            // Clear the fields after saving
-            firstNameField.clear();
-            lastNameField.clear();
-            phoneNumberField.clear();
-            emailField.clear();
-        });
     }
 }

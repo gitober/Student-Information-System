@@ -28,6 +28,7 @@ public class UserContentLoader {
     private final StudentService studentService;
     private final DepartmentService departmentService;
     private final SubjectService subjectService;
+    private final UserService userService;
 
     // Lazy-Loaded Views
     @Autowired
@@ -62,12 +63,13 @@ public class UserContentLoader {
     @Autowired
     public UserContentLoader(AuthenticatedUser authenticatedUser, TeacherService teacherService,
                              StudentService studentService, DepartmentService departmentService,
-                             SubjectService subjectService) {
+                             SubjectService subjectService, UserService userService) { // Inject UserService
         this.authenticatedUser = authenticatedUser;
         this.teacherService = teacherService;
         this.studentService = studentService;
         this.departmentService = departmentService;
         this.subjectService = subjectService;
+        this.userService = userService;
     }
 
 
@@ -123,7 +125,7 @@ public class UserContentLoader {
                 layout.add(teacherView);
             } else if (user instanceof Student) {
                 Student student = (Student) user;
-                StudentEditProfileView studentView = new StudentEditProfileView(student);
+                StudentEditProfileView studentView = new StudentEditProfileView(student, userService); // Pass UserService
                 studentView.setSaveListener(updatedStudent -> studentService.save(updatedStudent));
                 layout.add(studentView);
             } else {

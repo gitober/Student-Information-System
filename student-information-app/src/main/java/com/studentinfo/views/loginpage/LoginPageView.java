@@ -32,6 +32,7 @@ public class LoginPageView extends Composite<VerticalLayout> {
     private final PasswordField passwordField;
     private final Button signInButton;
     private final Button signUpButton;
+    private final Button forgotPasswordButton; // New Button for "Forgot Password"
     private final Checkbox rememberMeCheckbox;
 
     @Autowired
@@ -48,9 +49,13 @@ public class LoginPageView extends Composite<VerticalLayout> {
         this.signUpButton = new Button("Signup");
         this.signUpButton.addClassName("login-signup-link");
 
+        this.forgotPasswordButton = new Button("Forgot Password?"); // Create the "Forgot Password?" button
+        this.forgotPasswordButton.addClassName("login-forgot-password-link"); // Add CSS class for styling
+        this.forgotPasswordButton.addClickListener(e -> UI.getCurrent().navigate("forgotpassword")); // Navigate to Forgot Password page
+
         this.rememberMeCheckbox = new Checkbox("Remember me");
         this.rememberMeCheckbox.addClassName("login-remember-checkbox");
-        this.rememberMeCheckbox.setId("remember-me"); // Set the checkbox ID for Spring Security recognition
+        this.rememberMeCheckbox.setId("remember-me");
 
         // Main layout setup
         VerticalLayout mainLayout = getContent();
@@ -88,28 +93,34 @@ public class LoginPageView extends Composite<VerticalLayout> {
         signInButton.addClickListener(e -> {
             String email = emailField.getValue();
             String password = passwordField.getValue();
-            boolean rememberMe = rememberMeCheckbox.getValue(); // Get the state of the "Remember me" checkbox
+            boolean rememberMe = rememberMeCheckbox.getValue();
 
-            // Validate input fields
             if (email.isEmpty()) {
                 Notification.show("Please enter your email.", 3000, Notification.Position.MIDDLE);
-                return; // Stop further execution if email is empty
+                return;
             }
 
             if (password.isEmpty()) {
                 Notification.show("Please enter your password.", 3000, Notification.Position.MIDDLE);
-                return; // Stop further execution if password is empty
+                return;
             }
 
-            // Call the login handler
-            loginHandler.login(email, password, rememberMe); // Pass the rememberMe state to the loginHandler
+            // Attempt to log in
+            boolean loginSuccessful = loginHandler.login(email, password, rememberMe);
+
+            // Check login success
+            if (!loginSuccessful) {
+                Notification.show("Invalid email or password. Please try again.", 3000, Notification.Position.MIDDLE);
+            } else {
+                // Optionally, navigate to the dashboard or another page if login is successful
+                Notification.show("Welcome, nice to see you!", 3000, Notification.Position.MIDDLE);
+            }
         });
 
         // Load the email from cookie if it exists
         loadRememberMeCookie();
 
         signUpButton.addClickListener(e -> UI.getCurrent().navigate("register"));
-
     }
 
     private VerticalLayout setupLeftContent() {
@@ -130,7 +141,9 @@ public class LoginPageView extends Composite<VerticalLayout> {
         Span signUpText = new Span("Don’t have an account yet?");
         signUpText.addClassName("login-signup-text");
 
-        leftContent.add(welcomeText, instructionText, emailField, passwordField, rememberMeCheckbox, signInButton, signUpText, signUpButton);
+        // Add the "Forgot Password?" button under the password field
+        leftContent.add(welcomeText, instructionText, emailField, passwordField, forgotPasswordButton, rememberMeCheckbox, signInButton, signUpText, signUpButton);
+
         return leftContent;
     }
 

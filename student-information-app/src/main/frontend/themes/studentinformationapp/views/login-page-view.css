@@ -103,6 +103,22 @@
   color: #555;
 }
 
+/* Forgot password link styles */
+.login-forgot-password-link {
+  color: #5ea9f4;
+  font-size: 14px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-top: 5px;
+  transition: color 0.3s ease;
+}
+
+.login-forgot-password-link:hover {
+  color: #4076aa; /* Darker color on hover */
+}
+
 /* Responsive behavior for devices of different sizes */
 @media (max-width: 1024px) {
   .login-content-layout {

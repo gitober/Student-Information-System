@@ -9,8 +9,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -51,7 +49,6 @@ public class UserServiceTest {
         reset(userRepository, passwordEncoder, authenticationManager);
     }
 
-
     @Test
     void testAuthenticateSuccess() {
         String userEmail = "test@email.com";
@@ -59,16 +56,28 @@ public class UserServiceTest {
         User user = new User();
         user.setEmail(userEmail);
 
-        Authentication auth = new UsernamePasswordAuthenticationToken(userEmail, password);
-
-        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenReturn(auth);
         when(userRepository.findByEmail(userEmail)).thenReturn(Optional.of(user));
+        when(passwordEncoder.matches(password, user.getHashedPassword())).thenReturn(true);
 
         Optional<User> result = userService.authenticate(userEmail, password);
 
         assertTrue(result.isPresent());
         assertEquals(user, result.get());
-        verify(authenticationManager, times(1)).authenticate(any(UsernamePasswordAuthenticationToken.class));
+    }
+
+    @Test
+    void testAuthenticateFailure() {
+        String userEmail = "test@email.com";
+        String password = "wrongPassword";
+        User user = new User();
+        user.setEmail(userEmail);
+
+        when(userRepository.findByEmail(userEmail)).thenReturn(Optional.of(user));
+        when(passwordEncoder.matches(password, user.getHashedPassword())).thenReturn(false);
+
+        Optional<User> result = userService.authenticate(userEmail, password);
+
+        assertFalse(result.isPresent());
     }
 
     @Test

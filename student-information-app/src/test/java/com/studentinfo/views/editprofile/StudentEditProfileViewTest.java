@@ -1,6 +1,7 @@
 package com.studentinfo.views.editprofile;
 
 import com.studentinfo.data.entity.Student;
+import com.studentinfo.services.UserService; // Import the UserService
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.notification.Notification;
@@ -18,6 +19,7 @@ import static org.mockito.Mockito.when;
 public class StudentEditProfileViewTest {
 
     private StudentEditProfileView studentEditProfileView;
+    private UserService userService; // Mocked UserService
 
     @BeforeEach
     public void setUp() {
@@ -28,13 +30,16 @@ public class StudentEditProfileViewTest {
         when(student.getEmail()).thenReturn("john.doe@example.com");
         when(student.getPhoneNumber()).thenReturn("123-456-7890");
 
+        // Mock the UserService
+        userService = Mockito.mock(UserService.class);
+
         // Initialize a Vaadin UI context
         UI ui = new UI();
         UI.setCurrent(ui);
 
         // Instantiate the view
         System.out.println("Setting up StudentEditProfileView...");
-        studentEditProfileView = new StudentEditProfileView(student);
+        studentEditProfileView = new StudentEditProfileView(student, userService); // Pass mocked UserService
         System.out.println("StudentEditProfileView setup completed.");
     }
 

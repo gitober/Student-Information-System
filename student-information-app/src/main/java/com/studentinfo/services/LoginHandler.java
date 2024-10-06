@@ -31,15 +31,24 @@ public class LoginHandler {
     }
 
     // Login Method
-    public void login(String email, String password, boolean rememberMe) {
-        // Authenticate the user using the user service
-        Optional<User> authenticatedUserOpt = userService.authenticate(email, password);
+    public boolean login(String email, String password, boolean rememberMe) {
+        try {
+            // Authenticate the user using the user service
+            Optional<User> authenticatedUserOpt = userService.authenticate(email, password);
 
-        authenticatedUserOpt.ifPresentOrElse(
-                user -> handleSuccessfulLogin(user, email, password, rememberMe),
-                () -> handleFailedLogin(email)
-        );
+            if (authenticatedUserOpt.isPresent()) {
+                User user = authenticatedUserOpt.get();
+                handleSuccessfulLogin(user, email, password, rememberMe);
+                return true; // Indicate that login was successful
+            } else {
+                handleFailedLogin(email);
+                return false; // Indicate that login failed
+            }
+        } catch (Exception e) {
+            return false; // Indicate that login failed due to an error
+        }
     }
+
 
     // Handle Successful Login
     private void handleSuccessfulLogin(User user, String email, String password, boolean rememberMe) {

@@ -4,17 +4,12 @@ import com.studentinfo.data.entity.Student;
 import com.studentinfo.data.entity.User;
 import com.studentinfo.data.repository.UserRepository;
 import com.studentinfo.security.AuthenticatedUser;
+import com.vaadin.flow.component.notification.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,14 +22,22 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final AuthenticatedUser authenticatedUser;
+    private final Environment environment; // Inject the Environment
 
     @Autowired
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder,
-                       AuthenticationManager authenticationManager, AuthenticatedUser authenticatedUser) {
+                       AuthenticationManager authenticationManager, AuthenticatedUser authenticatedUser,
+                       Environment environment) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.authenticatedUser = authenticatedUser;
+        this.environment = environment; // Assign the Environment
+    }
+
+    // Check if the current environment is test
+    private boolean isTestEnvironment() {
+        return environment != null && List.of(environment.getActiveProfiles()).contains("test");
     }
 
     // Public Methods
@@ -63,12 +66,15 @@ public class UserService {
 
     // Authenticate user based on email and password
     public Optional<User> authenticate(String email, String password) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(email, password)
-        );
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        return userRepository.findByEmail(email);
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            // Use PasswordEncoder to compare the provided password with the hashed password
+            if (passwordEncoder.matches(password, user.getHashedPassword())) {
+                return Optional.of(user);
+            }
+        }
+        return Optional.empty(); // Return empty if authentication fails
     }
 
     // CRUD Operations
@@ -84,7 +90,6 @@ public class UserService {
         Optional<User> currentUser = authenticatedUser.get(); // Assuming authenticatedUser is set up correctly
         return currentUser.orElse(null);
     }
-
 
     // List all users
     public List<User> list() {
@@ -106,33 +111,29 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    // Private Helper Methods
-
-    // Get the current HttpServletRequest
-    private HttpServletRequest getRequest() {
-        try {
-            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-            return attributes.getRequest();
-        } catch (IllegalStateException e) {
-            throw new IllegalStateException("No current request available", e);
-        }
-    }
-
-    // Get the current HttpServletResponse
-    private HttpServletResponse getResponse() {
-        try {
-            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-            HttpServletResponse response = attributes.getResponse();
-            if (response == null) {
-                throw new IllegalStateException("No response available");
-            }
-            return response;
-        } catch (IllegalStateException e) {
-            throw new IllegalStateException("No current response available", e);
-        }
-    }
-
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    // Method to update the user's password in the database
+    public void updatePassword(String email, String newPassword) {
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            // Hash the new password using the PasswordEncoder
+            String hashedPassword = passwordEncoder.encode(newPassword);
+            System.out.println("Hashed Password: " + hashedPassword); // Debugging
+            user.setHashedPassword(hashedPassword);
+            userRepository.save(user); // Save the user with the updated password
+
+            // Show notification if not in the test environment
+            if (!isTestEnvironment()) {
+                Notification.show("Password updated successfully!", 3000, Notification.Position.MIDDLE);
+            }
+        } else {
+            if (!isTestEnvironment()) {
+                Notification.show("User not found with this email.", 3000, Notification.Position.MIDDLE);
+            }
+        }
     }
 }
