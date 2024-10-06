@@ -1,5 +1,6 @@
 package com.studentinfo.data.entity;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -35,6 +36,11 @@ class StudentTest {
         courses.add(course1);
         courses.add(course2);
         student.setCourses(courses);
+    }
+
+    @AfterEach
+    void tearDown() {
+        student = null;
     }
 
     @Test

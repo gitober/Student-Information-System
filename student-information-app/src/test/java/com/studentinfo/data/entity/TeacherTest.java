@@ -1,5 +1,6 @@
 package com.studentinfo.data.entity;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -33,6 +34,12 @@ class TeacherTest {
 
         teacher.setCourses(courses);
     }
+
+    @AfterEach
+    void tearDown() {
+        teacher = null;
+    }
+
 
     @Test
     void testGetTeacherId() {

@@ -7,6 +7,7 @@ import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.component.page.Page;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -70,6 +71,22 @@ public class LogoutViewTest {
         Field responseField = LogoutView.class.getDeclaredField("response");
         responseField.setAccessible(true);
         responseField.set(logoutView, mockResponse);
+    }
+
+    @AfterEach
+    public void tearDown() throws Exception {
+        // Clear the UI context to avoid affecting other tests
+        UI.setCurrent(null);
+
+        // Clear the VaadinSession to prevent memory leaks
+        VaadinSession.setCurrent(null);
+
+        // Clear the SecurityContext to prevent it from interfering with other tests
+        SecurityContextHolder.clearContext();
+
+        // Nullify references to help garbage collection
+        logoutView = null;
+        mockBeforeEnterEvent = null;
     }
 
     @Test

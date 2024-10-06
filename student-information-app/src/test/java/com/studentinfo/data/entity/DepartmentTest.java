@@ -1,5 +1,6 @@
 package com.studentinfo.data.entity;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class DepartmentTest {
 
     private Department department;
-    private Set<Teacher> teachers;
     private Set<Subject> subjects;
 
     @BeforeEach
@@ -29,7 +29,7 @@ class DepartmentTest {
         teacher2.setFirstName("Jane");
         teacher2.setLastName("Smith");
 
-        teachers = new HashSet<>();
+        Set<Teacher> teachers = new HashSet<>();
         teachers.add(teacher1);
         teachers.add(teacher2);
 
@@ -47,6 +47,13 @@ class DepartmentTest {
         department.setTeachers(teachers);
         department.setSubjects(subjects);
     }
+
+    @AfterEach
+    void tearDown() {
+        department = null;
+        subjects = null;
+    }
+
 
     @Test
     void testGetDepartmentName() {

@@ -2,6 +2,7 @@ package com.studentinfo.data.repository;
 
 import com.studentinfo.data.entity.Department;
 import com.studentinfo.data.entity.Subject;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -23,26 +24,29 @@ class SubjectRepositoryTest {
     @Autowired
     private DepartmentRepository departmentRepository;
 
-    private Subject testSubject;
-
-    private Department testDepartment;
-
     @BeforeEach
     public void setUp() {
-        testDepartment = new Department();
+        Department testDepartment = new Department();
         testDepartment.setDepartmentName("Science");
 
         // Save the department to the database and retrieve the auto-generated ID
         testDepartment = departmentRepository.save(testDepartment);
 
         // Create a test subject
-        testSubject = new Subject();
+        Subject testSubject = new Subject();
         testSubject.setName("Mathematics");
         testSubject.setDepartment(testDepartment); // Set the department relationship
 
         // Save the subject to the database
         subjectRepository.save(testSubject);
     }
+
+    @AfterEach
+    void tearDown() {
+        subjectRepository.deleteAll();
+        departmentRepository.deleteAll();
+    }
+
 
     @Test
     public void testFindName() {

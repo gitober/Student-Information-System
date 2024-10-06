@@ -1,5 +1,6 @@
 package com.studentinfo.data.entity;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,12 +12,11 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class GradeTest {
 
     private Grade grade;
-    private Course course;
 
     @BeforeEach
     void setUp() {
         // Create a Course object
-        course = new Course();
+        Course course = new Course();
         course.setCourseName("Mathematics");
 
         // Create a Grade object with sample data
@@ -26,6 +26,11 @@ class GradeTest {
         grade.setGradingDay(LocalDate.of(2024, 10, 1));
         grade.setStudentNumber(12345L);
         grade.setCourse(course);
+    }
+
+    @AfterEach
+    void tearDown() {
+        grade = null;
     }
 
     @Test

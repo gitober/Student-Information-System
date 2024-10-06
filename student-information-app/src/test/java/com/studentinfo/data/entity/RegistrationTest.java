@@ -1,5 +1,6 @@
 package com.studentinfo.data.entity;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,12 +13,11 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 class RegistrationTest {
 
     private Registration registration;
-    private User user;
 
     @BeforeEach
     void setUp() {
         // Create a User object
-        user = new User();
+        User user = new User();
         user.setId(1L);
         user.setFirstName("Alice");
         user.setLastName("Johnson");
@@ -31,6 +31,11 @@ class RegistrationTest {
         registration.setBatchId(2L);
         registration.setCourseId(3L);
         registration.setUser(user);
+    }
+
+    @AfterEach
+    void tearDown() {
+        registration = null;
     }
 
     @Test

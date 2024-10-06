@@ -8,11 +8,13 @@ import com.studentinfo.data.repository.CourseRepository;
 import com.studentinfo.data.repository.RegistrationRepository;
 import com.studentinfo.data.repository.StudentRepository;
 import com.studentinfo.data.repository.TeacherRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Arrays;
 import java.util.List;
@@ -42,6 +44,13 @@ class CourseServiceTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
     }
+
+    @AfterEach
+    void tearDown() {
+        // Reset mocks after each test
+        reset(courseRepository, registrationRepository, teacherRepository, studentRepository);
+    }
+
 
     @Test
     void testSaveCourseWithTeachers() {

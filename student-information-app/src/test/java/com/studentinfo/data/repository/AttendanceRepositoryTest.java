@@ -3,6 +3,7 @@ package com.studentinfo.data.repository;
 import com.studentinfo.data.entity.Attendance;
 import com.studentinfo.data.entity.Course;
 import com.studentinfo.data.entity.Student;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,14 @@ class AttendanceRepositoryTest {
         attendance.setAttendanceDate(LocalDate.now());
         attendanceRepository.saveAndFlush(attendance);
     }
+
+    @AfterEach
+    void tearDown() {
+        attendanceRepository.deleteAll();
+        studentRepository.deleteAll();
+        courseRepository.deleteAll();
+    }
+
 
     @Test
     void testFindByStudent_StudentNumberAndCourse_CourseId() {

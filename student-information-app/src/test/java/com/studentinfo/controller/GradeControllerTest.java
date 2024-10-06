@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.studentinfo.data.entity.Course;
 import com.studentinfo.data.entity.Grade;
 import com.studentinfo.services.GradeService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -20,6 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -67,6 +69,12 @@ public class GradeControllerTest {
         grade2.setGradingDay(LocalDate.of(2024, 10, 1));
         grade2.setStudentNumber(101L);
         grade2.setCourse(course2);
+    }
+
+    @AfterEach
+    void tearDown() {
+        // Reset mocks after each test to ensure no shared state
+        reset(gradeService);
     }
 
     @Test
@@ -133,11 +141,6 @@ public class GradeControllerTest {
                 .andExpect(jsonPath("$.studentNumber").value(100L))
                 .andExpect(jsonPath("$.course.courseId").value(200L));
     }
-
-
-
-
-
 
     @Test
     public void testDeleteGrade() throws Exception {

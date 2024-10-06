@@ -2,6 +2,7 @@ package com.studentinfo.services;
 
 import com.studentinfo.data.entity.User;
 import com.studentinfo.data.repository.UserRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -11,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
 import java.util.List;
@@ -18,7 +20,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@ActiveProfiles("test")
 public class UserServiceTest {
+
+    private AutoCloseable mocks;
 
     @Mock
     private UserRepository userRepository;
@@ -34,8 +39,18 @@ public class UserServiceTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        mocks = MockitoAnnotations.openMocks(this); // Initialize mocks
     }
+
+    @AfterEach
+    void tearDown() throws Exception {
+        // Close mocks to avoid any side effects
+        mocks.close();
+
+        // Reset mocks to ensure no shared state between tests
+        reset(userRepository, passwordEncoder, authenticationManager);
+    }
+
 
     @Test
     void testAuthenticateSuccess() {

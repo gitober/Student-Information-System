@@ -2,6 +2,7 @@ package com.studentinfo.services;
 
 import com.studentinfo.data.entity.Department;
 import com.studentinfo.data.repository.DepartmentRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -11,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
 import java.util.List;
@@ -29,6 +31,12 @@ class DepartmentServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+    }
+
+    @AfterEach
+    void tearDown() {
+        // Reset mocks after each test
+        reset(departmentRepository);
     }
 
     @Test

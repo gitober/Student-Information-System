@@ -57,8 +57,8 @@ class TeacherControllerTest {
 
     @AfterEach
     void tearDown() {
-        teacher1 = null;
-        teacher2 = null;
+        // Reset mocks after each test to avoid shared state
+        reset(teacherService);
     }
 
     @Test

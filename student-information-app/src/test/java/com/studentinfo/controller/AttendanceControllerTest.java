@@ -3,6 +3,7 @@ package com.studentinfo.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.studentinfo.data.entity.Attendance;
 import com.studentinfo.services.AttendanceService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -18,6 +19,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.reset;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -45,6 +47,11 @@ public class AttendanceControllerTest {
         attendance2 = new Attendance();
         attendance2.setAttendanceId(2L);
         attendance2.setAttendanceStatus("Absent");
+    }
+
+    @AfterEach
+    void tearDown() {
+        reset(attendanceService);
     }
 
     @Test
@@ -101,10 +108,6 @@ public class AttendanceControllerTest {
                 .andExpect(jsonPath("$.attendanceId").value(1L))
                 .andExpect(jsonPath("$.attendanceStatus").value("Present"));
     }
-
-
-
-
 
     @Test
     public void testDeleteAttendance() throws Exception {

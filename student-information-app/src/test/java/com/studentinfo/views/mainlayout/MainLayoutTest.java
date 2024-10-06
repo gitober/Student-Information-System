@@ -3,6 +3,7 @@ package com.studentinfo.views.mainlayout;
 import com.studentinfo.security.AuthenticatedUser;
 import com.studentinfo.views.header.HeaderView;
 import com.vaadin.flow.component.html.Div;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -24,6 +25,13 @@ public class MainLayoutTest {
     public void setUp() {
         MockitoAnnotations.openMocks(this);
         mainLayout = new MainLayout(authenticatedUser); // Initialize MainLayout with the mocked AuthenticatedUser
+    }
+
+    @AfterEach
+    public void tearDown() throws Exception {
+        // Clear any remaining mock objects
+        authenticatedUser = null;
+        mainLayout = null;
     }
 
     @Test

@@ -4,6 +4,7 @@ import com.studentinfo.security.AuthenticatedUser;
 import com.studentinfo.services.UserContentLoader;
 import com.studentinfo.views.header.HeaderView;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -24,6 +25,12 @@ public class CoursesViewTest {
 
         // Instantiate the view with mocks
         coursesView = new CoursesView(authenticatedUser, userContentLoader);
+    }
+
+    @AfterEach
+    void tearDown() {
+        // Reset mocks to ensure no shared state between tests
+        Mockito.reset(userContentLoader);
     }
 
     @Test

@@ -4,6 +4,7 @@ import com.studentinfo.data.entity.Course;
 import com.studentinfo.data.entity.Registration;
 import com.studentinfo.data.entity.Student;
 import com.studentinfo.data.entity.User; // Ensure to import the User entity
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,13 +37,12 @@ class RegistrationRepositoryTest {
 
     private Student student;
     private Course course;
-    private User user; // Add a user variable
-    private Registration registration; // Add a registration variable
 
     @BeforeEach
     void setUp() {
         // Create and save a test user
-        user = new User();
+        // Add a user variable
+        User user = new User();
         user.setUsername("john_doe");
         user.setEmail("john.doe@example.com"); // Ensure the email is set
         user.setHashedPassword("hashed_password");
@@ -70,7 +70,8 @@ class RegistrationRepositoryTest {
         courseRepository.saveAndFlush(course);
 
         // Create and save a test registration
-        registration = new Registration();
+        // Add a registration variable
+        Registration registration = new Registration();
         registration.setRegistrationDay(LocalDate.now());
         registration.setStudentNumber(student.getStudentNumber());
         registration.setCourseId(course.getCourseId());
@@ -79,12 +80,21 @@ class RegistrationRepositoryTest {
         registrationRepository.saveAndFlush(registration);
     }
 
+    @AfterEach
+    void tearDown() {
+        registrationRepository.deleteAll();
+        courseRepository.deleteAll();
+        studentRepository.deleteAll();
+        userRepository.deleteAll();
+    }
+
+
     @Test
     void testFindCoursesByStudentNumber() {
         List<Course> courses = registrationRepository.findCoursesByStudentNumber(student.getStudentNumber());
         assertNotNull(courses);
         assertEquals(1, courses.size());
-        assertEquals(course.getCourseName(), courses.get(0).getCourseName());
+        assertEquals(course.getCourseName(), courses.getFirst().getCourseName());
     }
 
     @Test
@@ -92,6 +102,6 @@ class RegistrationRepositoryTest {
         List<Student> students = registrationRepository.findStudentsByCourseId(course.getCourseId());
         assertNotNull(students);
         assertEquals(1, students.size());
-        assertEquals(student.getStudentNumber(), students.get(0).getStudentNumber());
+        assertEquals(student.getStudentNumber(), students.getFirst().getStudentNumber());
     }
 }

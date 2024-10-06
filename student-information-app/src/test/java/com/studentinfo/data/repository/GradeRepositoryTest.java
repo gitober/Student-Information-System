@@ -3,6 +3,7 @@ package com.studentinfo.data.repository;
 import com.studentinfo.data.entity.Course;
 import com.studentinfo.data.entity.Grade;
 import com.studentinfo.data.entity.Student;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,6 +71,14 @@ class GradeRepositoryTest {
         grade2.setGradingDay(LocalDate.now());
         gradeRepository.save(grade2);
     }
+
+    @AfterEach
+    void tearDown() {
+        gradeRepository.deleteAll();
+        courseRepository.deleteAll();
+        studentRepository.deleteAll();
+    }
+
 
     @Test
     void testFindByStudentNumber() {

@@ -4,6 +4,7 @@ import com.studentinfo.data.entity.Role;
 import com.studentinfo.data.entity.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -52,6 +53,13 @@ class SecurityServiceTest {
         when(mockAuthentication.getName()).thenReturn("test@example.com"); // Set the name to match the email
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenReturn(mockAuthentication);
+    }
+
+    @AfterEach
+    void tearDown() {
+        // Clear the security context and reset mocks after each test
+        SecurityContextHolder.clearContext();
+        reset(authenticationManager, request, response);
     }
 
     @Test

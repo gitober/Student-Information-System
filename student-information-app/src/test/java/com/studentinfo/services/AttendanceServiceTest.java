@@ -2,11 +2,13 @@ package com.studentinfo.services;
 
 import com.studentinfo.data.entity.Attendance;
 import com.studentinfo.data.repository.AttendanceRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +28,12 @@ class AttendanceServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+    }
+
+    @AfterEach
+    void tearDown() {
+        // Reset the mock repository after each test
+        reset(attendanceRepository);
     }
 
     @Test

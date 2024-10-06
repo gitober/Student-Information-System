@@ -9,6 +9,7 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.textfield.TextField;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -38,6 +39,15 @@ public class TeacherUpdateStudentProfileViewTest {
 
         // Instantiate the view with mocked services
         view = new TeacherUpdateStudentProfileView(studentService, authenticatedUser);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        // Clear the Vaadin UI context
+        UI.setCurrent(null);
+
+        // Clear the view reference
+        view = null;
     }
 
     @Test

@@ -1,5 +1,6 @@
 package com.studentinfo.data.entity;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,6 +17,11 @@ class EnrollmentTest {
         enrollment.setId(1L);
         enrollment.setStudentId(1001L);
         enrollment.setCourseId(2002L);
+    }
+
+    @AfterEach
+    void tearDown() {
+        enrollment = null;
     }
 
     @Test

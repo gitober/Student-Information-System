@@ -3,6 +3,7 @@ package com.studentinfo.security;
 import com.studentinfo.data.entity.Role;
 import com.studentinfo.data.entity.User;
 import com.studentinfo.data.repository.UserRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -29,6 +30,12 @@ class UserDetailsServiceImplTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+    }
+
+    @AfterEach
+    void tearDown() {
+        // Reset any changes or state after each test if necessary
+        userRepository.deleteAll();
     }
 
     @Test

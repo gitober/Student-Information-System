@@ -22,6 +22,7 @@ import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.RouteRegistry;
 import com.vaadin.flow.server.VaadinService;
 import com.vaadin.flow.server.VaadinSession;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -76,6 +77,16 @@ public class StudentDashboardViewTest {
 
         // Creating the StudentDashboardView instance with mocked services
         studentDashboardView = new StudentDashboardView(courseService, gradeService, attendanceService, authenticatedUser);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        // Clear any references to avoid memory leaks
+        studentDashboardView = null;
+
+        // Reset VaadinService and VaadinSession to avoid affecting other tests
+        VaadinService.setCurrent(null);
+        VaadinSession.setCurrent(null);
     }
 
     @Test

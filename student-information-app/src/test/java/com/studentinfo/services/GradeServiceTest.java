@@ -2,6 +2,7 @@ package com.studentinfo.services;
 
 import com.studentinfo.data.entity.Grade;
 import com.studentinfo.data.repository.GradeRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -26,6 +27,13 @@ class GradeServiceTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
     }
+
+    @AfterEach
+    void tearDown() {
+        // Reset mocks after each test
+        reset(gradeRepository);
+    }
+
 
     @Test
     void testGetAllGrades() {

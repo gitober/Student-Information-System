@@ -3,6 +3,7 @@ package com.studentinfo.security;
 import com.studentinfo.data.entity.User;
 import com.studentinfo.data.repository.UserRepository;
 import com.vaadin.flow.spring.security.AuthenticationContext;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -39,6 +40,12 @@ class AuthenticatedUserTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
     }
+
+    @AfterEach
+    void tearDown() {
+        SecurityContextHolder.clearContext();
+    }
+
 
     @Test
     void testGet() {

@@ -10,6 +10,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.server.VaadinSession;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -62,6 +63,19 @@ public class TeacherAttendanceViewTest {
 
         // Instantiate the TeacherAttendanceView
         teacherAttendanceView = new TeacherAttendanceView(mockTeacherService, mockCourseService, mockAuthenticatedUser);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        // Clear the Vaadin UI and session context
+        UI.setCurrent(null);
+        VaadinSession.setCurrent(null);
+
+        // Clear the teacherAttendanceView reference
+        teacherAttendanceView = null;
+
+        // Reset the SecurityContext
+        SecurityContextHolder.clearContext();
     }
 
     @Test

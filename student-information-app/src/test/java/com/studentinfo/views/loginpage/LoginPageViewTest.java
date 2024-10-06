@@ -13,6 +13,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.server.VaadinRequest;
 import com.vaadin.flow.server.VaadinResponse;
 import com.vaadin.flow.server.VaadinService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -49,6 +50,16 @@ public class LoginPageViewTest {
             // Instantiate the LoginPageView with the mocked login handler
             loginPageView = new LoginPageView(loginHandler);
         }
+    }
+
+    @AfterEach
+    public void tearDown() {
+        // Clear the UI context to avoid affecting other tests
+        UI.setCurrent(null);
+
+        // Clear any other references to avoid memory leaks
+        loginPageView = null;
+        loginHandler = null;
     }
 
     @Test

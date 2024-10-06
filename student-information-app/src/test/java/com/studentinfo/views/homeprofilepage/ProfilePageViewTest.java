@@ -4,6 +4,7 @@ import com.studentinfo.security.AuthenticatedUser;
 import com.studentinfo.services.UserContentLoader;
 import com.studentinfo.views.header.HeaderView;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -22,6 +23,12 @@ public class ProfilePageViewTest {
 
         // Initialize ProfilePageView with mocked dependencies
         profilePageView = new ProfilePageView(authenticatedUser, userContentLoader);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        // Clear any references to avoid memory leaks
+        profilePageView = null;
     }
 
     @Test

@@ -4,6 +4,7 @@ import com.studentinfo.data.entity.Role;
 import com.studentinfo.data.entity.Student;
 import com.studentinfo.data.entity.Teacher;
 import com.studentinfo.data.entity.User;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -36,6 +37,12 @@ class RegistrationHandlerTest {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
+    }
+
+    @AfterEach
+    void tearDown() {
+        // Reset mocks after each test
+        reset(userService, passwordEncoder, studentService, teacherService);
     }
 
     @Test

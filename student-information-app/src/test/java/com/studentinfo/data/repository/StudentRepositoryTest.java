@@ -1,6 +1,7 @@
 package com.studentinfo.data.repository;
 
 import com.studentinfo.data.entity.Student;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,9 @@ class StudentRepositoryTest {
     @Autowired
     private StudentRepository studentRepository;
 
-    private Student testStudent;
-
     @BeforeEach
     public void setUp() {
-        testStudent = new Student();
+        Student testStudent = new Student();
         testStudent.setUsername("John_doe");
         testStudent.setFirstName("John");
         testStudent.setEmail("john.doe.email.com");
@@ -31,6 +30,10 @@ class StudentRepositoryTest {
         studentRepository.save(testStudent);
     }
 
+    @AfterEach
+    void tearDown() {
+        studentRepository.deleteAll();
+    }
 
     @Test
     public void testFindByUsername() {

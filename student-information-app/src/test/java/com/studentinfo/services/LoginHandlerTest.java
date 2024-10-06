@@ -4,6 +4,7 @@ import com.studentinfo.data.entity.User;
 import com.studentinfo.data.entity.Role;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.notification.Notification;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -47,6 +48,13 @@ class LoginHandlerTest {
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(httpServletRequest, httpServletResponse));
 
         // Clear the SecurityContextHolder before each test
+        SecurityContextHolder.clearContext();
+    }
+
+    @AfterEach
+    void tearDown() {
+        // Reset mocks and clear SecurityContextHolder after each test
+        reset(userService, authenticationManager, httpServletRequest, httpServletResponse);
         SecurityContextHolder.clearContext();
     }
 

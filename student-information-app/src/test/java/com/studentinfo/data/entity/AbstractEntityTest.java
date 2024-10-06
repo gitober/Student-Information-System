@@ -1,5 +1,6 @@
 package com.studentinfo.data.entity;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +22,12 @@ class AbstractEntityTest {
         // Set IDs and version for testing
         entity1.setId(1001L);
         entity2.setId(1002L);
+    }
+
+    @AfterEach
+    void tearDown() {
+        entity1 = null;
+        entity2 = null;
     }
 
     @Test

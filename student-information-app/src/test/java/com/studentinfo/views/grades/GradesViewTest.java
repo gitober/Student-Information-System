@@ -3,7 +3,9 @@ package com.studentinfo.views.grades;
 import com.studentinfo.security.AuthenticatedUser;
 import com.studentinfo.services.UserContentLoader;
 import com.studentinfo.views.header.HeaderView;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -29,6 +31,12 @@ public class GradesViewTest {
     public void setUp() {
         MockitoAnnotations.openMocks(this);
     }
+
+    @AfterEach
+    void tearDown() {
+        UI.setCurrent(null); // Clear the Vaadin UI context to avoid side effects between tests
+    }
+
 
     @Test
     public void testGradesViewInitialization() {

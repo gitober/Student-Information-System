@@ -9,12 +9,10 @@ import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.RouterLink;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.mockito.MockedConstruction;
 import org.mockito.Mockito;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
 
@@ -22,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@TestInstance(TestInstance.Lifecycle.PER_METHOD)
 public class HeaderViewTest {
 
     private HeaderView headerView;
@@ -38,9 +35,10 @@ public class HeaderViewTest {
         // Set up the UI context for Vaadin components
         UI.setCurrent(new UI());
 
-        // Mock the RouterLink creation to avoid "Element to insert must not be null" error
+        // Properly mock RouterLink construction
         mockedRouterLink = Mockito.mockConstruction(RouterLink.class, (mock, context) -> {
-            when(mock.getElement()).thenReturn(new Span().getElement());  // Complete stubbing for the mock
+            when(mock.getElement()).thenReturn(new Span().getElement());  // Ensure complete stubbing
+            when(mock.getText()).thenReturn("Sample Link"); // Add more stubbing if needed
         });
 
         // Instantiate HeaderView with the mocked user
@@ -56,6 +54,9 @@ public class HeaderViewTest {
         if (mockedRouterLink != null) {
             mockedRouterLink.close();
         }
+
+        // Clear any remaining mock objects
+        mockedRouterLink = null;
     }
 
     @Test

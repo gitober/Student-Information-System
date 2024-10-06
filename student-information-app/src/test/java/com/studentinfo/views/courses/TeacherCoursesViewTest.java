@@ -10,6 +10,7 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.textfield.TextField;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -45,6 +46,11 @@ public class TeacherCoursesViewTest {
         teacherCoursesView = new TeacherCoursesView(courseService, teacherService);
 
         System.out.println("Test environment setup for TeacherCoursesView completed.");
+    }
+
+    @AfterEach
+    void tearDown() {
+        UI.setCurrent(null); // Clear the Vaadin UI context to avoid side effects between tests
     }
 
     @Test

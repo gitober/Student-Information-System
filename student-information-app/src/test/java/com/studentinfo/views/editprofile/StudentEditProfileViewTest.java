@@ -5,6 +5,7 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.textfield.TextField;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -35,6 +36,11 @@ public class StudentEditProfileViewTest {
         System.out.println("Setting up StudentEditProfileView...");
         studentEditProfileView = new StudentEditProfileView(student);
         System.out.println("StudentEditProfileView setup completed.");
+    }
+
+    @AfterEach
+    void tearDown() {
+        UI.setCurrent(null); // Clear the Vaadin UI context to avoid side effects between tests
     }
 
     @Test

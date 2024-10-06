@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
 
 class StudentControllerTest {
@@ -26,14 +27,13 @@ class StudentControllerTest {
     private Student newStudent, createdStudent, updatedStudent;
 
     @BeforeAll
-    static void setUp() {
+    static void setUpAll() {
         System.out.println("Starting the StudentControllerTest class");
     }
 
     @BeforeEach
-    void init() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
-        studentController = new StudentController(studentService);
         newStudent = new Student();
         createdStudent = new Student();
         updatedStudent = new Student();
@@ -42,7 +42,6 @@ class StudentControllerTest {
         newStudent.setFirstName("John");
         newStudent.setLastName("Doe");
 
-        updatedStudent = new Student();
         updatedStudent.setId(1L);
         updatedStudent.setFirstName("Jane");
         updatedStudent.setLastName("Wayne");
@@ -50,10 +49,8 @@ class StudentControllerTest {
 
     @AfterEach
     void tearDownEach() {
-        studentController = null;
-        newStudent = null;
-        createdStudent = null;
-        updatedStudent = null;
+        // Reset mocks after each test to avoid shared state
+        reset(studentService);
     }
 
     // Unit test for StudentController.getAllStudents()
@@ -124,7 +121,7 @@ class StudentControllerTest {
     }
 
     @AfterAll
-    static void tearDown() {
+    static void tearDownAll() {
         System.out.println("Finishing the StudentControllerTest class");
     }
 }

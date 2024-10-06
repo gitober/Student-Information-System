@@ -1,5 +1,6 @@
 package com.studentinfo.data.entity;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,23 +12,26 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class AttendanceTest {
 
     private Attendance attendance;
-    private Student student;
-    private Course course;
 
     @BeforeEach
     void setUp() {
         // Create a sample Student
-        student = new Student();
+        Student student = new Student();
         student.setFirstName("John");
         student.setLastName("Doe");
 
         // Create a sample Course
-        course = new Course();
+        Course course = new Course();
         course.setCourseName("Mathematics");
 
         // Create an Attendance object with sample data
         attendance = new Attendance("Present", LocalDate.of(2024, 10, 1), student, course);
         attendance.setAttendanceId(1L);
+    }
+
+    @AfterEach
+    void tearDown() {
+        attendance = null;
     }
 
     @Test

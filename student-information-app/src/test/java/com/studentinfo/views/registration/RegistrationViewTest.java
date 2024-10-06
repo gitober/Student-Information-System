@@ -7,6 +7,7 @@ import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.server.VaadinSession;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -36,6 +37,16 @@ public class RegistrationViewTest {
 
         // Instantiate the RegistrationView
         registrationView = new RegistrationView(mockRegistrationHandler);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        // Clear the Vaadin UI and session context
+        UI.setCurrent(null);
+        VaadinSession.setCurrent(null);
+
+        // Clear the registrationView reference
+        registrationView = null;
     }
 
     @Test

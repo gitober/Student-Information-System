@@ -1,6 +1,7 @@
 package com.studentinfo.data.repository;
 
 import com.studentinfo.data.entity.Department;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +17,21 @@ class DepartmentRepositoryTest {
     @Autowired
     private DepartmentRepository departmentRepository;
 
-    private Department testDepartment;
-
     @BeforeEach
     void setUp() {
         // Create a test department
-        testDepartment = new Department();
+        Department testDepartment = new Department();
         testDepartment.setDepartmentName("Science");
 
         // Save the department to the database
         departmentRepository.save(testDepartment);
     }
+
+    @AfterEach
+    void tearDown() {
+        departmentRepository.deleteAll();
+    }
+
 
     // Test the findByName method
     @Test

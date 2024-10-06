@@ -1,5 +1,6 @@
 package com.studentinfo.data.entity;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,18 +10,23 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class SubjectTest {
 
     private Subject subject;
-    private Department department;
 
     @BeforeEach
     void setUp() {
         // Create a sample Department
-        department = new Department();
+        Department department = new Department();
         department.setDepartmentName("Science");
 
         // Create a Subject object with sample data
         subject = new Subject("Physics", department);
         subject.setId(1L);
     }
+
+    @AfterEach
+    void tearDown() {
+        subject = null;
+    }
+
 
     @Test
     void testGetName() {

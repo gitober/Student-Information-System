@@ -10,16 +10,20 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
 
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
 
+@SpringBootTest
+@ActiveProfiles("test")
 class UserContentLoaderTest {
 
     @Mock
@@ -34,9 +38,12 @@ class UserContentLoaderTest {
     @InjectMocks
     private UserContentLoader userContentLoader;
 
+    private AutoCloseable mocks; // To close mocks after each test
+
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        // Initialize mocks
+        mocks = MockitoAnnotations.openMocks(this);
 
         // Mock the views to return a non-null element when added to a layout
         when(studentDashboardView.getElement()).thenReturn(new Div().getElement());
@@ -44,8 +51,11 @@ class UserContentLoaderTest {
     }
 
     @AfterEach
-    void tearDown() {
-        // Reset mocks after each test to ensure no shared state
+    void tearDown() throws Exception {
+        // Close mocks to avoid any side effects
+        mocks.close();
+
+        // Reset mocks to ensure no shared state between tests
         reset(authenticatedUser, studentDashboardView, teacherDashboardView);
     }
 

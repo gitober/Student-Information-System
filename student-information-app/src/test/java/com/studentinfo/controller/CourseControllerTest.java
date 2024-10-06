@@ -5,6 +5,7 @@ import com.studentinfo.data.entity.Course;
 import com.studentinfo.data.entity.Teacher;
 import com.studentinfo.services.CourseService;
 import com.studentinfo.services.TeacherService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -17,10 +18,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.reset;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -62,6 +63,12 @@ public class CourseControllerTest {
         teacher2 = new Teacher();
         teacher2.setId(2L);
         teacher2.setFirstName("Jane");
+    }
+
+    @AfterEach
+    void tearDown() {
+        // Reset mocks after each test to ensure no shared state
+        reset(courseService, teacherService);
     }
 
     @Test
@@ -128,10 +135,6 @@ public class CourseControllerTest {
                 .andExpect(jsonPath("$.courseId").value(1L))
                 .andExpect(jsonPath("$.courseName").value("Mathematics"));
     }
-
-
-
-
 
     @Test
     public void testDeleteCourse() throws Exception {

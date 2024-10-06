@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.studentinfo.data.dto.UserDTO;
 import com.studentinfo.data.entity.User;
 import com.studentinfo.services.UserService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -55,6 +56,12 @@ public class UserControllerTest {
                 .build();
     }
 
+    @AfterEach
+    void tearDown() {
+        user = null;
+        userDTO = null;
+    }
+
     @Test
     public void testCreateUser() throws Exception {
         // Mock the userService.save() method to return the created user
@@ -68,6 +75,7 @@ public class UserControllerTest {
         // Validate the response
         response.andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(1L))
-                .andExpect(jsonPath("$.firstName").value("John"));
+                .andExpect(jsonPath("$.firstName").value("John"))
+                .andExpect(jsonPath("$.username").value("johndoe"));
     }
 }
