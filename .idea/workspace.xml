@@ -57,59 +57,59 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Docker.student-information-app/Dockerfile build.executor": "Run",
-    "Docker.student-information-app/Dockerfile.executor": "Run",
-    "JUnit.All in student-information-app (1).executor": "Run",
-    "JUnit.All in student-information-app (2).executor": "Run",
-    "JUnit.All in student-information-app (3).executor": "Debug",
-    "JUnit.All in student-information-app (4).executor": "Run",
-    "JUnit.All in student-information-app.executor": "Run",
-    "JUnit.ApplicationTest.executor": "Run",
-    "JUnit.CoursesViewTest.executor": "Run",
-    "JUnit.EditProfileViewTest.testEditProfileViewComponents.executor": "Run",
-    "JUnit.HeaderViewTest.executor": "Run",
-    "JUnit.LoginPageViewTest.executor": "Run",
-    "JUnit.LogoutViewTest.executor": "Run",
-    "JUnit.MainLayoutTest.executor": "Run",
-    "JUnit.ProfilePageViewTest.executor": "Run",
-    "JUnit.RegistrationViewTest.executor": "Run",
-    "JUnit.StudentCoursesViewTest.executor": "Run",
-    "JUnit.StudentDashboardViewTest.executor": "Run",
-    "JUnit.StudentEditProfileViewTest.executor": "Run",
-    "JUnit.StudentGradesViewTest.executor": "Run",
-    "JUnit.TeacherAttendanceViewTest.executor": "Run",
-    "JUnit.TeacherCoursesViewTest.executor": "Run",
-    "JUnit.TeacherCoursesViewTest.testOpenEditDialog.executor": "Run",
-    "JUnit.TeacherDashboardViewTest.executor": "Run",
-    "JUnit.TeacherEditProfileViewTest.executor": "Run",
-    "JUnit.TeacherGradesViewTest.executor": "Run",
-    "JUnit.TeacherUpdateStudentProfileViewTest.executor": "Run",
-    "JUnit.TeacherUpdateStudentProfileViewTest.testComponentsPresence.executor": "Run",
-    "JUnit.UserContentLoaderTest.executor": "Run",
-    "JUnit.courses in student-information-app.executor": "Run",
-    "JUnit.editprofile in student-information-app.executor": "Run",
-    "JUnit.java in student-information-app.executor": "Run",
-    "JUnit.views in student-information-app.executor": "Run",
-    "Maven.student-information-app [clean].executor": "Run",
-    "Maven.student-information-app [install].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.Application.executor": "Run",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Docker.student-information-app/Dockerfile build.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.student-information-app/Dockerfile.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.All in student-information-app (1).executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.All in student-information-app (2).executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.All in student-information-app (3).executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.All in student-information-app (4).executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.All in student-information-app.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ApplicationTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CoursesViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.EditProfileViewTest.testEditProfileViewComponents.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.HeaderViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LoginPageViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LogoutViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MainLayoutTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ProfilePageViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.RegistrationViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.StudentCoursesViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.StudentDashboardViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.StudentEditProfileViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.StudentGradesViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TeacherAttendanceViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TeacherCoursesViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TeacherCoursesViewTest.testOpenEditDialog.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TeacherDashboardViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TeacherEditProfileViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TeacherGradesViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TeacherUpdateStudentProfileViewTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TeacherUpdateStudentProfileViewTest.testComponentsPresence.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserContentLoaderTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.courses in student-information-app.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.editprofile in student-information-app.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.java in student-information-app.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.views in student-information-app.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.student-information-app [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.student-information-app [install].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.Application.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -119,7 +119,7 @@
       <command value="mvn install" />
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.All in student-information-app (2)">
+  <component name="RunManager" selected="JUnit.All in student-information-app">
     <configuration name="All in student-information-app (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="student-information-app" />
       <shortenClasspath name="MANIFEST" />
@@ -255,10 +255,10 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.All in student-information-app" />
         <item itemvalue="JUnit.All in student-information-app (2)" />
         <item itemvalue="JUnit.LoginPageViewTest" />
         <item itemvalue="JUnit.All in student-information-app (1)" />
-        <item itemvalue="JUnit.All in student-information-app" />
         <item itemvalue="JUnit.All in student-information-app (3)" />
       </list>
     </recent_temporary>
