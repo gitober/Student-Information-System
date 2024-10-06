@@ -7,14 +7,17 @@ import com.studentinfo.views.homeprofilepage.StudentDashboardView;
 import com.studentinfo.views.homeprofilepage.TeacherDashboardView;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
 
+import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
 
 class UserContentLoaderTest {
@@ -38,6 +41,12 @@ class UserContentLoaderTest {
         // Mock the views to return a non-null element when added to a layout
         when(studentDashboardView.getElement()).thenReturn(new Div().getElement());
         when(teacherDashboardView.getElement()).thenReturn(new Div().getElement());
+    }
+
+    @AfterEach
+    void tearDown() {
+        // Reset mocks after each test to ensure no shared state
+        reset(authenticatedUser, studentDashboardView, teacherDashboardView);
     }
 
     @Test
