@@ -8,15 +8,20 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.page.Page;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.VaadinService;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import jakarta.servlet.http.Cookie;
 
 @PageTitle("Login Page")
 @Route(value = "login")
@@ -27,6 +32,7 @@ public class LoginPageView extends Composite<VerticalLayout> {
     private final PasswordField passwordField;
     private final Button signInButton;
     private final Button signUpButton;
+    private final Checkbox rememberMeCheckbox;
 
     @Autowired
     public LoginPageView(LoginHandler loginHandler) {
@@ -41,6 +47,10 @@ public class LoginPageView extends Composite<VerticalLayout> {
 
         this.signUpButton = new Button("Signup");
         this.signUpButton.addClassName("login-signup-link");
+
+        this.rememberMeCheckbox = new Checkbox("Remember me");
+        this.rememberMeCheckbox.addClassName("login-remember-checkbox");
+        this.rememberMeCheckbox.setId("remember-me"); // Set the checkbox ID for Spring Security recognition
 
         // Main layout setup
         VerticalLayout mainLayout = getContent();
@@ -74,8 +84,32 @@ public class LoginPageView extends Composite<VerticalLayout> {
         // Add content layout to main layout
         mainLayout.addAndExpand(contentLayout);
 
-        signInButton.addClickListener(e -> loginHandler.login(emailField.getValue(), passwordField.getValue()));
+        // Set up click listener for sign-in button
+        signInButton.addClickListener(e -> {
+            String email = emailField.getValue();
+            String password = passwordField.getValue();
+            boolean rememberMe = rememberMeCheckbox.getValue(); // Get the state of the "Remember me" checkbox
+
+            // Validate input fields
+            if (email.isEmpty()) {
+                Notification.show("Please enter your email.", 3000, Notification.Position.MIDDLE);
+                return; // Stop further execution if email is empty
+            }
+
+            if (password.isEmpty()) {
+                Notification.show("Please enter your password.", 3000, Notification.Position.MIDDLE);
+                return; // Stop further execution if password is empty
+            }
+
+            // Call the login handler
+            loginHandler.login(email, password, rememberMe); // Pass the rememberMe state to the loginHandler
+        });
+
+        // Load the email from cookie if it exists
+        loadRememberMeCookie();
+
         signUpButton.addClickListener(e -> UI.getCurrent().navigate("register"));
+
     }
 
     private VerticalLayout setupLeftContent() {
@@ -92,9 +126,6 @@ public class LoginPageView extends Composite<VerticalLayout> {
         welcomeText.addClassName("login-welcome-text");
         Span instructionText = new Span("Please enter your details");
         instructionText.addClassName("login-instruction-text");
-
-        Checkbox rememberMeCheckbox = new Checkbox("Remember me");
-        rememberMeCheckbox.addClassName("login-remember-checkbox");
 
         Span signUpText = new Span("Don’t have an account yet?");
         signUpText.addClassName("login-signup-text");
@@ -117,5 +148,19 @@ public class LoginPageView extends Composite<VerticalLayout> {
         rightContent.add(birdImage);
 
         return rightContent;
+    }
+
+    // Load the "Remember me" cookie
+    private void loadRememberMeCookie() {
+        Cookie[] cookies = VaadinService.getCurrentRequest().getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("rememberMe".equals(cookie.getName())) {
+                    emailField.setValue(cookie.getValue());
+                    rememberMeCheckbox.setValue(true);
+                    break;
+                }
+            }
+        }
     }
 }

@@ -7,31 +7,48 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.server.VaadinRequest;
+import com.vaadin.flow.server.VaadinResponse;
+import com.vaadin.flow.server.VaadinService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.mockito.MockedStatic;
 
 import java.util.Objects;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 public class LoginPageViewTest {
 
     private LoginPageView loginPageView;
+    private LoginHandler loginHandler;
 
     @BeforeEach
     public void setUp() {
         // Mock the LoginHandler
-        LoginHandler loginHandler = Mockito.mock(LoginHandler.class);
+        loginHandler = Mockito.mock(LoginHandler.class);
 
         // Set up the UI context for Vaadin components
         UI.setCurrent(new UI());
 
-        // Instantiate the LoginPageView with the mocked login handler
-        loginPageView = new LoginPageView(loginHandler);
+        // Mock VaadinService, VaadinRequest, and VaadinResponse
+        VaadinRequest vaadinRequest = mock(VaadinRequest.class);
+        VaadinResponse vaadinResponse = mock(VaadinResponse.class);
+
+        try (MockedStatic<VaadinService> vaadinServiceMock = Mockito.mockStatic(VaadinService.class)) {
+            vaadinServiceMock.when(VaadinService::getCurrentRequest).thenReturn(vaadinRequest);
+            vaadinServiceMock.when(VaadinService::getCurrentResponse).thenReturn(vaadinResponse);
+
+            // Instantiate the LoginPageView with the mocked login handler
+            loginPageView = new LoginPageView(loginHandler);
+        }
     }
 
     @Test
@@ -63,6 +80,26 @@ public class LoginPageViewTest {
         // Check if the "Remember me" checkbox is present
         Checkbox rememberMeCheckbox = findComponentOfType(loginPageView.getContent(), Checkbox.class);
         assertNotNull(rememberMeCheckbox, "Remember me checkbox should be present in the login page.");
+    }
+
+    @Test
+    public void testLoginButtonFunctionality() {
+        // Find the email and password fields
+        TextField emailField = findComponentOfType(loginPageView.getContent(), TextField.class);
+        PasswordField passwordField = findComponentOfType(loginPageView.getContent(), PasswordField.class);
+        Checkbox rememberMeCheckbox = findComponentOfType(loginPageView.getContent(), Checkbox.class);
+
+        // Set values for email and password
+        emailField.setValue("test@example.com");
+        passwordField.setValue("password123");
+        rememberMeCheckbox.setValue(true);
+
+        // Find the sign-in button and click it
+        Button signInButton = findButtonByText(loginPageView.getContent(), "Sign in");
+        signInButton.click();
+
+        // Verify that the login method in LoginHandler was called with the correct arguments
+        verify(loginHandler, times(1)).login(eq("test@example.com"), eq("password123"), eq(true));
     }
 
     // Helper method to find a component of a given type in the layout's hierarchy

@@ -55,6 +55,8 @@ class LoginHandlerTest {
         // Arrange
         String email = "test@example.com";
         String password = "password";
+        boolean rememberMe = true; // or false, depending on what you want to test
+
         User user = new User();
         user.setUsername(email);
 
@@ -75,7 +77,7 @@ class LoginHandlerTest {
 
         try (var mockedNotification = Mockito.mockStatic(Notification.class)) {
             // Act
-            loginHandler.login(email, password);
+            loginHandler.login(email, password, rememberMe); // Pass the rememberMe parameter
 
             // Assert
             verify(userService, times(1)).authenticate(email, password);
@@ -92,6 +94,7 @@ class LoginHandlerTest {
         // Arrange
         String email = "invalid@example.com";
         String password = "wrongpassword";
+        boolean rememberMe = false; // This value doesn't matter in case of failure
 
         when(userService.authenticate(email, password)).thenReturn(Optional.empty());
 
@@ -101,7 +104,7 @@ class LoginHandlerTest {
 
         try (var mockedNotification = Mockito.mockStatic(Notification.class)) {
             // Act
-            loginHandler.login(email, password);
+            loginHandler.login(email, password, rememberMe); // Pass the rememberMe parameter
 
             // Assert
             verify(userService, times(1)).authenticate(email, password);
@@ -114,6 +117,4 @@ class LoginHandlerTest {
             mockedNotification.verify(() -> Notification.show("Authentication failed. Please check your credentials."), times(1));
         }
     }
-
-
 }

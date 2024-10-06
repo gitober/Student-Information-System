@@ -37,6 +37,12 @@ public class RegistrationHandler {
     public boolean registerUser(String firstName, String lastName, LocalDate birthday, String phoneNumber,
                                 String email, String password, String role) {
         try {
+            // Check if the email already exists
+            if (userService.findByEmail(email).isPresent()) {
+                Notification.show("This email is already registered. Please use a different email.");
+                return false;
+            }
+
             User user = createUserBasedOnRole(role);
             if (user == null) {
                 Notification.show("Invalid role selected.");
@@ -64,6 +70,7 @@ public class RegistrationHandler {
             return false;
         }
     }
+
 
 
     // Private Helper Methods
@@ -113,4 +120,9 @@ public class RegistrationHandler {
         // Set roles
         user.setRoles(Set.of(Role.USER));
     }
+
+    public boolean isEmailRegistered(String email) {
+        return userService.findByEmail(email).isPresent();
+    }
+
 }

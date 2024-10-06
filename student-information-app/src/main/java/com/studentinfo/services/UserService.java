@@ -131,4 +131,8 @@ public class UserService {
             throw new IllegalStateException("No current response available", e);
         }
     }
+
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 }

@@ -9,18 +9,19 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
-import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 import org.springframework.security.web.context.SecurityContextRepository;
-import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.Authentication;
 
 @Configuration
 @EnableWebSecurity
@@ -28,9 +29,11 @@ public class SecurityConfiguration extends VaadinWebSecurity {
 
     private static final Logger logger = LoggerFactory.getLogger(SecurityConfiguration.class);
     private final UserDetailsServiceImpl userDetailsService;
+    private final DataSource dataSource; // Inject the DataSource
 
-    public SecurityConfiguration(UserDetailsServiceImpl userDetailsService) {
+    public SecurityConfiguration(UserDetailsServiceImpl userDetailsService, DataSource dataSource) {
         this.userDetailsService = userDetailsService;
+        this.dataSource = dataSource;
     }
 
     @Bean
@@ -56,6 +59,13 @@ public class SecurityConfiguration extends VaadinWebSecurity {
         return new HttpSessionSecurityContextRepository();
     }
 
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+        tokenRepository.setDataSource(dataSource);
+        return tokenRepository;
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -79,6 +89,11 @@ public class SecurityConfiguration extends VaadinWebSecurity {
                     form.loginPage("/login").defaultSuccessUrl("/profile", true);
                     logger.info("Form login configured.");
                     logCurrentSecurityContext("After configuring form login");
+                })
+                .rememberMe(rememberMe -> {
+                    rememberMe.tokenRepository(persistentTokenRepository())
+                            .tokenValiditySeconds(1209600) // 2 weeks
+                            .rememberMeParameter("remember-me"); // This corresponds to the checkbox in your login form
                 })
                 .logout(logout -> {
                     logout.logoutUrl("/logout")
@@ -111,7 +126,6 @@ public class SecurityConfiguration extends VaadinWebSecurity {
         super.configure(http);
         logCurrentSecurityContext("After super.configure(http)");
     }
-
 
     // Utility method to log the current security context
     private void logCurrentSecurityContext(String phase) {

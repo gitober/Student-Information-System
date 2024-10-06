@@ -12,7 +12,7 @@ import org.springframework.security.web.context.HttpSessionSecurityContextReposi
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.Optional;
@@ -31,18 +31,18 @@ public class LoginHandler {
     }
 
     // Login Method
-    public void login(String email, String password) {
+    public void login(String email, String password, boolean rememberMe) {
         // Authenticate the user using the user service
         Optional<User> authenticatedUserOpt = userService.authenticate(email, password);
 
         authenticatedUserOpt.ifPresentOrElse(
-                user -> handleSuccessfulLogin(user, email, password),
+                user -> handleSuccessfulLogin(user, email, password, rememberMe),
                 () -> handleFailedLogin(email)
         );
     }
 
     // Handle Successful Login
-    private void handleSuccessfulLogin(User user, String email, String password) {
+    private void handleSuccessfulLogin(User user, String email, String password, boolean rememberMe) {
         try {
             // Create authentication token
             UsernamePasswordAuthenticationToken authToken =
@@ -59,6 +59,10 @@ public class LoginHandler {
             HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
             new HttpSessionSecurityContextRepository().saveContext(SecurityContextHolder.getContext(), request, response);
 
+            // Set or remove the "Remember me" cookie
+            assert response != null;
+            handleRememberMeCookie(rememberMe, email, response);
+
             // Check the user's role and navigate accordingly
             navigateUserBasedOnRole(user);
 
@@ -73,6 +77,14 @@ public class LoginHandler {
     private void handleFailedLogin(String email) {
         System.out.println("Authentication failed for user: " + email);
         Notification.show("Authentication failed. Please check your credentials.");
+    }
+
+    // Set or remove the "Remember me" cookie
+    private void handleRememberMeCookie(boolean rememberMe, String email, HttpServletResponse response) {
+        Cookie cookie = new Cookie("rememberMe", rememberMe ? email : "");
+        cookie.setMaxAge(rememberMe ? 60 * 60 * 24 * 30 : 0); // 30 days if "Remember me" is checked, 0 to delete the cookie
+        cookie.setPath("/");
+        response.addCookie(cookie);
     }
 
     // Navigate User Based on Role
