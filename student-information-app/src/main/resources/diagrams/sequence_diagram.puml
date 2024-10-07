@@ -1,0 +1,36 @@
+@startuml
+actor Student
+actor Teacher
+
+Student -> System: View Courses
+System -> CourseService: Fetch Courses
+CourseService -> System: Return Course List
+System -> Student: Display Courses
+
+Student -> System: Register for Course
+System -> CourseService: Register Student for Course
+CourseService -> System: Confirm Registration
+System -> Student: Registration Successful
+
+Student -> System: Check Grades
+System -> GradeService: Retrieve Grades
+GradeService -> System: Return Grades
+System -> Student: Display Grades
+
+Teacher -> System: Manage Courses
+System -> CourseService: Add/Edit/Delete Course
+CourseService -> System: Confirm Changes
+
+Teacher -> System: Update Grades
+System -> GradeService: Update Student Grades
+GradeService -> System: Confirm Grade Update
+
+Teacher -> System: Track Attendance
+System -> AttendanceService: Mark Attendance
+AttendanceService -> System: Confirm Attendance Recorded
+
+Teacher -> System: Manage Students
+System -> StudentService: Add/Edit/Delete Student
+StudentService -> System: Confirm Changes
+
+@enduml

@@ -1,0 +1,84 @@
+@startuml
+class User {
+    +user_id: Long
+    +first_name: String
+    +last_name: String
+    +email: String
+    +phone_number: String
+    +username: String
+    +user_type: String
+    +hashed_password: String
+    +viewCourses()
+}
+
+class Student {
+    +student_number: Long
+    +address: String
+    +grade: String
+    +student_class: String
+    +viewAttendance()
+    +registerForCourses()
+    +checkGrades()
+}
+
+class Teacher {
+    +teacher_id: Long
+    +address: String
+    +phone_number: String
+    +manageCourses()
+    +updateGrades()
+    +trackAttendance()
+}
+
+class Course {
+    +course_id: Long
+    +course_name: String
+    +course_plan: String
+    +duration: Integer
+    +addCourse()
+    +editCourse()
+    +deleteCourse()
+}
+
+class Department {
+    +department_id: Long
+    +department_name: String
+}
+
+class Subject {
+    +subject_id: Long
+    +subject_name: String
+}
+
+class Registration {
+    +registration_id: Long
+    +registration_day: Date
+    +confirmRegistration()
+}
+
+class Grade {
+    +grade_id: Long
+    +grade: String
+    +grading_day: Date
+    +assignGrade()
+}
+
+class Attendance {
+    +attendance_id: Long
+    +attendance_status: String
+    +attendance_date: Date
+    +markAttendance()
+}
+
+User <|-- Student
+User <|-- Teacher
+Teacher --> Course
+Student --> Course
+Student --> Registration
+Student --> Grade
+Teacher --> Grade
+Teacher --> Attendance
+Course --> Department
+Course --> Subject
+
+@enduml

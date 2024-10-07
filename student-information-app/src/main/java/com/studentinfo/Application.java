@@ -18,14 +18,4 @@ public class Application implements AppShellConfigurator {
         SpringApplication.run(Application.class, args);
     }
 
-
-    // Remove or comment out the DataSourceInitializer bean if not needed
-    /*
-    @Bean
-    public DataSourceInitializer dataSourceInitializer(DataSource dataSource, UserRepository repository) {
-        DataSourceInitializer initializer = new DataSourceInitializer();
-        initializer.setDataSource(dataSource);
-        return initializer;
-    }
-    */
 }

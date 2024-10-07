@@ -1,0 +1,21 @@
+@startuml
+class Student {
+    +viewCourses()
+    +registerForCourses()
+    +checkGrades()
+    +viewAttendance()
+}
+
+class Teacher {
+    +manageCourses()
+    +updateGrades()
+    +trackAttendance()
+    +manageStudents()
+    +overseeRegistrations()
+}
+
+Student --> Course
+Teacher --> Course
+Teacher --> Student
+
+@enduml

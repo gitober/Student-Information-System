@@ -23,7 +23,6 @@ public class StudentEditProfileView extends VerticalLayout {
     private final TextField phoneNumberField;
     private final TextField emailField;
     private final PasswordField newPasswordField; // New field for the password
-    private final Button saveButton;
     private final Student student;
     private final UserService userService; // Reference to UserService
 
@@ -80,7 +79,7 @@ public class StudentEditProfileView extends VerticalLayout {
         emailField = new TextField("Email");
         newPasswordField = new PasswordField("New Password"); // New field for updating password
 
-        saveButton = new Button("Save");
+        Button saveButton = new Button("Save");
         saveButton.addClassName("student-edit-profile-save-button");
 
         formLayout.add(firstNameField, lastNameField, phoneNumberField, emailField, newPasswordField, saveButton); // Include the password field

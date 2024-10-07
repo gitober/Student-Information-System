@@ -1,0 +1,38 @@
+@startuml
+start
+
+:Student views courses;
+if (Are courses available?) then (Yes)
+  :Display course list;
+else (No)
+  :Notify "No courses available";
+endif
+
+:Student registers for a course;
+if (Is registration successful?) then (Yes)
+  :Confirm registration;
+else (No)
+  :Notify registration failed;
+endif
+
+:Student checks grades;
+:Display grades;
+
+:Teacher manages courses;
+if (Add/Edit/Delete course?) then (Yes)
+  :Course update confirmed;
+else (No)
+  :Operation failed;
+endif
+
+:Teacher updates student grades;
+:Grade update confirmed;
+
+:Teacher tracks student attendance;
+:Attendance recorded;
+
+:Admin oversees student registrations;
+:Admin manages user roles;
+
+stop
+@enduml

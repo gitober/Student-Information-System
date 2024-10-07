@@ -6,6 +6,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -20,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
+
 
 @PageTitle("Forgot Password / Reset Password")
 @Route(value = "forgotpassword")
@@ -53,6 +55,10 @@ public class ForgotPasswordView extends Composite<VerticalLayout> implements Bef
         H3 forgotPasswordTitle = new H3("Forgot Password?");
         forgotPasswordTitle.addClassName("forgot-password-title");
 
+        // New Paragraph for instructions
+        Paragraph instructions = new Paragraph("Enter your email address to receive a link to reset your password.");
+        instructions.addClassName("forgot-password-instructions");
+
         emailField = new EmailField("Email");
         emailField.addClassName("forgot-password-email-field");
 
@@ -61,12 +67,12 @@ public class ForgotPasswordView extends Composite<VerticalLayout> implements Bef
         submitButton.addClassName("forgot-password-submit-button");
         submitButton.addClickListener(e -> handleForgotPassword());
 
-        Button cancelButton = new Button("Cancel");
+        Button cancelButton = new Button("Close");
         cancelButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
-        cancelButton.addClassName("forgot-password-cancel-button");
+        cancelButton.addClassName("forgot-password-close-button");
         cancelButton.addClickListener(e -> getUI().ifPresent(ui -> ui.navigate("login")));
 
-        forgotPasswordLayout.add(forgotPasswordTitle, emailField, submitButton, cancelButton);
+        forgotPasswordLayout.add(forgotPasswordTitle, instructions, emailField, submitButton, cancelButton);
 
         // "Reset Password" layout
         resetPasswordLayout = new VerticalLayout();
@@ -84,9 +90,9 @@ public class ForgotPasswordView extends Composite<VerticalLayout> implements Bef
         resetButton.addClassName("reset-password-button");
         resetButton.addClickListener(e -> handleResetPassword());
 
-        Button resetCancelButton = new Button("Cancel");
+        Button resetCancelButton = new Button("Close");
         resetCancelButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
-        resetCancelButton.addClassName("reset-password-cancel-button");
+        resetCancelButton.addClassName("close-password-close-button");
         resetCancelButton.addClickListener(e -> getUI().ifPresent(ui -> ui.navigate("login")));
 
         resetPasswordLayout.add(resetPasswordTitle, newPasswordField, resetButton, resetCancelButton);
