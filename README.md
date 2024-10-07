@@ -80,56 +80,56 @@ spring.mail.password=${EMAIL_PASSWORD}
 ## Database Schema
 The Database Schema image illustrates the structure of the database used in this application. It includes tables for Users, Courses, Grades, Attendance, and more, along with their relationships. Primary and foreign keys are used to maintain data integrity and enable efficient data retrieval.
 
-![Database Schema](readme_img/database.png)
+![Database Schema](student-information-app/readme_images/database.png "database")
 
 ## ER Diagram
 The ER Diagram provides a visual representation of the relationships between various entities in the system, such as Users, Students, Teachers, Courses, Departments, etc. It showcases how data is interconnected, helping to understand the database's logical structure.
 
-![ER Diagram](src/main/resources/META-INF/resources/readme_img/er_diagram.png)
+![ER Diagram](student-information-app/readme_images/er_diagram.png "er_diagram")
 
 ## Application Walkthrough
 
 ### Login, Forgot Password, and Registration
 - **Login:** This is the main page where users can log in using their credentials. Enter your email and password, and click "Sign in" to access your dashboard.
-  ![Login Page](src/main/resources/META-INF.resources/readme_img/login.png)
+  ![Login Page](student-information-app/readme_images/login.png "login")
 
 - **Forgot Password:** If you forget your password, click the "Forgot Password?" link on the login page. Enter your registered email to receive a password reset link.
-  ![Forgot Password](src/main/resources/META-INF.resources/readme_img/forgot_password.png)
+  ![Forgot Password](student-information-app/readme_images/forgot_password.png "forgot_password")
 
 - **Register:** New users can create an account by filling out their details, such as name, email, phone number, and role (student or teacher). Click "Register" to complete the registration process.
-  ![Register Page](../resources/readme_img/register.png)
+  ![Register Page](student-information-app/readme_images/register.png "register")
 
 ### Student Features
 - **Dashboard:** This is the student's main interface, providing access to various functionalities such as viewing courses, checking grades, and editing profiles.
-  ![Student Dashboard](../main/resources/META-INF.resources/readme_img/student_dashboard.png)
+  ![Student Dashboard](student-information-app/readme_images/student_dashboard.png "student_dashboard")
 
 - **Courses:** View enrolled courses and available courses. Use the "Enroll" button to register for a course or "View Attendance" to check attendance records.
-  ![Student Courses](src/main/resources/META-INF.resources/readme_img/student_courses.png)
+  ![Student Courses](student-information-app/readme_images/student_courses.png "student_courses")
 
 - **Edit Profile:** Update personal details such as name, email, and phone number. Click "Save" to apply the changes.
-  ![Student Edit Profile](src/main/resources/META-INF.resources/readme_img/student_edit_profile.png)
+  ![Student Edit Profile](student-information-app/readme_images/student_edit_profile.png "student_edit_profile")
 
 - **Grades Overview:** View grades for all completed courses. This page displays the course name, grade, and the date the grade was assigned.
-  ![Student Grades](src/main/resources/META-INF/resources/readme_img/student_grades.png)
+  ![Student Grades](student-information-app/readme_images/student_grades.png "student_grades")
 
 ### Teacher Features
 - **Dashboard:** The teacher's main interface for managing students, courses, attendance, and grading. It provides quick access to all essential functions.
-  ![Teacher Dashboard](src/main/resources/META-INF/resources/readme_img/teacher_dashboard.png)
+  ![Teacher Dashboard](student-information-app/readme_images/teacher_dashboard.png "teacher_dashboard")
 
 - **Attendance Tracking:** Allows teachers to manage student attendance records. Search by course or student to update attendance status.
-  ![Attendance Tracking](src/main/resources/META-INF/resources/readme_img/teacher_attendance.png)
+  ![Attendance Tracking](student-information-app/readme_images/teacher_attendance.png "teacher_attendance")
 
 - **Course Management:** Teachers can add, edit, and delete courses. Use the "Add Course" button to create new courses or "Edit" to modify existing ones.
-  ![Course Management](src/main/resources/META-INF/resources/readme_img/teacher_courses.png)
+  ![Course Management](student-information-app/readme_images/teacher_courses.png "teacher_courses")
 
 - **Edit Profile:** Update teacher details such as name, email, department, and subject. Click "Save" to save changes.
-  ![Teacher Edit Profile](src/main/resources/META-INF/resources/readme_img/teacher_edit_profile.png)
+  ![Teacher Edit Profile](student-information-app/readme_images/teacher_edit_profile.png "teacher_edit_profile")
 
 - **Grades Management:** Manage student grades for specific courses. Use the "Edit" button to update a student's grade or "Add Grade" to enter a new one.
-  ![Grades Management](src/main/resources/META-INF/resources/readme_img/teacher_grades.png)
+  ![Grades Management](student-information-app/readme_images/teacher_grades.png "teacher_grades")
 
 - **Student Management:** View and update student profiles. Use the search feature to find students by first or last name.
-  ![Student Management](src/main/resources/META-INF/resources/readme_img/teacher_student_management.png)
+  ![Student Management](student-information-app/readme_images/teacher_student_management.png "teacher_student_management")
 
 
 ## Technologies Used
