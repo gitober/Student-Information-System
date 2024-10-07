@@ -80,7 +80,7 @@ spring.mail.password=${EMAIL_PASSWORD}
 ## Database Schema
 The Database Schema image illustrates the structure of the database used in this application. It includes tables for Users, Courses, Grades, Attendance, and more, along with their relationships. Primary and foreign keys are used to maintain data integrity and enable efficient data retrieval.
 
-![Database Schema](src/main/resources/META-INF/resources/readme_img/database.png)
+![Database Schema](readme_img/database.png)
 
 ## ER Diagram
 The ER Diagram provides a visual representation of the relationships between various entities in the system, such as Users, Students, Teachers, Courses, Departments, etc. It showcases how data is interconnected, helping to understand the database's logical structure.
@@ -91,23 +91,23 @@ The ER Diagram provides a visual representation of the relationships between var
 
 ### Login, Forgot Password, and Registration
 - **Login:** This is the main page where users can log in using their credentials. Enter your email and password, and click "Sign in" to access your dashboard.
-  ![Login Page](src/main/resources/META-INF/resources/readme_img/login_page.png)
+  ![Login Page](src/main/resources/META-INF.resources/readme_img/login.png)
 
 - **Forgot Password:** If you forget your password, click the "Forgot Password?" link on the login page. Enter your registered email to receive a password reset link.
-  ![Forgot Password](src/main/resources/META-INF/resources/readme_img/forgot_password.png)
+  ![Forgot Password](src/main/resources/META-INF.resources/readme_img/forgot_password.png)
 
 - **Register:** New users can create an account by filling out their details, such as name, email, phone number, and role (student or teacher). Click "Register" to complete the registration process.
-  ![Register Page](src/main/resources/META-INF/resources/readme_img/register.png)
+  ![Register Page](../resources/readme_img/register.png)
 
 ### Student Features
 - **Dashboard:** This is the student's main interface, providing access to various functionalities such as viewing courses, checking grades, and editing profiles.
-  ![Student Dashboard](src/main/resources/META-INF/resources/readme_img/student_dashboard.png)
+  ![Student Dashboard](../main/resources/META-INF.resources/readme_img/student_dashboard.png)
 
 - **Courses:** View enrolled courses and available courses. Use the "Enroll" button to register for a course or "View Attendance" to check attendance records.
-  ![Student Courses](src/main/resources/META-INF/resources/readme_img/student_courses.png)
+  ![Student Courses](src/main/resources/META-INF.resources/readme_img/student_courses.png)
 
 - **Edit Profile:** Update personal details such as name, email, and phone number. Click "Save" to apply the changes.
-  ![Student Edit Profile](src/main/resources/META-INF/resources/readme_img/student_edit_profile.png)
+  ![Student Edit Profile](src/main/resources/META-INF.resources/readme_img/student_edit_profile.png)
 
 - **Grades Overview:** View grades for all completed courses. This page displays the course name, grade, and the date the grade was assigned.
   ![Student Grades](src/main/resources/META-INF/resources/readme_img/student_grades.png)
