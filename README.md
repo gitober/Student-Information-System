@@ -91,7 +91,7 @@ The ER Diagram provides a visual representation of the relationships between var
 
 ### Login, Forgot Password, and Registration
 - **Login:** This is the main page where users can log in using their credentials. Enter your email and password, and click "Sign in" to access your dashboard.
-  ![Login Page](student-information-app/readme_images/login.png "login")
+  ![Login Page](student-information-app/readme_images/login_page.png "login")
 
 - **Forgot Password:** If you forget your password, click the "Forgot Password?" link on the login page. Enter your registered email to receive a password reset link.
   ![Forgot Password](student-information-app/readme_images/forgot_password.png "forgot_password")
@@ -159,7 +159,7 @@ The ER Diagram provides a visual representation of the relationships between var
 5. Submit a pull request.
 
 ## Testing
-- Please refer to the [testing README](../src/test/README.md) for details on running unit and integration tests using JUnit and Mockito.
+- Please refer to the [testing README](./student-information-app/src/test/README.md) for details on running unit and integration tests using JUnit and Mockito.
 
 ## References
 - [Vaadin Documentation](https://vaadin.com/docs)
