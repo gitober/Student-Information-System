@@ -4,6 +4,16 @@
 ## Project Overview
 The Student Information System is a web application designed to facilitate student and teacher interactions, manage course enrollments, track attendance, and handle grade management. It provides a comprehensive platform for educational institutions to manage their academic activities efficiently.
 
+## Contents
+- [Database Schema](#database-schema)
+- [ER Diagram](#er-diagram)
+- [Application Walkthrough](#application-walkthrough)
+- [Login, Forgot Password, and Registration](#login-forgot-password-and-registration)
+- [Student Features](#student-features)
+- [Teacher Features](#teacher-features)
+- [Technologies Used](#technologies-used)
+- [Authors](#authors)
+
 ## Getting Started
 
 ### Prerequisites
@@ -168,6 +178,7 @@ The ER Diagram provides a visual representation of the relationships between var
 
 ## Authors
 - [Anni](https://github.com/annikannisto)
-- [Gitta](https://github.com/gitober)
-- [George](https://github.com/GeorgeChirikov)
 - [Eetu](https://github.com/eetuam1)
+- [George](https://github.com/GeorgeChirikov)
+- [Gitta](https://github.com/gitober)
+
