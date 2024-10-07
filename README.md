@@ -5,14 +5,28 @@
 The Student Information System is a web application designed to facilitate student and teacher interactions, manage course enrollments, track attendance, and handle grade management. It provides a comprehensive platform for educational institutions to manage their academic activities efficiently.
 
 ## Contents
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Running the Application](#running-the-application)
+- [Configuration Files](#configuration-files)
+  - [.env File (Sensitive information hidden)](#env-file-sensitive-information-hidden)
+  - [application.properties Highlights](#applicationproperties-highlights)
+- [Dockerfile](#dockerfile)
+- [Jenkins Pipeline](#jenkins-pipeline)
 - [Database Schema](#database-schema)
 - [ER Diagram](#er-diagram)
 - [Application Walkthrough](#application-walkthrough)
-- [Login, Forgot Password, and Registration](#login-forgot-password-and-registration)
-- [Student Features](#student-features)
-- [Teacher Features](#teacher-features)
+  - [Login, Forgot Password, and Registration](#login-forgot-password-and-registration)
+  - [Student Features](#student-features)
+  - [Teacher Features](#teacher-features)
 - [Technologies Used](#technologies-used)
+- [Further Development Plan](#further-development-plan)
+- [Contributing](#contributing)
+- [Testing](#testing)
+- [References](#references)
 - [Authors](#authors)
+
 
 ## Getting Started
 
