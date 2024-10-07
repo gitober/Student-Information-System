@@ -165,3 +165,9 @@ The ER Diagram provides a visual representation of the relationships between var
 - [Vaadin Documentation](https://vaadin.com/docs)
 - [Spring Boot Reference](https://spring.io/projects/spring-boot)
 - [MySQL Documentation](https://dev.mysql.com/doc/)
+
+## Authors
+- [Anni](https://github.com/annikannisto)
+- [Gitta](https://github.com/gitober)
+- [George](https://github.com/GeorgeChirikov)
+- [Eetu](https://github.com/eetuam1)
