@@ -122,18 +122,20 @@ public class UserService {
             User user = userOptional.get();
             // Hash the new password using the PasswordEncoder
             String hashedPassword = passwordEncoder.encode(newPassword);
-            System.out.println("Hashed Password: " + hashedPassword); // Debugging
+            System.out.println("Hashed Password Before Save: " + hashedPassword); // Debugging
             user.setHashedPassword(hashedPassword);
             userRepository.save(user); // Save the user with the updated password
 
-            // Show notification if not in the test environment
-            if (!isTestEnvironment()) {
-                Notification.show("Password updated successfully!", 3000, Notification.Position.MIDDLE);
-            }
+            // Verify that the password has been saved
+            Optional<User> updatedUser = userRepository.findByEmail(email);
+            updatedUser.ifPresentOrElse(
+                    u -> System.out.println("Hashed Password After Save: " + u.getHashedPassword()),
+                    () -> System.out.println("User not found after update.")
+            );
         } else {
-            if (!isTestEnvironment()) {
-                Notification.show("User not found with this email.", 3000, Notification.Position.MIDDLE);
-            }
+            System.out.println("User not found with this email.");
         }
     }
+
+
 }

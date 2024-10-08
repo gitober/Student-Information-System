@@ -22,9 +22,10 @@ public class StudentEditProfileView extends VerticalLayout {
     private final TextField lastNameField;
     private final TextField phoneNumberField;
     private final TextField emailField;
-    private final PasswordField newPasswordField; // New field for the password
+    private final PasswordField newPasswordField;
     private final Student student;
-    private final UserService userService; // Reference to UserService
+    private final UserService userService;
+    private final Button saveButton;
 
     // Consumer to handle save actions
     @Setter
@@ -37,8 +38,9 @@ public class StudentEditProfileView extends VerticalLayout {
 
     // Constructor accepting a Student object and UserService
     public StudentEditProfileView(Student studentData, UserService userService) {
-        this.student = studentData; // Use the new parameter name
-        this.userService = userService; // Store the UserService reference
+        this.student = studentData;
+        this.userService = userService;
+        this.saveButton = new Button("Save");
 
         setSizeFull(); // Makes the layout take the full size of the parent
         setPadding(false); // Removes any padding
@@ -77,18 +79,19 @@ public class StudentEditProfileView extends VerticalLayout {
         lastNameField = new TextField("Last Name");
         phoneNumberField = new TextField("Phone Number");
         emailField = new TextField("Email");
-        newPasswordField = new PasswordField("New Password"); // New field for updating password
+        newPasswordField = new PasswordField("New Password");
 
+        // The correct saveButton as a class-level field
         Button saveButton = new Button("Save");
         saveButton.addClassName("student-edit-profile-save-button");
 
-        formLayout.add(firstNameField, lastNameField, phoneNumberField, emailField, newPasswordField, saveButton); // Include the password field
+        formLayout.add(firstNameField, lastNameField, phoneNumberField, emailField, newPasswordField, saveButton);
 
         // Combine current details and form into a main layout
         HorizontalLayout mainLayout = new HorizontalLayout(currentDetailsLayout, formLayout);
         mainLayout.setWidthFull();
         mainLayout.setSpacing(true);
-        mainLayout.setAlignItems(Alignment.STRETCH); // Ensure child elements are stretched equally
+        mainLayout.setAlignItems(Alignment.STRETCH);
         mainLayout.setJustifyContentMode(JustifyContentMode.CENTER);
         mainLayout.addClassName("student-edit-profile-main-layout");
 
@@ -106,18 +109,18 @@ public class StudentEditProfileView extends VerticalLayout {
     }
 
     private void updateStudentProfile() {
-        // Update student fields
         if (!firstNameField.isEmpty()) student.setFirstName(firstNameField.getValue());
         if (!lastNameField.isEmpty()) student.setLastName(lastNameField.getValue());
         if (!phoneNumberField.isEmpty()) student.setPhoneNumber(phoneNumberField.getValue());
         if (!emailField.isEmpty()) student.setEmail(emailField.getValue());
 
-        // Update password if provided
         String newPassword = newPasswordField.getValue();
         if (!newPassword.isEmpty()) {
-            System.out.println("Updating password for email: " + student.getEmail()); // Debugging statement
-            userService.updatePassword(student.getEmail(), newPassword); // Update password using UserService
+            userService.updatePassword(student.getEmail(), newPassword); // Ensure password is updated
         }
+
+        // Save the updated student profile (if necessary)
+        userService.save(student); // <-- Add this to persist the updated profile
 
         // Update displayed paragraphs with new values
         nameParagraph.getElement().setProperty("innerHTML", "<span class='label'>Name </span>" + "<br>" + student.getFirstName() + " " + student.getLastName());
