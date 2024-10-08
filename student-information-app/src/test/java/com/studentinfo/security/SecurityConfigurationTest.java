@@ -15,8 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes = Application.class)
-@ActiveProfiles("test")
+@SpringBootTest
 class SecurityConfigurationTest {
 
     @Autowired

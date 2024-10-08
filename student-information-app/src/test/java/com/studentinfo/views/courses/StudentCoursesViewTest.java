@@ -1,5 +1,6 @@
 package com.studentinfo.views.courses;
 
+import java.lang.reflect.InvocationTargetException;
 import com.studentinfo.data.entity.Course;
 import com.studentinfo.services.CourseService;
 import com.studentinfo.services.AttendanceService;
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collections;
 
@@ -113,11 +115,16 @@ public class StudentCoursesViewTest {
         Method enrollInCourseMethod = StudentCoursesView.class.getDeclaredMethod("enrollInCourse", Course.class);
         enrollInCourseMethod.setAccessible(true);
 
-        // Invoke the private method
-        System.out.println("Invoking enrollInCourse method...");
-        assertDoesNotThrow(() -> enrollInCourseMethod.invoke(studentCoursesView, sampleCourse),
-                "Invoking the 'enrollInCourse' method should not throw an exception.");
-        System.out.println("enrollInCourse method invoked successfully.");
+        try {
+            // Invoke the private method
+            System.out.println("Invoking enrollInCourse method...");
+            enrollInCourseMethod.invoke(studentCoursesView, sampleCourse);
+            System.out.println("enrollInCourse method invoked successfully.");
+        } catch (InvocationTargetException e) {
+            // Print the cause of the exception
+            e.getCause().printStackTrace();
+            fail("Invoking the 'enrollInCourse' method should not throw an exception.");
+        }
 
         // Verify if a confirmation dialog opens and the action is handled properly
         // This part is more for structural verification as dialog testing is complex in unit tests

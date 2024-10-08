@@ -23,8 +23,7 @@ import java.util.Optional;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest(classes = Application.class)
-@ActiveProfiles("test")
+@SpringBootTest
 class UserContentLoaderTest {
 
     @Mock

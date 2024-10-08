@@ -1,6 +1,5 @@
 package com.studentinfo.security;
 
-import com.studentinfo.Application;
 import com.studentinfo.data.entity.User;
 import com.studentinfo.data.repository.UserRepository;
 import com.vaadin.flow.spring.security.AuthenticationContext;
@@ -8,22 +7,19 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest(classes = Application.class)
-@ActiveProfiles("test")
+@SpringBootTest
 class AuthenticatedUserTest {
 
     @MockBean
