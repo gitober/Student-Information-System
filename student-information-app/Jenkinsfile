@@ -2,30 +2,44 @@ pipeline {
     agent any
     tools {
         maven 'Maven3'  // Ensure Maven is installed
-        jdk 'Java_Home'     // Ensure JDK is installed
+        jdk 'Java_Home' // Ensure JDK is installed
     }
     stages {
         stage('Checkout Code') {
             steps {
-                git url: 'https://github.com/gitober/Student-Information-System.git',branch:'main'
+                git url: 'https://github.com/gitober/Student-Information-System.git', branch: 'main'
+            }
+        }
+        stage('Load Environment Variables') {
+            steps {
+                script {
+                    // Load the .env file manually into the environment
+                    def envVars = readFile 'student-information-app/src/main/resources/.env'
+                    envVars.split('\n').each { line ->
+                        def parts = line.split('=')
+                        if (parts.length == 2) {
+                            env[parts[0].trim()] = parts[1].trim()
+                        }
+                    }
+                }
             }
         }
         stage('Build') {
             steps {
-                dir ('student-information-app') {
+                dir('student-information-app') {
                     bat 'mvn clean package'
                 }
             }
         }
         stage('Run Unit Tests') {
             steps {
-                dir('student-information-app') {  // Ensure we are in the correct directory
-                    bat 'mvn test'
+                dir('student-information-app') {
+                    bat 'mvn verify'  // Run tests and verify the build
                 }
             }
             post {
                 always {
-                    dir('student-information-app') {  // Ensure we are in the correct directory
+                    dir('student-information-app') {
                         junit 'target/surefire-reports/*.xml'  // Capture test reports
                     }
                 }
@@ -33,13 +47,13 @@ pipeline {
         }
         stage('Code Coverage Report') {
             steps {
-                dir('student-information-app') {  // Ensure we are in the correct directory
+                dir('student-information-app') {
                     bat 'mvn jacoco:report'
                 }
             }
             post {
                 always {
-                    dir('student-information-app') {  // Ensure we are in the correct directory
+                    dir('student-information-app') {
                         jacoco(execPattern: 'target/jacoco.exec')
                     }
                 }
@@ -47,5 +61,3 @@ pipeline {
         }
     }
 }
-
-
