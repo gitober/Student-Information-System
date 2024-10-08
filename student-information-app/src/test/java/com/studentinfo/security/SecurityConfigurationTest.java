@@ -1,8 +1,9 @@
 package com.studentinfo.security;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,7 +11,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,38 +27,33 @@ class SecurityConfigurationTest {
     @Autowired
     private SecurityContextRepository securityContextRepository;
 
-    @BeforeAll
-    static void initAll() {
-        System.out.println("Starting SecurityConfigurationTest class");
+    @BeforeEach
+    void setUp() {
+        // Initialize mocks before each test
+        MockitoAnnotations.openMocks(this);
     }
 
     @AfterEach
     void tearDown() {
-        // Clear the security context after each test
-        SecurityContextHolder.clearContext();
+        // No need to reset Spring beans
     }
 
     @Test
     void testPasswordEncoder() {
-        // Arrange
         String rawPassword = "password";
-
-        // Act
         String encodedPassword = passwordEncoder.encode(rawPassword);
-
-        // Assert
         assertThat(passwordEncoder.matches(rawPassword, encodedPassword)).isTrue();
     }
 
     @Test
     void testAuthenticationManager() {
-        // Assert
         assertThat(authenticationManager).isNotNull();
     }
 
     @Test
     void testSecurityContextRepository() {
-        // Assert
         assertThat(securityContextRepository).isNotNull();
     }
+
+    // Add more tests for HttpSecurity configuration here
 }

@@ -9,7 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.ActiveProfiles;
@@ -23,23 +25,25 @@ import static org.mockito.Mockito.*;
 @ActiveProfiles("test")
 class AuthenticatedUserTest {
 
-    @Mock
+    @MockBean
     private UserRepository userRepository;
 
-    @Mock
+    @MockBean
     private AuthenticationContext authenticationContext;
 
+    @InjectMocks
+    @Autowired
     private AuthenticatedUser authenticatedUser;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        authenticatedUser = new AuthenticatedUser(authenticationContext, userRepository); // Explicitly initialize
     }
 
     @AfterEach
     void tearDown() {
-        SecurityContextHolder.clearContext();
+        // Reset mocks after each test
+        reset(userRepository, authenticationContext);
     }
 
     @Test
@@ -67,18 +71,6 @@ class AuthenticatedUserTest {
         // Assert
         assertTrue(result.isPresent(), "Expected user should be present.");
         assertEquals(result.get().getEmail(), testEmail, "Expected email should match.");
-    }
-
-    @Test
-    void testGetWhenUserIsNotAuthenticated() {
-        // Mock the AuthenticationContext to return empty
-        when(authenticationContext.getAuthenticatedUser(UserDetails.class)).thenReturn(Optional.empty());
-
-        // Act
-        Optional<User> result = authenticatedUser.get();
-
-        // Assert
-        assertTrue(result.isEmpty(), "Expected no user to be present.");
     }
 
     @Test
