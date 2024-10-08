@@ -2,7 +2,7 @@ pipeline {
     agent any
     tools {
         maven 'Maven3'  // Ensure Maven is installed
-        jdk 'Java_Home'  // Ensure JDK is installed
+        jdk 'Java_Home' // Ensure JDK is installed
     }
 
     environment {
@@ -55,25 +55,26 @@ pipeline {
                 }
             }
         }
+
+        stage('Inject Credentials') {
+            steps {
+                script {
+                    withCredentials([string(credentialsId: 'db-username', variable: 'DB_USERNAME'),
+                                     string(credentialsId: 'db-password', variable: 'DB_PASSWORD'),
+                                     string(credentialsId: 'email-username', variable: 'EMAIL_USERNAME'),
+                                     string(credentialsId: 'email-password', variable: 'EMAIL_PASSWORD')]) {
+                        // Use credentials within this block
+                        echo "Database Username: ${DB_USERNAME}"
+                        echo "Email Username: ${EMAIL_USERNAME}"
+                    }
+                }
+            }
+        }
     }
 
     post {
         always {
             cleanWs()  // Clean the workspace after the build
-        }
-    }
-
-    environment {
-        // Use withCredentials to inject the secrets stored in Jenkins
-        withCredentials([string(credentialsId: 'db-username', variable: 'DB_USERNAME'),
-                         string(credentialsId: 'db-password', variable: 'DB_PASSWORD'),
-                         string(credentialsId: 'email-username', variable: 'EMAIL_USERNAME'),
-                         string(credentialsId: 'email-password', variable: 'EMAIL_PASSWORD')]) {
-            // Environment variables for database and email credentials
-            DB_USERNAME = "${DB_USERNAME}"
-            DB_PASSWORD = "${DB_PASSWORD}"
-            EMAIL_USERNAME = "${EMAIL_USERNAME}"
-            EMAIL_PASSWORD = "${EMAIL_PASSWORD}"
         }
     }
 }
