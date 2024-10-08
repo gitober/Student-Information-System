@@ -7,29 +7,31 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.router.Router;
 import com.vaadin.flow.server.VaadinRequest;
 import com.vaadin.flow.server.VaadinResponse;
 import com.vaadin.flow.server.VaadinService;
+import com.vaadin.flow.server.VaadinSession;
+import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
 import java.util.Objects;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class LoginPageViewTest {
 
     private LoginPageView loginPageView;
     private LoginHandler loginHandler;
+    private MockedStatic<VaadinService> vaadinServiceMock;
 
     @BeforeEach
     public void setUp() {
@@ -37,19 +39,32 @@ public class LoginPageViewTest {
         loginHandler = Mockito.mock(LoginHandler.class);
 
         // Set up the UI context for Vaadin components
-        UI.setCurrent(new UI());
+        UI ui = new UI();
+        UI.setCurrent(ui);
 
         // Mock VaadinService, VaadinRequest, and VaadinResponse
         VaadinRequest vaadinRequest = mock(VaadinRequest.class);
         VaadinResponse vaadinResponse = mock(VaadinResponse.class);
+        VaadinSession vaadinSession = mock(VaadinSession.class);
+        VaadinService vaadinService = mock(VaadinService.class);
+        Router router = mock(Router.class);
 
-        try (MockedStatic<VaadinService> vaadinServiceMock = Mockito.mockStatic(VaadinService.class)) {
-            vaadinServiceMock.when(VaadinService::getCurrentRequest).thenReturn(vaadinRequest);
-            vaadinServiceMock.when(VaadinService::getCurrentResponse).thenReturn(vaadinResponse);
+        vaadinServiceMock = Mockito.mockStatic(VaadinService.class);
+        vaadinServiceMock.when(VaadinService::getCurrentRequest).thenReturn(vaadinRequest);
+        vaadinServiceMock.when(VaadinService::getCurrentResponse).thenReturn(vaadinResponse);
+        vaadinServiceMock.when(VaadinService::getCurrent).thenReturn(vaadinService);
 
-            // Instantiate the LoginPageView with the mocked login handler
-            loginPageView = new LoginPageView(loginHandler);
-        }
+        // Simulate the presence of a "rememberMe" cookie
+        Cookie[] cookies = { new Cookie("rememberMe", "test@example.com") };
+        when(vaadinRequest.getCookies()).thenReturn(cookies);
+
+        // Set the session and router for the UI
+        when(vaadinSession.getService()).thenReturn(vaadinService);
+        when(vaadinService.getRouter()).thenReturn(router);
+        ui.getInternals().setSession(vaadinSession);
+
+        // Instantiate the LoginPageView with the mocked login handler
+        loginPageView = new LoginPageView(loginHandler);
     }
 
     @AfterEach
@@ -60,6 +75,9 @@ public class LoginPageViewTest {
         // Clear any other references to avoid memory leaks
         loginPageView = null;
         loginHandler = null;
+
+        // Close the static mock
+        vaadinServiceMock.close();
     }
 
     @Test
@@ -111,6 +129,33 @@ public class LoginPageViewTest {
 
         // Verify that the login method in LoginHandler was called with the correct arguments
         verify(loginHandler, times(1)).login(eq("test@example.com"), eq("password123"), eq(true));
+    }
+
+    @Test
+    public void testForgotPasswordButtonFunctionality() {
+        // Mock the UI class
+        UI mockUI = mock(UI.class);
+        UI.setCurrent(mockUI);
+
+        // Find the "Forgot Password?" button
+        Button forgotPasswordButton = findButtonByText(loginPageView.getContent(), "Forgot Password?");
+        assertNotNull(forgotPasswordButton, "Forgot Password button should be present in the login page.");
+
+        // Simulate clicking the button
+        forgotPasswordButton.click();
+
+        // Verify that the navigation to the "forgotpassword" route was triggered
+        verify(mockUI).navigate("forgotpassword");
+    }
+
+    @Test
+    public void testRememberMeCookie() {
+        // Verify that the email was loaded from the cookie
+        TextField emailField = findComponentOfType(loginPageView.getContent(), TextField.class);
+        assertEquals("test@example.com", emailField.getValue(), "Email should be pre-filled from cookie.");
+
+        Checkbox rememberMeCheckbox = findComponentOfType(loginPageView.getContent(), Checkbox.class);
+        assertTrue(rememberMeCheckbox.getValue(), "Remember me checkbox should be selected if cookie exists.");
     }
 
     // Helper method to find a component of a given type in the layout's hierarchy

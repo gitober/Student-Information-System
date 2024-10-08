@@ -169,8 +169,8 @@ public class LoginPageView extends Composite<VerticalLayout> {
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if ("rememberMe".equals(cookie.getName())) {
-                    emailField.setValue(cookie.getValue());
-                    rememberMeCheckbox.setValue(true);
+                    emailField.setValue(cookie.getValue()); // Set the email from the cookie
+                    rememberMeCheckbox.setValue(true); // Check the "Remember me" checkbox
                     break;
                 }
             }
