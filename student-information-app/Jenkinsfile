@@ -2,62 +2,78 @@ pipeline {
     agent any
     tools {
         maven 'Maven3'  // Ensure Maven is installed
-        jdk 'Java_Home' // Ensure JDK is installed
+        jdk 'Java_Home'  // Ensure JDK is installed
     }
+
+    environment {
+        DB_URL = 'jdbc:mysql://localhost:3306/studentinfoapp'
+        SMTP_HOST = 'smtp.gmail.com'
+        SMTP_PORT = '587'
+    }
+
     stages {
         stage('Checkout Code') {
             steps {
                 git url: 'https://github.com/gitober/Student-Information-System.git', branch: 'main'
             }
         }
-        stage('Load Environment Variables') {
-            steps {
-                script {
-                    // Load the .env file manually into the environment
-                    def envVars = readFile 'student-information-app/src/main/resources/.env'
-                    envVars.split('\n').each { line ->
-                        def parts = line.split('=')
-                        if (parts.length == 2) {
-                            env[parts[0].trim()] = parts[1].trim()
-                        }
-                    }
-                }
-            }
-        }
+
         stage('Build') {
             steps {
-                dir('student-information-app') {
+                dir ('student-information-app') {
                     bat 'mvn clean package'
                 }
             }
         }
+
         stage('Run Unit Tests') {
             steps {
-                dir('student-information-app') {
-                    bat 'mvn verify'  // Run tests and verify the build
+                dir('student-information-app') {  // Ensure we are in the correct directory
+                    bat 'mvn test'
                 }
             }
             post {
                 always {
-                    dir('student-information-app') {
+                    dir('student-information-app') {  // Ensure we are in the correct directory
                         junit 'target/surefire-reports/*.xml'  // Capture test reports
                     }
                 }
             }
         }
+
         stage('Code Coverage Report') {
             steps {
-                dir('student-information-app') {
+                dir('student-information-app') {  // Ensure we are in the correct directory
                     bat 'mvn jacoco:report'
                 }
             }
             post {
                 always {
-                    dir('student-information-app') {
+                    dir('student-information-app') {  // Ensure we are in the correct directory
                         jacoco(execPattern: 'target/jacoco.exec')
                     }
                 }
             }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()  // Clean the workspace after the build
+        }
+    }
+
+    environment {
+        // Use withCredentials to inject the secrets stored in Jenkins
+        withCredentials([string(credentialsId: 'db-username', variable: 'DB_USERNAME'),
+                         string(credentialsId: 'db-password', variable: 'DB_PASSWORD'),
+                         string(credentialsId: 'email-username', variable: 'EMAIL_USERNAME'),
+                         string(credentialsId: 'email-password', variable: 'EMAIL_PASSWORD')]) {
+            // Environment variables for database and email credentials
+            DB_USERNAME = "${DB_USERNAME}"
+            DB_PASSWORD = "${DB_PASSWORD}"
+            EMAIL_USERNAME = "${EMAIL_USERNAME}"
+            EMAIL_PASSWORD = "${EMAIL_PASSWORD}"
         }
     }
 }
