@@ -1,17 +1,16 @@
-
 # Student Information System
 
 ## Project Overview
-The Student Information System is a web application designed to facilitate student and teacher interactions, manage course enrollments, track attendance, and handle grade management. It provides a comprehensive platform for educational institutions to manage their academic activities efficiently.
+The Student Information System is a web application designed to facilitate interactions between students and teachers, manage course enrollments, track attendance, and handle grade management. It provides a comprehensive platform for educational institutions to efficiently manage their academic activities.
 
 ## Contents
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
+  - [Installation Instructions](#installation-instructions)
   - [Running the Application](#running-the-application)
-- [Configuration Files](#configuration-files)
-  - [.env File (Sensitive information hidden)](#env-file-sensitive-information-hidden)
-  - [application.properties Highlights](#applicationproperties-highlights)
+- [Configuration Highlights](#configuration-highlights)
+  - [Environment Configuration](#environment-configuration)
+  - [Application Properties](#application-properties)
 - [Dockerfile](#dockerfile)
 - [Jenkins Pipeline](#jenkins-pipeline)
 - [Database Schema](#database-schema)
@@ -27,134 +26,114 @@ The Student Information System is a web application designed to facilitate stude
 - [References](#references)
 - [Authors](#authors)
 
-
 ## Getting Started
 
 ### Prerequisites
+Ensure you have the following installed on your system:
 - Java Development Kit (JDK) 21
 - Maven
 - MySQL
-- Docker (Optional for containerized deployment)
+- Docker (optional for containerized deployment)
 
-### Installation
-1. Clone the repository:
-    ```bash
-    git clone https://github.com/gitober/Student-Information-System.git
-    ```
-2. Navigate to the project directory:
-    ```bash
-    cd Student-Information-System/student-information-app
-    ```
-3. Configure the `.env` file to src/main/resources folder.
-4. Build the project using Maven:
-    ```bash
-    mvn clean package
-    ```
+### Installation Instructions
+1. **Clone the Repository**:
+  - Open your terminal or command prompt.
+  - Clone the repository to your local machine using Git.
 
-### Running the Application
-- Using Maven:
-    ```bash
-    mvn spring-boot:run
-    ```
-- Using Docker:
-    ```bash
-    docker build -t student-information-app .
-    docker run -p 8080:8080 student-information-app
-    ```
+2. **Navigate to the Project Directory**:
+  - Use the `cd` command to change into the directory where the project files are located.
 
-## Configuration Files
+3. **Configure the Environment Variables**:
+  - Create a `.env` file in the `src/main/resources` folder of the project.
+  - Populate this file with your database and email settings:
+    - Set the database username, password, and URL.
+    - Set the email username and password, along with the SMTP host and port.
 
-### .env File (Sensitive information hidden)
-```plaintext
-# Database settings
-DB_USERNAME=your_db_username
-DB_PASSWORD=your_db_password
-DB_URL=jdbc:mysql://localhost:3306/studentinfoapp
+4. **Build the Project**:
+  - Use Maven to clean and package the project by running a specific command that compiles the code and prepares it for deployment.
 
-# Email settings
-EMAIL_USERNAME=your_email
-EMAIL_PASSWORD=your_email_password
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-```
+## Running the Application
 
-### `application.properties` Highlights
-```properties
-# Server port
-server.port=${PORT:8080}
+### Option 1: Using Maven
+- To run the application with Maven, execute a command that starts the Spring Boot application.
 
-# Database and JPA settings
-spring.datasource.url=${DB_URL}
-spring.datasource.username=${DB_USERNAME}
-spring.datasource.password=${DB_PASSWORD}
+### Option 2: Using Docker
+- If you prefer containerized deployment:
+  - Build the Docker image using a command that specifies the current directory.
+  - Run the Docker container, mapping the application port to your host machine.
 
-# Email settings
-spring.mail.host=smtp.gmail.com
-spring.mail.port=587
-spring.mail.username=${EMAIL_USERNAME}
-spring.mail.password=${EMAIL_PASSWORD}
-```
+## Configuration Highlights
+
+### Environment Configuration
+- Ensure the environment configuration file includes:
+  - **Database Settings**: Credentials to connect to your MySQL database.
+  - **Email Settings**: SMTP configuration details necessary for sending emails.
+
+### Application Properties
+- Key properties in your application settings should define:
+  - The server port the application will listen on.
+  - Database connection details using the previously defined environment variables.
+  - Email service configuration for sending out emails, utilizing the environment variables set earlier.
 
 ### Dockerfile
-- The project uses a multi-stage Dockerfile to build and run the application efficiently. See the Dockerfile for the detailed setup.
+- The project uses a multi-stage Dockerfile to build and run the application efficiently.
 
 ### Jenkins Pipeline
-- The Jenkins pipeline automates code checkout, build, testing, and code coverage report generation. See the pipeline script in the root directory for more details.
+- The Jenkins pipeline automates code checkout, build, testing, and code coverage report generation.
 
 ## Database Schema
-The Database Schema image illustrates the structure of the database used in this application. It includes tables for Users, Courses, Grades, Attendance, and more, along with their relationships. Primary and foreign keys are used to maintain data integrity and enable efficient data retrieval.
+The Database Schema illustrates the structure of the database used in this application, including tables for Users, Courses, Grades, Attendance, and more, along with their relationships.
 
-![Database Schema](student-information-app/readme_images/database.png "database")
+![Database Schema](student-information-app/readme_images/database.png "Database Schema")
 
 ## ER Diagram
-The ER Diagram provides a visual representation of the relationships between various entities in the system, such as Users, Students, Teachers, Courses, Departments, etc. It showcases how data is interconnected, helping to understand the database's logical structure.
+The ER Diagram provides a visual representation of the relationships between various entities in the system, showcasing how data is interconnected.
 
-![ER Diagram](student-information-app/readme_images/er_diagram.png "er_diagram")
+![ER Diagram](student-information-app/readme_images/er_diagram.png "ER Diagram")
 
 ## Application Walkthrough
 
 ### Login, Forgot Password, and Registration
-- **Login:** This is the main page where users can log in using their credentials. Enter your email and password, and click "Sign in" to access your dashboard.
-  ![Login Page](student-information-app/readme_images/login_page.png "login")
+- **Login**: The main page where users can log in using their credentials.
+  ![Login Page](student-information-app/readme_images/login_page.png "Login")
 
-- **Forgot Password:** If you forget your password, click the "Forgot Password?" link on the login page. Enter your registered email to receive a password reset link.
-  ![Forgot Password](student-information-app/readme_images/forgot_password.png "forgot_password")
+- **Forgot Password**: Click the "Forgot Password?" link to receive a password reset link.
+  ![Forgot Password](student-information-app/readme_images/forgot_password.png "Forgot Password")
 
-- **Register:** New users can create an account by filling out their details, such as name, email, phone number, and role (student or teacher). Click "Register" to complete the registration process.
-  ![Register Page](student-information-app/readme_images/register.png "register")
+- **Register**: New users can create an account by filling out their details.
+  ![Register Page](student-information-app/readme_images/register.png "Register")
 
 ### Student Features
-- **Dashboard:** This is the student's main interface, providing access to various functionalities such as viewing courses, checking grades, and editing profiles.
-  ![Student Dashboard](student-information-app/readme_images/student_dashboard.png "student_dashboard")
+- **Dashboard**: Access various functionalities such as viewing courses and checking grades.
+  ![Student Dashboard](student-information-app/readme_images/student_dashboard.png "Student Dashboard")
 
-- **Courses:** View enrolled courses and available courses. Use the "Enroll" button to register for a course or "View Attendance" to check attendance records.
-  ![Student Courses](student-information-app/readme_images/student_courses.png "student_courses")
+- **Courses**: View enrolled and available courses.
+  ![Student Courses](student-information-app/readme_images/student_courses.png "Student Courses")
 
-- **Edit Profile:** Update personal details such as name, email, and phone number. Click "Save" to apply the changes.
-  ![Student Edit Profile](student-information-app/readme_images/student_edit_profile.png "student_edit_profile")
+- **Edit Profile**: Update personal details.
+  ![Student Edit Profile](student-information-app/readme_images/student_edit_profile.png "Student Edit Profile")
 
-- **Grades Overview:** View grades for all completed courses. This page displays the course name, grade, and the date the grade was assigned.
-  ![Student Grades](student-information-app/readme_images/student_grades.png "student_grades")
+- **Grades Overview**: View grades for all completed courses.
+  ![Student Grades](student-information-app/readme_images/student_grades.png "Student Grades")
 
 ### Teacher Features
-- **Dashboard:** The teacher's main interface for managing students, courses, attendance, and grading. It provides quick access to all essential functions.
-  ![Teacher Dashboard](student-information-app/readme_images/teacher_dashboard.png "teacher_dashboard")
+- **Dashboard**: Manage students, courses, attendance, and grading.
+  ![Teacher Dashboard](student-information-app/readme_images/teacher_dashboard.png "Teacher Dashboard")
 
-- **Attendance Tracking:** Allows teachers to manage student attendance records. Search by course or student to update attendance status.
-  ![Attendance Tracking](student-information-app/readme_images/teacher_attendance.png "teacher_attendance")
+- **Attendance Tracking**: Manage student attendance records.
+  ![Attendance Tracking](student-information-app/readme_images/teacher_attendance.png "Attendance Tracking")
 
-- **Course Management:** Teachers can add, edit, and delete courses. Use the "Add Course" button to create new courses or "Edit" to modify existing ones.
-  ![Course Management](student-information-app/readme_images/teacher_courses.png "teacher_courses")
+- **Course Management**: Add, edit, and delete courses.
+  ![Course Management](student-information-app/readme_images/teacher_courses.png "Course Management")
 
-- **Edit Profile:** Update teacher details such as name, email, department, and subject. Click "Save" to save changes.
-  ![Teacher Edit Profile](student-information-app/readme_images/teacher_edit_profile.png "teacher_edit_profile")
+- **Edit Profile**: Update teacher details.
+  ![Teacher Edit Profile](student-information-app/readme_images/teacher_edit_profile.png "Teacher Edit Profile")
 
-- **Grades Management:** Manage student grades for specific courses. Use the "Edit" button to update a student's grade or "Add Grade" to enter a new one.
-  ![Grades Management](student-information-app/readme_images/teacher_grades.png "teacher_grades")
+- **Grades Management**: Manage student grades for specific courses.
+  ![Grades Management](student-information-app/readme_images/teacher_grades.png "Grades Management")
 
-- **Student Management:** View and update student profiles. Use the search feature to find students by first or last name.
-  ![Student Management](student-information-app/readme_images/teacher_student_management.png "teacher_student_management")
-
+- **Student Management**: View and update student profiles.
+  ![Student Management](student-information-app/readme_images/teacher_student_management.png "Student Management")
 
 ## Technologies Used
 - Java 21
@@ -170,20 +149,13 @@ The ER Diagram provides a visual representation of the relationships between var
 
 ## Further Development Plan
 - Introduce admin role for central management.
-- Implement real-time communication features like chat between students and teachers.
+- Implement real-time communication features.
 - Add comprehensive analytics and reporting tools.
 - Integrate calendar and notification systems.
-- Enable multi-language support for broader accessibility.
-
-## Contributing
-1. Fork the repository.
-2. Create a new branch: `git checkout -b feature-branch-name`
-3. Make your changes and commit them: `git commit -m 'Add some feature'`
-4. Push to the branch: `git push origin feature-branch-name`
-5. Submit a pull request.
+- Enable multi-language support.
 
 ## Testing
-- Please refer to the [testing README](./student-information-app/src/test/README.md) for details on running unit and integration tests using JUnit and Mockito.
+- Refer to the testing README for details on running unit and integration tests using JUnit and Mockito.
 
 ## References
 - [Vaadin Documentation](https://vaadin.com/docs)
@@ -195,4 +167,3 @@ The ER Diagram provides a visual representation of the relationships between var
 - [Eetu](https://github.com/eetuam1)
 - [George](https://github.com/GeorgeChirikov)
 - [Gitta](https://github.com/gitober)
-
