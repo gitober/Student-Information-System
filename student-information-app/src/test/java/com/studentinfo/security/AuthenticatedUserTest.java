@@ -7,10 +7,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.ActiveProfiles;
@@ -24,19 +23,18 @@ import static org.mockito.Mockito.*;
 @ActiveProfiles("test")
 class AuthenticatedUserTest {
 
-    @MockBean
+    @Mock
     private UserRepository userRepository;
 
-    @MockBean
+    @Mock
     private AuthenticationContext authenticationContext;
 
-    @InjectMocks
-    @Autowired
     private AuthenticatedUser authenticatedUser;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        authenticatedUser = new AuthenticatedUser(authenticationContext, userRepository); // Explicitly initialize
     }
 
     @AfterEach

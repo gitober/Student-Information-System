@@ -1,6 +1,5 @@
 package com.studentinfo.security;
 
-import com.studentinfo.Application;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -41,18 +40,25 @@ class SecurityConfigurationTest {
 
     @Test
     void testPasswordEncoder() {
+        // Arrange
         String rawPassword = "password";
+
+        // Act
         String encodedPassword = passwordEncoder.encode(rawPassword);
+
+        // Assert
         assertThat(passwordEncoder.matches(rawPassword, encodedPassword)).isTrue();
     }
 
     @Test
     void testAuthenticationManager() {
+        // Assert
         assertThat(authenticationManager).isNotNull();
     }
 
     @Test
     void testSecurityContextRepository() {
+        // Assert
         assertThat(securityContextRepository).isNotNull();
     }
 }

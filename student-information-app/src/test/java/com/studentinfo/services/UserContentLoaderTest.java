@@ -1,6 +1,5 @@
 package com.studentinfo.services;
 
-import com.studentinfo.Application;
 import com.studentinfo.data.entity.Student;
 import com.studentinfo.data.entity.Teacher;
 import com.studentinfo.security.AuthenticatedUser;
@@ -11,7 +10,6 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -22,6 +20,7 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -70,7 +69,7 @@ class UserContentLoaderTest {
         userContentLoader.loadProfileContent(layout);
 
         // Assert
-        assert layout.getComponentCount() == 1;
+        assertEquals(1, layout.getComponentCount(), "Expected one component for teacher profile content.");
     }
 
     @Test
@@ -83,6 +82,6 @@ class UserContentLoaderTest {
         userContentLoader.loadProfileContent(layout);
 
         // Assert
-        assert layout.getComponentCount() == 1;
+        assertEquals(1, layout.getComponentCount(), "Expected one component for student profile content.");
     }
 }
