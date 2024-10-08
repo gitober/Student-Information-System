@@ -1,5 +1,6 @@
 package com.studentinfo.services;
 
+import com.studentinfo.Application;
 import com.studentinfo.data.entity.Student;
 import com.studentinfo.data.entity.Teacher;
 import com.studentinfo.security.AuthenticatedUser;
@@ -22,7 +23,7 @@ import java.util.Optional;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
+@SpringBootTest(classes = Application.class)
 @ActiveProfiles("test")
 class UserContentLoaderTest {
 

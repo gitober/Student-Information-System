@@ -1,5 +1,6 @@
 package com.studentinfo.security;
 
+import com.studentinfo.Application;
 import com.studentinfo.data.entity.User;
 import com.studentinfo.data.repository.UserRepository;
 import com.vaadin.flow.spring.security.AuthenticationContext;
@@ -18,11 +19,10 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@SpringBootTest(classes = Application.class)
 @ActiveProfiles("test")
 class AuthenticatedUserTest {
 
@@ -45,7 +45,6 @@ class AuthenticatedUserTest {
     void tearDown() {
         SecurityContextHolder.clearContext();
     }
-
 
     @Test
     void testGet() {
@@ -71,7 +70,19 @@ class AuthenticatedUserTest {
 
         // Assert
         assertTrue(result.isPresent(), "Expected user should be present.");
-        assertTrue(result.get().getEmail().equals(testEmail), "Expected email should match.");
+        assertEquals(result.get().getEmail(), testEmail, "Expected email should match.");
+    }
+
+    @Test
+    void testGetWhenUserIsNotAuthenticated() {
+        // Mock the AuthenticationContext to return empty
+        when(authenticationContext.getAuthenticatedUser(UserDetails.class)).thenReturn(Optional.empty());
+
+        // Act
+        Optional<User> result = authenticatedUser.get();
+
+        // Assert
+        assertTrue(result.isEmpty(), "Expected no user to be present.");
     }
 
     @Test
@@ -83,7 +94,6 @@ class AuthenticatedUserTest {
         verify(authenticationContext).logout();
 
         // Assert that the security context is cleared (if necessary)
-        assertTrue(SecurityContextHolder.getContext().getAuthentication() == null,
-                "Expected security context to be cleared after logout.");
+        assertNull(SecurityContextHolder.getContext().getAuthentication(), "Expected security context to be cleared after logout.");
     }
 }

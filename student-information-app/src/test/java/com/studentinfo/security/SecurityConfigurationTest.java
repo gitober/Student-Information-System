@@ -1,5 +1,6 @@
 package com.studentinfo.security;
 
+import com.studentinfo.Application;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
+@SpringBootTest(classes = Application.class)
 @ActiveProfiles("test")
 class SecurityConfigurationTest {
 
