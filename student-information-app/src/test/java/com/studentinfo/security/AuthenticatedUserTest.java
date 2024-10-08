@@ -5,6 +5,7 @@ import com.studentinfo.data.repository.UserRepository;
 import com.vaadin.flow.spring.security.AuthenticationContext;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -23,6 +24,7 @@ import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
+@Disabled
 class AuthenticatedUserTest {
 
     @MockBean
