@@ -1,12 +1,18 @@
 package com.studentinfo.data.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDate;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "attendance")
 public class Attendance {
 
+    // Getters and Setters
     // Fields
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,44 +45,4 @@ public class Attendance {
         this.course = course;
     }
 
-    // Getters and Setters
-    public Long getAttendanceId() {
-        return attendanceId;
-    }
-
-    public void setAttendanceId(Long attendanceId) {
-        this.attendanceId = attendanceId;
-    }
-
-    public String getAttendanceStatus() {
-        return attendanceStatus;
-    }
-
-    public void setAttendanceStatus(String attendanceStatus) {
-        this.attendanceStatus = attendanceStatus;
-    }
-
-    public LocalDate getAttendanceDate() {
-        return attendanceDate;
-    }
-
-    public void setAttendanceDate(LocalDate attendanceDate) {
-        this.attendanceDate = attendanceDate;
-    }
-
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
 }

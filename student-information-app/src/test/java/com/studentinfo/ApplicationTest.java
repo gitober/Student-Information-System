@@ -10,7 +10,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-@Disabled
 public class ApplicationTest {
 
     @BeforeAll

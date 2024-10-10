@@ -21,6 +21,8 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -31,13 +33,15 @@ import java.util.stream.Collectors;
 @CssImport("./themes/studentinformationapp/views/courses-view/student-courses-view.css")
 public class StudentCoursesView extends Composite<VerticalLayout> {
 
+    private static final Logger logger = LoggerFactory.getLogger(StudentCoursesView.class); // Logger for this class
+
     private final CourseService courseService;
     private final AttendanceService attendanceService;
     private final UserService userService;
     private List<Course> enrolledCourses;
     private List<Course> availableCourses;
-    private Grid<Course> enrolledCoursesGrid;
-    private Grid<Course> availableCoursesGrid;
+    private final Grid<Course> enrolledCoursesGrid;
+    private final Grid<Course> availableCoursesGrid;
 
     @Autowired
     public StudentCoursesView(CourseService courseService, AttendanceService attendanceService, UserService userService) {
@@ -67,11 +71,11 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
         // Add necessary columns
         enrolledCoursesGrid.addColumn(Course::getCourseName).setHeader("Course Name");
         enrolledCoursesGrid.addColumn(Course::getCoursePlan).setHeader("Course Plan");
-        enrolledCoursesGrid.addColumn(course -> course.getFormattedDateRange()).setHeader("Duration");
+        enrolledCoursesGrid.addColumn(Course::getFormattedDateRange).setHeader("Duration");
         enrolledCoursesGrid.addColumn(course -> {
             List<Teacher> teachers = course.getTeachers();
             if (!teachers.isEmpty()) {
-                return teachers.get(0).getFirstName() + " " + teachers.get(0).getLastName();
+                return teachers.getFirst().getFirstName() + " " + teachers.getFirst().getLastName();
             } else {
                 return "No teacher assigned";
             }
@@ -80,7 +84,7 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
         // Button to view attendance for each course
         enrolledCoursesGrid.addComponentColumn(course -> {
             Button attendanceButton = new Button("View Attendance");
-            attendanceButton.addClassName("student-courses-view-attendance-button"); // Add this line for styling
+            attendanceButton.addClassName("student-courses-view-attendance-button");
             attendanceButton.addClickListener(event -> openAttendanceDialog(course));
             return attendanceButton;
         }).setHeader("Attendance");
@@ -92,11 +96,11 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
         // Add only the necessary columns
         availableCoursesGrid.addColumn(Course::getCourseName).setHeader("Course Name");
         availableCoursesGrid.addColumn(Course::getCoursePlan).setHeader("Course Plan");
-        availableCoursesGrid.addColumn(course -> course.getFormattedDateRange()).setHeader("Duration");
+        availableCoursesGrid.addColumn(Course::getFormattedDateRange).setHeader("Duration");
         availableCoursesGrid.addColumn(course -> {
             List<Teacher> teachers = course.getTeachers();
             if (!teachers.isEmpty()) {
-                return teachers.get(0).getFirstName() + " " + teachers.get(0).getLastName();
+                return teachers.getFirst().getFirstName() + " " + teachers.getFirst().getLastName();
             } else {
                 return "No teacher assigned";
             }
@@ -109,7 +113,6 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
             enrollButton.addClickListener(event -> enrollInCourse(course));
             return enrollButton;
         }).setHeader("Actions");
-
 
         // Fetch the current student's number
         Long studentNumber = userService.getCurrentStudentNumber();
@@ -186,7 +189,7 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
         // Teacher field (read-only)
         TextField teacherField = new TextField("Teacher",
                 course.getTeachers().isEmpty() ? "No teacher assigned" :
-                        course.getTeachers().get(0).getFirstName() + " " + course.getTeachers().get(0).getLastName(),
+                        course.getTeachers().getFirst().getFirstName() + " " + course.getTeachers().getFirst().getLastName(),
                 "");
         teacherField.addClassName("student-courses-view-teacher-field");
         teacherField.setReadOnly(true);
@@ -209,7 +212,7 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
 
             try {
                 // Debug log before enrolling
-                System.out.println("Debug: Enrolling student " + studentNumber + " in course ID " + course.getCourseId());
+                logger.debug("Debug: Enrolling student {} in course ID {}", studentNumber, course.getCourseId());
 
                 // Enroll the student in the selected course
                 courseService.enrollInCourse(studentNumber, batchId, course.getCourseId(), coursePayment);
@@ -221,7 +224,7 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
             } catch (Exception e) {
                 // Show error notification if enrollment fails
                 Notification.show("Enrollment failed: " + e.getMessage());
-                e.printStackTrace(); // Log stack trace for debugging
+                logger.error("Enrollment failed: {}", e.getMessage(), e); // Log the exception with stack trace
             }
 
             // Close the dialog
@@ -247,7 +250,6 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
         confirmationDialog.open();
     }
 
-
     private void openAttendanceDialog(Course course) {
         Dialog attendanceDialog = new Dialog();
         attendanceDialog.addClassName("student-courses-view-attendance-dialog");
@@ -256,13 +258,26 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
         H2 title = new H2("Attendance for " + course.getCourseName());
         attendanceDialog.add(title);
 
-        // Fetch attendance records for the selected course
-        List<Attendance> attendanceRecords = attendanceService.getAttendanceByCourseId(course.getCourseId());
+        // Fetch the current student's number
+        Long studentNumber = userService.getCurrentStudentNumber();
+
+        if (studentNumber == null) {
+            Notification.show("Error: Unable to retrieve student information.");
+            return;
+        }
+
+        // Fetch attendance records for the selected course and the current student
+        List<Attendance> attendanceRecords = attendanceService.getAttendanceByStudentNumberAndCourseId(studentNumber, course.getCourseId());
+
+        if (attendanceRecords.isEmpty()) {
+            Notification.show("No attendance records found for this course.");
+        }
 
         // Create a grid to display attendance records
         Grid<Attendance> attendanceGrid = new Grid<>(Attendance.class);
         attendanceGrid.removeAllColumns(); // Clear existing columns
 
+        // Add columns to display the attendance date and status
         attendanceGrid.addColumn(Attendance::getAttendanceDate).setHeader("Date");
         attendanceGrid.addColumn(Attendance::getAttendanceStatus).setHeader("Status");
 
@@ -282,8 +297,5 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
         // Open the attendance dialog
         attendanceDialog.open();
     }
-
-
-
 
 }

@@ -1,11 +1,16 @@
 package com.studentinfo.data.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "enrollments")
 public class Enrollment {
 
+    // Getters and Setters
     // Fields
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,28 +22,4 @@ public class Enrollment {
     @Column(name = "course_id")
     private Long courseId;
 
-    // Getters and Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(Long studentId) {
-        this.studentId = studentId;
-    }
-
-    public Long getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(Long courseId) {
-        this.courseId = courseId;
-    }
 }

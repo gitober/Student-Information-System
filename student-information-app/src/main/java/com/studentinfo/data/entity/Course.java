@@ -1,13 +1,19 @@
 package com.studentinfo.data.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDate;
 import java.util.List;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "course")
 public class Course {
 
+    // Getters and Setters
     // Fields
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,48 +48,6 @@ public class Course {
         this.duration = duration;
     }
 
-
-
-    // Getters and Setters
-    public Long getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(Long courseId) {
-        this.courseId = courseId;
-    }
-
-    public String getCourseName() {
-        return courseName;
-    }
-
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
-
-    public String getCoursePlan() {
-        return coursePlan;
-    }
-
-    public void setCoursePlan(String coursePlan) {
-        this.coursePlan = coursePlan;
-    }
-
-    public Integer getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Integer duration) {
-        this.duration = duration;
-    }
-
-    public List<Teacher> getTeachers() {
-        return teachers;
-    }
-
-    public void setTeachers(List<Teacher> teachers) {
-        this.teachers = teachers;
-    }
 
     // Additional Methods
     // Method to calculate and display start and end dates based on duration

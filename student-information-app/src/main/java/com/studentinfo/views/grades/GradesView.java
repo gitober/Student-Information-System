@@ -18,12 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 @CssImport("./themes/studentinformationapp/views/grades-view/grades-view.css")
 public class GradesView extends Composite<VerticalLayout> {
 
-    private final AuthenticatedUser authenticatedUser;
     private final UserContentLoader userContentLoader;
 
     @Autowired
     public GradesView(AuthenticatedUser authenticatedUser, UserContentLoader userContentLoader) {
-        this.authenticatedUser = authenticatedUser;
         this.userContentLoader = userContentLoader;
 
         // Main layout setup

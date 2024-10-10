@@ -1,13 +1,19 @@
 package com.studentinfo.data.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.HashSet;
 import java.util.Set;
 
+@Setter
+@Getter
 @Entity
 @DiscriminatorValue("STUDENT")
 public class Student extends User {
 
+    // Getters and Setters
     // Fields
     private String address;
     private String grade;
@@ -21,36 +27,4 @@ public class Student extends User {
     )
     private Set<Course> courses = new HashSet<>();
 
-    // Getters and Setters
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getGrade() {
-        return grade;
-    }
-
-    public void setGrade(String grade) {
-        this.grade = grade;
-    }
-
-    public String getStudentClass() {
-        return studentClass;
-    }
-
-    public void setStudentClass(String studentClass) {
-        this.studentClass = studentClass;
-    }
-
-    public Set<Course> getCourses() {
-        return courses;
-    }
-
-    public void setCourses(Set<Course> courses) {
-        this.courses = courses;
-    }
 }

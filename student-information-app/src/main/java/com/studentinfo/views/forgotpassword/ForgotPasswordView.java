@@ -1,14 +1,17 @@
 package com.studentinfo.views.forgotpassword;
 
 import com.studentinfo.services.EmailService;
+import com.studentinfo.views.mainlayout.MainLayout;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.CssImport;
-import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
@@ -22,9 +25,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.Optional;
 
-
 @PageTitle("Forgot Password / Reset Password")
-@Route(value = "forgotpassword")
+@Route(value = "forgotpassword", layout = MainLayout.class)
 @AnonymousAllowed
 @CssImport("./themes/studentinformationapp/views/forgotpassword-view.css")
 public class ForgotPasswordView extends Composite<VerticalLayout> implements BeforeEnterObserver {
@@ -36,12 +38,11 @@ public class ForgotPasswordView extends Composite<VerticalLayout> implements Bef
     private final PasswordField newPasswordField;
     private final VerticalLayout forgotPasswordLayout;
     private final VerticalLayout resetPasswordLayout;
-    private String resetToken = null; // Store the reset token here
+    private String resetToken = null;
 
     public ForgotPasswordView() {
         // Main layout setup
         VerticalLayout mainLayout = getContent();
-        mainLayout.setSizeFull();
         mainLayout.setPadding(false);
         mainLayout.setSpacing(false);
         mainLayout.setAlignItems(FlexComponent.Alignment.CENTER);
@@ -52,36 +53,48 @@ public class ForgotPasswordView extends Composite<VerticalLayout> implements Bef
         forgotPasswordLayout.setAlignItems(FlexComponent.Alignment.CENTER);
         forgotPasswordLayout.addClassName("forgot-password-layout");
 
-        H3 forgotPasswordTitle = new H3("Forgot Password?");
+        // Add bird image inside the white area
+        Image birdImage = new Image("images/bird.png", "Colorful Bird");
+        birdImage.addClassName("forgot-password-bird-image");
+        birdImage.setWidth("240px"); // Set size for bird image
+        forgotPasswordLayout.add(birdImage); // Add bird inside the layout
+
+        // Page title and instructions
+        H2 forgotPasswordTitle = new H2("Forgot Password?");
         forgotPasswordTitle.addClassName("forgot-password-title");
 
-        // New Paragraph for instructions
         Paragraph instructions = new Paragraph("Enter your email address to receive a link to reset your password.");
         instructions.addClassName("forgot-password-instructions");
 
         emailField = new EmailField("Email");
         emailField.addClassName("forgot-password-email-field");
 
+        // Buttons: Submit and "Back to Home"
         Button submitButton = new Button("Submit");
         submitButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         submitButton.addClassName("forgot-password-submit-button");
         submitButton.addClickListener(e -> handleForgotPassword());
 
-        Button cancelButton = new Button("Close");
+        Button cancelButton = new Button("Back to Home"); // Renamed button for better UX
         cancelButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
         cancelButton.addClassName("forgot-password-close-button");
         cancelButton.addClickListener(e -> getUI().ifPresent(ui -> ui.navigate("login")));
 
-        forgotPasswordLayout.add(forgotPasswordTitle, instructions, emailField, submitButton, cancelButton);
+        // Horizontal layout for buttons
+        HorizontalLayout buttonLayout = new HorizontalLayout(submitButton, cancelButton);
+        buttonLayout.setSpacing(true); // Add spacing between buttons
+
+        forgotPasswordLayout.add(forgotPasswordTitle, instructions, emailField, buttonLayout);
 
         // "Reset Password" layout
         resetPasswordLayout = new VerticalLayout();
         resetPasswordLayout.setAlignItems(FlexComponent.Alignment.CENTER);
         resetPasswordLayout.addClassName("reset-password-layout");
 
-        H3 resetPasswordTitle = new H3("Reset Password");
+        H2 resetPasswordTitle = new H2("Reset Password");
         resetPasswordTitle.addClassName("reset-password-title");
 
+        // Initialize the newPasswordField
         newPasswordField = new PasswordField("New Password");
         newPasswordField.addClassName("reset-password-field");
 
@@ -92,9 +105,10 @@ public class ForgotPasswordView extends Composite<VerticalLayout> implements Bef
 
         Button resetCancelButton = new Button("Close");
         resetCancelButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
-        resetCancelButton.addClassName("close-password-close-button");
-        resetCancelButton.addClickListener(e -> getUI().ifPresent(ui -> ui.navigate("login")));
+        resetCancelButton.addClassName("reset-password-close-button");
+        resetCancelButton.addClickListener(e -> getUI().ifPresent(ui -> ui.navigate("login"))); // Redirect to home
 
+        // Add components to resetPasswordLayout
         resetPasswordLayout.add(resetPasswordTitle, newPasswordField, resetButton, resetCancelButton);
         resetPasswordLayout.setVisible(false); // Initially hide the reset password form
 

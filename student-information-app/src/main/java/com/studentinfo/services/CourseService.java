@@ -12,12 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class CourseService {
 
-    // Repositories
+    // Repositories for interacting with the database
     private final CourseRepository courseRepository;
     private final RegistrationRepository registrationRepository;
     private final TeacherRepository teacherRepository;
@@ -34,24 +33,20 @@ public class CourseService {
 
     // CRUD Operations
 
-    // Method to create or update a Course with Teachers
+    // Create or update a Course with Teachers
     @Transactional
     public Course saveCourse(Course course, List<Teacher> teachers) {
-        // Save the course first
+        // Save the course
         Course savedCourse = courseRepository.save(course);
 
-        // Load each teacher from the database and establish the relationship
+        // Add the course to each teacher's list of courses and save the relationship
         for (Teacher teacher : teachers) {
             Teacher persistentTeacher = teacherRepository.findById(teacher.getTeacherId())
                     .orElseThrow(() -> new IllegalArgumentException("Teacher not found with ID: " + teacher.getTeacherId()));
-
-            // Add the course to the teacher's list of courses
             if (!persistentTeacher.getCourses().contains(savedCourse)) {
                 persistentTeacher.getCourses().add(savedCourse);
             }
-
-            // Save the teacher to persist the relationship
-            teacherRepository.save(persistentTeacher);
+            teacherRepository.save(persistentTeacher); // Persist the relationship
         }
 
         return savedCourse;
@@ -62,94 +57,83 @@ public class CourseService {
         if (!courseRepository.existsById(courseId)) {
             return null; // Return null if course doesn't exist
         }
-        course.setCourseId(courseId); // Ensure the ID is set to update the correct course
-        course.setTeachers(teachers); // Update the list of teachers
-        return courseRepository.save(course);
+        course.setCourseId(courseId); // Ensure ID is set for the correct course
+        course.setTeachers(teachers); // Set the list of teachers
+        return courseRepository.save(course); // Save the updated course
     }
 
-    // Get All Courses
+    // Get all Courses from the database
     public List<Course> getAllCourses() {
         return courseRepository.findAll();
     }
 
-    // Get Course by ID
+    // Retrieve a Course by its ID
     public Optional<Course> getCourseById(Long courseId) {
         return courseRepository.findById(courseId);
     }
 
-    // Delete a Course by ID
+    // Delete a Course by its ID
     public boolean deleteCourse(Long courseId) {
         if (courseRepository.existsById(courseId)) {
             courseRepository.deleteById(courseId);
-            return true; // Return true if deletion was successful
+            return true; // Successful deletion
         }
-        return false; // Return false if course not found
+        return false; // Course not found
     }
 
     // Enrollment and Registration Operations
 
+    // Enroll a student in a course
     public void enrollInCourse(Long studentNumber, Long batchId, Long courseId, double coursePayment) {
-        // Find the student by student number
         Student student = studentRepository.findByStudentNumber(studentNumber)
                 .orElseThrow(() -> new IllegalArgumentException("Student not found with student number: " + studentNumber));
 
-        // Create a new registration
+        // Create a new registration record
         Registration registration = new Registration();
-        registration.setStudent(student); // Set the student object directly
+        registration.setStudent(student);
         registration.setBatchId(batchId);
         registration.setCourseId(courseId);
         registration.setCoursePayment(coursePayment);
         registration.setRegistrationDay(LocalDate.now());
-
-        // Set student_number directly if needed
         registration.setStudentNumber(student.getStudentNumber()); // Ensure student number is set
-
-        // Set the user in registration (user_id)
-        registration.setUser(student); // Assuming you want to set user as well
+        registration.setUser(student); // Set user (assuming this is the intended behavior)
 
         // Save the registration
         registrationRepository.save(registration);
     }
 
-
-
-    // Get Enrolled Courses for a Student by student number
+    // Retrieve enrolled courses for a student by their student number
     public List<Course> getEnrolledCourses(Long studentNumber) {
-        System.out.println("Debug: Fetching enrolled courses for student number: " + studentNumber);
-        List<Course> courses = registrationRepository.findCoursesByStudentNumber(studentNumber);
-        System.out.println("Debug: Enrolled courses retrieved: " + courses.size());
-        return courses;
+        return registrationRepository.findCoursesByStudentNumber(studentNumber);
     }
 
-    // Get Enrolled Students for a Course by course ID
+    // Retrieve enrolled students for a course by its course ID
     public List<Student> getEnrolledStudents(Long courseId) {
         return registrationRepository.findStudentsByCourseId(courseId);
     }
 
     // Additional Operations
 
-    // Get Available Courses
+    // Retrieve all available courses (same as getAllCourses, can be adjusted or removed)
     public List<Course> getAvailableCourses() {
         return courseRepository.findAll();
     }
 
-    // Get Courses for a specific student by student ID
+    // Retrieve courses for a specific student by student ID
     public List<Course> getCoursesForStudent(Long studentId) {
         return courseRepository.findCoursesByStudentId(studentId);
     }
 
-    // Get Courses by Teacher ID (Retrieve students enrolled in a course)
+    // Retrieve students enrolled in a course by course ID (duplicate method, can be combined or removed)
     public List<Student> getEnrolledStudentsByCourseId(Long courseId) {
-        List<Student> students = registrationRepository.findStudentsByCourseId(courseId);
-        return students;
+        return registrationRepository.findStudentsByCourseId(courseId);
     }
 
+    // Retrieve courses taught by a specific teacher by their teacher ID
     public List<Course> getCoursesByTeacherId(Long teacherId) {
-        // Find the teacher by their ID
         Teacher teacher = teacherRepository.findById(teacherId)
                 .orElseThrow(() -> new IllegalArgumentException("Teacher not found with ID: " + teacherId));
-
-        // Return the list of courses associated with this teacher
-        return teacher.getCourses();
+        return teacher.getCourses(); // Return the list of courses taught by the teacher
     }
+
 }

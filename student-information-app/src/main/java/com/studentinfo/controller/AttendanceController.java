@@ -16,12 +16,14 @@ public class AttendanceController {
     @Autowired
     private AttendanceService attendanceService;
 
+    // Get all attendance records
     @GetMapping
     public ResponseEntity<List<Attendance>> getAllAttendance() {
         List<Attendance> attendanceList = attendanceService.getAllAttendance();
         return ResponseEntity.ok(attendanceList); // Return 200 OK with list of attendance records
     }
 
+    // Get attendance record by ID
     @GetMapping("/{attendanceId}")
     public ResponseEntity<Attendance> getAttendanceById(@PathVariable Long attendanceId) {
         return attendanceService.getAttendanceById(attendanceId)
@@ -29,12 +31,14 @@ public class AttendanceController {
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build()); // Return 404 Not Found if no attendance found
     }
 
+    // Create a new attendance record
     @PostMapping
     public ResponseEntity<Attendance> createAttendance(@RequestBody Attendance attendance) {
         Attendance createdAttendance = attendanceService.createAttendance(attendance);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdAttendance); // Return 201 Created with the created attendance record
     }
 
+    // Update attendance record by ID
     @PutMapping("/{attendanceId}")
     public ResponseEntity<Attendance> updateAttendance(@PathVariable Long attendanceId, @RequestBody Attendance attendance) {
         Attendance updatedAttendance = attendanceService.updateAttendance(attendanceId, attendance);
@@ -44,6 +48,7 @@ public class AttendanceController {
         return ResponseEntity.ok(updatedAttendance); // Return 200 OK with the updated attendance record
     }
 
+    // Delete attendance record by ID
     @DeleteMapping("/{attendanceId}")
     public ResponseEntity<Void> deleteAttendance(@PathVariable Long attendanceId) {
         boolean wasDeleted = attendanceService.deleteAttendance(attendanceId);
@@ -52,5 +57,4 @@ public class AttendanceController {
         }
         return ResponseEntity.noContent().build(); // Return 204 No Content after successful deletion
     }
-
 }

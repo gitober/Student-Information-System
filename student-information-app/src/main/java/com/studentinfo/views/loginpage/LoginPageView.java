@@ -49,9 +49,9 @@ public class LoginPageView extends Composite<VerticalLayout> {
         this.signUpButton = new Button("Signup");
         this.signUpButton.addClassName("login-signup-link");
 
-        this.forgotPasswordButton = new Button("Forgot Password?"); // Create the "Forgot Password?" button
-        this.forgotPasswordButton.addClassName("login-forgot-password-link"); // Add CSS class for styling
-        this.forgotPasswordButton.addClickListener(e -> UI.getCurrent().navigate("forgotpassword")); // Navigate to Forgot Password page
+        this.forgotPasswordButton = new Button("Forgot Password?");
+        this.forgotPasswordButton.addClassName("login-forgot-password-link");
+        this.forgotPasswordButton.addClickListener(e -> UI.getCurrent().navigate("forgotpassword"));
 
         this.rememberMeCheckbox = new Checkbox("Remember me");
         this.rememberMeCheckbox.addClassName("login-remember-checkbox");

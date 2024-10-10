@@ -38,15 +38,12 @@ import java.util.stream.Collectors;
 public class StudentDashboardView extends Composite<VerticalLayout> {
 
     private final CourseService courseService;
-    private final GradeService gradeService;
     private final AttendanceService attendanceService;
     private final AuthenticatedUser authenticatedUser;
-    private List<Course> enrolledCourses;
 
     @Autowired
     public StudentDashboardView(CourseService courseService, GradeService gradeService, AttendanceService attendanceService, AuthenticatedUser authenticatedUser) {
         this.courseService = courseService;
-        this.gradeService = gradeService;
         this.attendanceService = attendanceService;
         this.authenticatedUser = authenticatedUser;
 
@@ -62,7 +59,7 @@ public class StudentDashboardView extends Composite<VerticalLayout> {
         Long studentNumber = getCurrentStudentNumber();
 
         // Retrieve the enrolled courses for the student
-        enrolledCourses = courseService.getEnrolledCourses(studentNumber);
+        List<Course> enrolledCourses = courseService.getEnrolledCourses(studentNumber);
 
         // Dashboard Grid Container
         FlexLayout dashboardGrid = new FlexLayout();

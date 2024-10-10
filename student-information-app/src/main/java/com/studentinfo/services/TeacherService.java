@@ -8,7 +8,6 @@ import com.studentinfo.data.repository.AttendanceRepository;
 import com.studentinfo.data.repository.CourseRepository;
 import com.studentinfo.data.repository.StudentRepository;
 import com.studentinfo.data.repository.TeacherRepository;
-import jakarta.persistence.Column;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +24,6 @@ public class TeacherService {
     private final TeacherRepository teacherRepository;
     private final AttendanceRepository attendanceRepository;
     private final StudentRepository studentRepository;
-    private final CourseRepository courseRepository;
 
     @Autowired
     public TeacherService(TeacherRepository teacherRepository, AttendanceRepository attendanceRepository,
@@ -33,20 +31,14 @@ public class TeacherService {
         this.teacherRepository = teacherRepository;
         this.attendanceRepository = attendanceRepository;
         this.studentRepository = studentRepository;
-        this.courseRepository = courseRepository;
     }
 
     // CRUD Operations for Teacher
-
-    @Column(name = "address", nullable = true)
-    private String address;
-
 
     // Retrieve a teacher by their ID
     public Optional<Teacher> get(Long id) {
         return teacherRepository.findById(id);
     }
-
 
     // Retrieve a teacher by their username
     public Optional<Teacher> getTeacherByUsername(String username) {
@@ -85,7 +77,7 @@ public class TeacherService {
         return teacherRepository.findByDepartment_NameAndSubject_Name(departmentName, subjectName);
     }
 
-    // Updated method to use the new repository method
+    // Retrieve a teacher by their username with courses
     public Optional<Teacher> getTeacherByUsernameWithCourses(String username) {
         return teacherRepository.findTeacherByUsernameWithCourses(username);
     }
@@ -94,9 +86,7 @@ public class TeacherService {
 
     // Save or update an attendance record
     public Attendance saveAttendanceRecord(Attendance record) {
-        Attendance savedRecord = attendanceRepository.save(record);
-        System.out.println("Saved attendance record: " + savedRecord); // Debugging statement
-        return savedRecord;
+        return attendanceRepository.save(record);
     }
 
     // Retrieve all attendance records
@@ -107,9 +97,7 @@ public class TeacherService {
     // Retrieve attendance records for the courses taught by the teacher
     public List<Attendance> getAttendanceRecordsForTeacher(Long teacherId) {
         List<Course> teacherCourses = getCoursesForTeacher(teacherId);
-        List<Attendance> records = attendanceRepository.findByCourseIn(teacherCourses);
-        System.out.println("Attendance records for teacher: " + records); // Debugging statement
-        return records;
+        return attendanceRepository.findByCourseIn(teacherCourses);
     }
 
     // Delete an attendance record
@@ -123,11 +111,8 @@ public class TeacherService {
     public List<Course> getCoursesForTeacher(Long teacherId) {
         Teacher teacher = teacherRepository.findTeacherWithCourses(teacherId);
         if (teacher != null) {
-            List<Course> courses = teacher.getCourses();
-            System.out.println("Courses for teacher " + teacherId + ": " + courses); // Debugging statement
-            return courses;
+            return teacher.getCourses();
         }
-        System.out.println("No courses found for teacher " + teacherId);
         return Collections.emptyList();
     }
 

@@ -28,15 +28,8 @@ import com.vaadin.flow.component.html.Image;
 @CssImport("./themes/studentinformationapp/views/home-profile-page-view/teacher-profile-page-view.css")
 public class TeacherDashboardView extends Composite<VerticalLayout> {
 
-    private final CourseService courseService;
-    private final StudentService studentService;
-    private final GradeService gradeService;
-
     @Autowired
     public TeacherDashboardView(CourseService courseService, StudentService studentService, GradeService gradeService) {
-        this.courseService = courseService;
-        this.studentService = studentService;
-        this.gradeService = gradeService;
 
         // Main layout setup
         getContent().addClassName("teacher-dashboard-view");

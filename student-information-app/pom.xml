@@ -20,16 +20,6 @@
         <version>3.2.8</version>
     </parent>
 
-    <repositories>
-        <repository>
-            <id>Vaadin Directory</id>
-            <url>https://maven.vaadin.com/vaadin-addons</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -80,9 +70,9 @@
 
         <!-- MySQL Connector (for production) -->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.33</version>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>9.0.0</version>
         </dependency>
 
         <!-- H2 Database (for testing) -->
@@ -104,6 +94,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-testbench-junit5</artifactId>
             <scope>test</scope>
@@ -117,6 +112,11 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.15.4</version> <!-- Make jsoup available at runtime -->
         </dependency>
 
         <!-- Lombok -->
@@ -150,7 +150,6 @@
             <artifactId>spring-dotenv</artifactId>
             <version>4.0.0</version>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -225,7 +224,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.studentinfo.StudentInformationApp</mainClass>
+                            <mainClass>com.studentinfo.Application</mainClass> <!-- Corrected the main class -->
                         </manifest>
                     </archive>
                 </configuration>

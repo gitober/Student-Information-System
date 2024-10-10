@@ -1,9 +1,14 @@
 package com.studentinfo.data.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Setter
+@Getter
 @Entity
 @PrimaryKeyJoinColumn(name = "user_id")
 public class Teacher extends User {
@@ -16,6 +21,7 @@ public class Teacher extends User {
     @JoinColumn(name = "department_id", nullable = true)
     private Department department;
 
+    // Getters and setters for courses, subject, and department
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "teacher_courses",
@@ -32,32 +38,7 @@ public class Teacher extends User {
 
     // Method to retrieve teacher_id
     public Long getTeacherId() {
-        return super.getId(); // Assuming 'id' in the User class corresponds to the teacher_id in the database
-    }
-
-    // Getters and setters for courses, subject, and department
-    public List<Course> getCourses() {
-        return courses;
-    }
-
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
-    }
-
-    public Subject getSubject() {
-        return subject;
-    }
-
-    public void setSubject(Subject subject) {
-        this.subject = subject;
-    }
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
+        return super.getId();
     }
 
     public String getFullName() {

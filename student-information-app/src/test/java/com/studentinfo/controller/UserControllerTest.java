@@ -1,7 +1,6 @@
 package com.studentinfo.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.studentinfo.data.dto.UserDTO;
 import com.studentinfo.data.entity.User;
 import com.studentinfo.services.UserService;
 import org.junit.jupiter.api.AfterEach;
@@ -15,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -35,11 +35,13 @@ public class UserControllerTest {
     @MockBean
     private UserService userService;
 
+    @MockBean
+    private PasswordEncoder passwordEncoder; // Mocking the PasswordEncoder
+
     @Autowired
     private ObjectMapper objectMapper;
 
     private User user;
-    private UserDTO userDTO;
 
     @BeforeEach
     void setUp() {
@@ -49,17 +51,11 @@ public class UserControllerTest {
                 .username("johndoe")
                 .roles(new HashSet<>())  // Initialize roles to prevent null errors
                 .build();
-
-        userDTO = UserDTO.builder()
-                .name("John")
-                .username("johndoe")
-                .build();
     }
 
     @AfterEach
     void tearDown() {
         user = null;
-        userDTO = null;
     }
 
     @Test
@@ -67,10 +63,13 @@ public class UserControllerTest {
         // Mock the userService.save() method to return the created user
         given(userService.save(ArgumentMatchers.any(User.class))).willReturn(user);
 
-        // Convert the userDTO to JSON and include roles as an empty set to match the entity structure
+        // Mock the passwordEncoder behavior
+        given(passwordEncoder.encode(ArgumentMatchers.anyString())).willReturn("hashedPassword");
+
+        // Convert the user to JSON
         ResultActions response = mockMvc.perform(post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(userDTO)));
+                .content(objectMapper.writeValueAsString(user)));
 
         // Validate the response
         response.andExpect(status().isCreated())

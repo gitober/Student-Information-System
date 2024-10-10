@@ -3,7 +3,6 @@ package com.studentinfo.data.dto;
 import java.time.LocalDate;
 
 public class AttendanceDTO {
-
     private Long attendanceId;
     private String attendanceStatus;
     private LocalDate attendanceDate;

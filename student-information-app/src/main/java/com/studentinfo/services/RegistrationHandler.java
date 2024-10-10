@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,21 +22,20 @@ public class RegistrationHandler {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private final StudentService studentService;
-    private final TeacherService teacherService;
 
     @Autowired
-    public RegistrationHandler(StudentService studentService, TeacherService teacherService, UserService userService, PasswordEncoder passwordEncoder) {
+    public RegistrationHandler(StudentService studentService, TeacherService teacherService,
+                               UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.studentService = studentService;
-        this.teacherService = teacherService;
     }
 
     // Public Methods
 
     // Register a new user based on role
-    public boolean registerUser(String firstName, String lastName, LocalDate birthday, String phoneNumber,
-                                String email, String password, String role) {
+    public boolean registerUser(String firstName, String lastName, LocalDate birthday,
+                                String phoneNumber, String email, String password, String role) {
         try {
             // Check if the email already exists
             if (userService.findByEmail(email).isPresent()) {
@@ -43,21 +43,22 @@ public class RegistrationHandler {
                 return false;
             }
 
+            // Create user based on role
             User user = createUserBasedOnRole(role);
             if (user == null) {
                 Notification.show("Invalid role selected.");
                 return false;
             }
 
-            // Set common user attributes
+            // Set user attributes
             setUserAttributes(user, firstName, lastName, birthday, phoneNumber, email, password);
 
-            // If the user is a Student, set the student number
+            // Set student number for students
             if (user instanceof Student) {
                 ((Student) user).setStudentNumber(generateStudentNumber());
             }
 
-            // Save the user using UserService
+            // Save the user
             userService.save(user);
             return true;
         } catch (IllegalArgumentException e) {
@@ -71,11 +72,9 @@ public class RegistrationHandler {
         }
     }
 
-
-
     // Private Helper Methods
 
-    // Create a User object based on the role
+    // Create a User object based on role
     private User createUserBasedOnRole(String role) {
         if ("Student".equalsIgnoreCase(role)) {
             Student student = new Student();
@@ -84,28 +83,26 @@ public class RegistrationHandler {
         } else if ("Teacher".equalsIgnoreCase(role)) {
             Teacher teacher = new Teacher();
             teacher.setUserType("TEACHER");
-            // Ensure teacher does not have a student number
             return teacher;
         }
         return null; // Invalid role
     }
 
+    // Generate student number
     private Long generateStudentNumber() {
-        // Find the maximum student number from the database using the student service
         Long maxStudentNumber = studentService.list().stream()
                 .map(Student::getStudentNumber)
-                .filter(num -> num != null)
+                .filter(Objects::nonNull)
                 .max(Long::compare)
-                .orElse(0L); // If no student numbers exist, start from 0
+                .orElse(0L); // Start from 0 if no students exist
 
-        // Return the next available student number
-        return maxStudentNumber + 1;
+        return maxStudentNumber + 1; // Next available student number
     }
 
-
-    // Set common attributes for the User
-    private void setUserAttributes(User user, String firstName, String lastName, LocalDate birthday,
-                                   String phoneNumber, String email, String password) {
+    // Set common attributes for User
+    private void setUserAttributes(User user, String firstName, String lastName,
+                                   LocalDate birthday, String phoneNumber,
+                                   String email, String password) {
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setBirthday(birthday);
@@ -117,12 +114,12 @@ public class RegistrationHandler {
         String encodedPassword = passwordEncoder.encode(password);
         user.setHashedPassword(encodedPassword);
 
-        // Set roles
+        // Assign roles
         user.setRoles(Set.of(Role.USER));
     }
 
+    // Check if email is already registered
     public boolean isEmailRegistered(String email) {
         return userService.findByEmail(email).isPresent();
     }
-
 }

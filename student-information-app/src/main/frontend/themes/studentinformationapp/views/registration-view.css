@@ -6,33 +6,31 @@
     justify-content: center;
     align-items: center;
     padding: 0; /* Removes unnecessary padding */
-    background-color: #ffffff !important; /* Light green background */
+    background-color: #ffffff !important;
     box-sizing: border-box;
 }
 
 /* Main registration form styling */
 .registration-form {
-    padding: 1rem; /* Reduced padding to make the form appear smaller */
-    background-color: rgb(248, 235, 177); /* White background for the form */
+    padding: 1rem;
+    background-color: rgb(222, 236, 236);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    max-width: 700px; /* Reduced max-width for better alignment */
+    max-width: 700px;
     width: 100%;
     transition: all 0.3s ease;
     margin: 0; /* Removed unnecessary margin */
     box-sizing: border-box;
-    /* Removed border styling if not needed */
 }
 
 /* Form title styling */
 .registration-form-title {
-    color: #1f2023; /* Dark blue from your palette */
+    color: #1f2023;
     margin-bottom: 1rem;
     font-size: 2rem;
-    text-align: center; /* Centers the title */
+    text-align: center;
     font-weight: bold;
     padding-bottom: 0.5rem; /* Adds space below the title */
-    border-bottom: 1px solid #e0e0e0; /* Adds a subtle underline */
 }
 
 /* Button layout */
@@ -50,18 +48,30 @@
     border: none; /* Removes any default button border */
     cursor: pointer;
     font-weight: bold;
-    border-radius: 4px;
+    border-radius: 25px; /* Rounded corners for consistency */
     transition: background-color 0.3s ease;
+    font-size: 16px; /* Font size for consistency with other buttons */
 }
 
+/* Primary Button (Orange) */
 .registration-primary-button {
-    background-color: #ffcc8f !important; /* Light orange button */
+    background-color: #FDB069; /* Light orange button */
     color: #ffffff; /* White text */
 }
 
+.registration-primary-button:hover {
+    background-color: #e08d53; /* Darker orange on hover */
+}
+
+/* Secondary Button (Purple) */
 .registration-secondary-button {
-    background-color: #f2e8f5 !important; /* Light purple background */
-    color: #000000; /* Black text */
+    background-color: #e08d53 !important; /* Light purple background */
+    color: #ffffff;
+}
+
+.registration-secondary-button:hover {
+    background-color: #cc8c40 !important; /* Darker purple on hover */
+    color: #ffffff !important; /* White text on hover */
 }
 
 /* Responsive Adjustments */

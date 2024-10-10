@@ -30,9 +30,8 @@ import java.util.stream.Collectors;
 public class TeacherUpdateStudentProfileView extends Composite<VerticalLayout> {
 
     private final StudentService studentService;
-    private final AuthenticatedUser authenticatedUser;
 
-    private List<Student> students;
+    private final List<Student> students;
     private Grid<Student> studentGrid;
     private TextField searchField;
 
@@ -48,7 +47,6 @@ public class TeacherUpdateStudentProfileView extends Composite<VerticalLayout> {
     @Autowired
     public TeacherUpdateStudentProfileView(StudentService studentService, AuthenticatedUser authenticatedUser) {
         this.studentService = studentService;
-        this.authenticatedUser = authenticatedUser;
 
         // Fetch students
         students = studentService.list();

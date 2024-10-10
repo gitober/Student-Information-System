@@ -29,7 +29,7 @@ public class SecurityConfiguration extends VaadinWebSecurity {
 
     private static final Logger logger = LoggerFactory.getLogger(SecurityConfiguration.class);
     private final UserDetailsServiceImpl userDetailsService;
-    private final DataSource dataSource; // Inject the DataSource
+    private final DataSource dataSource;
 
     public SecurityConfiguration(UserDetailsServiceImpl userDetailsService, DataSource dataSource) {
         this.userDetailsService = userDetailsService;
@@ -86,7 +86,9 @@ public class SecurityConfiguration extends VaadinWebSecurity {
                     logCurrentSecurityContext("After configuring authorization requests");
                 })
                 .formLogin(form -> {
-                    form.loginPage("/login").defaultSuccessUrl("/profile", true);
+                    form.loginPage("/login")
+                            .usernameParameter("email") // Use email for login
+                            .defaultSuccessUrl("/profile", true);
                     logger.info("Form login configured.");
                     logCurrentSecurityContext("After configuring form login");
                 })

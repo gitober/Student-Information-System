@@ -22,7 +22,7 @@ public class GradeService {
 
     // Retrieve all grades
     public List<Grade> getAllGrades() {
-        return gradeRepository.findAll(); // Assumes the repository has a findAll method
+        return gradeRepository.findAll();
     }
 
     // Save or create a new grade
@@ -35,7 +35,7 @@ public class GradeService {
         if (!gradeRepository.existsById(gradeId)) {
             return null; // Return null if the grade doesn't exist
         }
-        grade.setGradeId(gradeId); // Ensure the ID is set to update the correct grade
+        grade.setGradeId(gradeId); // Set the ID to ensure the correct grade is updated
         return gradeRepository.save(grade);
     }
 
@@ -43,7 +43,7 @@ public class GradeService {
     public boolean deleteGrade(Integer gradeId) {
         if (gradeRepository.existsById(gradeId)) {
             gradeRepository.deleteById(gradeId);
-            return true; // Return true if the deletion was successful
+            return true; // Return true if deletion was successful
         }
         return false; // Return false if the grade was not found
     }

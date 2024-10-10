@@ -24,12 +24,14 @@ public class CourseController {
         this.teacherService = teacherService;
     }
 
+    // Get all courses
     @GetMapping
     public ResponseEntity<List<Course>> getAllCourses() {
         List<Course> courses = courseService.getAllCourses();
         return ResponseEntity.ok(courses); // Return 200 OK with the list of courses
     }
 
+    // Get course by ID
     @GetMapping("/{courseId}")
     public ResponseEntity<Course> getCourseById(@PathVariable Long courseId) {
         return courseService.getCourseById(courseId)
@@ -37,6 +39,7 @@ public class CourseController {
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build()); // Return 404 Not Found if course not found
     }
 
+    // Create a new course
     @PostMapping
     public ResponseEntity<Course> createCourse(@RequestBody Course course, @RequestParam List<Long> teacherIds) {
         // Retrieve teachers using the provided IDs
@@ -52,6 +55,7 @@ public class CourseController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedCourse);
     }
 
+    // Update course by ID
     @PutMapping("/{courseId}")
     public ResponseEntity<Course> updateCourse(
             @PathVariable Long courseId,
@@ -76,6 +80,7 @@ public class CourseController {
         return ResponseEntity.ok(updatedCourse); // Return 200 OK with the updated course
     }
 
+    // Delete course by ID
     @DeleteMapping("/{courseId}")
     public ResponseEntity<Void> deleteCourse(@PathVariable Long courseId) {
         boolean wasDeleted = courseService.deleteCourse(courseId);

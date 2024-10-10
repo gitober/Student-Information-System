@@ -23,13 +23,13 @@ public class StudentEditProfileView extends VerticalLayout {
     private final TextField phoneNumberField;
     private final TextField emailField;
     private final PasswordField newPasswordField;
+    private final Button saveButton;
     private final Student student;
     private final UserService userService;
-    private final Button saveButton;
 
     // Consumer to handle save actions
     @Setter
-    private Consumer<Student> saveListener; // Define a variable to hold the listener
+    private Consumer<Student> saveListener;
 
     // Paragraphs to display current details
     private final Paragraph nameParagraph;
@@ -40,17 +40,16 @@ public class StudentEditProfileView extends VerticalLayout {
     public StudentEditProfileView(Student studentData, UserService userService) {
         this.student = studentData;
         this.userService = userService;
-        this.saveButton = new Button("Save");
 
-        setSizeFull(); // Makes the layout take the full size of the parent
-        setPadding(false); // Removes any padding
-        setMargin(false); // Removes any margin
-        setSpacing(false); // Removes any spacing between child components
+        setSizeFull();
+        setPadding(false);
+        setMargin(false);
+        setSpacing(false);
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
         addClassName("student-edit-profile-container");
 
-        // Form Title
+        // Page title
         H3 h3 = new H3("Edit Student Profile");
         h3.addClassName("student-edit-profile-title");
 
@@ -81,8 +80,8 @@ public class StudentEditProfileView extends VerticalLayout {
         emailField = new TextField("Email");
         newPasswordField = new PasswordField("New Password");
 
-        // The correct saveButton as a class-level field
-        Button saveButton = new Button("Save");
+        // Save button
+        saveButton = new Button("Save"); // Save button is now a class-level field
         saveButton.addClassName("student-edit-profile-save-button");
 
         formLayout.add(firstNameField, lastNameField, phoneNumberField, emailField, newPasswordField, saveButton);
@@ -100,14 +99,16 @@ public class StudentEditProfileView extends VerticalLayout {
 
         // Add save listener
         saveButton.addClickListener(event -> {
-            updateStudentProfile(); // Call to update student profile with new values
+            updateStudentProfile(); // This already updates the password
             if (saveListener != null) {
                 saveListener.accept(student); // Trigger the save listener
             }
+
             Notification.show("Profile updated successfully", 3000, Notification.Position.TOP_CENTER);
         });
     }
 
+    // Method to update the student profile
     private void updateStudentProfile() {
         if (!firstNameField.isEmpty()) student.setFirstName(firstNameField.getValue());
         if (!lastNameField.isEmpty()) student.setLastName(lastNameField.getValue());
@@ -119,8 +120,8 @@ public class StudentEditProfileView extends VerticalLayout {
             userService.updatePassword(student.getEmail(), newPassword); // Ensure password is updated
         }
 
-        // Save the updated student profile (if necessary)
-        userService.save(student); // <-- Add this to persist the updated profile
+        // Save the updated student profile
+        userService.save(student);
 
         // Update displayed paragraphs with new values
         nameParagraph.getElement().setProperty("innerHTML", "<span class='label'>Name </span>" + "<br>" + student.getFirstName() + " " + student.getLastName());

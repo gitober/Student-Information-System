@@ -18,12 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 @CssImport("./themes/studentinformationapp/views/home-profile-page-view/home-profile-page-view.css")
 public class ProfilePageView extends Composite<VerticalLayout> {
 
-    private final AuthenticatedUser authenticatedUser;
     private final UserContentLoader userContentLoader;
 
     @Autowired
     public ProfilePageView(AuthenticatedUser authenticatedUser, UserContentLoader userContentLoader) {
-        this.authenticatedUser = authenticatedUser;
         this.userContentLoader = userContentLoader;
 
         // Main layout setup

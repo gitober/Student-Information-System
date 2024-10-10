@@ -3,7 +3,6 @@ package com.studentinfo.views.TeacherAttendanceView;
 import com.studentinfo.data.entity.Attendance;
 import com.studentinfo.data.entity.Course;
 import com.studentinfo.data.entity.Student;
-import com.studentinfo.data.entity.Teacher;
 import com.studentinfo.security.AuthenticatedUser;
 import com.studentinfo.services.CourseService;
 import com.studentinfo.services.TeacherService;
@@ -33,7 +32,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,21 +44,24 @@ public class TeacherAttendanceView extends Composite<VerticalLayout> {
 
     private final TeacherService teacherService;
     private final CourseService courseService;
-    private final AuthenticatedUser authenticatedUser;
 
     private List<Attendance> attendanceRecords;
-    private Grid<Attendance> attendanceGrid;
+    private final Grid<Attendance> attendanceGrid;
     private TextField searchField;
-    private Button addAttendanceButton;
 
     @Autowired
     public TeacherAttendanceView(TeacherService teacherService, CourseService courseService, AuthenticatedUser authenticatedUser) {
         this.teacherService = teacherService;
         this.courseService = courseService;
-        this.authenticatedUser = authenticatedUser;
 
-        // Fetch attendance records for the authenticated teacher
+        // Fetch attendance records for the authenticated teacher, initialize to empty list if null
         attendanceRecords = teacherService.getAttendanceRecordsForTeacher(getCurrentTeacherId());
+        if (attendanceRecords == null) {
+            attendanceRecords = Collections.emptyList();  // Initialize to an empty list if null
+        }
+
+        attendanceGrid = new Grid<>(Attendance.class, false);  // Initialize the grid
+        configureGrid();  // Configure the grid after initialization
 
         VerticalLayout mainLayout = getContent();
         mainLayout.addClassName("teacher-attendance-view-container");
@@ -71,26 +72,25 @@ public class TeacherAttendanceView extends Composite<VerticalLayout> {
         mainLayout.add(createPageHeader());
 
         configureSearchBar();
-        configureGrid();
 
         if (attendanceRecords != null && !attendanceRecords.isEmpty()) {
-            attendanceGrid.setItems(attendanceRecords);
+            attendanceGrid.setItems(attendanceRecords);  // This will now work because attendanceRecords is not null
         }
 
-        addAttendanceButton = new Button("Add Attendance", event -> openAddAttendanceDialog());
+        Button addAttendanceButton = new Button("Add Attendance", event -> openAddAttendanceDialog());
         addAttendanceButton.addClassName("teacher-attendance-add-button");
-        mainLayout.add(searchField, attendanceGrid, addAttendanceButton); // Add components to the layout
+        mainLayout.add(searchField, attendanceGrid, addAttendanceButton);
     }
 
-    // Method to get the currently authenticated teacher's ID
+
     private Long getCurrentTeacherId() {
-        String username = getCurrentAuthenticatedUsername();
-        return teacherService.getTeacherByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Teacher not found for username: " + username))
+        String email = getCurrentAuthenticatedEmail();
+        return teacherService.getTeacherByUsername(email)
+                .orElseThrow(() -> new RuntimeException("Teacher not found for email: " + email))
                 .getId();
     }
 
-    private String getCurrentAuthenticatedUsername() {
+    private String getCurrentAuthenticatedEmail() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
             return ((UserDetails) authentication.getPrincipal()).getUsername();
@@ -124,15 +124,12 @@ public class TeacherAttendanceView extends Composite<VerticalLayout> {
     }
 
     private void configureGrid() {
-        attendanceGrid = new Grid<>(Attendance.class, false);
         attendanceGrid.setItems(attendanceRecords); // Set real data here
 
-        // Display the course name
         attendanceGrid.addColumn(record -> record.getCourse().getCourseName())
                 .setHeader("Course")
                 .setAutoWidth(true);
 
-        // Display the full name of the student
         attendanceGrid.addColumn(record -> record.getStudent().getFirstName() + " " + record.getStudent().getLastName())
                 .setHeader("Student")
                 .setAutoWidth(true);
@@ -179,21 +176,17 @@ public class TeacherAttendanceView extends Composite<VerticalLayout> {
         VerticalLayout dialogLayout = new VerticalLayout();
         dialogLayout.addClassName("teacher-attendance-dialog-layout");
 
-        // Add a message or title to guide the user
         Paragraph instruction = new Paragraph("Note: You can only add attendance for courses you are assigned to as a teacher.");
         instruction.addClassName("teacher-attendance-dialog-instruction");
 
-        // Student ComboBox
         ComboBox<Student> studentComboBox = new ComboBox<>("Student");
         studentComboBox.setItems(teacherService.getAllStudents());
         studentComboBox.setItemLabelGenerator(student -> student.getFirstName() + " " + student.getLastName());
         studentComboBox.addClassName("teacher-attendance-student-combobox");
 
-        // Course ComboBox
         ComboBox<Course> courseComboBox = new ComboBox<>("Course");
         courseComboBox.addClassName("teacher-attendance-course-combobox");
 
-        // When a student is selected, update the courses list
         studentComboBox.addValueChangeListener(event -> {
             Student selectedStudent = event.getValue();
             if (selectedStudent != null) {
@@ -203,17 +196,13 @@ public class TeacherAttendanceView extends Composite<VerticalLayout> {
             }
         });
 
-        // Status ComboBox
         ComboBox<String> statusField = new ComboBox<>("Status", "Present", "Absent");
         statusField.addClassName("teacher-attendance-status-combobox");
 
-        // Date Picker
         DatePicker datePicker = new DatePicker("Date");
-        datePicker.setPlaceholder("dd.MM.yyyy");
         datePicker.setValue(LocalDate.now());
         datePicker.addClassName("teacher-attendance-date-picker");
 
-        // Save button
         Button saveButton = new Button("Save", event -> {
             try {
                 Attendance newRecord = new Attendance();
@@ -223,7 +212,8 @@ public class TeacherAttendanceView extends Composite<VerticalLayout> {
                 newRecord.setAttendanceStatus(statusField.getValue());
 
                 teacherService.saveAttendanceRecord(newRecord);
-                refreshAttendanceData(); // Call this method to refresh the grid
+                refreshAttendanceData();
+                attendanceGrid.getDataProvider().refreshAll();
                 addDialog.close();
             } catch (Exception e) {
                 Notification.show("Invalid input. Please check the details.");
@@ -231,7 +221,6 @@ public class TeacherAttendanceView extends Composite<VerticalLayout> {
         });
         saveButton.addClassName("teacher-attendance-save-button");
 
-        // Close button
         Button closeButton = new Button("Close", event -> addDialog.close());
         closeButton.addClassName("teacher-attendance-close-button");
 
@@ -243,17 +232,10 @@ public class TeacherAttendanceView extends Composite<VerticalLayout> {
         addDialog.open();
     }
 
-
-
-    // Refresh the attendance data
     private void refreshAttendanceData() {
         attendanceRecords = teacherService.getAttendanceRecordsForTeacher(getCurrentTeacherId());
-        System.out.println("Updated attendance records: " + attendanceRecords); // Debugging statement
         attendanceGrid.setItems(attendanceRecords);
     }
-
-
-
 
     private void openEditAttendanceDialog(Attendance record) {
         Dialog editDialog = new Dialog();
@@ -271,12 +253,10 @@ public class TeacherAttendanceView extends Composite<VerticalLayout> {
         statusField.setValue(record.getAttendanceStatus());
         dateField.setValue(record.getAttendanceDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
 
-        // Assign more unique class names to buttons for styling
         Button saveButton = new Button("Save", event -> {
             record.setAttendanceStatus(statusField.getValue());
             teacherService.saveAttendanceRecord(record);
-            attendanceRecords = teacherService.getAttendanceRecordsForTeacher(getCurrentTeacherId());
-            attendanceGrid.setItems(attendanceRecords);
+            refreshAttendanceData();
             editDialog.close();
         });
         saveButton.addClassName("teacher-attendance-dialog-edit-button-save");
@@ -289,7 +269,6 @@ public class TeacherAttendanceView extends Composite<VerticalLayout> {
         editDialog.open();
     }
 
-
     private void confirmDeleteAttendance(Attendance record) {
         Dialog confirmDialog = new Dialog();
         confirmDialog.addClassName("teacher-attendance-delete-dialog");
@@ -298,14 +277,13 @@ public class TeacherAttendanceView extends Composite<VerticalLayout> {
 
         Button confirmButton = new Button("Delete", event -> {
             teacherService.deleteAttendanceRecord(record);
-            attendanceRecords = teacherService.getAttendanceRecordsForTeacher(getCurrentTeacherId());
-            attendanceGrid.setItems(attendanceRecords);
+            refreshAttendanceData();
             confirmDialog.close();
         });
-        confirmButton.addClassName("teacher-attendance-delete-button");  // Apply the delete button class
+        confirmButton.addClassName("teacher-attendance-delete-button");
 
         Button cancelButton = new Button("Cancel", event -> confirmDialog.close());
-        cancelButton.addClassName("teacher-attendance-close-button");  // Apply the close button class
+        cancelButton.addClassName("teacher-attendance-close-button");
 
         HorizontalLayout buttonsLayout = new HorizontalLayout(confirmButton, cancelButton);
         confirmDialog.add(buttonsLayout);

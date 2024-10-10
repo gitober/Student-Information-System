@@ -1,12 +1,18 @@
 package com.studentinfo.data.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Set;
 
 @Entity
 public class Department {
 
+    // Getters and Setters
     // Fields
+    @Setter
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "department_id")
@@ -15,9 +21,13 @@ public class Department {
     @Column(name = "department_name")
     private String name;
 
+    @Setter
+    @Getter
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Teacher> teachers;
 
+    @Setter
+    @Getter
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Subject> subjects;
 
@@ -28,15 +38,6 @@ public class Department {
         this.name = name;
     }
 
-    // Getters and Setters
-    public Long getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(Long departmentId) {
-        this.departmentId = departmentId;
-    }
-
     public String getDepartmentName() {
         return name;
     }
@@ -45,19 +46,4 @@ public class Department {
         this.name = name;
     }
 
-    public Set<Teacher> getTeachers() {
-        return teachers;
-    }
-
-    public void setTeachers(Set<Teacher> teachers) {
-        this.teachers = teachers;
-    }
-
-    public Set<Subject> getSubjects() {
-        return subjects;
-    }
-
-    public void setSubjects(Set<Subject> subjects) {
-        this.subjects = subjects;
-    }
 }

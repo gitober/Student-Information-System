@@ -25,13 +25,11 @@ import java.util.stream.Collectors;
 public class StudentGradesView extends Composite<VerticalLayout> {
 
     private final GradeService gradeService;
-    private final UserService userService;
-    private Grid<Grade> gradesGrid;
+    private final Grid<Grade> gradesGrid;
 
     @Autowired
     public StudentGradesView(GradeService gradeService, UserService userService) {
         this.gradeService = gradeService;
-        this.userService = userService;
 
         getContent().addClassName("student-grades-view-container");
 
@@ -76,7 +74,7 @@ public class StudentGradesView extends Composite<VerticalLayout> {
 
     // Method to filter grades based on the search term
     private void filterGrades(String searchTerm) {
-        List<Grade> filteredGrades = gradesGrid.getListDataView().getItems().collect(Collectors.toList())
+        List<Grade> filteredGrades = gradesGrid.getListDataView().getItems().toList()
                 .stream()
                 .filter(grade -> grade.getCourse().getCourseName().toLowerCase().contains(searchTerm.toLowerCase()))
                 .collect(Collectors.toList());

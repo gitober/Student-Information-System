@@ -1,8 +1,13 @@
 package com.studentinfo.data.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDate;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "registration")
 public class Registration {
@@ -15,10 +20,10 @@ public class Registration {
     private LocalDate registrationDay;
 
     @Column(name = "course_payment")
-    private Double coursePayment; // Allow null values
+    private Double coursePayment;
 
     @Column(name = "student_number")
-    private Long studentNumber; // Added studentNumber field
+    private Long studentNumber;
 
     @ManyToOne
     @JoinColumn(name = "student_number", referencedColumnName = "student_number", insertable = false, updatable = false)
@@ -33,70 +38,4 @@ public class Registration {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
-
-    // Getters and Setters
-
-    public Long getRegistrationId() {
-        return registrationId;
-    }
-
-    public void setRegistrationId(Long registrationId) {
-        this.registrationId = registrationId;
-    }
-
-    public LocalDate getRegistrationDay() {
-        return registrationDay;
-    }
-
-    public void setRegistrationDay(LocalDate registrationDay) {
-        this.registrationDay = registrationDay;
-    }
-
-    public Double getCoursePayment() {
-        return coursePayment;
-    }
-
-    public void setCoursePayment(Double coursePayment) {
-        this.coursePayment = coursePayment;
-    }
-
-    public Long getStudentNumber() {
-        return studentNumber; // Corrected getter for studentNumber
-    }
-
-    public void setStudentNumber(Long studentNumber) {
-        this.studentNumber = studentNumber; // Corrected setter for studentNumber
-    }
-
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
-    public Long getBatchId() {
-        return batchId;
-    }
-
-    public void setBatchId(Long batchId) {
-        this.batchId = batchId;
-    }
-
-    public Long getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(Long courseId) {
-        this.courseId = courseId;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }

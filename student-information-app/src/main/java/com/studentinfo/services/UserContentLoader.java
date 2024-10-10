@@ -118,15 +118,13 @@ public class UserContentLoader {
     // Load edit profile content based on user role
     public void loadEditProfileContent(VerticalLayout layout) {
         authenticatedUser.get().ifPresentOrElse(user -> {
-            if (user instanceof Teacher) {
-                Teacher teacher = (Teacher) user;
+            if (user instanceof Teacher teacher) {
                 TeacherEditProfileView teacherView = new TeacherEditProfileView(teacher, departmentService, subjectService);
-                teacherView.setSaveListener(updatedTeacher -> teacherService.save(updatedTeacher));
+                teacherView.setSaveListener(teacherService::save);
                 layout.add(teacherView);
-            } else if (user instanceof Student) {
-                Student student = (Student) user;
+            } else if (user instanceof Student student) {
                 StudentEditProfileView studentView = new StudentEditProfileView(student, userService); // Pass UserService
-                studentView.setSaveListener(updatedStudent -> studentService.save(updatedStudent));
+                studentView.setSaveListener(studentService::save);
                 layout.add(studentView);
             } else {
                 layout.add(new Paragraph("Role not recognized. Please contact support."));

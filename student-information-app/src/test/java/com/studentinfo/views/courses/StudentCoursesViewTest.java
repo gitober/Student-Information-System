@@ -1,6 +1,5 @@
 package com.studentinfo.views.courses;
 
-import java.lang.reflect.InvocationTargetException;
 import com.studentinfo.data.entity.Course;
 import com.studentinfo.services.CourseService;
 import com.studentinfo.services.AttendanceService;
@@ -54,7 +53,6 @@ public class StudentCoursesViewTest {
     void tearDown() {
         UI.setCurrent(null); // Clear the Vaadin UI context to avoid side effects between tests
     }
-
 
     @Test
     public void testStudentCoursesViewComponents() throws Exception {
@@ -111,30 +109,40 @@ public class StudentCoursesViewTest {
         sampleCourse.setCourseName("Sample Course");
         sampleCourse.setTeachers(Collections.emptyList());  // Ensure getTeachers() does not return null
 
-        // Access the private method using reflection
-        Method enrollInCourseMethod = StudentCoursesView.class.getDeclaredMethod("enrollInCourse", Course.class);
-        enrollInCourseMethod.setAccessible(true);
+        // Initialize a UI instance and set it as the current UI for the test
+        UI ui = new UI();
+        UI.setCurrent(ui);  // Set the current UI for the test
 
         try {
-            // Invoke the private method
-            System.out.println("Invoking enrollInCourse method...");
-            enrollInCourseMethod.invoke(studentCoursesView, sampleCourse);
-            System.out.println("enrollInCourse method invoked successfully.");
-        } catch (InvocationTargetException e) {
-            // Print the cause of the exception
-            e.getCause().printStackTrace();
-            fail("Invoking the 'enrollInCourse' method should not throw an exception.");
+            // Access the private method using reflection
+            Method enrollInCourseMethod = StudentCoursesView.class.getDeclaredMethod("enrollInCourse", Course.class);
+            enrollInCourseMethod.setAccessible(true);
+
+            try (var notificationMock = Mockito.mockStatic(Notification.class)) {
+                // Mock the Notification to avoid UI context issues
+                notificationMock.when(() -> Notification.show(Mockito.anyString())).thenReturn(null);
+
+                // Invoke the private method
+                System.out.println("Invoking enrollInCourse method...");
+                enrollInCourseMethod.invoke(studentCoursesView, sampleCourse);
+                System.out.println("enrollInCourse method invoked successfully.");
+            } catch (InvocationTargetException e) {
+                // Print the cause of the exception
+                e.getCause().printStackTrace();
+                fail("Invoking the 'enrollInCourse' method should not throw an exception.");
+            }
+
+            // Verify if a confirmation dialog opens and the action is handled properly
+            // Simulate the button click
+            Button enrollButton = new Button("Enroll");
+            enrollButton.addClickListener(event -> Notification.show("Enrollment confirmed"));
+
+            System.out.println("Simulating enroll button click...");
+            assertDoesNotThrow(enrollButton::click, "Clicking the 'Enroll' button should not throw an exception.");
+            System.out.println("Enroll button click simulation completed.");
+        } finally {
+            // Clean up UI context
+            UI.setCurrent(null);
         }
-
-        // Verify if a confirmation dialog opens and the action is handled properly
-        // This part is more for structural verification as dialog testing is complex in unit tests
-        Button enrollButton = new Button("Enroll");
-        enrollButton.addClickListener(event -> Notification.show("Enrollment confirmed"));
-
-        System.out.println("Simulating enroll button click...");
-        assertDoesNotThrow(enrollButton::click, "Clicking the 'Enroll' button should not throw an exception.");
-        System.out.println("Enroll button click simulation completed.");
-
-        System.out.println("Enroll in course button test completed.");
     }
 }

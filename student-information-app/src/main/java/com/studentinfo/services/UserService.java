@@ -4,10 +4,9 @@ import com.studentinfo.data.entity.Student;
 import com.studentinfo.data.entity.User;
 import com.studentinfo.data.repository.UserRepository;
 import com.studentinfo.security.AuthenticatedUser;
-import com.vaadin.flow.component.notification.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,19 +19,16 @@ public class UserService {
     // Dependencies
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
     private final AuthenticatedUser authenticatedUser;
-    private final Environment environment; // Inject the Environment
+    private final Environment environment;
 
     @Autowired
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder,
-                       AuthenticationManager authenticationManager, AuthenticatedUser authenticatedUser,
-                       Environment environment) {
+                       AuthenticatedUser authenticatedUser, Environment environment) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.authenticationManager = authenticationManager;
         this.authenticatedUser = authenticatedUser;
-        this.environment = environment; // Assign the Environment
+        this.environment = environment;
     }
 
     // Check if the current environment is test
@@ -40,55 +36,32 @@ public class UserService {
         return environment != null && List.of(environment.getActiveProfiles()).contains("test");
     }
 
-    // Public Methods
-
     // Get the current authenticated user's student number
     public Long getCurrentStudentNumber() {
         Optional<User> currentUser = authenticatedUser.get();
-
-        if (currentUser.isPresent()) {
-            User user = currentUser.get();
-            System.out.println("Debug: Current user is present, user type: " + user.getClass().getSimpleName());
-
-            if (user instanceof Student) {
-                Long studentNumber = ((Student) user).getStudentNumber();
-                System.out.println("Debug: Retrieved student number: " + studentNumber);
-                return studentNumber;
-            } else {
-                System.out.println("Debug: Current user is not a student.");
-            }
-        } else {
-            System.out.println("Debug: No current user found.");
+        if (currentUser.isPresent() && currentUser.get() instanceof Student) {
+            return ((Student) currentUser.get()).getStudentNumber();
         }
-
-        return null; // Return null if no student is found
+        return null;
     }
 
     // Authenticate user based on email and password
     public Optional<User> authenticate(String email, String password) {
         Optional<User> userOptional = userRepository.findByEmail(email);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            // Use PasswordEncoder to compare the provided password with the hashed password
-            if (passwordEncoder.matches(password, user.getHashedPassword())) {
-                return Optional.of(user);
-            }
+        if (userOptional.isPresent() && passwordEncoder.matches(password, userOptional.get().getHashedPassword())) {
+            return Optional.of(userOptional.get());
         }
-        return Optional.empty(); // Return empty if authentication fails
+        return Optional.empty();
     }
-
-    // CRUD Operations
 
     // Find a user by email
     public User findByUsername(String username) {
-        Optional<User> userOptional = userRepository.findByUsername(username);
-        return userOptional.orElse(null); // Return the user if found, or null if not found
+        return userRepository.findByUsername(username).orElse(null);
     }
 
     // Get the current authenticated user
     public User getCurrentUser() {
-        Optional<User> currentUser = authenticatedUser.get(); // Assuming authenticatedUser is set up correctly
-        return currentUser.orElse(null);
+        return authenticatedUser.get().orElse(null);
     }
 
     // List all users
@@ -111,31 +84,37 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+    // Find a user by email
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
-    // Method to update the user's password in the database
+    // Update the user's password in the database
     public void updatePassword(String email, String newPassword) {
         Optional<User> userOptional = userRepository.findByEmail(email);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            // Hash the new password using the PasswordEncoder
-            String hashedPassword = passwordEncoder.encode(newPassword);
-            System.out.println("Hashed Password Before Save: " + hashedPassword); // Debugging
-            user.setHashedPassword(hashedPassword);
-            userRepository.save(user); // Save the user with the updated password
+            user.setHashedPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(user);
 
-            // Verify that the password has been saved
-            Optional<User> updatedUser = userRepository.findByEmail(email);
-            updatedUser.ifPresentOrElse(
-                    u -> System.out.println("Hashed Password After Save: " + u.getHashedPassword()),
-                    () -> System.out.println("User not found after update.")
-            );
+            // Clear the current authentication to force re-login with the new password
+            SecurityContextHolder.clearContext();
+
+            System.out.println("Password updated for user: " + email); // Debugging log
         } else {
-            System.out.println("User not found with this email.");
+            System.out.println("User with email " + email + " not found."); // Debugging log
         }
     }
 
 
+    // Update both email and username for a user
+    public void updateUserEmailAndUsername(Long userId, String newEmail, String newUsername) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setUsername(newUsername);
+            user.setEmail(newEmail);
+            userRepository.save(user);
+        }
+    }
 }

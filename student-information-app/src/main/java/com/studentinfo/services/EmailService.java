@@ -17,27 +17,31 @@ import java.util.UUID;
 @Service
 public class EmailService {
 
-    private final Map<String, String> resetTokenStore = new HashMap<>(); // In-memory storage for reset tokens
+    // In-memory storage for reset tokens
+    private final Map<String, String> resetTokenStore = new HashMap<>();
+
+    // Dependencies
     private final JavaMailSender mailSender;
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); // Password encoder
+    private final UserRepository userRepository; // Inject the UserRepository to update the password
 
     @Value("${EMAIL_USERNAME}")
-    private String fromEmail;
+    private String fromEmail; // Sender's email address
 
+    // Constructor for injecting mailSender and userRepository
     @Autowired
-    private UserRepository userRepository; // Inject the UserRepository to update the password
-
-    public EmailService(JavaMailSender mailSender) {
+    public EmailService(JavaMailSender mailSender, UserRepository userRepository) {
         this.mailSender = mailSender;
+        this.userRepository = userRepository;
     }
 
+    // Send an email
     public void sendEmail(String to, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(fromEmail);
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);
-
         mailSender.send(message);
     }
 
@@ -60,15 +64,14 @@ public class EmailService {
                 .orElse(null);
     }
 
-    // Method to update the user's password in the database
+    // Update the user's password in the database
     public void updatePassword(String email, String newPassword) {
         Optional<User> userOptional = userRepository.findByEmail(email);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            // Hash the new password using BCrypt
-            String hashedPassword = passwordEncoder.encode(newPassword);
-            user.setHashedPassword(hashedPassword);
-            userRepository.save(user);
+            String hashedPassword = passwordEncoder.encode(newPassword); // Hash the new password
+            user.setHashedPassword(hashedPassword); // Update password
+            userRepository.save(user); // Save user with new password
         }
     }
 }

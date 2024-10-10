@@ -15,6 +15,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.util.Optional;
 
 @Service
@@ -33,34 +34,29 @@ public class LoginHandler {
     // Login Method
     public boolean login(String email, String password, boolean rememberMe) {
         try {
-            // Authenticate the user using the user service
+            // Authenticate the user
             Optional<User> authenticatedUserOpt = userService.authenticate(email, password);
 
             if (authenticatedUserOpt.isPresent()) {
                 User user = authenticatedUserOpt.get();
                 handleSuccessfulLogin(user, email, password, rememberMe);
-                return true; // Indicate that login was successful
+                return true; // Successful login
             } else {
                 handleFailedLogin(email);
-                return false; // Indicate that login failed
+                return false; // Failed login
             }
         } catch (Exception e) {
-            return false; // Indicate that login failed due to an error
+            return false; // Handle login error
         }
     }
-
 
     // Handle Successful Login
     private void handleSuccessfulLogin(User user, String email, String password, boolean rememberMe) {
         try {
-            // Create authentication token
+            // Authenticate and set security context
             UsernamePasswordAuthenticationToken authToken =
                     new UsernamePasswordAuthenticationToken(email, password, user.getAuthorities());
-
-            // Authenticate the token
             Authentication authentication = authenticationManager.authenticate(authToken);
-
-            // Set authentication in SecurityContextHolder
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             // Persist security context to session
@@ -68,11 +64,11 @@ public class LoginHandler {
             HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
             new HttpSessionSecurityContextRepository().saveContext(SecurityContextHolder.getContext(), request, response);
 
-            // Set or remove the "Remember me" cookie
+            // Handle "Remember me" cookie
             assert response != null;
             handleRememberMeCookie(rememberMe, email, response);
 
-            // Check the user's role and navigate accordingly
+            // Navigate based on user role
             navigateUserBasedOnRole(user);
 
             Notification.show("Logged in successfully!");
@@ -88,10 +84,10 @@ public class LoginHandler {
         Notification.show("Authentication failed. Please check your credentials.");
     }
 
-    // Set or remove the "Remember me" cookie
+    // Set or remove "Remember me" cookie
     private void handleRememberMeCookie(boolean rememberMe, String email, HttpServletResponse response) {
         Cookie cookie = new Cookie("rememberMe", rememberMe ? email : "");
-        cookie.setMaxAge(rememberMe ? 60 * 60 * 24 * 30 : 0); // 30 days if "Remember me" is checked, 0 to delete the cookie
+        cookie.setMaxAge(rememberMe ? 60 * 60 * 24 * 30 : 0); // 30 days or delete cookie
         cookie.setPath("/");
         response.addCookie(cookie);
     }
@@ -99,14 +95,11 @@ public class LoginHandler {
     // Navigate User Based on Role
     private void navigateUserBasedOnRole(User user) {
         if (user.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_TEACHER"))) {
-            // Redirect teachers to the teacher dashboard or profile
-            UI.getCurrent().navigate("profile"); // Change to "teacher-dashboard" if needed
+            UI.getCurrent().navigate("profile"); // Redirect teachers
         } else if (user.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_STUDENT"))) {
-            // Redirect students to their profile
-            UI.getCurrent().navigate("profile");
+            UI.getCurrent().navigate("profile"); // Redirect students
         } else {
-            // Fallback option if role is not recognized
-            UI.getCurrent().navigate("profile");
+            UI.getCurrent().navigate("profile"); // Fallback navigation
         }
     }
 }

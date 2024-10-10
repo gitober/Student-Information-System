@@ -21,6 +21,8 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -32,13 +34,15 @@ import java.util.stream.Collectors;
 @CssImport("./themes/studentinformationapp/views/grades-view/teacher-grades-view.css")
 public class TeacherGradesView extends Composite<VerticalLayout> {
 
+    private static final Logger logger = LoggerFactory.getLogger(TeacherGradesView.class); // Logger instance
+
     private final GradeService gradeService;
     private final CourseService courseService;
     private final StudentService studentService;
 
-    private Grid<Grade> gradesGrid;
+    private final Grid<Grade> gradesGrid;
     private List<Grade> gradeEntries;
-    private ComboBox<Course> courseComboBox;
+    private final ComboBox<Course> courseComboBox;
 
     public TeacherGradesView(GradeService gradeService, CourseService courseService, StudentService studentService) {
         this.gradeService = gradeService;
@@ -59,7 +63,7 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
         courseComboBox = new ComboBox<>("Select Course");
         courseComboBox.addClassName("teacher-grades-view-course-combobox");
         courseComboBox.setItemLabelGenerator(Course::getCourseName);
-        courseComboBox.setItems(courseService.getAllCourses());
+        refreshCourseData();  // Load courses when initializing the page
         courseComboBox.addValueChangeListener(event -> refreshGradesData());
 
         // Search field
@@ -103,6 +107,7 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
         refreshGradesData();
     }
 
+    // Refresh grades data based on selected course
     private void refreshGradesData() {
         Course selectedCourse = courseComboBox.getValue();
         if (selectedCourse != null) {
@@ -113,6 +118,16 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
         gradesGrid.setItems(gradeEntries);
     }
 
+    // Refresh the course ComboBox with the latest courses
+    private void refreshCourseData() {
+        List<Course> allCourses = courseService.getAllCourses();
+        courseComboBox.setItems(allCourses);
+        if (!allCourses.isEmpty()) {
+            courseComboBox.setValue(allCourses.getFirst()); // Optionally, auto-select the first course
+        }
+    }
+
+    // Filter grades by student name
     private void filterGradesByStudent(String searchTerm) {
         List<Grade> filteredGrades = gradeEntries.stream()
                 .filter(entry -> {
@@ -122,10 +137,10 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
                             .orElse(false);
                 })
                 .collect(Collectors.toList());
-
         gradesGrid.setItems(filteredGrades);
     }
 
+    // Dialog for adding a new grade
     private void openAddGradeDialog() {
         Dialog addGradeDialog = new Dialog();
         addGradeDialog.addClassName("teacher-grades-view-add-grade-dialog");
@@ -159,34 +174,13 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
         Button saveButton = new Button("Save");
         saveButton.addClassName("teacher-grades-view-save-button");
         saveButton.addClickListener(event -> {
-            // Get selected course, student, and grade value
             Course selectedCourse = dialogCourseComboBox.getValue();
             Student selectedStudent = studentComboBox.getValue();
             String gradeValue = gradeField.getValue();
 
-            // Log values for debugging
-            System.out.println("Selected Course: " + (selectedCourse != null ? selectedCourse.getCourseName() : "None"));
-            System.out.println("Selected Student: " + (selectedStudent != null ? selectedStudent.getFirstName() + " " + selectedStudent.getLastName() : "None"));
-            System.out.println("Entered Grade: " + gradeValue);
-
-            // Validate inputs
             if (selectedCourse == null || selectedStudent == null || gradeValue.isEmpty()) {
                 Notification.show("Please select a course, a student, and enter a valid grade.");
                 return;
-            }
-
-            // Validate if grade is a number between 1.0 and 5.0 or "Fail"
-            if (!gradeValue.equalsIgnoreCase("Fail")) {
-                try {
-                    double numericGrade = Double.parseDouble(gradeValue);
-                    if (numericGrade < 1.0 || numericGrade > 5.0) {
-                        Notification.show("Grade must be between 1.0 and 5.0 or 'Fail'.");
-                        return;
-                    }
-                } catch (NumberFormatException e) {
-                    Notification.show("Invalid grade format. Please enter a number between 1.0 and 5.0 or 'Fail'.");
-                    return;
-                }
             }
 
             // Create a new grade entity
@@ -196,22 +190,17 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
             newGrade.setGrade(gradeValue);
             newGrade.setGradingDay(LocalDate.now());
 
-            // Save the grade using the gradeService
+            // Save the grade
             try {
                 gradeService.saveGrade(newGrade);
-                System.out.println("Grade saved successfully.");
-
-                // Refresh the grid to show the updated data
-                refreshGradesData();
-
-                // Notify user of successful addition
                 Notification.show("New grade added successfully.");
+                refreshGradesData();  // Refresh the grades data
+                refreshCourseData();  // Also refresh the course list after saving
             } catch (Exception e) {
-                e.printStackTrace();
-                Notification.show("An error occurred while saving the grade.");
+                logger.error("Error saving grade: {}", e.getMessage());
+                Notification.show("Error saving grade.");
             }
 
-            // Close the dialog
             addGradeDialog.close();
         });
 
@@ -230,6 +219,7 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
         addGradeDialog.open();
     }
 
+    // Helper method to create edit and delete buttons for each grade row
     private HorizontalLayout createEditAndDeleteButtons(Grade grade) {
         Button editButton = new Button("Edit");
         editButton.addClassName("teacher-grades-view-edit-button");
@@ -240,16 +230,11 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
         deleteButton.addClickListener(event -> {
             try {
                 gradeService.deleteGrade(grade.getGradeId());
-                System.out.println("Grade deleted successfully.");
-
-                // Refresh the grid to show the updated data
-                refreshGradesData();
-
-                // Notify user of successful deletion
                 Notification.show("Grade deleted successfully.");
+                refreshGradesData();  // Refresh the grid
             } catch (Exception e) {
-                e.printStackTrace();
-                Notification.show("An error occurred while deleting the grade.");
+                logger.error("Error deleting grade: {}", e.getMessage());
+                Notification.show("Error deleting grade.");
             }
         });
 
@@ -258,6 +243,7 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
         return actionButtons;
     }
 
+    // Dialog for editing a grade
     private void openEditGradeDialog(Grade grade) {
         Dialog editGradeDialog = new Dialog();
         editGradeDialog.addClassName("teacher-grades-view-edit-grade-dialog");
@@ -272,43 +258,21 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
         saveButton.addClickListener(event -> {
             String gradeValue = gradeField.getValue();
 
-            // Validate input
             if (gradeValue.isEmpty()) {
                 Notification.show("Please enter a grade.");
                 return;
             }
 
-            // Validate if grade is a number between 1.0 and 5.0 or "Fail"
-            if (!gradeValue.equalsIgnoreCase("Fail")) {
-                try {
-                    double numericGrade = Double.parseDouble(gradeValue);
-                    if (numericGrade < 1.0 || numericGrade > 5.0) {
-                        Notification.show("Grade must be between 1.0 and 5.0 or 'Fail'.");
-                        return;
-                    }
-                } catch (NumberFormatException e) {
-                    Notification.show("Invalid grade format. Please enter a number between 1.0 and 5.0 or 'Fail'.");
-                    return;
-                }
-            }
-
-            // Update the grade entity
             grade.setGrade(gradeValue);
             try {
                 gradeService.saveGrade(grade);
-                System.out.println("Grade updated successfully.");
-
-                // Refresh the grid with updated data
-                refreshGradesData();
-
-                // Notify user of successful update
                 Notification.show("Grade updated successfully.");
+                refreshGradesData();  // Refresh the grid
             } catch (Exception e) {
-                e.printStackTrace();
-                Notification.show("An error occurred while updating the grade.");
+                logger.error("Error updating grade: {}", e.getMessage());
+                Notification.show("Error updating grade.");
             }
 
-            // Close the dialog
             editGradeDialog.close();
         });
 
@@ -322,5 +286,4 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
         editGradeDialog.add(new H2("Edit Grade"), gradeField, dialogButtons);
         editGradeDialog.open();
     }
-
 }

@@ -18,12 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 @CssImport("./themes/studentinformationapp/views/courses-view/courses-view.css")
 public class CoursesView extends Composite<VerticalLayout> {
 
-    private final AuthenticatedUser authenticatedUser;
     private final UserContentLoader userContentLoader;
 
     @Autowired
     public CoursesView(AuthenticatedUser authenticatedUser, UserContentLoader userContentLoader) {
-        this.authenticatedUser = authenticatedUser;
         this.userContentLoader = userContentLoader;
 
         // Debug statements to ensure proper injection

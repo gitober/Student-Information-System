@@ -6,10 +6,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Version;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
 @MappedSuperclass
 public abstract class AbstractEntity {
 
+    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "idgenerator")
     // The initial value is to account for data.sql demo data ids
@@ -18,18 +22,6 @@ public abstract class AbstractEntity {
 
     @Version
     private int version;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public int getVersion() {
-        return version;
-    }
 
     @Override
     public int hashCode() {

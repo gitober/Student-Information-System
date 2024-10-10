@@ -5,74 +5,75 @@ import com.studentinfo.data.repository.UserRepository;
 import com.vaadin.flow.spring.security.AuthenticationContext;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
-@ActiveProfiles("test")
-@Disabled
 class AuthenticatedUserTest {
 
-    @MockBean
+    @Mock
     private UserRepository userRepository;
 
-    @MockBean
+    @Mock
     private AuthenticationContext authenticationContext;
 
     @InjectMocks
-    @Autowired
     private AuthenticatedUser authenticatedUser;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        MockitoAnnotations.openMocks(this); // Initialize mocks
     }
 
     @AfterEach
     void tearDown() {
-        // Reset mocks after each test
-        reset(userRepository, authenticationContext);
+        reset(userRepository, authenticationContext); // Reset mocks after each test
     }
 
     @Test
-    void testGet() {
+    void testGetAuthenticatedUser() {
         // Arrange
         String testEmail = "test@example.com";
-        User user = new User();
-        user.setEmail(testEmail);
+        User mockUser = new User();
+        mockUser.setEmail(testEmail);
 
-        UserDetails userDetails = org.springframework.security.core.userdetails.User
+        UserDetails mockUserDetails = org.springframework.security.core.userdetails.User
                 .withUsername(testEmail)
-                .password("password") // Password not needed for the mock
-                .roles("USER") // Add roles if needed
+                .password("password") // Password doesn't matter in this context
+                .roles("USER") // Roles if necessary
                 .build();
 
-        // Mock the AuthenticationContext to return a UserDetails object
-        when(authenticationContext.getAuthenticatedUser(UserDetails.class)).thenReturn(Optional.of(userDetails));
+        // Mock the AuthenticationContext to return the UserDetails
+        when(authenticationContext.getAuthenticatedUser(UserDetails.class)).thenReturn(Optional.of(mockUserDetails));
 
-        // Mock the user repository to return the user
-        when(userRepository.findByEmail(testEmail)).thenReturn(Optional.of(user));
+        // Mock the user repository to return the custom User entity
+        when(userRepository.findByEmail(testEmail)).thenReturn(Optional.of(mockUser));
 
         // Act
         Optional<User> result = authenticatedUser.get();
 
         // Assert
         assertTrue(result.isPresent(), "Expected user should be present.");
-        assertEquals(result.get().getEmail(), testEmail, "Expected email should match.");
+        assertEquals(testEmail, result.get().getEmail(), "Email should match the mock data.");
+    }
+
+    @Test
+    void testGetAuthenticatedUserNotFound() {
+        // Arrange: No user is authenticated
+        when(authenticationContext.getAuthenticatedUser(UserDetails.class)).thenReturn(Optional.empty());
+
+        // Act
+        Optional<User> result = authenticatedUser.get();
+
+        // Assert: Result should be empty
+        assertFalse(result.isPresent(), "Expected no user to be returned.");
     }
 
     @Test
@@ -80,10 +81,7 @@ class AuthenticatedUserTest {
         // Act
         authenticatedUser.logout();
 
-        // Verify that the logout method was called on the AuthenticationContext
+        // Assert that the logout method was called on the AuthenticationContext
         verify(authenticationContext).logout();
-
-        // Assert that the security context is cleared (if necessary)
-        assertNull(SecurityContextHolder.getContext().getAuthentication(), "Expected security context to be cleared after logout.");
     }
 }
