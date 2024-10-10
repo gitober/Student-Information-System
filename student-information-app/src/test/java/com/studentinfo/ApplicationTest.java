@@ -2,14 +2,12 @@ package com.studentinfo;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.context.ActiveProfiles;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
+@ActiveProfiles("test")
 public class ApplicationTest {
 
     @BeforeAll
@@ -20,7 +18,8 @@ public class ApplicationTest {
 
     @Test
     void contextLoads() {
-        // Test that the Spring context loads correctly
+        // If the context fails to load, the test will automatically fail
+        System.out.println("Application context loaded successfully");
     }
 
     @AfterAll
