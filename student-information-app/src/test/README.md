@@ -105,6 +105,7 @@ spring.datasource.username=sa
 spring.datasource.password=
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect
 
+
 # Hibernate settings for testing
 spring.jpa.hibernate.ddl-auto=create-drop
 spring.jpa.show-sql=true
@@ -115,3 +116,13 @@ spring.sql.init.mode=never
 
 # Test-specific logging configuration (optional)
 logging.level.org.springframework=INFO
+
+# Email settings for tests
+EMAIL_USERNAME=dummy_email@test.com
+EMAIL_PASSWORD=dummy_password
+spring.mail.host=smtp.test.com
+spring.mail.port=587
+spring.mail.properties.mail.smtp.auth=false
+spring.mail.properties.mail.smtp.starttls.enable=false
+
+
