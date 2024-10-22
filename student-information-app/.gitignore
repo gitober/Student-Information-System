@@ -24,6 +24,7 @@ webpack.generated.js
 src/main/resources/.env
 src/main/resources/.env.*
 src/main/resources/.env
+.env
 
 # IDE files (Not pushing modules.xml and workspace.xml will not affect the functionality of the project for others.
 /.idea/workspace.xml

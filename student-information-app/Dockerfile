@@ -23,10 +23,10 @@ FROM eclipse-temurin:21-jre
 LABEL authors="bober"
 
 # Copy the jar file from the build stage
-COPY --from=builder /app/target/student-information-app-1.0-SNAPSHOT.jar /app/app.jar
+COPY --from=builder /app/target/student-information-app-1.0-SNAPSHOT.jar /app.jar
 
 # Expose the application port
 EXPOSE 8080
 
 # Run the application
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java", "-jar", "/app.jar"]
