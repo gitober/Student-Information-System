@@ -97,8 +97,18 @@ public class TeacherService {
     // Retrieve attendance records for the courses taught by the teacher
     public List<Attendance> getAttendanceRecordsForTeacher(Long teacherId) {
         List<Course> teacherCourses = getCoursesForTeacher(teacherId);
-        return attendanceRepository.findByCourseIn(teacherCourses);
+
+        // Debug log to verify courses retrieved for the teacher
+        System.out.println("Teacher ID: " + teacherId + " is teaching " + teacherCourses.size() + " courses.");
+
+        List<Attendance> attendanceRecords = attendanceRepository.findByCourseIn(teacherCourses);
+
+        // Debug log to verify the attendance records fetched
+        System.out.println("Attendance records retrieved for teacher ID " + teacherId + ": " + attendanceRecords.size());
+
+        return attendanceRecords;
     }
+
 
     // Delete an attendance record
     public void deleteAttendanceRecord(Attendance record) {

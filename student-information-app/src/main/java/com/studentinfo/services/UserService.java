@@ -39,17 +39,26 @@ public class UserService {
     // Get the current authenticated user's student number
     public Long getCurrentStudentNumber() {
         Optional<User> currentUser = authenticatedUser.get();
-        if (currentUser.isPresent() && currentUser.get() instanceof Student) {
-            return ((Student) currentUser.get()).getStudentNumber();
+
+        if (currentUser.isPresent()) {
+            User user = currentUser.get();
+
+            // Try explicitly fetching the student entity
+            if (user instanceof Student) {
+                return ((Student) user).getStudentNumber();
+            }
         }
+
         return null;
     }
+
+
 
     // Authenticate user based on email and password
     public Optional<User> authenticate(String email, String password) {
         Optional<User> userOptional = userRepository.findByEmail(email);
         if (userOptional.isPresent() && passwordEncoder.matches(password, userOptional.get().getHashedPassword())) {
-            return Optional.of(userOptional.get());
+            return userOptional;
         }
         return Optional.empty();
     }

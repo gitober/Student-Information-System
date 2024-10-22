@@ -13,8 +13,6 @@ import java.util.Set;
 @DiscriminatorValue("STUDENT")
 public class Student extends User {
 
-    // Getters and Setters
-    // Fields
     private String address;
     private String grade;
     private String studentClass;
@@ -22,9 +20,8 @@ public class Student extends User {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "registration",
-            joinColumns = @JoinColumn(name = "student_number", referencedColumnName = "student_number"),
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"), // Use user_id as the primary key
             inverseJoinColumns = @JoinColumn(name = "course_id", referencedColumnName = "course_id")
     )
     private Set<Course> courses = new HashSet<>();
-
 }

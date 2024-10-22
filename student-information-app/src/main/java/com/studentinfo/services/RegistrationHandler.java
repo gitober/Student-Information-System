@@ -24,8 +24,7 @@ public class RegistrationHandler {
     private final StudentService studentService;
 
     @Autowired
-    public RegistrationHandler(StudentService studentService, TeacherService teacherService,
-                               UserService userService, PasswordEncoder passwordEncoder) {
+    public RegistrationHandler(StudentService studentService, UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.studentService = studentService;
@@ -90,14 +89,10 @@ public class RegistrationHandler {
 
     // Generate student number
     private Long generateStudentNumber() {
-        Long maxStudentNumber = studentService.list().stream()
-                .map(Student::getStudentNumber)
-                .filter(Objects::nonNull)
-                .max(Long::compare)
-                .orElse(0L); // Start from 0 if no students exist
-
-        return maxStudentNumber + 1; // Next available student number
+        // Using the current timestamp to generate a unique student number
+        return System.currentTimeMillis(); // Returns the current time in milliseconds since the epoch
     }
+
 
     // Set common attributes for User
     private void setUserAttributes(User user, String firstName, String lastName,
