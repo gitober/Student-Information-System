@@ -13,8 +13,8 @@ RUN mvn dependency:go-offline
 # Copy the source code
 COPY src /app/src
 
-# Build the Vaadin frontend and package the application
-RUN mvn clean package vaadin:build-frontend -DskipTests
+# Build the Vaadin frontend and package the application in production mode
+RUN mvn clean package vaadin:build-frontend -Pproduction -DskipTests
 
 # Use a lightweight JRE image to run the application
 FROM eclipse-temurin:21-jre
@@ -22,7 +22,7 @@ FROM eclipse-temurin:21-jre
 # Set metadata information
 LABEL authors="bober"
 
-# Copy the jar file from the build stage
+# Copy the jar file and any required frontend resources from the build stage
 COPY --from=builder /app/target/student-information-app-1.0-SNAPSHOT.jar /app.jar
 
 # Expose the application port
