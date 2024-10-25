@@ -1,0 +1,7 @@
+Thumbs.db
+.DS_Store
+.git
+node_modules
+target/
+
+src/main/frontend/generated/jar-resources/vaadin-dev-tools

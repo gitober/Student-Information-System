@@ -1,36 +1,49 @@
 @startuml
-actor Student
 actor Teacher
 
-Student -> System: View Courses
-System -> CourseService: Fetch Courses
-CourseService -> System: Return Course List
-System -> Student: Display Courses
+Teacher -> CourseService: saveCourse(course, teachers)
+CourseService -> Database: save(course)
+alt success
+    Database -> CourseService: course saved
+    CourseService -> Teacher: Confirm Changes
+else error
+    Database -> CourseService: error details
+    CourseService -> Teacher: Display Error
+end
 
-Student -> System: Register for Course
-System -> CourseService: Register Student for Course
-CourseService -> System: Confirm Registration
-System -> Student: Registration Successful
+Teacher -> CourseService: updateCourse(courseId, course, teachers)
+CourseService -> Database: update(course)
+alt success
+    Database -> CourseService: course updated
+    CourseService -> Teacher: Confirm Changes
+else error
+    Database -> CourseService: error details
+    CourseService -> Teacher: Display Error
+end
 
-Student -> System: Check Grades
-System -> GradeService: Retrieve Grades
-GradeService -> System: Return Grades
-System -> Student: Display Grades
+Teacher -> CourseService: deleteCourse(courseId)
+CourseService -> Database: delete(course)
+alt success
+    Database -> CourseService: course deleted
+    CourseService -> Teacher: Confirm Changes
+else error
+    Database -> CourseService: error details
+    CourseService -> Teacher: Display Error
+end
 
-Teacher -> System: Manage Courses
-System -> CourseService: Add/Edit/Delete Course
-CourseService -> System: Confirm Changes
+Teacher -> CourseService: getAllCourses()
+CourseService -> Database: fetch all courses
+Database -> CourseService: list of courses
+CourseService -> Teacher: return all courses
 
-Teacher -> System: Update Grades
-System -> GradeService: Update Student Grades
-GradeService -> System: Confirm Grade Update
-
-Teacher -> System: Track Attendance
-System -> AttendanceService: Mark Attendance
-AttendanceService -> System: Confirm Attendance Recorded
-
-Teacher -> System: Manage Students
-System -> StudentService: Add/Edit/Delete Student
-StudentService -> System: Confirm Changes
+Teacher -> CourseService: getCourseById(courseId)
+CourseService -> Database: fetch course by ID
+alt found
+    Database -> CourseService: return course
+    CourseService -> Teacher: return course
+else not found
+    Database -> CourseService: course not found
+    CourseService -> Teacher: course not found
+end
 
 @enduml

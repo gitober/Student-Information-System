@@ -116,15 +116,6 @@ CREATE TABLE IF NOT EXISTS grade (
                                      FOREIGN KEY (course_id) REFERENCES course(course_id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Create the 'profile' table
-CREATE TABLE IF NOT EXISTS profile (
-                                       student_class VARCHAR(255) NOT NULL,
-                                       year INT NOT NULL,
-                                       student_number BIGINT NOT NULL,
-                                       PRIMARY KEY (student_number),
-                                       FOREIGN KEY (student_number) REFERENCES student(student_number) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
 -- Create the 'registration' table
 CREATE TABLE IF NOT EXISTS registration (
                                             registration_id BIGINT NOT NULL AUTO_INCREMENT,
