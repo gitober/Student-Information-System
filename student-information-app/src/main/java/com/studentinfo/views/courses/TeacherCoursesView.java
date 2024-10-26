@@ -5,6 +5,7 @@ import com.studentinfo.data.entity.Teacher;
 import com.studentinfo.services.CourseService;
 import com.studentinfo.data.entity.Course;
 import com.studentinfo.services.TeacherService;
+import com.studentinfo.services.DateService; // Import DateService
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -22,6 +23,8 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -34,81 +37,75 @@ public class TeacherCoursesView extends Composite<VerticalLayout> {
 
     private final CourseService courseService;
     private final TeacherService teacherService;
-    private List<Course> courses; // Store the courses data
+    private List<Course> courses;
     private final Grid<Course> coursesGrid;
 
     @Autowired
-    public TeacherCoursesView(CourseService courseService, TeacherService teacherService) {
+    public TeacherCoursesView(CourseService courseService, TeacherService teacherService, DateService dateService, MessageSource messageSource) {
         this.courseService = courseService;
         this.teacherService = teacherService;
+        // Inject DateService
 
-        // Main layout setup
         getContent().addClassName("teacher-courses-view-container");
 
-        // Page title
-        H2 title = new H2("Course Management");
+        H2 title = new H2(messageSource.getMessage("courses.title", null, LocaleContextHolder.getLocale()));
         title.addClassName("teacher-courses-view-title");
 
-        Paragraph description = new Paragraph("Manage your courses here. You can add, edit, view, and delete courses.");
+        Paragraph description = new Paragraph(messageSource.getMessage("courses.description", null, LocaleContextHolder.getLocale()));
         description.addClassName("teacher-courses-view-description");
 
-        // Search bar to filter courses by course name or plan
-        TextField searchField = new TextField("Search Courses");
+        TextField searchField = new TextField(messageSource.getMessage("courses.searchPlaceholder", null, LocaleContextHolder.getLocale()));
         searchField.addClassName("teacher-courses-view-search");
         searchField.setValueChangeMode(ValueChangeMode.EAGER);
         searchField.addValueChangeListener(event -> filterCourses(event.getValue()));
 
-        // Configure courses grid
         coursesGrid = new Grid<>(Course.class, false);
         coursesGrid.addClassName("teacher-courses-view-grid");
-        coursesGrid.addColumn(Course::getCourseName).setHeader("Course Name").setKey("course-name");
-        coursesGrid.addColumn(Course::getCoursePlan).setHeader("Course Plan").setKey("course-plan");
-        coursesGrid.addColumn(Course::getFormattedDateRange).setHeader("Date Range").setKey("date-range");
+        coursesGrid.addColumn(Course::getCourseName).setHeader(messageSource.getMessage("courses.courseName", null, LocaleContextHolder.getLocale()));
+        coursesGrid.addColumn(Course::getCoursePlan).setHeader(messageSource.getMessage("courses.coursePlan", null, LocaleContextHolder.getLocale()));
 
-        // Add action buttons (Edit, View, Delete)
+        // Use dateService to format date range based on locale
+        coursesGrid.addColumn(course -> dateService.formatDateRange(LocalDate.now(), LocalDate.now().plusDays(course.getDuration())))
+                .setHeader(messageSource.getMessage("courses.dateRange", null, LocaleContextHolder.getLocale()));
+
         coursesGrid.addComponentColumn(course -> {
-            Button editButton = new Button("Edit");
+            Button editButton = new Button(messageSource.getMessage("courses.edit", null, LocaleContextHolder.getLocale()));
             editButton.addClassName("teacher-courses-view-edit-button");
-            editButton.addClickListener(event -> openEditDialog(course));
+            editButton.addClickListener(event -> openEditDialog(course, messageSource));
 
-            Button viewDetailsButton = new Button("View Details");
+            Button viewDetailsButton = new Button(messageSource.getMessage("courses.viewDetails", null, LocaleContextHolder.getLocale()));
             viewDetailsButton.addClassName("teacher-courses-view-details-button");
-            viewDetailsButton.addClickListener(event -> openViewDetailsDialog(course));
+            viewDetailsButton.addClickListener(event -> openViewDetailsDialog(course, messageSource));
 
-            Button deleteButton = new Button("Delete");
+            Button deleteButton = new Button(messageSource.getMessage("courses.delete", null, LocaleContextHolder.getLocale()));
             deleteButton.addClassName("teacher-courses-view-delete-button");
-            deleteButton.addClickListener(event -> openDeleteConfirmationDialog(course));
+            deleteButton.addClickListener(event -> openDeleteConfirmationDialog(course, messageSource));
 
             HorizontalLayout actionButtons = new HorizontalLayout(editButton, viewDetailsButton, deleteButton);
             actionButtons.addClassName("teacher-courses-view-action-buttons");
             return actionButtons;
-        }).setHeader("Actions");
+        }).setHeader(messageSource.getMessage("courses.actions", null, LocaleContextHolder.getLocale()));
 
-        // Add course button (opens the "Add New Course" dialog)
-        Button addCourseButton = new Button("Add Course");
+        Button addCourseButton = new Button(messageSource.getMessage("courses.addCourse", null, LocaleContextHolder.getLocale()));
         addCourseButton.addClassName("teacher-courses-view-add-button");
-        addCourseButton.addClickListener(event -> openAddCourseDialog());
+        addCourseButton.addClickListener(event -> openAddCourseDialog(messageSource));
 
-        // Adding components to the view
         getContent().add(title, description, searchField, coursesGrid, addCourseButton);
 
-        // Load the courses during initialization
         refreshCourseData();
     }
 
-    // Method to refresh the course data
     private void refreshCourseData() {
         courses = courseService.getAllCourses();
         if (courses != null && !courses.isEmpty()) {
-            courses.sort((c1, c2) -> Long.compare(c2.getCourseId(), c1.getCourseId())); // Sort by courseId descending
-            coursesGrid.setItems(courses); // Ensure the courses are loaded into the grid
+            courses.sort((c1, c2) -> Long.compare(c2.getCourseId(), c1.getCourseId()));
+            coursesGrid.setItems(courses);
         } else {
-            coursesGrid.setItems(List.of()); // Handle the case where no courses are found
+            coursesGrid.setItems(List.of());
         }
-        coursesGrid.getDataProvider().refreshAll(); // Force grid to refresh
+        coursesGrid.getDataProvider().refreshAll();
     }
 
-    // Method to filter courses based on the search term
     private void filterCourses(String searchTerm) {
         List<Course> filteredCourses = courses.stream()
                 .filter(course -> course.getCourseName().toLowerCase().contains(searchTerm.toLowerCase()) ||
@@ -117,178 +114,140 @@ public class TeacherCoursesView extends Composite<VerticalLayout> {
         coursesGrid.setItems(filteredCourses);
     }
 
-    // Method to open the Edit dialog
-    private void openEditDialog(Course course) {
+    private void openEditDialog(Course course, MessageSource messageSource) {
         Dialog editDialog = new Dialog();
         editDialog.addClassName("teacher-courses-view-edit-dialog");
 
-        // Create and configure input fields for editing course details
-        TextField courseNameField = new TextField("Course Name");
+        TextField courseNameField = new TextField(messageSource.getMessage("courses.courseName", null, LocaleContextHolder.getLocale()));
         courseNameField.setValue(course.getCourseName());
-        courseNameField.addClassName("teacher-courses-view-course-name-field");
 
-        TextField coursePlanField = new TextField("Course Plan");
+        TextField coursePlanField = new TextField(messageSource.getMessage("courses.coursePlan", null, LocaleContextHolder.getLocale()));
         coursePlanField.setValue(course.getCoursePlan());
-        coursePlanField.addClassName("teacher-courses-view-plan-field");
 
-        // DatePicker for the start date
-        DatePicker startDatePicker = new DatePicker("Start Date");
+        DatePicker startDatePicker = new DatePicker(messageSource.getMessage("courses.startDate", null, LocaleContextHolder.getLocale()));
         startDatePicker.setValue(LocalDate.now());
-        startDatePicker.addClassName("teacher-courses-view-start-date-picker");
 
-        // Calculate end date using the duration
-        DatePicker endDatePicker = new DatePicker("End Date");
+        DatePicker endDatePicker = new DatePicker(messageSource.getMessage("courses.endDate", null, LocaleContextHolder.getLocale()));
         endDatePicker.setValue(startDatePicker.getValue().plusDays(course.getDuration()));
-        endDatePicker.addClassName("teacher-courses-view-end-date-picker");
 
-        // ComboBox for selecting teachers
-        ComboBox<Teacher> teacherComboBox = new ComboBox<>("Select Teacher");
+        ComboBox<Teacher> teacherComboBox = new ComboBox<>(messageSource.getMessage("courses.selectTeacher", null, LocaleContextHolder.getLocale()));
         teacherComboBox.setItems(teacherService.getAllTeachers());
         teacherComboBox.setItemLabelGenerator(Teacher::getFullName);
-        teacherComboBox.setValue(course.getTeachers().isEmpty() ? null : course.getTeachers().get(0));
-        teacherComboBox.addClassName("teacher-courses-view-add-teacher");
+        teacherComboBox.setValue(course.getTeachers().isEmpty() ? null : course.getTeachers().getFirst());
 
-        // Button to save the changes
-        Button saveButton = new Button("Save");
-        saveButton.addClassName("teacher-courses-view-save-button");
+        Button saveButton = new Button(messageSource.getMessage("courses.save", null, LocaleContextHolder.getLocale()));
         saveButton.addClickListener(event -> {
             course.setCourseName(courseNameField.getValue());
             course.setCoursePlan(coursePlanField.getValue());
-
-            // Calculate duration based on selected dates
             long durationInDays = java.time.temporal.ChronoUnit.DAYS.between(startDatePicker.getValue(), endDatePicker.getValue());
             course.setDuration((int) durationInDays);
-
-            Teacher selectedTeacher = teacherComboBox.getValue();
-            course.setTeachers(List.of(selectedTeacher));
+            course.setTeachers(List.of(teacherComboBox.getValue()));
 
             Course savedCourse = courseService.saveCourse(course, course.getTeachers());
             if (savedCourse != null) {
-                refreshCourseData();  // Refresh the grid
-                Notification.show("Course updated");
+                refreshCourseData();
+                Notification.show(messageSource.getMessage("courses.updateSuccess", null, LocaleContextHolder.getLocale()));
             } else {
-                Notification.show("Error updating course. Please try again.");
+                Notification.show(messageSource.getMessage("courses.updateError", null, LocaleContextHolder.getLocale()));
             }
             editDialog.close();
         });
 
-        Button cancelButton = new Button("Cancel");
-        cancelButton.addClassName("teacher-courses-view-cancel-button");
+        Button cancelButton = new Button(messageSource.getMessage("courses.cancel", null, LocaleContextHolder.getLocale()));
         cancelButton.addClickListener(event -> editDialog.close());
 
-        HorizontalLayout dialogButtons = new HorizontalLayout(saveButton, cancelButton);
-        dialogButtons.addClassName("teacher-courses-view-dialog-buttons");
-
-        editDialog.add(courseNameField, coursePlanField, startDatePicker, endDatePicker, teacherComboBox, dialogButtons);
+        editDialog.add(courseNameField, coursePlanField, startDatePicker, endDatePicker, teacherComboBox, new HorizontalLayout(saveButton, cancelButton));
         editDialog.open();
     }
 
-    private void openViewDetailsDialog(Course course) {
+    private void openViewDetailsDialog(Course course, MessageSource messageSource) {
         Dialog detailsDialog = new Dialog();
         detailsDialog.addClassName("teacher-courses-view-details-dialog");
 
-        TextField courseNameField = new TextField("Course Name");
+        TextField courseNameField = new TextField(messageSource.getMessage("courses.courseName", null, LocaleContextHolder.getLocale()));
         courseNameField.setValue(course.getCourseName());
         courseNameField.setReadOnly(true);
-        courseNameField.addClassName("teacher-courses-view-details-course-name");
 
-        TextField coursePlanField = new TextField("Course Plan");
+        TextField coursePlanField = new TextField(messageSource.getMessage("courses.coursePlan", null, LocaleContextHolder.getLocale()));
         coursePlanField.setValue(course.getCoursePlan());
         coursePlanField.setReadOnly(true);
-        coursePlanField.addClassName("teacher-courses-view-details-course-plan");
 
-        DatePicker startDatePicker = new DatePicker("Start Date");
+        DatePicker startDatePicker = new DatePicker(messageSource.getMessage("courses.startDate", null, LocaleContextHolder.getLocale()));
         startDatePicker.setValue(LocalDate.now());
         startDatePicker.setReadOnly(true);
-        startDatePicker.addClassName("teacher-courses-view-details-start-date");
 
-        DatePicker endDatePicker = new DatePicker("End Date");
+        DatePicker endDatePicker = new DatePicker(messageSource.getMessage("courses.endDate", null, LocaleContextHolder.getLocale()));
         endDatePicker.setValue(LocalDate.now().plusDays(course.getDuration()));
         endDatePicker.setReadOnly(true);
-        endDatePicker.addClassName("teacher-courses-view-details-end-date");
 
         Grid<Student> studentGrid = new Grid<>(Student.class, false);
-        studentGrid.addClassName("teacher-courses-view-student-grid");
-        studentGrid.addColumn(Student::getFirstName).setHeader("First Name").setKey("student-firstname");
-        studentGrid.addColumn(Student::getLastName).setHeader("Last Name").setKey("student-lastname");
-        studentGrid.addColumn(Student::getEmail).setHeader("Email").setKey("student-email");
-        studentGrid.addColumn(Student::getPhoneNumber).setHeader("Phone Number").setKey("student-phonenumber");
+        studentGrid.addColumn(Student::getFirstName).setHeader(messageSource.getMessage("courses.studentFirstName", null, LocaleContextHolder.getLocale()));
+        studentGrid.addColumn(Student::getLastName).setHeader(messageSource.getMessage("courses.studentLastName", null, LocaleContextHolder.getLocale()));
+        studentGrid.addColumn(Student::getEmail).setHeader(messageSource.getMessage("courses.studentEmail", null, LocaleContextHolder.getLocale()));
+        studentGrid.addColumn(Student::getPhoneNumber).setHeader(messageSource.getMessage("courses.studentPhoneNumber", null, LocaleContextHolder.getLocale()));
+        studentGrid.setItems(courseService.getEnrolledStudentsByCourseId(course.getCourseId()));
 
-        List<Student> enrolledStudents = courseService.getEnrolledStudentsByCourseId(course.getCourseId());
-        studentGrid.setItems(enrolledStudents);
-
-        Button closeButton = new Button("Close");
-        closeButton.addClassName("teacher-courses-view-close-button");
+        Button closeButton = new Button(messageSource.getMessage("courses.close", null, LocaleContextHolder.getLocale()));
         closeButton.addClickListener(event -> detailsDialog.close());
 
-        detailsDialog.add(courseNameField, coursePlanField, startDatePicker, endDatePicker, new H2("Enrolled Students"), studentGrid, closeButton);
+        detailsDialog.add(courseNameField, coursePlanField, startDatePicker, endDatePicker, studentGrid, closeButton);
         detailsDialog.open();
     }
 
-    private void openDeleteConfirmationDialog(Course course) {
+    private void openDeleteConfirmationDialog(Course course, MessageSource messageSource) {
         Dialog confirmationDialog = new Dialog();
         confirmationDialog.addClassName("teacher-courses-view-delete-dialog");
 
-        confirmationDialog.add(new H2("Confirm Course Deletion"));
+        confirmationDialog.add(new H2(messageSource.getMessage("courses.confirmDeletion", null, LocaleContextHolder.getLocale())));
 
-        Button confirmButton = new Button("Confirm");
-        confirmButton.addClassName("teacher-courses-view-confirm-button");
+        Button confirmButton = new Button(messageSource.getMessage("courses.confirm", null, LocaleContextHolder.getLocale()));
         confirmButton.addClickListener(event -> {
             try {
                 courseService.deleteCourse(course.getCourseId());
-                refreshCourseData(); // Refresh grid
-                Notification.show("Course deleted");
+                refreshCourseData();
+                Notification.show(messageSource.getMessage("courses.deleteSuccess", null, LocaleContextHolder.getLocale()));
             } catch (Exception e) {
-                Notification.show("Failed to delete course: " + e.getMessage());
+                Notification.show(messageSource.getMessage("courses.deleteError", null, LocaleContextHolder.getLocale()));
             }
             confirmationDialog.close();
         });
 
-        Button cancelButton = new Button("Cancel");
-        cancelButton.addClassName("teacher-courses-view-cancel-delete-button");
+        Button cancelButton = new Button(messageSource.getMessage("courses.cancel", null, LocaleContextHolder.getLocale()));
         cancelButton.addClickListener(event -> confirmationDialog.close());
 
-        HorizontalLayout dialogButtons = new HorizontalLayout(confirmButton, cancelButton);
-        confirmationDialog.add(dialogButtons);
+        confirmationDialog.add(new HorizontalLayout(confirmButton, cancelButton));
         confirmationDialog.open();
     }
 
-    private void openAddCourseDialog() {
+    private void openAddCourseDialog(MessageSource messageSource) {
         Dialog addCourseDialog = new Dialog();
         addCourseDialog.addClassName("teacher-courses-view-add-dialog");
 
-        TextField courseNameField = new TextField("Course Name");
-        courseNameField.addClassName("teacher-courses-view-add-course-name");
-
-        TextField coursePlanField = new TextField("Course Plan");
-        coursePlanField.addClassName("teacher-courses-view-add-course-plan");
-
-        DatePicker startDatePicker = new DatePicker("Start Date");
+        TextField courseNameField = new TextField(messageSource.getMessage("courses.courseName", null, LocaleContextHolder.getLocale()));
+        TextField coursePlanField = new TextField(messageSource.getMessage("courses.coursePlan", null, LocaleContextHolder.getLocale()));
+        DatePicker startDatePicker = new DatePicker(messageSource.getMessage("courses.startDate", null, LocaleContextHolder.getLocale()));
         startDatePicker.setValue(LocalDate.now());
-        startDatePicker.addClassName("teacher-courses-view-add-start-date");
 
-        DatePicker endDatePicker = new DatePicker("End Date");
+        DatePicker endDatePicker = new DatePicker(messageSource.getMessage("courses.endDate", null, LocaleContextHolder.getLocale()));
         endDatePicker.setValue(startDatePicker.getValue().plusDays(30));
-        endDatePicker.addClassName("teacher-courses-view-add-end-date");
 
-        ComboBox<Teacher> teacherComboBox = new ComboBox<>("Select Teacher");
+        ComboBox<Teacher> teacherComboBox = new ComboBox<>(messageSource.getMessage("courses.selectTeacher", null, LocaleContextHolder.getLocale()));
         teacherComboBox.setItems(teacherService.getAllTeachers());
         teacherComboBox.setItemLabelGenerator(Teacher::getFullName);
 
-        Button saveButton = new Button("Save");
-        saveButton.addClassName("teacher-courses-view-add-save-button");
+        Button saveButton = new Button(messageSource.getMessage("courses.save", null, LocaleContextHolder.getLocale()));
         saveButton.addClickListener(event -> {
             LocalDate startDate = startDatePicker.getValue();
             LocalDate endDate = endDatePicker.getValue();
 
             if (startDate == null || endDate == null || endDate.isBefore(startDate)) {
-                Notification.show("Invalid date range. Please select valid dates.");
+                Notification.show(messageSource.getMessage("courses.invalidDateRange", null, LocaleContextHolder.getLocale()));
                 return;
             }
 
             Teacher selectedTeacher = teacherComboBox.getValue();
             if (selectedTeacher == null) {
-                Notification.show("Please select a teacher.");
+                Notification.show(messageSource.getMessage("courses.selectTeacherPrompt", null, LocaleContextHolder.getLocale()));
                 return;
             }
 
@@ -298,21 +257,19 @@ public class TeacherCoursesView extends Composite<VerticalLayout> {
 
             try {
                 courseService.saveCourse(newCourse, List.of(selectedTeacher));
-                refreshCourseData(); // Refresh the grid and sort
-                Notification.show("New course added");
+                refreshCourseData();
+                Notification.show(messageSource.getMessage("courses.addSuccess", null, LocaleContextHolder.getLocale()));
             } catch (Exception e) {
-                Notification.show("Error adding course: " + e.getMessage());
+                Notification.show(messageSource.getMessage("courses.addError", null, LocaleContextHolder.getLocale()));
             }
 
             addCourseDialog.close();
         });
 
-        Button cancelButton = new Button("Cancel");
-        cancelButton.addClassName("teacher-courses-view-add-cancel-button");
+        Button cancelButton = new Button(messageSource.getMessage("courses.cancel", null, LocaleContextHolder.getLocale()));
         cancelButton.addClickListener(event -> addCourseDialog.close());
 
-        HorizontalLayout dialogButtons = new HorizontalLayout(saveButton, cancelButton);
-        addCourseDialog.add(courseNameField, coursePlanField, startDatePicker, endDatePicker, teacherComboBox, dialogButtons);
+        addCourseDialog.add(courseNameField, coursePlanField, startDatePicker, endDatePicker, teacherComboBox, new HorizontalLayout(saveButton, cancelButton));
         addCourseDialog.open();
     }
 }

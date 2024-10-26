@@ -21,6 +21,7 @@ public class LocalizationConfig implements WebMvcConfigurer {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasename("messages"); // Assumes `messages_en.properties`, etc.
         messageSource.setDefaultEncoding("UTF-8");
+        messageSource.setFallbackToSystemLocale(false); // Fall back to default messages when specific locale is unavailable
         return messageSource;
     }
 
@@ -29,8 +30,8 @@ public class LocalizationConfig implements WebMvcConfigurer {
     public LocaleResolver localeResolver() {
         CookieLocaleResolver localeResolver = new CookieLocaleResolver();
         localeResolver.setDefaultLocale(Locale.ENGLISH); // Set default locale to English
-        localeResolver.setCookieName("user-lang"); // Name of the cookie to store the locale
-        localeResolver.setCookieMaxAge(3600 * 24 * 365); // 1 year
+        localeResolver.setCookieName("user-lang"); // Set cookie name (deprecated)
+        localeResolver.setCookieMaxAge(3600 * 24 * 365); // Set cookie max age to 1 year (deprecated)
         return localeResolver;
     }
 

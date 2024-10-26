@@ -10,6 +10,7 @@ import com.studentinfo.views.editprofile.EditProfileView;
 import com.studentinfo.views.grades.GradesView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Composite;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
@@ -19,23 +20,30 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.vaadin.flow.component.html.Image;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 
+import java.util.Locale;
 
 @SpringComponent
 @UIScope
 @CssImport("./themes/studentinformationapp/views/home-profile-page-view/teacher-profile-page-view.css")
 public class TeacherDashboardView extends Composite<VerticalLayout> {
 
+    private final MessageSource messageSource;
+    private final Locale locale;
+
     @Autowired
-    public TeacherDashboardView(CourseService courseService, StudentService studentService, GradeService gradeService) {
+    public TeacherDashboardView(CourseService courseService, StudentService studentService, GradeService gradeService, MessageSource messageSource) {
+        this.messageSource = messageSource;
+        this.locale = Locale.getDefault();
 
         // Main layout setup
         getContent().addClassName("teacher-dashboard-view");
 
         // Page title
-        H1 welcomeText = new H1("Teacher Dashboard");
+        H1 welcomeText = new H1(getTranslation("teacher.dashboard.title"));
         welcomeText.addClassName("teacher-dashboard-welcome-text");
         getContent().add(welcomeText);
 
@@ -46,12 +54,21 @@ public class TeacherDashboardView extends Composite<VerticalLayout> {
         dashboardGrid.setJustifyContentMode(FlexLayout.JustifyContentMode.CENTER);
 
         // Add cards with navigation links
-
-        dashboardGrid.add(createDashboardCard("Students", studentService.list().size() + " Students", TeacherUpdateStudentProfileView.class, "./icons/Students.png"));
-        dashboardGrid.add(createDashboardCard("Grading", gradeService.getAllGrades().size() + " Grades", GradesView.class, "./icons/Recent_Grades.png"));
-        dashboardGrid.add(createDashboardCard("Manage Courses", courseService.getAllCourses().size() + " Classes", CoursesView.class, "./icons/Your_Courses.png"));
-        dashboardGrid.add(createDashboardCard("Manage Attendance", "Click to Manage", TeacherAttendanceView.class, "./icons/Manage_Attendance.png"));
-        dashboardGrid.add(createDashboardCard("Quick Links", "Access Tools", EditProfileView.class, "./icons/Quick_Links.png"));
+        dashboardGrid.add(createDashboardCard(getTranslation("teacher.dashboard.students.title"),
+                studentService.list().size() + " " + getTranslation("teacher.dashboard.students.count"),
+                TeacherUpdateStudentProfileView.class, "./icons/Students.png"));
+        dashboardGrid.add(createDashboardCard(getTranslation("teacher.dashboard.grading.title"),
+                gradeService.getAllGrades().size() + " " + getTranslation("teacher.dashboard.grading.count"),
+                GradesView.class, "./icons/Recent_Grades.png"));
+        dashboardGrid.add(createDashboardCard(getTranslation("teacher.dashboard.courses.title"),
+                courseService.getAllCourses().size() + " " + getTranslation("teacher.dashboard.courses.count"),
+                CoursesView.class, "./icons/Your_Courses.png"));
+        dashboardGrid.add(createDashboardCard(getTranslation("teacher.dashboard.attendance.title"),
+                getTranslation("teacher.dashboard.attendance.description"),
+                TeacherAttendanceView.class, "./icons/Manage_Attendance.png"));
+        dashboardGrid.add(createDashboardCard(getTranslation("teacher.dashboard.links.title"),
+                getTranslation("teacher.dashboard.links.description"),
+                EditProfileView.class, "./icons/Quick_Links.png"));
 
         getContent().add(dashboardGrid);
     }
@@ -86,5 +103,10 @@ public class TeacherDashboardView extends Composite<VerticalLayout> {
             card.add(cardIcon, cardTitle, cardDescription);
         }
         return card;
+    }
+
+    private String getTranslation(String key) {
+        Locale currentLocale = UI.getCurrent().getLocale();
+        return messageSource.getMessage(key, null, currentLocale);
     }
 }

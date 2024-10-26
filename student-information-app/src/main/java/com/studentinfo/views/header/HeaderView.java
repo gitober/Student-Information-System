@@ -146,7 +146,7 @@ public class HeaderView extends HorizontalLayout {
 
     private ComboBox<LanguageOption> createLanguageDropdown() {
         List<LanguageOption> languageOptions = new ArrayList<>();
-        languageOptions.add(new LanguageOption("English", "images/flags/us.png", Locale.ENGLISH));
+        languageOptions.add(new LanguageOption("English", "images/flags/uk.png", Locale.ENGLISH));
         languageOptions.add(new LanguageOption("Suomi", "images/flags/fi.png", Locale.forLanguageTag("fi")));
         languageOptions.add(new LanguageOption("中文", "images/flags/ch.png", Locale.forLanguageTag("ch")));
         languageOptions.add(new LanguageOption("Русский", "images/flags/ru.png", Locale.forLanguageTag("ru")));

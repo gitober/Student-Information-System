@@ -26,9 +26,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.context.MessageSource;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -45,11 +47,25 @@ public class TeacherDashboardViewTest {
         CourseService courseService = Mockito.mock(CourseService.class);
         StudentService studentService = Mockito.mock(StudentService.class);
         GradeService gradeService = Mockito.mock(GradeService.class);
+        MessageSource messageSource = Mockito.mock(MessageSource.class);
 
         // Mock service methods
         when(studentService.list()).thenReturn(new ArrayList<>(List.of(new Student(), new Student())));
         when(gradeService.getAllGrades()).thenReturn(new ArrayList<>(List.of(new Grade(), new Grade(), new Grade())));
         when(courseService.getAllCourses()).thenReturn(new ArrayList<>(List.of(new Course(), new Course())));
+
+        // Mock translation messages
+        when(messageSource.getMessage("teacher.dashboard.title", null, Locale.getDefault())).thenReturn("Teacher Dashboard");
+        when(messageSource.getMessage("teacher.dashboard.students.title", null, Locale.getDefault())).thenReturn("Students");
+        when(messageSource.getMessage("teacher.dashboard.students.count", null, Locale.getDefault())).thenReturn("Students Count");
+        when(messageSource.getMessage("teacher.dashboard.grading.title", null, Locale.getDefault())).thenReturn("Grading");
+        when(messageSource.getMessage("teacher.dashboard.grading.count", null, Locale.getDefault())).thenReturn("Grades Count");
+        when(messageSource.getMessage("teacher.dashboard.courses.title", null, Locale.getDefault())).thenReturn("Manage Courses");
+        when(messageSource.getMessage("teacher.dashboard.courses.count", null, Locale.getDefault())).thenReturn("Courses Count");
+        when(messageSource.getMessage("teacher.dashboard.attendance.title", null, Locale.getDefault())).thenReturn("Manage Attendance");
+        when(messageSource.getMessage("teacher.dashboard.attendance.description", null, Locale.getDefault())).thenReturn("Click to Manage");
+        when(messageSource.getMessage("teacher.dashboard.links.title", null, Locale.getDefault())).thenReturn("Quick Links");
+        when(messageSource.getMessage("teacher.dashboard.links.description", null, Locale.getDefault())).thenReturn("Access Tools");
 
         // Setting up a mocked Vaadin environment
         VaadinService vaadinServiceMock = Mockito.mock(VaadinService.class);
@@ -78,7 +94,7 @@ public class TeacherDashboardViewTest {
                 .thenReturn(Optional.of("edit-profile"));
 
         // Creating the TeacherDashboardView instance with mocked services
-        teacherDashboardView = new TeacherDashboardView(courseService, studentService, gradeService);
+        teacherDashboardView = new TeacherDashboardView(courseService, studentService, gradeService, messageSource);
     }
 
     @AfterEach

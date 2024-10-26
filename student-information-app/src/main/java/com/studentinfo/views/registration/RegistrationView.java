@@ -24,6 +24,7 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 @PageTitle("Registration")
 @Route(value = "register")
@@ -44,7 +45,6 @@ public class RegistrationView extends Composite<VerticalLayout> {
     public RegistrationView(RegistrationHandler registrationHandler, MessageSource messageSource) {
         this.registrationHandler = registrationHandler;
 
-        // Main layout setup
         VerticalLayout mainLayout = getContent();
         mainLayout.setSizeFull();
         mainLayout.setPadding(false);
@@ -53,15 +53,12 @@ public class RegistrationView extends Composite<VerticalLayout> {
         mainLayout.setJustifyContentMode(JustifyContentMode.START);
         mainLayout.addClassName("registration-container");
 
-        // Add the reusable Header component
         HeaderView header = new HeaderView(messageSource);
         header.setWidthFull();
         mainLayout.add(header);
 
-        // Add padding to ensure content starts below the header
         mainLayout.getStyle().set("padding-top", "60px");
 
-        // Layout for form and content
         VerticalLayout layoutColumn2 = new VerticalLayout();
         layoutColumn2.setWidth("100%");
         layoutColumn2.setMaxWidth("800px");
@@ -70,21 +67,18 @@ public class RegistrationView extends Composite<VerticalLayout> {
         layoutColumn2.setJustifyContentMode(JustifyContentMode.CENTER);
         layoutColumn2.addClassName("registration-form");
 
-        // Form Title
-        H3 h3 = new H3("Register Here");
+        H3 h3 = new H3(messageSource.getMessage("registration.formTitle", null, LocaleContextHolder.getLocale()));
         h3.addClassName("registration-form-title");
 
-        // Form fields
         FormLayout formLayout2Col = new FormLayout();
-        firstNameField = new TextField("First Name");
-        lastNameField = new TextField("Last Name");
-        DatePicker birthdayField = new DatePicker("Birthday");
-        TextField phoneNumberField = new TextField("Phone Number");
-        emailField = new EmailField("Email");
-        passwordField = new PasswordField("Create Password");
-        confirmPasswordField = new PasswordField("Confirm Password");
+        firstNameField = new TextField(messageSource.getMessage("registration.firstName", null, LocaleContextHolder.getLocale()));
+        lastNameField = new TextField(messageSource.getMessage("registration.lastName", null, LocaleContextHolder.getLocale()));
+        DatePicker birthdayField = new DatePicker(messageSource.getMessage("registration.birthday", null, LocaleContextHolder.getLocale()));
+        TextField phoneNumberField = new TextField(messageSource.getMessage("registration.phoneNumber", null, LocaleContextHolder.getLocale()));
+        emailField = new EmailField(messageSource.getMessage("registration.email", null, LocaleContextHolder.getLocale()));
+        passwordField = new PasswordField(messageSource.getMessage("registration.password", null, LocaleContextHolder.getLocale()));
+        confirmPasswordField = new PasswordField(messageSource.getMessage("registration.confirmPassword", null, LocaleContextHolder.getLocale()));
 
-        // Add components to the form layout
         formLayout2Col.add(
                 firstNameField,
                 lastNameField,
@@ -97,46 +91,40 @@ public class RegistrationView extends Composite<VerticalLayout> {
         formLayout2Col.addClassName("registration-form-field");
         layoutColumn2.add(h3, formLayout2Col);
 
-        // Role selection
-        roleComboBox = new ComboBox<>("Role");
-        roleComboBox.setItems("Student", "Teacher");
-        roleComboBox.setPlaceholder("Select role");
+        roleComboBox = new ComboBox<>(messageSource.getMessage("registration.role", null, LocaleContextHolder.getLocale()));
+        roleComboBox.setItems(
+                messageSource.getMessage("registration.role.student", null, LocaleContextHolder.getLocale()),
+                messageSource.getMessage("registration.role.teacher", null, LocaleContextHolder.getLocale())
+        );
+        roleComboBox.setPlaceholder(messageSource.getMessage("registration.role.placeholder", null, LocaleContextHolder.getLocale()));
         formLayout2Col.add(roleComboBox);
 
-        // Buttons
-        saveButton = new Button("Register");
+        saveButton = new Button(messageSource.getMessage("registration.registerButton", null, LocaleContextHolder.getLocale()));
         saveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         saveButton.addClassName("registration-primary-button");
 
-        Button cancelButton = new Button("Cancel");
+        Button cancelButton = new Button(messageSource.getMessage("registration.cancelButton", null, LocaleContextHolder.getLocale()));
         cancelButton.addClassName("registration-secondary-button");
 
-        // Button click listeners
-        saveButton.addClickListener(e -> handleRegistration(birthdayField, phoneNumberField));
-
+        saveButton.addClickListener(e -> handleRegistration(birthdayField, phoneNumberField, messageSource));
         cancelButton.addClickListener(e -> UI.getCurrent().navigate("login"));
 
-        // Buttons layout
         HorizontalLayout buttonLayout = new HorizontalLayout(saveButton, cancelButton);
         buttonLayout.addClassName("registration-button-layout");
         layoutColumn2.add(buttonLayout);
 
-        // Add the form layout to the main layout
         mainLayout.addAndExpand(layoutColumn2);
 
-        // Add real-time field listeners for validation
-        addFieldListeners();
+        addFieldListeners(messageSource);
     }
 
-    private void handleRegistration(DatePicker birthdayField, TextField phoneNumberField) {
-        // Check if any required fields are empty
+    private void handleRegistration(DatePicker birthdayField, TextField phoneNumberField, MessageSource messageSource) {
         if (firstNameField.isEmpty() || lastNameField.isEmpty() || emailField.isEmpty() ||
                 passwordField.isEmpty() || confirmPasswordField.isEmpty() || roleComboBox.isEmpty()) {
-            Notification.show("Please fill in all the required fields.");
+            Notification.show(messageSource.getMessage("registration.emptyFields", null, LocaleContextHolder.getLocale()));
             return;
         }
 
-        // Attempt to register the user
         boolean registrationSuccessful = registrationHandler.registerUser(
                 firstNameField.getValue(),
                 lastNameField.getValue(),
@@ -148,26 +136,25 @@ public class RegistrationView extends Composite<VerticalLayout> {
         );
 
         if (registrationSuccessful) {
-            Notification.show("Registration successful!");
+            Notification.show(messageSource.getMessage("registration.success", null, LocaleContextHolder.getLocale()));
             UI.getCurrent().navigate("login");
         } else {
-            Notification.show("Registration failed. The email may already be in use or an unexpected error occurred.");
+            Notification.show(messageSource.getMessage("registration.failure", null, LocaleContextHolder.getLocale()));
         }
     }
 
-    // Real-time field validation listeners
-    private void addFieldListeners() {
-        emailField.addValueChangeListener(e -> validateEmail());
-        passwordField.addValueChangeListener(e -> validatePasswordStrength());
-        confirmPasswordField.addValueChangeListener(e -> validatePasswordMatch());
+    private void addFieldListeners(MessageSource messageSource) {
+        emailField.addValueChangeListener(e -> validateEmail(messageSource));
+        passwordField.addValueChangeListener(e -> validatePasswordStrength(messageSource));
+        confirmPasswordField.addValueChangeListener(e -> validatePasswordMatch(messageSource));
     }
 
-    private void validateEmail() {
+    private void validateEmail(MessageSource messageSource) {
         if (emailField.isEmpty() || !emailField.getValue().contains("@")) {
-            emailField.setErrorMessage("Please enter a valid email address.");
+            emailField.setErrorMessage(messageSource.getMessage("registration.invalidEmail", null, LocaleContextHolder.getLocale()));
             emailField.setInvalid(true);
         } else if (registrationHandler.isEmailRegistered(emailField.getValue())) {
-            emailField.setErrorMessage("This email is already registered.");
+            emailField.setErrorMessage(messageSource.getMessage("registration.emailRegistered", null, LocaleContextHolder.getLocale()));
             emailField.setInvalid(true);
         } else {
             emailField.setInvalid(false);
@@ -175,10 +162,10 @@ public class RegistrationView extends Composite<VerticalLayout> {
         updateSaveButtonState();
     }
 
-    private void validatePasswordStrength() {
+    private void validatePasswordStrength(MessageSource messageSource) {
         String password = passwordField.getValue();
         if (password.length() < 8 || !password.matches(".*\\d.*")) {
-            passwordField.setErrorMessage("Password must be at least 8 characters long and contain at least one number.");
+            passwordField.setErrorMessage(messageSource.getMessage("registration.weakPassword", null, LocaleContextHolder.getLocale()));
             passwordField.setInvalid(true);
         } else {
             passwordField.setInvalid(false);
@@ -186,9 +173,9 @@ public class RegistrationView extends Composite<VerticalLayout> {
         updateSaveButtonState();
     }
 
-    private void validatePasswordMatch() {
+    private void validatePasswordMatch(MessageSource messageSource) {
         if (!passwordField.getValue().equals(confirmPasswordField.getValue())) {
-            confirmPasswordField.setErrorMessage("Passwords do not match.");
+            confirmPasswordField.setErrorMessage(messageSource.getMessage("registration.passwordMismatch", null, LocaleContextHolder.getLocale()));
             confirmPasswordField.setInvalid(true);
         } else {
             confirmPasswordField.setInvalid(false);
@@ -196,7 +183,6 @@ public class RegistrationView extends Composite<VerticalLayout> {
         updateSaveButtonState();
     }
 
-    // Enable or disable the save button based on form validation
     private void updateSaveButtonState() {
         saveButton.setEnabled(!emailField.isInvalid() && !passwordField.isInvalid() && !confirmPasswordField.isInvalid());
     }
