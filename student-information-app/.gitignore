@@ -1,0 +1,57 @@
+# Ignore compiled files and directories
+/target/
+/node_modules/
+/.mvn/
+/.idea/
+/out/
+
+# Ignore environment and configuration files
+.env
+*.env
+*.iml
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore logs and temp files
+*.log
+*.tmp
+*.bak
+*.swp
+
+# Ignore application build files and IDE-specific files
+*.class
+*.jar
+*.war
+*.ear
+/.vscode/
+*.sublime-*
+
+# Ignore dependency management and package manager files
+package-lock.json
+yarn.lock
+
+# Ignore generated files from Vaadin
+vite.config.ts.timestamp*
+vite.generated.ts
+
+
+# Ignore cache files
+.cache/
+.caches/
+.idea/
+.vscode/
+*.project
+*.classpath
+.settings/
+
+# Ignore Maven specific files
+.mvn/
+mvnw
+mvnw.cmd
+
+# Ignore IntelliJ IDEA-specific files
+*.idea
+*.iml
+.idea/

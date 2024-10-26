@@ -93,6 +93,7 @@ public class HeaderView extends HorizontalLayout {
                 UI.getCurrent().getPage().setLocation("/logout");
             });
             logoutButton.setId("logout-button");
+            logoutButton.addClassName("logout-button");
 
             // Log the text of the logout button
             System.out.println("Logout button text: " + logoutButton.getText());
@@ -172,11 +173,18 @@ public class HeaderView extends HorizontalLayout {
             Locale selectedLocale = event.getValue().getLocale();
             UI.getCurrent().getSession().setLocale(selectedLocale);
             UI.getCurrent().setLocale(selectedLocale);
-            UI.getCurrent().getPage().executeJs("window.location.reload();");
+            LocaleContextHolder.setLocale(selectedLocale); // Sync with Spring's context
+
+            // Persist the selected locale in the cookie
+            UI.getCurrent().getPage().executeJs("document.cookie = 'user-lang=' + $0 + '; path=/; max-age=31536000';",
+                    selectedLocale.getLanguage());
+
+            UI.getCurrent().getPage().reload(); // Reload to apply the changes consistently
         });
 
         return languageDropdown;
     }
+
 
     // Inner class to represent language options
     @Getter
@@ -199,6 +207,8 @@ public class HeaderView extends HorizontalLayout {
 
     // Helper method to get translations
     private String getTranslation(String key) {
-        return messageSource.getMessage(key, null, LocaleContextHolder.getLocale());
+        String translation = messageSource.getMessage(key, null, LocaleContextHolder.getLocale());
+        System.out.println("Translation key: " + key + " - Locale: " + LocaleContextHolder.getLocale() + " - Result: " + translation);
+        return translation;
     }
 }
