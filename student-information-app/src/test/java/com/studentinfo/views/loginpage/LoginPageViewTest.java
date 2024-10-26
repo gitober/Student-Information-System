@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -39,6 +40,14 @@ public class LoginPageViewTest {
         // Mock the LoginHandler and MessageSource
         loginHandler = Mockito.mock(LoginHandler.class);
         MessageSource messageSource = Mockito.mock(MessageSource.class);
+
+        // Mock the message source to return expected labels
+        when(messageSource.getMessage("login.email", null, LocaleContextHolder.getLocale())).thenReturn("Email");
+        when(messageSource.getMessage("login.password", null, LocaleContextHolder.getLocale())).thenReturn("Password");
+        when(messageSource.getMessage("login.signin", null, LocaleContextHolder.getLocale())).thenReturn("Sign in");
+        when(messageSource.getMessage("login.signup", null, LocaleContextHolder.getLocale())).thenReturn("Signup");
+        when(messageSource.getMessage("login.forgotPassword", null, LocaleContextHolder.getLocale())).thenReturn("Forgot Password?");
+        when(messageSource.getMessage("login.rememberMe", null, LocaleContextHolder.getLocale())).thenReturn("Remember me");
 
         // Set up the UI context for Vaadin components
         UI ui = new UI();
@@ -121,12 +130,16 @@ public class LoginPageViewTest {
         Checkbox rememberMeCheckbox = findComponentOfType(loginPageView.getContent(), Checkbox.class);
 
         // Set values for email and password
+        assert emailField != null;
         emailField.setValue("test@example.com");
+        assert passwordField != null;
         passwordField.setValue("password123");
+        assert rememberMeCheckbox != null;
         rememberMeCheckbox.setValue(true);
 
         // Find the sign-in button and click it
         Button signInButton = findButtonByText(loginPageView.getContent(), "Sign in");
+        assert signInButton != null;
         signInButton.click();
 
         // Verify that the login method in LoginHandler was called with the correct arguments
@@ -154,9 +167,11 @@ public class LoginPageViewTest {
     public void testRememberMeCookie() {
         // Verify that the email was loaded from the cookie
         TextField emailField = findComponentOfType(loginPageView.getContent(), TextField.class);
+        assert emailField != null;
         assertEquals("test@example.com", emailField.getValue(), "Email should be pre-filled from cookie.");
 
         Checkbox rememberMeCheckbox = findComponentOfType(loginPageView.getContent(), Checkbox.class);
+        assert rememberMeCheckbox != null;
         assertTrue(rememberMeCheckbox.getValue(), "Remember me checkbox should be selected if cookie exists.");
     }
 
@@ -165,12 +180,13 @@ public class LoginPageViewTest {
         if (componentType.isInstance(root)) {
             return componentType.cast(root);
         }
-        Optional<T> childResult = root.getChildren()
-                .map(child -> findComponentOfType(child, componentType))
-                .filter(componentType::isInstance)
-                .map(componentType::cast)
-                .findFirst();
-        return childResult.orElse(null);
+        for (Component child : root.getChildren().toList()) {
+            T found = findComponentOfType(child, componentType);
+            if (found != null) {
+                return found;
+            }
+        }
+        return null;
     }
 
     // Helper method to find a button by its text in the layout's hierarchy
@@ -178,11 +194,12 @@ public class LoginPageViewTest {
         if (root instanceof Button && text.equals(((Button) root).getText())) {
             return (Button) root;
         }
-        Optional<Button> childResult = root.getChildren()
-                .map(child -> findButtonByText(child, text))
-                .filter(Objects::nonNull)
-                .map(component -> (Button) component)
-                .findFirst();
-        return childResult.orElse(null);
+        for (Component child : root.getChildren().toList()) {
+            Button found = findButtonByText(child, text);
+            if (found != null) {
+                return found;
+            }
+        }
+        return null;
     }
 }

@@ -19,11 +19,8 @@ import org.springframework.context.MessageSource;
 @CssImport("./themes/studentinformationapp/views/courses-view/courses-view.css")
 public class CoursesView extends Composite<VerticalLayout> {
 
-    private final UserContentLoader userContentLoader;
-
     @Autowired
     public CoursesView(AuthenticatedUser authenticatedUser, UserContentLoader userContentLoader, MessageSource messageSource) {
-        this.userContentLoader = userContentLoader;
 
         // Debug statements to ensure proper injection
         if (authenticatedUser == null) {

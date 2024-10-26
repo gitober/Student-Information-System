@@ -12,6 +12,7 @@ import com.studentinfo.views.courses.CoursesView;
 import com.studentinfo.views.editprofile.EditProfileView;
 import com.studentinfo.views.grades.GradesView;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
@@ -35,7 +36,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class TeacherDashboardViewTest {
 
@@ -43,11 +44,11 @@ public class TeacherDashboardViewTest {
 
     @BeforeEach
     public void setUp() {
-        // Mock the services
-        CourseService courseService = Mockito.mock(CourseService.class);
-        StudentService studentService = Mockito.mock(StudentService.class);
-        GradeService gradeService = Mockito.mock(GradeService.class);
-        MessageSource messageSource = Mockito.mock(MessageSource.class);
+        // Mock services
+        CourseService courseService = mock(CourseService.class);
+        StudentService studentService = mock(StudentService.class);
+        GradeService gradeService = mock(GradeService.class);
+        MessageSource messageSource = mock(MessageSource.class);
 
         // Mock service methods
         when(studentService.list()).thenReturn(new ArrayList<>(List.of(new Student(), new Student())));
@@ -67,42 +68,41 @@ public class TeacherDashboardViewTest {
         when(messageSource.getMessage("teacher.dashboard.links.title", null, Locale.getDefault())).thenReturn("Quick Links");
         when(messageSource.getMessage("teacher.dashboard.links.description", null, Locale.getDefault())).thenReturn("Access Tools");
 
-        // Setting up a mocked Vaadin environment
-        VaadinService vaadinServiceMock = Mockito.mock(VaadinService.class);
-        VaadinSession vaadinSessionMock = Mockito.mock(VaadinSession.class);
-        Router routerMock = Mockito.mock(Router.class);
-        RouteRegistry routeRegistryMock = Mockito.mock(RouteRegistry.class);
+        // Mock Vaadin environment
+        UI ui = new UI();
+        UI.setCurrent(ui);
 
-        // Ensure VaadinService.getCurrent() returns the mocked VaadinService
+        VaadinSession vaadinSessionMock = mock(VaadinSession.class);
+        ui.getInternals().setSession(vaadinSessionMock);
+
+        VaadinService vaadinServiceMock = mock(VaadinService.class);
+        Router routerMock = mock(Router.class);
+        RouteRegistry routeRegistryMock = mock(RouteRegistry.class);
+
         VaadinService.setCurrent(vaadinServiceMock);
-        VaadinSession.setCurrent(vaadinSessionMock);
+        when(vaadinServiceMock.getRouter()).thenReturn(routerMock);
+        when(routerMock.getRegistry()).thenReturn(routeRegistryMock);
 
-        // Ensure the router and route registry are set in the VaadinService
-        Mockito.when(vaadinServiceMock.getRouter()).thenReturn(routerMock);
-        Mockito.when(routerMock.getRegistry()).thenReturn(routeRegistryMock);
-
-        // Register the routes in the mocked RouteRegistry
-        Mockito.when(routeRegistryMock.getTargetUrl(TeacherUpdateStudentProfileView.class, new RouteParameters()))
+        // Mock route URLs for RouterLinks
+        when(routeRegistryMock.getTargetUrl(TeacherUpdateStudentProfileView.class, new RouteParameters()))
                 .thenReturn(Optional.of("teacher-update-student-profile"));
-        Mockito.when(routeRegistryMock.getTargetUrl(GradesView.class, new RouteParameters()))
+        when(routeRegistryMock.getTargetUrl(GradesView.class, new RouteParameters()))
                 .thenReturn(Optional.of("grades"));
-        Mockito.when(routeRegistryMock.getTargetUrl(CoursesView.class, new RouteParameters()))
+        when(routeRegistryMock.getTargetUrl(CoursesView.class, new RouteParameters()))
                 .thenReturn(Optional.of("courses"));
-        Mockito.when(routeRegistryMock.getTargetUrl(TeacherAttendanceView.class, new RouteParameters()))
+        when(routeRegistryMock.getTargetUrl(TeacherAttendanceView.class, new RouteParameters()))
                 .thenReturn(Optional.of("attendance"));
-        Mockito.when(routeRegistryMock.getTargetUrl(EditProfileView.class, new RouteParameters()))
+        when(routeRegistryMock.getTargetUrl(EditProfileView.class, new RouteParameters()))
                 .thenReturn(Optional.of("edit-profile"));
 
-        // Creating the TeacherDashboardView instance with mocked services
+        // Instantiate TeacherDashboardView with mocked services
         teacherDashboardView = new TeacherDashboardView(courseService, studentService, gradeService, messageSource);
     }
 
     @AfterEach
     public void tearDown() {
-        // Clear any references to avoid memory leaks
         teacherDashboardView = null;
-
-        // Reset VaadinService and VaadinSession to avoid affecting other tests
+        UI.setCurrent(null);
         VaadinService.setCurrent(null);
         VaadinSession.setCurrent(null);
     }

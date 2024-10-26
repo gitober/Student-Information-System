@@ -4,12 +4,11 @@ import com.studentinfo.data.entity.Course;
 import com.studentinfo.data.entity.Teacher;
 import com.studentinfo.services.CourseService;
 import com.studentinfo.services.TeacherService;
+import com.studentinfo.services.DateService;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.textfield.TextField;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,6 +35,7 @@ public class TeacherCoursesViewTest {
         // Mock the services
         CourseService courseService = Mockito.mock(CourseService.class);
         TeacherService teacherService = Mockito.mock(TeacherService.class);
+        DateService dateService = Mockito.mock(DateService.class);
         messageSource = Mockito.mock(MessageSource.class);
 
         // Mock service methods
@@ -54,7 +54,7 @@ public class TeacherCoursesViewTest {
         UI.setCurrent(ui);
 
         // Instantiate the view with mocked services
-        teacherCoursesView = new TeacherCoursesView(courseService, teacherService, messageSource);
+        teacherCoursesView = new TeacherCoursesView(courseService, teacherService, dateService, messageSource);
     }
 
     @AfterEach
@@ -100,9 +100,6 @@ public class TeacherCoursesViewTest {
         sampleCourse.setDuration(30);  // Set a valid duration to avoid NullPointerException
         sampleCourse.setTeachers(Collections.emptyList());  // Initialize the teachers list to avoid NullPointerException
 
-        // Mock MessageSource
-        MessageSource messageSource = Mockito.mock(MessageSource.class);
-
         try {
             // Access the method with reflection
             Method openEditDialogMethod = TeacherCoursesView.class.getDeclaredMethod("openEditDialog", Course.class, MessageSource.class);
@@ -119,9 +116,6 @@ public class TeacherCoursesViewTest {
             fail("An unexpected exception occurred while testing 'openEditDialog': " + e.getMessage());
         }
     }
-
-
-
 
     @Test
     public void testAddCourseButton() {
