@@ -1,26 +1,30 @@
 .student-grades-view-container {
     padding: 20px;
-    background-color: #FFF5BA; /* Same background color as teacher view */
+    background-color: #FFF5BA; /* Unified background color */
     border-radius: 8px;
+    max-width: 100%;
+    overflow: auto;
 }
 
 .student-grades-view-title {
     font-size: 30px;
     color: #333;
+    text-align: center;
     margin-bottom: 20px;
 }
 
 .student-grades-view-description {
     font-size: 14px;
     color: #666;
+    text-align: center;
     margin-bottom: 20px;
-
 }
 
 .student-grades-view-search {
     margin-bottom: 20px;
     width: 100%;
-    max-width: 400px; /* Set a maximum width */
+    max-width: 400px;
+    margin: 0 auto; /* Center search bar */
 }
 
 .student-grades-view-grid {
@@ -35,38 +39,48 @@
 .student-grades-view-date-column {
     text-align: left;
     padding: 10px;
+    color: #333;
 }
 
 .student-grades-view-action-buttons {
+    display: flex;
     gap: 10px;
+    justify-content: center;
 }
 
 .student-grades-view-edit-button,
 .student-grades-view-delete-button,
 .student-grades-view-add-button {
-    background-color: #FDB069; /* Accent color for buttons */
+    background-color: #FDB069;
     color: white;
     border: none;
     border-radius: 5px;
-    padding: 5px 10px;
+    padding: 8px 12px;
+    font-size: 14px;
     cursor: pointer;
+    transition: opacity 0.2s ease;
 }
 
 .student-grades-view-edit-button:hover,
 .student-grades-view-delete-button:hover,
 .student-grades-view-add-button:hover {
-    opacity: 0.9; /* Slightly darker on hover */
+    opacity: 0.9;
 }
 
 .student-grades-view-dialog-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
     margin-top: 20px;
-    justify-content: flex-end; /* Align buttons to the right */
 }
 
 .student-grades-view-edit-dialog,
 .student-grades-view-add-dialog,
 .student-grades-view-delete-dialog {
-    width: 400px; /* Fixed width for consistency */
+    width: 400px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
 }
 
 .student-grades-view-grade-field,
@@ -82,12 +96,15 @@
     color: white;
     border: none;
     border-radius: 5px;
-    padding: 5px 10px;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
 }
 
 .student-grades-view-confirm-delete-button:hover,
 .student-grades-view-cancel-button:hover {
-    opacity: 0.9; /* Slightly darker on hover */
+    opacity: 0.9;
 }
 
 /* Media queries for responsiveness */
@@ -97,15 +114,20 @@
     }
 
     .student-grades-view-title {
-        font-size: 20px;
+        font-size: 24px;
+    }
+
+    .student-grades-view-description {
+        font-size: 13px;
     }
 
     .student-grades-view-search {
-        max-width: 100%; /* Full width on smaller screens */
+        max-width: 100%;
+        width: 100%;
     }
 
     .student-grades-view-grid {
-        font-size: 14px; /* Smaller font size for grid */
+        font-size: 14px;
     }
 
     .student-grades-view-edit-button,
@@ -113,8 +135,15 @@
     .student-grades-view-add-button,
     .student-grades-view-confirm-delete-button,
     .student-grades-view-cancel-button {
-        width: 100%; /* Full width buttons */
+        width: 100%;
         padding: 10px;
+        font-size: 12px;
+    }
+
+    .student-grades-view-dialog-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
     }
 }
 
@@ -123,7 +152,20 @@
         font-size: 18px;
     }
 
+    .student-grades-view-description {
+        font-size: 12px;
+    }
+
     .student-grades-view-grid {
-        font-size: 12px; /* Even smaller font size for very small screens */
+        font-size: 12px;
+    }
+
+    .student-grades-view-edit-button,
+    .student-grades-view-delete-button,
+    .student-grades-view-add-button,
+    .student-grades-view-confirm-delete-button,
+    .student-grades-view-cancel-button {
+        font-size: 10px;
+        padding: 8px;
     }
 }

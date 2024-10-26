@@ -10,6 +10,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.context.MessageSource;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -24,20 +25,20 @@ public class EditProfileViewTest {
         // Mock the dependencies
         AuthenticatedUser authenticatedUser = Mockito.mock(AuthenticatedUser.class);
         UserContentLoader userContentLoader = Mockito.mock(UserContentLoader.class);
+        MessageSource messageSource = Mockito.mock(MessageSource.class);
 
         // Initialize a Vaadin UI context
         UI ui = new UI();
         UI.setCurrent(ui);
 
         // Instantiate the view with mocked dependencies
-        editProfileView = new EditProfileView(authenticatedUser, userContentLoader);
+        editProfileView = new EditProfileView(authenticatedUser, userContentLoader, messageSource);
     }
 
     @AfterEach
     void tearDown() {
         UI.setCurrent(null); // Clear the Vaadin UI context to avoid side effects between tests
     }
-
 
     @Test
     public void testEditProfileViewComponents() {

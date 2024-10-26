@@ -61,9 +61,9 @@ public class TeacherCoursesView extends Composite<VerticalLayout> {
         // Configure courses grid
         coursesGrid = new Grid<>(Course.class, false);
         coursesGrid.addClassName("teacher-courses-view-grid");
-        coursesGrid.addColumn(Course::getCourseName).setHeader("Course Name").setClassNameGenerator(course -> "teacher-courses-view-course-column");
-        coursesGrid.addColumn(Course::getCoursePlan).setHeader("Course Plan").setClassNameGenerator(course -> "teacher-courses-view-plan-column");
-        coursesGrid.addColumn(Course::getFormattedDateRange).setHeader("Date Range").setClassNameGenerator(course -> "teacher-courses-view-daterange-column");
+        coursesGrid.addColumn(Course::getCourseName).setHeader("Course Name").setKey("course-name");
+        coursesGrid.addColumn(Course::getCoursePlan).setHeader("Course Plan").setKey("course-plan");
+        coursesGrid.addColumn(Course::getFormattedDateRange).setHeader("Date Range").setKey("date-range");
 
         // Add action buttons (Edit, View, Delete)
         coursesGrid.addComponentColumn(course -> {
@@ -209,10 +209,10 @@ public class TeacherCoursesView extends Composite<VerticalLayout> {
 
         Grid<Student> studentGrid = new Grid<>(Student.class, false);
         studentGrid.addClassName("teacher-courses-view-student-grid");
-        studentGrid.addColumn(Student::getFirstName).setHeader("First Name").setClassNameGenerator(student -> "teacher-courses-view-student-firstname");
-        studentGrid.addColumn(Student::getLastName).setHeader("Last Name").setClassNameGenerator(student -> "teacher-courses-view-student-lastname");
-        studentGrid.addColumn(Student::getEmail).setHeader("Email").setClassNameGenerator(student -> "teacher-courses-view-student-email");
-        studentGrid.addColumn(Student::getPhoneNumber).setHeader("Phone Number").setClassNameGenerator(student -> "teacher-courses-view-student-phonenumber");
+        studentGrid.addColumn(Student::getFirstName).setHeader("First Name").setKey("student-firstname");
+        studentGrid.addColumn(Student::getLastName).setHeader("Last Name").setKey("student-lastname");
+        studentGrid.addColumn(Student::getEmail).setHeader("Email").setKey("student-email");
+        studentGrid.addColumn(Student::getPhoneNumber).setHeader("Phone Number").setKey("student-phonenumber");
 
         List<Student> enrolledStudents = courseService.getEnrolledStudentsByCourseId(course.getCourseId());
         studentGrid.setItems(enrolledStudents);

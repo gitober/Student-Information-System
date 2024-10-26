@@ -20,6 +20,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+import org.springframework.context.MessageSource;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -35,8 +36,9 @@ public class LoginPageViewTest {
 
     @BeforeEach
     public void setUp() {
-        // Mock the LoginHandler
+        // Mock the LoginHandler and MessageSource
         loginHandler = Mockito.mock(LoginHandler.class);
+        MessageSource messageSource = Mockito.mock(MessageSource.class);
 
         // Set up the UI context for Vaadin components
         UI ui = new UI();
@@ -63,8 +65,8 @@ public class LoginPageViewTest {
         when(vaadinService.getRouter()).thenReturn(router);
         ui.getInternals().setSession(vaadinSession);
 
-        // Instantiate the LoginPageView with the mocked login handler
-        loginPageView = new LoginPageView(loginHandler);
+        // Instantiate the LoginPageView with the mocked login handler and message source
+        loginPageView = new LoginPageView(loginHandler, messageSource);
     }
 
     @AfterEach

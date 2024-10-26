@@ -12,13 +12,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.MockitoAnnotations;
+import org.springframework.context.MessageSource;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 public class ForgotPasswordViewTest {
@@ -26,18 +27,27 @@ public class ForgotPasswordViewTest {
     @Mock
     private EmailService emailService;
 
+    @Mock
+    private MessageSource messageSource;  // Mock MessageSource
+
     @InjectMocks
     private ForgotPasswordView forgotPasswordView;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+
+        // Mock the messages for email.notification.success and any other expected keys
+        when(messageSource.getMessage(eq("email.notification.success"), any(), any(Locale.class)))
+                .thenReturn("An email has been sent to reset your password.");
+        when(messageSource.getMessage(eq("forgot.password.email.sent"), any(), any(Locale.class)))
+                .thenReturn("An email has been sent to reset your password.");
     }
 
     @AfterEach
     void tearDown() {
         // Reset mocks after each test
-        reset(emailService);
+        reset(emailService, messageSource);
     }
 
     @Test
@@ -58,7 +68,8 @@ public class ForgotPasswordViewTest {
 
         // Mock Notification
         try (MockedStatic<Notification> notificationMockedStatic = mockStatic(Notification.class)) {
-            notificationMockedStatic.when(() -> Notification.show(anyString(), anyInt(), any(Notification.Position.class)))
+            notificationMockedStatic.when(() -> Notification.show(
+                            "An email has been sent to reset your password.", 3000, Notification.Position.TOP_CENTER))
                     .thenReturn(mock(Notification.class));
 
             // Act
@@ -66,7 +77,8 @@ public class ForgotPasswordViewTest {
 
             // Assert
             verify(emailService, times(1)).sendEmail(eq(email), anyString(), anyString());
-            notificationMockedStatic.verify(() -> Notification.show("An email has been sent to reset your password.", 3000, Notification.Position.TOP_CENTER));
+            notificationMockedStatic.verify(() -> Notification.show(
+                    "An email has been sent to reset your password.", 3000, Notification.Position.TOP_CENTER));
         }
     }
 

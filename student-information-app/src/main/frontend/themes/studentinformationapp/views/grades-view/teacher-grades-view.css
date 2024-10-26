@@ -22,12 +22,12 @@
 }
 
 .teacher-grades-view-combobox-layout {
-    gap: 20px; /* Adjusts space between the combo boxes */
-    width: 100%; /* Ensures the combo boxes take the full width */
+    gap: 20px;
+    width: 100%;
 }
 
 .teacher-grades-view-course-combobox,
-.teacher-grades-view-student-combobox-dialog, /* Added style for the student ComboBox in the dialog */
+.teacher-grades-view-student-combobox-dialog,
 .teacher-grades-view-search-field {
     width: 100%;
     max-width: 400px;
@@ -41,7 +41,7 @@
     justify-content: space-between;
 }
 
-/* Button styles */
+/* Action button styles */
 .teacher-grades-view-action-buttons {
     display: flex;
     flex-direction: column;
@@ -49,13 +49,14 @@
     margin-top: 10px;
 }
 
+/* General button styles */
 .teacher-grades-view-edit-button,
 .teacher-grades-view-delete-button,
 .teacher-grades-view-add-grade-button,
 .teacher-grades-view-save-button,
 .teacher-grades-view-cancel-button,
-.teacher-grades-view-edit-save-button, /* Added style for the save button in the edit dialog */
-.teacher-grades-view-edit-cancel-button /* Added style for the cancel button in the edit dialog */ {
+.teacher-grades-view-edit-save-button,
+.teacher-grades-view-edit-cancel-button {
     color: #ffffff;
     background-color: #FDB069;
     border: none;
@@ -72,8 +73,8 @@
 .teacher-grades-view-add-grade-button:hover,
 .teacher-grades-view-save-button:hover,
 .teacher-grades-view-cancel-button:hover,
-.teacher-grades-view-edit-save-button:hover, /* Hover effect for the edit save button */
-.teacher-grades-view-edit-cancel-button:hover /* Hover effect for the edit cancel button */ {
+.teacher-grades-view-edit-save-button:hover,
+.teacher-grades-view-edit-cancel-button:hover {
     background-color: #e08d53;
 }
 

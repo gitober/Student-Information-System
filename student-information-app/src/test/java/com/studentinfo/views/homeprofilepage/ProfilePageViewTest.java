@@ -3,13 +3,17 @@ package com.studentinfo.views.homeprofilepage;
 import com.studentinfo.security.AuthenticatedUser;
 import com.studentinfo.services.UserContentLoader;
 import com.studentinfo.views.header.HeaderView;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.springframework.context.MessageSource;
+
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 public class ProfilePageViewTest {
 
@@ -17,17 +21,27 @@ public class ProfilePageViewTest {
 
     @BeforeEach
     public void setUp() {
-        // Create mocks for AuthenticatedUser and UserContentLoader
-        AuthenticatedUser authenticatedUser = Mockito.mock(AuthenticatedUser.class);
-        UserContentLoader userContentLoader = Mockito.mock(UserContentLoader.class);
+        // Set up UI context for Vaadin components
+        UI ui = new UI();
+        ui.setLocale(Locale.ENGLISH); // Set a default locale
+        UI.setCurrent(ui);
+
+        // Mock the AuthenticatedUser, UserContentLoader, and MessageSource dependencies
+        AuthenticatedUser authenticatedUser = mock(AuthenticatedUser.class);
+        UserContentLoader userContentLoader = mock(UserContentLoader.class);
+        MessageSource messageSource = mock(MessageSource.class);
+
+        // Directly use Locale.ENGLISH for the mock
+        when(messageSource.getMessage("header.title", null, Locale.ENGLISH)).thenReturn("Student Information System");
 
         // Initialize ProfilePageView with mocked dependencies
-        profilePageView = new ProfilePageView(authenticatedUser, userContentLoader);
+        profilePageView = new ProfilePageView(authenticatedUser, userContentLoader, messageSource);
     }
 
     @AfterEach
     public void tearDown() {
-        // Clear any references to avoid memory leaks
+        // Clear the UI context and any references to avoid memory leaks
+        UI.setCurrent(null);
         profilePageView = null;
     }
 

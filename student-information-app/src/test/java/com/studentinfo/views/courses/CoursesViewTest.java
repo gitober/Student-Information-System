@@ -8,6 +8,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.context.MessageSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -16,21 +17,23 @@ public class CoursesViewTest {
 
     private UserContentLoader userContentLoader;
     private CoursesView coursesView;
+    private MessageSource messageSource;
 
     @BeforeEach
     public void setUp() {
         // Create mocks for the dependencies
         AuthenticatedUser authenticatedUser = Mockito.mock(AuthenticatedUser.class);
         userContentLoader = Mockito.mock(UserContentLoader.class);
+        messageSource = Mockito.mock(MessageSource.class);
 
         // Instantiate the view with mocks
-        coursesView = new CoursesView(authenticatedUser, userContentLoader);
+        coursesView = new CoursesView(authenticatedUser, userContentLoader, messageSource);
     }
 
     @AfterEach
     void tearDown() {
         // Reset mocks to ensure no shared state between tests
-        Mockito.reset(userContentLoader);
+        Mockito.reset(userContentLoader, messageSource);
     }
 
     @Test

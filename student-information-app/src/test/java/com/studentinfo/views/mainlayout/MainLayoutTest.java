@@ -2,13 +2,14 @@ package com.studentinfo.views.mainlayout;
 
 import com.studentinfo.security.AuthenticatedUser;
 import com.studentinfo.views.header.HeaderView;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.Div;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.context.MessageSource;
 
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -18,20 +19,28 @@ public class MainLayoutTest {
     @Mock
     private AuthenticatedUser authenticatedUser;
 
-    @InjectMocks
+    @Mock
+    private MessageSource messageSource;
+
     private MainLayout mainLayout;
 
     @BeforeEach
     public void setUp() {
+        // Initialize mocks
         MockitoAnnotations.openMocks(this);
-        mainLayout = new MainLayout(authenticatedUser); // Initialize MainLayout with the mocked AuthenticatedUser
+
+        // Set up the Vaadin UI context
+        UI ui = new UI();
+        UI.setCurrent(ui);
+
+        // Manually initialize MainLayout with mocked dependencies
+        mainLayout = new MainLayout(authenticatedUser, messageSource);
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
-        // Clear any remaining mock objects
-        authenticatedUser = null;
-        mainLayout = null;
+    public void tearDown() {
+        // Clean up the UI context
+        UI.setCurrent(null);
     }
 
     @Test
