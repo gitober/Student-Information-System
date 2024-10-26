@@ -48,11 +48,13 @@ public class StudentGradesView extends Composite<VerticalLayout> {
 
         // Grid for displaying grades
         gradesGrid = new Grid<>();
-        gradesGrid.addColumn(grade -> grade.getCourse().getCourseName()).setHeader("Course").setClassNameGenerator(grade -> "student-grades-view-course-column");
-        gradesGrid.addColumn(Grade::getGrade).setHeader("Grade").setClassNameGenerator(grade -> "student-grades-view-grade-column");
-        gradesGrid.addColumn(grade -> grade.getGradingDay().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
-                .setHeader("Date").setClassNameGenerator(grade -> "student-grades-view-date-column");
         gradesGrid.addClassName("student-grades-view-grid");
+
+        // Configure columns with keys for CSS styling
+        gradesGrid.addColumn(grade -> grade.getCourse().getCourseName()).setHeader("Course").setKey("course-name");
+        gradesGrid.addColumn(Grade::getGrade).setHeader("Grade").setKey("grade");
+        gradesGrid.addColumn(grade -> grade.getGradingDay().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                .setHeader("Date").setKey("grading-date");
 
         // Fetch and display grades for the current student
         Long studentNumber = userService.getCurrentStudentNumber();
@@ -63,7 +65,7 @@ public class StudentGradesView extends Composite<VerticalLayout> {
         }
 
         // Add components to the layout
-        getContent().add(title, description , searchField, gradesGrid);
+        getContent().add(title, description, searchField, gradesGrid);
     }
 
     // Method to fetch grades and populate the grid

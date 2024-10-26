@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.context.MessageSource;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -27,6 +28,9 @@ public class GradesViewTest {
     @Mock
     private UserContentLoader userContentLoader;
 
+    @Mock
+    private MessageSource messageSource;
+
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -36,7 +40,6 @@ public class GradesViewTest {
     void tearDown() {
         UI.setCurrent(null); // Clear the Vaadin UI context to avoid side effects between tests
     }
-
 
     @Test
     public void testGradesViewInitialization() {
@@ -51,7 +54,7 @@ public class GradesViewTest {
 
         // Call the userContentLoader to load grades content
         gradesView.getContent().add(layoutColumn); // Simulating adding to the view
-        gradesView.getContent().add(new HeaderView("EduBird", authenticatedUser)); // Add header to the layout
+        gradesView.getContent().add(new HeaderView(authenticatedUser, messageSource)); // Add header to the layout
 
         // Verify that the loadGradesContent method is called with any instance of VerticalLayout
         verify(userContentLoader).loadGradesContent(any(VerticalLayout.class));

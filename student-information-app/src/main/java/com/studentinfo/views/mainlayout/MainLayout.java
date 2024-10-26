@@ -8,16 +8,23 @@ import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.spring.annotation.RouteScope;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 
 @SpringComponent
 @RouteScope
 public class MainLayout extends Composite<Div> implements RouterLayout {
 
     @Autowired
-    public MainLayout(AuthenticatedUser authenticatedUser) {
-        // Simply add the HeaderView, which already handles the dynamic content based on user roles
-        HeaderView headerView = new HeaderView("EduBird", authenticatedUser);
-
+    public MainLayout(AuthenticatedUser authenticatedUser, MessageSource messageSource) {
+        // Choose the appropriate header based on whether the user is logged in
+        HeaderView headerView;
+        if (authenticatedUser.get().isPresent()) {
+            // User is logged in, show full header
+            headerView = new HeaderView(authenticatedUser, messageSource);
+        } else {
+            // Public page, show minimal header
+            headerView = new HeaderView(messageSource);
+        }
         // Add the header to the main layout
         getContent().add(headerView);
     }

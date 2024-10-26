@@ -11,6 +11,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.context.MessageSource;
 
 import java.util.Optional;
 
@@ -23,8 +24,9 @@ public class RegistrationViewTest {
 
     @BeforeEach
     public void setUp() {
-        // Mock the RegistrationHandler
+        // Mock the RegistrationHandler and MessageSource
         RegistrationHandler mockRegistrationHandler = Mockito.mock(RegistrationHandler.class);
+        MessageSource mockMessageSource = Mockito.mock(MessageSource.class);
 
         // Set up the UI context for Vaadin
         UI ui = new UI();
@@ -35,8 +37,8 @@ public class RegistrationViewTest {
         VaadinSession.setCurrent(mockSession);
         ui.getInternals().setSession(mockSession);
 
-        // Instantiate the RegistrationView
-        registrationView = new RegistrationView(mockRegistrationHandler);
+        // Instantiate the RegistrationView with mocks
+        registrationView = new RegistrationView(mockRegistrationHandler, mockMessageSource);
     }
 
     @AfterEach

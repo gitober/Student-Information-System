@@ -79,21 +79,22 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
         // Columns for the grid
         gradesGrid.addColumn(grade -> grade.getCourse().getCourseName())
                 .setHeader("Course")
-                .setClassNameGenerator(entry -> "teacher-grades-view-course-column");
+                .setKey("course-column");
 
         gradesGrid.addColumn(grade -> {
                     Optional<Student> studentOpt = Optional.ofNullable(studentService.getStudentByNumber(grade.getStudentNumber()));
                     return studentOpt.map(student -> student.getFirstName() + " " + student.getLastName())
                             .orElse("Unknown Student");
                 }).setHeader("Student")
-                .setClassNameGenerator(entry -> "teacher-grades-view-student-column");
+                .setKey("student-column");
 
         gradesGrid.addColumn(Grade::getGrade)
                 .setHeader("Grade")
-                .setClassNameGenerator(entry -> "teacher-grades-view-grade-column");
+                .setKey("grade-column");
 
-        gradesGrid.addComponentColumn(this::createEditAndDeleteButtons).setHeader("Actions")
-                .setClassNameGenerator(entry -> "teacher-grades-view-action-column");
+        gradesGrid.addComponentColumn(this::createEditAndDeleteButtons)
+                .setHeader("Actions")
+                .setKey("action-column");
 
         // Add Grade Button
         Button addGradeButton = new Button("Add Grade");

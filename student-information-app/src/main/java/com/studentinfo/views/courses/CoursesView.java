@@ -11,6 +11,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 
 @PageTitle("Courses")
 @Route(value = "courses")
@@ -21,7 +22,7 @@ public class CoursesView extends Composite<VerticalLayout> {
     private final UserContentLoader userContentLoader;
 
     @Autowired
-    public CoursesView(AuthenticatedUser authenticatedUser, UserContentLoader userContentLoader) {
+    public CoursesView(AuthenticatedUser authenticatedUser, UserContentLoader userContentLoader, MessageSource messageSource) {
         this.userContentLoader = userContentLoader;
 
         // Debug statements to ensure proper injection
@@ -30,6 +31,9 @@ public class CoursesView extends Composite<VerticalLayout> {
         }
         if (userContentLoader == null) {
             throw new IllegalStateException("UserContentLoader is not injected!");
+        }
+        if (messageSource == null) {
+            throw new IllegalStateException("MessageSource is not injected!");
         }
 
         // Main layout setup
@@ -46,7 +50,7 @@ public class CoursesView extends Composite<VerticalLayout> {
         mainLayout.getStyle().set("padding-top", "60px");
 
         // Add the reusable Header component
-        mainLayout.add(new HeaderView("EduBird", authenticatedUser));
+        mainLayout.add(new HeaderView(authenticatedUser, messageSource));
 
         // Create a container for user-specific content
         VerticalLayout layoutColumn = new VerticalLayout();

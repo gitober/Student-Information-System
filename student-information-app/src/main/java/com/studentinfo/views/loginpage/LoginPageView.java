@@ -12,7 +12,6 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.page.Page;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
@@ -20,6 +19,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinService;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 
 import jakarta.servlet.http.Cookie;
 
@@ -36,7 +36,7 @@ public class LoginPageView extends Composite<VerticalLayout> {
     private final Checkbox rememberMeCheckbox;
 
     @Autowired
-    public LoginPageView(LoginHandler loginHandler) {
+    public LoginPageView(LoginHandler loginHandler, MessageSource messageSource) {
         this.emailField = new TextField("Email", "Enter your email");
         this.emailField.addClassName("login-text-field");
 
@@ -66,8 +66,8 @@ public class LoginPageView extends Composite<VerticalLayout> {
         mainLayout.setSpacing(false);
         mainLayout.addClassName("login-view-page");
 
-        // Add the reusable Header component first
-        HeaderView header = new HeaderView("EduBird");
+        // Add the reusable Header component with MessageSource
+        HeaderView header = new HeaderView(messageSource);
         header.setWidthFull();
         mainLayout.add(header);
 
@@ -112,7 +112,6 @@ public class LoginPageView extends Composite<VerticalLayout> {
             if (!loginSuccessful) {
                 Notification.show("Invalid email or password. Please try again.", 3000, Notification.Position.MIDDLE);
             } else {
-                // Optionally, navigate to the dashboard or another page if login is successful
                 Notification.show("Welcome, nice to see you!", 3000, Notification.Position.MIDDLE);
             }
         });

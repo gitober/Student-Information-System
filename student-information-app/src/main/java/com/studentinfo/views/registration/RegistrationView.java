@@ -23,6 +23,7 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 
 @PageTitle("Registration")
 @Route(value = "register")
@@ -40,7 +41,7 @@ public class RegistrationView extends Composite<VerticalLayout> {
     private final Button saveButton;
 
     @Autowired
-    public RegistrationView(RegistrationHandler registrationHandler) {
+    public RegistrationView(RegistrationHandler registrationHandler, MessageSource messageSource) {
         this.registrationHandler = registrationHandler;
 
         // Main layout setup
@@ -53,7 +54,7 @@ public class RegistrationView extends Composite<VerticalLayout> {
         mainLayout.addClassName("registration-container");
 
         // Add the reusable Header component
-        HeaderView header = new HeaderView("EduBird");
+        HeaderView header = new HeaderView(messageSource);
         header.setWidthFull();
         mainLayout.add(header);
 
