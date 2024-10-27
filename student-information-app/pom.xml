@@ -11,14 +11,14 @@
     <properties>
         <java.version>21</java.version>
         <vaadin.version>24.5.1</vaadin.version>
-        <spring-boot.version>3.3.5</spring-boot.version>
+        <spring-boot.version>3.2.8</spring-boot.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.4</version>
+        <version>3.2.8</version>
     </parent>
 
     <dependencyManagement>
@@ -67,6 +67,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
         </dependency>
 
         <!-- MySQL Connector (for production) -->
@@ -147,6 +153,14 @@
             <groupId>me.paulschwarz</groupId>
             <artifactId>spring-dotenv</artifactId>
             <version>4.0.0</version>
+        </dependency>
+
+        <!-- XMLUnit -->
+        <dependency>
+            <groupId>org.xmlunit</groupId>
+            <artifactId>xmlunit-core</artifactId>
+            <version>2.10.0</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
