@@ -14,6 +14,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -36,6 +37,7 @@ public class TeacherAttendanceViewTest {
         TeacherService mockTeacherService = mock(TeacherService.class);
         CourseService mockCourseService = mock(CourseService.class);
         AuthenticatedUser mockAuthenticatedUser = mock(AuthenticatedUser.class);
+        MessageSource mockMessageSource = mock(MessageSource.class);
 
         // Set up mock authentication
         SecurityContext mockSecurityContext = mock(SecurityContext.class);
@@ -52,6 +54,10 @@ public class TeacherAttendanceViewTest {
         when(mockTeacherService.getTeacherByUsername("testTeacher")).thenReturn(Optional.of(mockTeacher));
         when(mockTeacherService.getAttendanceRecordsForTeacher(1L)).thenReturn(Collections.emptyList());
 
+        // Mock translation messages
+        when(mockMessageSource.getMessage("teacher.attendance.search.placeholder", null, null)).thenReturn("Search by Course or Student");
+        when(mockMessageSource.getMessage("teacher.attendance.add.button", null, null)).thenReturn("Add Attendance");
+
         // Set up the UI context for Vaadin
         UI ui = new UI();
         UI.setCurrent(ui);
@@ -62,7 +68,7 @@ public class TeacherAttendanceViewTest {
         ui.getInternals().setSession(mockSession);
 
         // Instantiate the TeacherAttendanceView
-        teacherAttendanceView = new TeacherAttendanceView(mockTeacherService, mockCourseService, mockAuthenticatedUser);
+        teacherAttendanceView = new TeacherAttendanceView(mockTeacherService, mockCourseService, mockAuthenticatedUser, mockMessageSource);
     }
 
     @AfterEach
@@ -85,7 +91,7 @@ public class TeacherAttendanceViewTest {
         assertNotNull(searchField, "Search field should be present in the teacher attendance view.");
 
         // Check if the attendance grid is present
-        Grid attendanceGrid = findComponent(Grid.class, null);
+        Grid<?> attendanceGrid = findComponent(Grid.class, null);
         assertNotNull(attendanceGrid, "Attendance grid should be present in the teacher attendance view.");
 
         // Check if the 'Add Attendance' button is present
@@ -100,18 +106,12 @@ public class TeacherAttendanceViewTest {
 
     private <T> T findComponentInTree(com.vaadin.flow.component.Component component, Class<T> componentClass, String labelText) {
         if (componentClass.isInstance(component)) {
-            switch (component) {
-                case TextField textField when labelText.equals(textField.getLabel()) -> {
-                    return componentClass.cast(component);
-                }
-                case Button button when labelText.equals(button.getText()) -> {
-                    return componentClass.cast(component);
-                }
-                case Grid grid -> {
-                    return componentClass.cast(component);
-                }
-                default -> {
-                }
+            if (component instanceof TextField textField && labelText.equals(textField.getLabel())) {
+                return componentClass.cast(component);
+            } else if (component instanceof Button button && labelText.equals(button.getText())) {
+                return componentClass.cast(component);
+            } else if (component instanceof Grid) {
+                return componentClass.cast(component);
             }
         }
 

@@ -15,9 +15,9 @@ import com.studentinfo.views.editprofile.TeacherEditProfileView;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
-
 
 @Component
 public class UserContentLoader {
@@ -29,6 +29,8 @@ public class UserContentLoader {
     private final DepartmentService departmentService;
     private final SubjectService subjectService;
     private final UserService userService;
+    private final DateService dateService;
+    private final MessageSource messageSource;
 
     // Lazy-Loaded Views
     @Autowired
@@ -63,15 +65,17 @@ public class UserContentLoader {
     @Autowired
     public UserContentLoader(AuthenticatedUser authenticatedUser, TeacherService teacherService,
                              StudentService studentService, DepartmentService departmentService,
-                             SubjectService subjectService, UserService userService) { // Inject UserService
+                             SubjectService subjectService, UserService userService,
+                             DateService dateService, MessageSource messageSource) {
         this.authenticatedUser = authenticatedUser;
         this.teacherService = teacherService;
         this.studentService = studentService;
         this.departmentService = departmentService;
         this.subjectService = subjectService;
         this.userService = userService;
+        this.dateService = dateService;
+        this.messageSource = messageSource;
     }
-
 
     // Methods to Load Content
 
@@ -87,7 +91,6 @@ public class UserContentLoader {
             }
         }, () -> layout.add(new Paragraph("User not found. Please log in again.")));
     }
-
 
     // Load courses content based on user role
     public void loadCoursesContent(VerticalLayout layout) {
@@ -119,7 +122,8 @@ public class UserContentLoader {
     public void loadEditProfileContent(VerticalLayout layout) {
         authenticatedUser.get().ifPresentOrElse(user -> {
             if (user instanceof Teacher teacher) {
-                TeacherEditProfileView teacherView = new TeacherEditProfileView(teacher, departmentService, subjectService);
+                // Pass additional dependencies: dateService and messageSource
+                TeacherEditProfileView teacherView = new TeacherEditProfileView(teacher, departmentService, subjectService, dateService, messageSource);
                 teacherView.setSaveListener(teacherService::save);
                 layout.add(teacherView);
             } else if (user instanceof Student student) {
@@ -142,5 +146,4 @@ public class UserContentLoader {
             }
         }, () -> layout.add(new Paragraph("User not found. Please log in again.")));
     }
-
 }

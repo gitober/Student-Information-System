@@ -3,6 +3,7 @@ package com.studentinfo.views.editprofile;
 import com.studentinfo.data.entity.Department;
 import com.studentinfo.data.entity.Subject;
 import com.studentinfo.data.entity.Teacher;
+import com.studentinfo.services.DateService;
 import com.studentinfo.services.DepartmentService;
 import com.studentinfo.services.SubjectService;
 import com.vaadin.flow.component.UI;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.context.MessageSource;
 
 import java.lang.reflect.Field;
 import java.util.Collections;
@@ -26,23 +28,26 @@ public class TeacherEditProfileViewTest {
 
     @BeforeEach
     public void setUp() {
-        // Mock the Teacher, DepartmentService, and SubjectService
+        // Mock the Teacher, DepartmentService, SubjectService, DateService, and MessageSource
         Teacher teacher = Mockito.mock(Teacher.class);
         DepartmentService departmentService = Mockito.mock(DepartmentService.class);
         SubjectService subjectService = Mockito.mock(SubjectService.class);
+        DateService dateService = Mockito.mock(DateService.class);
+        MessageSource messageSource = Mockito.mock(MessageSource.class);
 
         // Mock methods for departmentService and subjectService
         when(departmentService.findAll()).thenReturn(Collections.emptyList());
         when(subjectService.findAll()).thenReturn(Collections.emptyList());
+
+        // Mock the MessageSource to return a key as message for simplicity
+        when(messageSource.getMessage(Mockito.anyString(), Mockito.any(), Mockito.any())).thenAnswer(invocation -> invocation.getArgument(0));
 
         // Initialize a Vaadin UI context
         UI ui = new UI();
         UI.setCurrent(ui);
 
         // Instantiate the view
-        System.out.println("Setting up TeacherEditProfileView...");
-        teacherEditProfileView = new TeacherEditProfileView(teacher, departmentService, subjectService);
-        System.out.println("TeacherEditProfileView setup completed.");
+        teacherEditProfileView = new TeacherEditProfileView(teacher, departmentService, subjectService, dateService, messageSource);
     }
 
     @AfterEach
@@ -52,8 +57,6 @@ public class TeacherEditProfileViewTest {
 
     @Test
     public void testTeacherEditProfileViewComponents() throws Exception {
-        System.out.println("Testing TeacherEditProfileView components...");
-
         // Verify that the main layout is not null
         assertNotNull(teacherEditProfileView, "The TeacherEditProfileView should not be null.");
 
@@ -62,23 +65,18 @@ public class TeacherEditProfileViewTest {
         firstNameField.setAccessible(true);
         TextField firstNameTextField = (TextField) firstNameField.get(teacherEditProfileView);
         assertNotNull(firstNameTextField, "First Name field should be present in the view.");
-        System.out.println("First Name field is present.");
 
         Field departmentComboBoxField = TeacherEditProfileView.class.getDeclaredField("departmentComboBox");
         departmentComboBoxField.setAccessible(true);
         ComboBox<Department> departmentComboBox = (ComboBox<Department>) departmentComboBoxField.get(teacherEditProfileView);
         assertNotNull(departmentComboBox, "Department ComboBox should be present in the view.");
-        System.out.println("Department ComboBox is present.");
 
         Field saveButtonField = TeacherEditProfileView.class.getDeclaredField("saveButton");
         saveButtonField.setAccessible(true);
         Button saveButton = (Button) saveButtonField.get(teacherEditProfileView);
         assertNotNull(saveButton, "Save button should be present in the view.");
-        System.out.println("Save button is present.");
 
         // Simulate clicking the save button
-        System.out.println("Clicking the save button...");
         assertDoesNotThrow(saveButton::click, "Clicking the save button should not throw an exception.");
-        System.out.println("Save button clicked successfully.");
     }
 }

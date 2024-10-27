@@ -13,11 +13,14 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.Collections;
-import java.util.List;
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class TeacherUpdateStudentProfileViewTest {
@@ -26,27 +29,30 @@ public class TeacherUpdateStudentProfileViewTest {
 
     @BeforeEach
     public void setUp() {
-        // Mock the services
-        StudentService studentService = Mockito.mock(StudentService.class);
-        AuthenticatedUser authenticatedUser = Mockito.mock(AuthenticatedUser.class);
+        // Mock services and dependencies
+        StudentService studentService = mock(StudentService.class);
+        AuthenticatedUser authenticatedUser = mock(AuthenticatedUser.class);
+        MessageSource messageSource = mock(MessageSource.class);
 
         // Mock the student list
         when(studentService.list()).thenReturn(Collections.singletonList(new Student()));
 
-        // Initialize the UI context
+        // Mock translations for UI labels
+        when(messageSource.getMessage("teacher.update.student.form.save", null, LocaleContextHolder.getLocale())).thenReturn("Save changes");
+        when(messageSource.getMessage("teacher.update.student.search.placeholder", null, LocaleContextHolder.getLocale())).thenReturn("Search by First Name or Last Name");
+
+        // Initialize UI context
         UI ui = new UI();
         UI.setCurrent(ui);
 
         // Instantiate the view with mocked services
-        view = new TeacherUpdateStudentProfileView(studentService, authenticatedUser);
+        view = new TeacherUpdateStudentProfileView(studentService, authenticatedUser, messageSource);
     }
 
     @AfterEach
     public void tearDown() {
         // Clear the Vaadin UI context
         UI.setCurrent(null);
-
-        // Clear the view reference
         view = null;
     }
 
@@ -59,13 +65,13 @@ public class TeacherUpdateStudentProfileViewTest {
                 .map(component -> (Grid<Student>) component)
                 .findFirst()
                 .orElse(null);
-
         assertNotNull(studentGrid, "Student grid should be present in the view.");
 
         // Check if the search field is present
         TextField searchField = view.getContent().getChildren()
                 .filter(component -> component instanceof TextField)
                 .map(component -> (TextField) component)
+                .filter(field -> "Search by First Name or Last Name".equals(field.getLabel()))
                 .findFirst()
                 .orElse(null);
         assertNotNull(searchField, "Search field should be present in the view.");

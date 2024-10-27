@@ -19,6 +19,8 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,12 +32,11 @@ import java.util.stream.Collectors;
 public class TeacherUpdateStudentProfileView extends Composite<VerticalLayout> {
 
     private final StudentService studentService;
-
+    private final MessageSource messageSource;
     private final List<Student> students;
     private Grid<Student> studentGrid;
     private TextField searchField;
 
-    // Fields for editing student information
     private TextField firstNameField;
     private TextField lastNameField;
     private EmailField emailField;
@@ -45,91 +46,79 @@ public class TeacherUpdateStudentProfileView extends Composite<VerticalLayout> {
     private Student selectedStudent;
 
     @Autowired
-    public TeacherUpdateStudentProfileView(StudentService studentService, AuthenticatedUser authenticatedUser) {
+    public TeacherUpdateStudentProfileView(StudentService studentService, AuthenticatedUser authenticatedUser, MessageSource messageSource) {
         this.studentService = studentService;
+        this.messageSource = messageSource;
 
-        // Fetch students
         students = studentService.list();
-
-        // Main layout setup
         VerticalLayout mainLayout = getContent();
         mainLayout.addClassName("teacher-update-student-profile-view");
         mainLayout.setPadding(false);
         mainLayout.setSpacing(false);
         mainLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.START);
 
-        // Add the page header
         mainLayout.add(createPageHeader());
-
-        // Configure and add the search bar and grid
         configureSearchBar();
         configureGrid();
 
-        // Add the search bar and grid to the layout
         mainLayout.add(searchField, studentGrid);
-
-        // Add the form for updating the student profile
         configureForm();
         mainLayout.add(createFormLayout());
     }
 
-    // Create the page header layout (title + description)
     private VerticalLayout createPageHeader() {
         VerticalLayout headerLayout = new VerticalLayout();
         headerLayout.addClassName("teacher-update-student-profile-page-header");
 
-        H2 headerText = new H2("Update Student Profiles");
+        H2 headerText = new H2(getMessage("teacher.update.student.header"));
         headerText.addClassName("teacher-update-student-profile-header");
 
-        Paragraph description = new Paragraph("Here you can update the details of your students.");
+        Paragraph description = new Paragraph(getMessage("teacher.update.student.description"));
         description.addClassName("teacher-update-student-profile-description");
 
         headerLayout.add(headerText, description);
         headerLayout.setPadding(false);
         headerLayout.setAlignItems(FlexComponent.Alignment.START);
-        headerLayout.setWidthFull();  // Ensure the header takes full width
+        headerLayout.setWidthFull();
         return headerLayout;
     }
 
-    // Configure the search bar
     private void configureSearchBar() {
-        searchField = new TextField("Search by First Name or Last Name");
+        searchField = new TextField(getMessage("teacher.update.student.search.placeholder"));
         searchField.setValueChangeMode(ValueChangeMode.EAGER);
         searchField.addValueChangeListener(event -> filterStudents(event.getValue()));
-        searchField.setWidthFull(); // Set width to full to match other elements
+        searchField.setWidthFull();
         searchField.addClassName("teacher-update-student-search");
     }
 
-    // Configure the grid
     private void configureGrid() {
         studentGrid = new Grid<>(Student.class, false);
         studentGrid.setItems(students);
 
         studentGrid.addColumn(Student::getFirstName)
-                .setHeader("First Name")
+                .setHeader(getMessage("teacher.update.student.grid.firstName"))
                 .setAutoWidth(true)
                 .setFlexGrow(1);
 
         studentGrid.addColumn(Student::getLastName)
-                .setHeader("Last Name")
+                .setHeader(getMessage("teacher.update.student.grid.lastName"))
                 .setAutoWidth(true)
                 .setFlexGrow(1);
 
         studentGrid.addColumn(Student::getEmail)
-                .setHeader("Email")
+                .setHeader(getMessage("teacher.update.student.grid.email"))
                 .setAutoWidth(true)
                 .setFlexGrow(1);
 
         studentGrid.addColumn(Student::getPhoneNumber)
-                .setHeader("Phone Number")
+                .setHeader(getMessage("teacher.update.student.grid.phone"))
                 .setAutoWidth(true)
                 .setFlexGrow(1);
 
         studentGrid.setHeight("400px");
-        studentGrid.setWidthFull(); // Make sure the grid takes the full width
+        studentGrid.setWidthFull();
         studentGrid.addClassName("teacher-update-student-grid");
 
-        // Handle row selection for updating the profile
         studentGrid.asSingleSelect().addValueChangeListener(event -> {
             selectedStudent = event.getValue();
             if (selectedStudent != null) {
@@ -138,24 +127,14 @@ public class TeacherUpdateStudentProfileView extends Composite<VerticalLayout> {
         });
     }
 
-    // Configure the form layout
     private void configureForm() {
-        firstNameField = new TextField("First Name");
-        firstNameField.addClassName("teacher-update-student-firstname");
+        firstNameField = new TextField(getMessage("teacher.update.student.form.firstName"));
+        lastNameField = new TextField(getMessage("teacher.update.student.form.lastName"));
+        emailField = new EmailField(getMessage("teacher.update.student.form.email"));
+        phoneNumberField = new TextField(getMessage("teacher.update.student.form.phone"));
 
-        lastNameField = new TextField("Last Name");
-        lastNameField.addClassName("teacher-update-student-lastname");
+        saveButton = new Button(getMessage("teacher.update.student.form.save"), event -> saveStudent());
 
-        emailField = new EmailField("Email");
-        emailField.addClassName("teacher-update-student-email");
-
-        phoneNumberField = new TextField("Phone Number");
-        phoneNumberField.addClassName("teacher-update-student-phone");
-
-        saveButton = new Button("Save changes", event -> saveStudent());
-        saveButton.addClassName("teacher-update-student-save-button");
-
-        // Initially, the form is hidden
         setVisibleForm(false);
     }
 
@@ -168,34 +147,29 @@ public class TeacherUpdateStudentProfileView extends Composite<VerticalLayout> {
         return formLayout;
     }
 
-    // Filter students based on the search term
     private void filterStudents(String searchTerm) {
-        clearForm();  // Clear the form whenever a search is made
+        clearForm();
 
-        // Filter the students based on the search term
         List<Student> filteredStudents = students.stream()
                 .filter(student -> student.getFirstName().toLowerCase().contains(searchTerm.toLowerCase()) ||
                         student.getLastName().toLowerCase().contains(searchTerm.toLowerCase()))
                 .collect(Collectors.toList());
 
-        // Update the grid with the filtered students
         studentGrid.setItems(filteredStudents);
     }
 
-    // Populate the form with selected student's data
     private void populateForm(Student student) {
         if (student != null) {
             firstNameField.setValue(student.getFirstName() != null ? student.getFirstName() : "");
             lastNameField.setValue(student.getLastName() != null ? student.getLastName() : "");
             emailField.setValue(student.getEmail() != null ? student.getEmail() : "");
             phoneNumberField.setValue(student.getPhoneNumber() != null ? student.getPhoneNumber() : "");
-            setVisibleForm(true);  // Show the form when a student is selected
+            setVisibleForm(true);
         } else {
-            clearForm();  // Clear the form if no student is selected
+            clearForm();
         }
     }
 
-    // Save changes to the student
     private void saveStudent() {
         if (selectedStudent != null) {
             selectedStudent.setFirstName(firstNameField.getValue());
@@ -203,35 +177,30 @@ public class TeacherUpdateStudentProfileView extends Composite<VerticalLayout> {
             selectedStudent.setEmail(emailField.getValue());
             selectedStudent.setPhoneNumber(phoneNumberField.getValue());
 
-            // Save the updated student in the database
             studentService.save(selectedStudent);
-
-            // Refresh the grid to reflect the changes
             studentGrid.getDataProvider().refreshAll();
-
-            // Clear the form after saving
             clearForm();
         }
     }
 
-    // Clear the form fields and reset the selected student
     private void clearForm() {
-        selectedStudent = null;  // Reset the selected student
-        firstNameField.clear();  // Clear the first name field
-        lastNameField.clear();   // Clear the last name field
-        emailField.clear();      // Clear the email field
-        phoneNumberField.clear(); // Clear the phone number field
-
-        // Hide the form after clearing
+        selectedStudent = null;
+        firstNameField.clear();
+        lastNameField.clear();
+        emailField.clear();
+        phoneNumberField.clear();
         setVisibleForm(false);
     }
 
-    // Set form visibility
     private void setVisibleForm(boolean visible) {
         firstNameField.setVisible(visible);
         lastNameField.setVisible(visible);
         emailField.setVisible(visible);
         phoneNumberField.setVisible(visible);
         saveButton.setVisible(visible);
+    }
+
+    private String getMessage(String key) {
+        return messageSource.getMessage(key, null, LocaleContextHolder.getLocale());
     }
 }
