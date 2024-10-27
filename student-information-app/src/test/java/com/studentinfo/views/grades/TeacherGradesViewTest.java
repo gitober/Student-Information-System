@@ -5,6 +5,7 @@ import com.studentinfo.data.entity.Grade;
 import com.studentinfo.services.CourseService;
 import com.studentinfo.services.GradeService;
 import com.studentinfo.services.StudentService;
+import com.studentinfo.services.DateService;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;
@@ -15,11 +16,13 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.context.MessageSource;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -29,6 +32,8 @@ public class TeacherGradesViewTest {
     private TeacherGradesView teacherGradesView;
     private GradeService gradeService;
     private CourseService courseService;
+    private MessageSource messageSource;
+    private DateService dateService;
 
     @BeforeEach
     public void setUp() {
@@ -36,23 +41,29 @@ public class TeacherGradesViewTest {
         gradeService = Mockito.mock(GradeService.class);
         courseService = Mockito.mock(CourseService.class);
         StudentService studentService = Mockito.mock(StudentService.class);
+        messageSource = Mockito.mock(MessageSource.class);
+        dateService = Mockito.mock(DateService.class);
 
         // Mock service methods
         Course mockCourse = new Course("Mathematics", "MATH101", 3);
         when(courseService.getAllCourses()).thenReturn(List.of(mockCourse));
         when(gradeService.getGradesByCourseId(mockCourse.getCourseId())).thenReturn(Collections.emptyList());
 
+        // Mock MessageSource for translations
+        when(messageSource.getMessage("grades.management.title", null, Locale.getDefault())).thenReturn("Grades Management");
+        when(messageSource.getMessage("grades.management.description", null, Locale.getDefault())).thenReturn("Manage and update student grades for selected courses.");
+
         // Initialize a Vaadin UI context
         UI ui = new UI();
         UI.setCurrent(ui);
 
         // Instantiate the view with mocked services
-        teacherGradesView = new TeacherGradesView(gradeService, courseService, studentService);
+        teacherGradesView = new TeacherGradesView(gradeService, courseService, studentService, dateService, messageSource);
 
         // Set up a ComboBox directly (if it exists in your class)
         // Alternatively, use reflection if it needs to be private
         try {
-            Field comboBoxField = TeacherGradesView.class.getDeclaredField("courseComboBox"); // Assuming it's named courseComboBox
+            Field comboBoxField = TeacherGradesView.class.getDeclaredField("courseComboBox");
             comboBoxField.setAccessible(true);
             ComboBox<Course> mockComboBox = new ComboBox<>();
             comboBoxField.set(teacherGradesView, mockComboBox);
@@ -86,7 +97,7 @@ public class TeacherGradesViewTest {
                 "Description should be 'Manage and update student grades for selected courses.'");
 
         // Check if the course ComboBox is present
-        ComboBox<Course> courseComboBox = getComboBoxField(); // Assuming it's named courseComboBox
+        ComboBox<Course> courseComboBox = getComboBoxField();
         assertNotNull(courseComboBox, "Course ComboBox should not be null.");
 
         // Check if the grades grid is initialized
@@ -107,13 +118,13 @@ public class TeacherGradesViewTest {
 
         // Set items in the ComboBox before setting a value
         ComboBox<Course> courseComboBox = getComboBoxField();
-        courseComboBox.setItems(List.of(mockCourse)); // Set the items in the ComboBox
-        courseComboBox.setValue(mockCourse); // Now you can set the value
+        courseComboBox.setItems(List.of(mockCourse));
+        courseComboBox.setValue(mockCourse);
 
         // Use reflection to call the private refreshGradesData method
         Method refreshDataMethod = TeacherGradesView.class.getDeclaredMethod("refreshGradesData");
         refreshDataMethod.setAccessible(true);
-        refreshDataMethod.invoke(teacherGradesView); // Call the method
+        refreshDataMethod.invoke(teacherGradesView);
 
         // Verify that the gradesGrid is updated with the mock grade
         Grid<Grade> gradesGrid = getPrivateField();
@@ -122,7 +133,6 @@ public class TeacherGradesViewTest {
         // Check the size of items in the data provider
         assertEquals(1, dataProvider.getItems().size(), "Grades grid should contain one grade.");
     }
-
 
     private ComboBox<Course> getComboBoxField() {
         try {

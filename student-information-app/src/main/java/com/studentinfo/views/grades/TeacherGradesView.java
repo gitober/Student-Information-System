@@ -6,6 +6,7 @@ import com.studentinfo.data.entity.Student;
 import com.studentinfo.services.CourseService;
 import com.studentinfo.services.GradeService;
 import com.studentinfo.services.StudentService;
+import com.studentinfo.services.DateService;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -23,6 +24,9 @@ import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -34,40 +38,45 @@ import java.util.stream.Collectors;
 @CssImport("./themes/studentinformationapp/views/grades-view/teacher-grades-view.css")
 public class TeacherGradesView extends Composite<VerticalLayout> {
 
-    private static final Logger logger = LoggerFactory.getLogger(TeacherGradesView.class); // Logger instance
+    private static final Logger logger = LoggerFactory.getLogger(TeacherGradesView.class);
 
     private final GradeService gradeService;
     private final CourseService courseService;
     private final StudentService studentService;
+    private final DateService dateService;
+    private final MessageSource messageSource;
 
     private final Grid<Grade> gradesGrid;
     private List<Grade> gradeEntries;
     private final ComboBox<Course> courseComboBox;
 
-    public TeacherGradesView(GradeService gradeService, CourseService courseService, StudentService studentService) {
+    @Autowired
+    public TeacherGradesView(GradeService gradeService, CourseService courseService, StudentService studentService, DateService dateService, MessageSource messageSource) {
         this.gradeService = gradeService;
         this.courseService = courseService;
         this.studentService = studentService;
+        this.dateService = dateService;
+        this.messageSource = messageSource;
 
         getContent().addClassName("teacher-grades-view-container");
 
         // Page title
-        H2 title = new H2("Grades Management");
+        H2 title = new H2(getMessage("grades.management.title"));
         title.addClassName("teacher-grades-view-title");
 
         // Description
-        Paragraph description = new Paragraph("Manage and update student grades for selected courses.");
+        Paragraph description = new Paragraph(getMessage("grades.management.description"));
         description.addClassName("teacher-grades-view-description");
 
         // Course ComboBox
-        courseComboBox = new ComboBox<>("Select Course");
+        courseComboBox = new ComboBox<>(getMessage("grades.management.select.course"));
         courseComboBox.addClassName("teacher-grades-view-course-combobox");
         courseComboBox.setItemLabelGenerator(Course::getCourseName);
-        refreshCourseData();  // Load courses when initializing the page
+        refreshCourseData();
         courseComboBox.addValueChangeListener(event -> refreshGradesData());
 
         // Search field
-        TextField searchField = new TextField("Search by Student");
+        TextField searchField = new TextField(getMessage("grades.management.search.student"));
         searchField.addClassName("teacher-grades-view-search-field");
         searchField.setValueChangeMode(ValueChangeMode.EAGER);
         searchField.addValueChangeListener(event -> filterGradesByStudent(event.getValue()));
@@ -78,26 +87,26 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
 
         // Columns for the grid
         gradesGrid.addColumn(grade -> grade.getCourse().getCourseName())
-                .setHeader("Course")
+                .setHeader(getMessage("grades.management.course.column"))
                 .setKey("course-column");
 
         gradesGrid.addColumn(grade -> {
                     Optional<Student> studentOpt = Optional.ofNullable(studentService.getStudentByNumber(grade.getStudentNumber()));
                     return studentOpt.map(student -> student.getFirstName() + " " + student.getLastName())
-                            .orElse("Unknown Student");
-                }).setHeader("Student")
+                            .orElse(getMessage("grades.management.unknown.student"));
+                }).setHeader(getMessage("grades.management.student.column"))
                 .setKey("student-column");
 
         gradesGrid.addColumn(Grade::getGrade)
-                .setHeader("Grade")
+                .setHeader(getMessage("grades.management.grade.column"))
                 .setKey("grade-column");
 
         gradesGrid.addComponentColumn(this::createEditAndDeleteButtons)
-                .setHeader("Actions")
+                .setHeader(getMessage("grades.management.actions.column"))
                 .setKey("action-column");
 
         // Add Grade Button
-        Button addGradeButton = new Button("Add Grade");
+        Button addGradeButton = new Button(getMessage("grades.management.add.grade.button"));
         addGradeButton.addClassName("teacher-grades-view-add-grade-button");
         addGradeButton.addClickListener(event -> openAddGradeDialog());
 
@@ -106,6 +115,11 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
 
         // Load real data
         refreshGradesData();
+    }
+
+    // Retrieve localized message
+    private String getMessage(String key) {
+        return messageSource.getMessage(key, null, LocaleContextHolder.getLocale());
     }
 
     // Refresh grades data based on selected course
@@ -124,7 +138,7 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
         List<Course> allCourses = courseService.getAllCourses();
         courseComboBox.setItems(allCourses);
         if (!allCourses.isEmpty()) {
-            courseComboBox.setValue(allCourses.getFirst()); // Optionally, auto-select the first course
+            courseComboBox.setValue(allCourses.get(0)); // Optionally, auto-select the first course
         }
     }
 
@@ -133,8 +147,7 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
         List<Grade> filteredGrades = gradeEntries.stream()
                 .filter(entry -> {
                     Optional<Student> studentOpt = Optional.ofNullable(studentService.getStudentByNumber(entry.getStudentNumber()));
-                    return studentOpt.map(student ->
-                                    (student.getFirstName() + " " + student.getLastName()).toLowerCase().contains(searchTerm.toLowerCase()))
+                    return studentOpt.map(student -> (student.getFirstName() + " " + student.getLastName()).toLowerCase().contains(searchTerm.toLowerCase()))
                             .orElse(false);
                 })
                 .collect(Collectors.toList());
@@ -147,17 +160,16 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
         addGradeDialog.addClassName("teacher-grades-view-add-grade-dialog");
 
         // Course ComboBox inside the dialog
-        ComboBox<Course> dialogCourseComboBox = new ComboBox<>("Select Course");
+        ComboBox<Course> dialogCourseComboBox = new ComboBox<>(getMessage("grades.management.select.course"));
         dialogCourseComboBox.addClassName("teacher-grades-view-course-combobox-dialog");
         dialogCourseComboBox.setItemLabelGenerator(Course::getCourseName);
         dialogCourseComboBox.setItems(courseService.getAllCourses());
 
         // Student ComboBox inside the dialog
-        ComboBox<Student> studentComboBox = new ComboBox<>("Select Student");
+        ComboBox<Student> studentComboBox = new ComboBox<>(getMessage("grades.management.select.student"));
         studentComboBox.addClassName("teacher-grades-view-student-combobox-dialog");
         studentComboBox.setItemLabelGenerator(student -> student.getFirstName() + " " + student.getLastName());
 
-        // Populate students based on the selected course in the dialog
         dialogCourseComboBox.addValueChangeListener(event -> {
             Course selectedCourse = event.getValue();
             if (selectedCourse != null) {
@@ -168,11 +180,11 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
             }
         });
 
-        TextField gradeField = new TextField("Grade (1.0 - 5.0 or 'Fail')");
+        TextField gradeField = new TextField(getMessage("grades.management.grade.input"));
         gradeField.addClassName("teacher-grades-view-grade-field");
         gradeField.setValueChangeMode(ValueChangeMode.EAGER);
 
-        Button saveButton = new Button("Save");
+        Button saveButton = new Button(getMessage("grades.management.save.button"));
         saveButton.addClassName("teacher-grades-view-save-button");
         saveButton.addClickListener(event -> {
             Course selectedCourse = dialogCourseComboBox.getValue();
@@ -180,32 +192,30 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
             String gradeValue = gradeField.getValue();
 
             if (selectedCourse == null || selectedStudent == null || gradeValue.isEmpty()) {
-                Notification.show("Please select a course, a student, and enter a valid grade.");
+                Notification.show(getMessage("grades.management.validation.error"));
                 return;
             }
 
-            // Create a new grade entity
             Grade newGrade = new Grade();
             newGrade.setCourse(selectedCourse);
             newGrade.setStudentNumber(selectedStudent.getStudentNumber());
             newGrade.setGrade(gradeValue);
             newGrade.setGradingDay(LocalDate.now());
 
-            // Save the grade
             try {
                 gradeService.saveGrade(newGrade);
-                Notification.show("New grade added successfully.");
-                refreshGradesData();  // Refresh the grades data
-                refreshCourseData();  // Also refresh the course list after saving
+                Notification.show(getMessage("grades.management.add.success"));
+                refreshGradesData();
+                refreshCourseData();
             } catch (Exception e) {
                 logger.error("Error saving grade: {}", e.getMessage());
-                Notification.show("Error saving grade.");
+                Notification.show(getMessage("grades.management.add.error"));
             }
 
             addGradeDialog.close();
         });
 
-        Button cancelButton = new Button("Cancel");
+        Button cancelButton = new Button(getMessage("grades.management.cancel.button"));
         cancelButton.addClassName("teacher-grades-view-cancel-button");
         cancelButton.addClickListener(event -> addGradeDialog.close());
 
@@ -216,26 +226,26 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
         comboBoxLayout.addClassName("teacher-grades-view-combobox-layout");
         comboBoxLayout.setSpacing(true);
 
-        addGradeDialog.add(new H2("Add New Grade"), comboBoxLayout, gradeField, dialogButtons);
+        addGradeDialog.add(new H2(getMessage("grades.management.add.title")), comboBoxLayout, gradeField, dialogButtons);
         addGradeDialog.open();
     }
 
     // Helper method to create edit and delete buttons for each grade row
     private HorizontalLayout createEditAndDeleteButtons(Grade grade) {
-        Button editButton = new Button("Edit");
+        Button editButton = new Button(getMessage("grades.management.edit.button"));
         editButton.addClassName("teacher-grades-view-edit-button");
         editButton.addClickListener(event -> openEditGradeDialog(grade));
 
-        Button deleteButton = new Button("Delete");
+        Button deleteButton = new Button(getMessage("grades.management.delete.button"));
         deleteButton.addClassName("teacher-grades-view-delete-button");
         deleteButton.addClickListener(event -> {
             try {
                 gradeService.deleteGrade(grade.getGradeId());
-                Notification.show("Grade deleted successfully.");
-                refreshGradesData();  // Refresh the grid
+                Notification.show(getMessage("grades.management.delete.success"));
+                refreshGradesData();
             } catch (Exception e) {
                 logger.error("Error deleting grade: {}", e.getMessage());
-                Notification.show("Error deleting grade.");
+                Notification.show(getMessage("grades.management.delete.error"));
             }
         });
 
@@ -249,42 +259,42 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
         Dialog editGradeDialog = new Dialog();
         editGradeDialog.addClassName("teacher-grades-view-edit-grade-dialog");
 
-        TextField gradeField = new TextField("Grade (1.0 - 5.0 or 'Fail')");
+        TextField gradeField = new TextField(getMessage("grades.management.grade.input"));
         gradeField.setValue(grade.getGrade());
         gradeField.addClassName("teacher-grades-view-edit-grade-field");
         gradeField.setValueChangeMode(ValueChangeMode.EAGER);
 
-        Button saveButton = new Button("Save");
+        Button saveButton = new Button(getMessage("grades.management.save.button"));
         saveButton.addClassName("teacher-grades-view-edit-save-button");
         saveButton.addClickListener(event -> {
             String gradeValue = gradeField.getValue();
 
             if (gradeValue.isEmpty()) {
-                Notification.show("Please enter a grade.");
+                Notification.show(getMessage("grades.management.validation.error"));
                 return;
             }
 
             grade.setGrade(gradeValue);
             try {
                 gradeService.saveGrade(grade);
-                Notification.show("Grade updated successfully.");
-                refreshGradesData();  // Refresh the grid
+                Notification.show(getMessage("grades.management.update.success"));
+                refreshGradesData();
             } catch (Exception e) {
                 logger.error("Error updating grade: {}", e.getMessage());
-                Notification.show("Error updating grade.");
+                Notification.show(getMessage("grades.management.update.error"));
             }
 
             editGradeDialog.close();
         });
 
-        Button cancelButton = new Button("Cancel");
+        Button cancelButton = new Button(getMessage("grades.management.cancel.button"));
         cancelButton.addClassName("teacher-grades-view-edit-cancel-button");
         cancelButton.addClickListener(event -> editGradeDialog.close());
 
         HorizontalLayout dialogButtons = new HorizontalLayout(saveButton, cancelButton);
         dialogButtons.addClassName("teacher-grades-view-edit-dialog-buttons");
 
-        editGradeDialog.add(new H2("Edit Grade"), gradeField, dialogButtons);
+        editGradeDialog.add(new H2(getMessage("grades.management.edit.title")), gradeField, dialogButtons);
         editGradeDialog.open();
     }
 }
