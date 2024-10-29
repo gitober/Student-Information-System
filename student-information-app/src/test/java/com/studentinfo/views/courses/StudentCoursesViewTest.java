@@ -14,6 +14,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.context.MessageSource;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -35,18 +36,20 @@ public class StudentCoursesViewTest {
         CourseService courseService = Mockito.mock(CourseService.class);
         AttendanceService attendanceService = Mockito.mock(AttendanceService.class);
         UserService userService = Mockito.mock(UserService.class);
+        MessageSource messageSource = Mockito.mock(MessageSource.class); // Add MessageSource mock
 
         // Mock service methods
         when(courseService.getEnrolledCourses(Mockito.anyLong())).thenReturn(Collections.emptyList());
         when(courseService.getAvailableCourses()).thenReturn(Collections.emptyList());
         when(userService.getCurrentStudentNumber()).thenReturn(1L);  // Mock a student number
+        when(messageSource.getMessage(Mockito.anyString(), Mockito.isNull(), Mockito.any())).thenReturn("Mocked Message"); // Mock message source
 
         // Initialize a Vaadin UI context
         UI ui = new UI();
         UI.setCurrent(ui);
 
         // Instantiate the view with mocked services
-        studentCoursesView = new StudentCoursesView(courseService, attendanceService, userService);
+        studentCoursesView = new StudentCoursesView(courseService, attendanceService, userService, messageSource); // Pass messageSource
     }
 
     @AfterEach
@@ -91,11 +94,11 @@ public class StudentCoursesViewTest {
 
         // Check if columns are added to the grids
         // Update the expected column count if necessary
-        System.out.println("Number of columns in enrolledCoursesGrid: " + enrolledCoursesGrid.getColumns().size());
         assertEquals(5, enrolledCoursesGrid.getColumns().size(), "Enrolled courses grid should have 5 columns.");
+        System.out.println("Number of columns in enrolledCoursesGrid: " + enrolledCoursesGrid.getColumns().size());
 
-        System.out.println("Number of columns in availableCoursesGrid: " + availableCoursesGrid.getColumns().size());
         assertEquals(5, availableCoursesGrid.getColumns().size(), "Available courses grid should have 5 columns.");
+        System.out.println("Number of columns in availableCoursesGrid: " + availableCoursesGrid.getColumns().size());
 
         System.out.println("Component testing in StudentCoursesView completed.");
     }

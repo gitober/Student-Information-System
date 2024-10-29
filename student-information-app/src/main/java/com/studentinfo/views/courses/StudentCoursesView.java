@@ -1,11 +1,11 @@
 package com.studentinfo.views.courses;
 
-import com.studentinfo.data.entity.Teacher;
-import com.studentinfo.services.CourseService;
-import com.studentinfo.services.AttendanceService;
-import com.studentinfo.services.UserService;
 import com.studentinfo.data.entity.Course;
+import com.studentinfo.data.entity.Teacher;
 import com.studentinfo.data.entity.Attendance;
+import com.studentinfo.services.AttendanceService;
+import com.studentinfo.services.CourseService;
+import com.studentinfo.services.UserService;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -24,8 +24,10 @@ import com.vaadin.flow.spring.annotation.UIScope;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @SpringComponent
@@ -33,92 +35,90 @@ import java.util.stream.Collectors;
 @CssImport("./themes/studentinformationapp/views/courses-view/student-courses-view.css")
 public class StudentCoursesView extends Composite<VerticalLayout> {
 
-    private static final Logger logger = LoggerFactory.getLogger(StudentCoursesView.class); // Logger for this class
+    private static final Logger logger = LoggerFactory.getLogger(StudentCoursesView.class);
 
     private final CourseService courseService;
     private final AttendanceService attendanceService;
     private final UserService userService;
+    private final MessageSource messageSource;
     private List<Course> enrolledCourses;
     private List<Course> availableCourses;
     private final Grid<Course> enrolledCoursesGrid;
     private final Grid<Course> availableCoursesGrid;
 
     @Autowired
-    public StudentCoursesView(CourseService courseService, AttendanceService attendanceService, UserService userService) {
+    public StudentCoursesView(CourseService courseService, AttendanceService attendanceService, UserService userService, MessageSource messageSource) {
         this.courseService = courseService;
         this.attendanceService = attendanceService;
         this.userService = userService;
+        this.messageSource = messageSource;
 
         getContent().addClassName("student-courses-view-container");
 
         // Page title
-        H2 title = new H2("My Courses");
+        H2 title = new H2(messageSource.getMessage("my.courses.title", null, Locale.getDefault()));
         title.addClassName("student-courses-view-title");
 
-        Paragraph description = new Paragraph("View and enroll in courses below.");
+        Paragraph description = new Paragraph(messageSource.getMessage("my.courses.description", null, Locale.getDefault()));
         description.addClassName("student-courses-view-description");
 
         // Search bar to filter courses by course name
-        TextField searchField = new TextField("Search Courses");
+        TextField searchField = new TextField(messageSource.getMessage("my.courses.search.label", null, Locale.getDefault()));
         searchField.addClassName("student-courses-view-search");
         searchField.setValueChangeMode(ValueChangeMode.EAGER);
         searchField.addValueChangeListener(event -> filterCourses(event.getValue()));
 
         // Initialize the grid for enrolled courses
         enrolledCoursesGrid = new Grid<>(Course.class);
-        enrolledCoursesGrid.removeAllColumns(); // Clear existing columns
-
-        // Add necessary columns
-        enrolledCoursesGrid.addColumn(Course::getCourseName).setHeader("Course Name");
-        enrolledCoursesGrid.addColumn(Course::getCoursePlan).setHeader("Course Plan");
-        enrolledCoursesGrid.addColumn(Course::getFormattedDateRange).setHeader("Duration");
+        enrolledCoursesGrid.removeAllColumns();
+        enrolledCoursesGrid.addColumn(Course::getCourseName).setHeader(messageSource.getMessage("my.courses.enrolled.column.name", null, Locale.getDefault()));
+        enrolledCoursesGrid.addColumn(Course::getCoursePlan).setHeader(messageSource.getMessage("my.courses.enrolled.column.plan", null, Locale.getDefault()));
+        enrolledCoursesGrid.addColumn(Course::getFormattedDateRange).setHeader(messageSource.getMessage("my.courses.enrolled.column.duration", null, Locale.getDefault()));
         enrolledCoursesGrid.addColumn(course -> {
             List<Teacher> teachers = course.getTeachers();
             if (!teachers.isEmpty()) {
-                return teachers.getFirst().getFirstName() + " " + teachers.getFirst().getLastName();
+                return teachers.get(0).getFirstName() + " " + teachers.get(0).getLastName();
             } else {
-                return "No teacher assigned";
+                return messageSource.getMessage("my.courses.no.teacher", null, Locale.getDefault());
             }
-        }).setHeader("Teacher");
+        }).setHeader(messageSource.getMessage("my.courses.enrolled.column.teacher", null, Locale.getDefault()));
 
         // Button to view attendance for each course
         enrolledCoursesGrid.addComponentColumn(course -> {
-            Button attendanceButton = new Button("View Attendance");
+            Button attendanceButton = new Button(messageSource.getMessage("my.courses.attendance.button", null, Locale.getDefault()));
             attendanceButton.addClassName("student-courses-view-attendance-button");
             attendanceButton.addClickListener(event -> openAttendanceDialog(course));
             return attendanceButton;
-        }).setHeader("Attendance");
+        }).setHeader(messageSource.getMessage("my.courses.attendance.column", null, Locale.getDefault()));
 
         // Initialize the grid for available courses
         availableCoursesGrid = new Grid<>(Course.class);
-        availableCoursesGrid.removeAllColumns(); // Clear existing columns
-
-        // Add only the necessary columns
-        availableCoursesGrid.addColumn(Course::getCourseName).setHeader("Course Name");
-        availableCoursesGrid.addColumn(Course::getCoursePlan).setHeader("Course Plan");
-        availableCoursesGrid.addColumn(Course::getFormattedDateRange).setHeader("Duration");
+        availableCoursesGrid.removeAllColumns();
+        availableCoursesGrid.addColumn(Course::getCourseName).setHeader(messageSource.getMessage("my.courses.available.column.name", null, Locale.getDefault()));
+        availableCoursesGrid.addColumn(Course::getCoursePlan).setHeader(messageSource.getMessage("my.courses.available.column.plan", null, Locale.getDefault()));
+        availableCoursesGrid.addColumn(Course::getFormattedDateRange).setHeader(messageSource.getMessage("my.courses.available.column.duration", null, Locale.getDefault()));
         availableCoursesGrid.addColumn(course -> {
             List<Teacher> teachers = course.getTeachers();
             if (!teachers.isEmpty()) {
-                return teachers.getFirst().getFirstName() + " " + teachers.getFirst().getLastName();
+                return teachers.get(0).getFirstName() + " " + teachers.get(0).getLastName();
             } else {
-                return "No teacher assigned";
+                return messageSource.getMessage("my.courses.no.teacher", null, Locale.getDefault());
             }
-        }).setHeader("Teacher");
+        }).setHeader(messageSource.getMessage("my.courses.available.column.teacher", null, Locale.getDefault()));
 
         // Add "Enroll" button for each course
         availableCoursesGrid.addComponentColumn(course -> {
-            Button enrollButton = new Button("Enroll");
+            Button enrollButton = new Button(messageSource.getMessage("my.courses.enroll.button", null, Locale.getDefault()));
             enrollButton.addClassName("student-courses-view-enroll-button");
             enrollButton.addClickListener(event -> enrollInCourse(course));
             return enrollButton;
-        }).setHeader("Actions");
+        }).setHeader(messageSource.getMessage("my.courses.available.column.actions", null, Locale.getDefault()));
 
         // Fetch the current student's number
         Long studentNumber = userService.getCurrentStudentNumber();
 
         if (studentNumber == null) {
-            Notification.show("Error: Unable to retrieve student information.");
+            Notification.show(messageSource.getMessage("my.courses.error.student.not.found", null, Locale.getDefault()));
             return;
         }
 
@@ -126,8 +126,8 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
         refreshCourseData(studentNumber);
 
         // Add components to layout
-        getContent().add(title, description, searchField, new H2("Enrolled Courses"), enrolledCoursesGrid,
-                new H2("Available Courses"), availableCoursesGrid);
+        getContent().add(title, description, searchField, new H2(messageSource.getMessage("my.courses.enrolled.title", null, Locale.getDefault())), enrolledCoursesGrid,
+                new H2(messageSource.getMessage("my.courses.available.title", null, Locale.getDefault())), availableCoursesGrid);
     }
 
     private void refreshCourseData(Long studentNumber) {
@@ -176,125 +176,66 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
         VerticalLayout dialogLayout = new VerticalLayout();
         dialogLayout.addClassName("student-courses-view-dialog-layout");
 
-        H2 dialogTitle = new H2("Confirm Enrollment");
+        H2 dialogTitle = new H2(messageSource.getMessage("my.courses.dialog.confirm.title", null, Locale.getDefault()));
         dialogTitle.addClassName("student-courses-view-dialog-title");
         dialogLayout.add(dialogTitle);
 
         // Course field (read-only)
-        TextField courseField = new TextField("Course", course.getCourseName(), "");
-        courseField.addClassName("student-courses-view-course-field");
+        TextField courseField = new TextField(messageSource.getMessage("my.courses.dialog.course.label", null, Locale.getDefault()), course.getCourseName(), "");
+        courseField.addClassName("student-courses-view-dialog-course-field");
         courseField.setReadOnly(true);
         dialogLayout.add(courseField);
 
-        // Teacher field (read-only)
-        TextField teacherField = new TextField("Teacher",
-                course.getTeachers().isEmpty() ? "No teacher assigned" :
-                        course.getTeachers().getFirst().getFirstName() + " " + course.getTeachers().getFirst().getLastName(),
-                "");
-        teacherField.addClassName("student-courses-view-teacher-field");
-        teacherField.setReadOnly(true);
-        dialogLayout.add(teacherField);
-
-        // Confirm button
-        Button confirmButton = new Button("Confirm", event -> {
-            // Fetch the current student's number
+        // Confirmation buttons
+        HorizontalLayout buttonLayout = new HorizontalLayout();
+        buttonLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
+        Button confirmButton = new Button(messageSource.getMessage("my.courses.dialog.confirm.button", null, Locale.getDefault()));
+        confirmButton.addClickListener(event -> {
+            // Enroll the student in the selected course without batchId
             Long studentNumber = userService.getCurrentStudentNumber();
-
-            if (studentNumber == null) {
-                Notification.show("Error: Unable to retrieve student information.");
-                confirmationDialog.close();
-                return;
-            }
-
-            // Ensure batchId and coursePayment are handled properly.
-            Long batchId = null; // Replace with a valid batch ID if needed
-            double coursePayment = 0.0; // Adjust based on your business logic
-
-            try {
-                // Debug log before enrolling
-                logger.debug("Debug: Enrolling student {} in course ID {}", studentNumber, course.getCourseId());
-
-                // Enroll the student in the selected course
-                courseService.enrollInCourse(studentNumber, batchId, course.getCourseId(), coursePayment);
-
-                // Refresh the course data after enrollment
-                refreshCourseData(studentNumber);
-                // Show notification to confirm enrollment
-                Notification.show("Successfully enrolled in " + course.getCourseName());
-            } catch (Exception e) {
-                // Show error notification if enrollment fails
-                Notification.show("Enrollment failed: " + e.getMessage());
-                logger.error("Enrollment failed: {}", e.getMessage(), e); // Log the exception with stack trace
-            }
-
-            // Close the dialog
+            courseService.enrollInCourse(studentNumber, null, course.getCourseId(), 0); // Adjust the method call as needed
+            Notification.show(messageSource.getMessage("my.courses.enroll.success", null, Locale.getDefault()));
             confirmationDialog.close();
+            refreshCourseData(studentNumber);
         });
-        confirmButton.addClassName("student-courses-view-confirm-button");
 
-        // Cancel button
-        Button cancelButton = new Button("Cancel", event -> confirmationDialog.close());
-        cancelButton.addClassName("student-courses-view-cancel-button");
+        Button cancelButton = new Button(messageSource.getMessage("my.courses.dialog.cancel.button", null, Locale.getDefault()));
+        cancelButton.addClickListener(event -> confirmationDialog.close());
 
-        // Add buttons to the dialog with adjusted styles
-        HorizontalLayout dialogButtons = new HorizontalLayout(confirmButton, cancelButton);
-        dialogButtons.addClassName("student-courses-view-dialog-buttons");
-        dialogButtons.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER); // Center align buttons
-        dialogButtons.setSpacing(true); // Add spacing between buttons
-        dialogLayout.add(dialogButtons);
-
-        // Add layout to the dialog
+        buttonLayout.add(confirmButton, cancelButton);
+        dialogLayout.add(buttonLayout);
         confirmationDialog.add(dialogLayout);
-
-        // Open the dialog
         confirmationDialog.open();
     }
 
+
+    // Method to open attendance dialog
     private void openAttendanceDialog(Course course) {
+        // Create attendance dialog
         Dialog attendanceDialog = new Dialog();
         attendanceDialog.addClassName("student-courses-view-attendance-dialog");
 
-        // Title for the dialog
-        H2 title = new H2("Attendance for " + course.getCourseName());
-        attendanceDialog.add(title);
+        // Attendance title
+        H2 attendanceTitle = new H2(messageSource.getMessage("my.courses.attendance.title", null, Locale.getDefault()));
+        attendanceDialog.add(attendanceTitle);
 
-        // Fetch the current student's number
-        Long studentNumber = userService.getCurrentStudentNumber();
+        // Retrieve the current student's number
+        Long studentNumber = userService.getCurrentStudentNumber(); // Ensure this method exists and returns the correct student number
 
-        if (studentNumber == null) {
-            Notification.show("Error: Unable to retrieve student information.");
-            return;
-        }
-
-        // Fetch attendance records for the selected course and the current student
+        // Fetch attendance records
         List<Attendance> attendanceRecords = attendanceService.getAttendanceByStudentNumberAndCourseId(studentNumber, course.getCourseId());
 
-        if (attendanceRecords.isEmpty()) {
-            Notification.show("No attendance records found for this course.");
-        }
-
-        // Create a grid to display attendance records
+        // Create grid for attendance records
         Grid<Attendance> attendanceGrid = new Grid<>(Attendance.class);
         attendanceGrid.removeAllColumns(); // Clear existing columns
+        attendanceGrid.addColumn(Attendance::getAttendanceDate).setHeader(messageSource.getMessage("my.courses.attendance.column.date", null, Locale.getDefault()));
+        attendanceGrid.addColumn(Attendance::getAttendanceStatus).setHeader(messageSource.getMessage("my.courses.attendance.column.status", null, Locale.getDefault()));
 
-        // Add columns to display the attendance date and status
-        attendanceGrid.addColumn(Attendance::getAttendanceDate).setHeader("Date");
-        attendanceGrid.addColumn(Attendance::getAttendanceStatus).setHeader("Status");
-
-        // Set items in the attendance grid
+        // Set items to the grid
         attendanceGrid.setItems(attendanceRecords);
 
-        // Add attendance grid to the dialog
+        // Add the grid to the dialog
         attendanceDialog.add(attendanceGrid);
-
-        // Close button with a custom class name
-        Button closeButton = new Button("Close", event -> attendanceDialog.close());
-        closeButton.addClassName("student-courses-view-attendance-close-button");
-
-        HorizontalLayout dialogButtons = new HorizontalLayout(closeButton);
-        attendanceDialog.add(dialogButtons);
-
-        // Open the attendance dialog
         attendanceDialog.open();
     }
 
