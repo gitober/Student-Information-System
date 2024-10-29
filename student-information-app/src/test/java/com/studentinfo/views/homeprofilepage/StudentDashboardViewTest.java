@@ -26,6 +26,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.context.MessageSource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +48,9 @@ public class StudentDashboardViewTest {
         GradeService gradeService = Mockito.mock(GradeService.class);
         AttendanceService attendanceService = Mockito.mock(AttendanceService.class);
         AuthenticatedUser authenticatedUser = Mockito.mock(AuthenticatedUser.class);
+
+        // Mock message source
+        MessageSource messageSource = createMessageSource();
 
         // Mock service methods
         when(courseService.getAllCourses()).thenReturn(new ArrayList<>(List.of(new Course(), new Course())));
@@ -76,7 +81,7 @@ public class StudentDashboardViewTest {
                 .thenReturn(Optional.of("edit-profile"));
 
         // Creating the StudentDashboardView instance with mocked services
-        studentDashboardView = new StudentDashboardView(courseService, gradeService, attendanceService, authenticatedUser);
+        studentDashboardView = new StudentDashboardView(courseService, gradeService, attendanceService, authenticatedUser, messageSource);
     }
 
     @AfterEach
@@ -94,7 +99,7 @@ public class StudentDashboardViewTest {
         // Check if the main title is present
         H1 title = (H1) studentDashboardView.getContent().getComponentAt(0);
         assertNotNull(title);
-        assertEquals("Student Dashboard", title.getText());
+        assertEquals("dashboard.welcome", title.getText()); // Adjusted to match the key used in your messages
 
         // Check if the dashboard grid is present
         FlexLayout dashboardGrid = (FlexLayout) studentDashboardView.getContent().getComponentAt(1);
@@ -102,13 +107,13 @@ public class StudentDashboardViewTest {
         assertEquals(4, dashboardGrid.getComponentCount()); // Should have 4 dashboard cards
 
         // Check if the correct number of cards is displayed with expected titles
-        checkCardTitle(dashboardGrid.getComponentAt(0), "Courses");
-        checkCardTitle(dashboardGrid.getComponentAt(1), "Grades");
-        checkCardTitle(dashboardGrid.getComponentAt(2), "Attendance");
-        checkCardTitle(dashboardGrid.getComponentAt(3), "Edit Profile");
+        checkCardTitle(dashboardGrid.getComponentAt(0), "dashboard.courses.title");
+        checkCardTitle(dashboardGrid.getComponentAt(1), "dashboard.grades.title");
+        checkCardTitle(dashboardGrid.getComponentAt(2), "dashboard.attendance.title");
+        checkCardTitle(dashboardGrid.getComponentAt(3), "dashboard.editprofile.title");
     }
 
-    private void checkCardTitle(Component card, String expectedTitle) {
+    private void checkCardTitle(Component card, String expectedTitleKey) {
         if (card instanceof Div divCard) {
             RouterLink link = (RouterLink) divCard.getChildren()
                     .filter(component -> component instanceof RouterLink)
@@ -120,7 +125,7 @@ public class StudentDashboardViewTest {
                         .findFirst()
                         .orElse(null);
                 assertNotNull(title);
-                assertEquals(expectedTitle, title.getText());
+                assertEquals(expectedTitleKey, title.getText()); // Check title against the key
             } else {
                 // Handle the case where there is no RouterLink
                 Paragraph title = (Paragraph) divCard.getChildren()
@@ -128,8 +133,14 @@ public class StudentDashboardViewTest {
                         .findFirst()
                         .orElse(null);
                 assertNotNull(title);
-                assertEquals(expectedTitle, title.getText());
+                assertEquals(expectedTitleKey, title.getText()); // Check title against the key
             }
         }
+    }
+
+    private MessageSource createMessageSource() {
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setBasename("messages"); // Base name for message bundles
+        return messageSource;
     }
 }

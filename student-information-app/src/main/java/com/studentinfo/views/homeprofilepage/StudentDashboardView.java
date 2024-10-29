@@ -18,6 +18,7 @@ import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
@@ -27,9 +28,11 @@ import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.vaadin.flow.component.html.Image;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @SpringComponent
@@ -40,18 +43,22 @@ public class StudentDashboardView extends Composite<VerticalLayout> {
     private final CourseService courseService;
     private final AttendanceService attendanceService;
     private final AuthenticatedUser authenticatedUser;
+    private final MessageSource messageSource;
 
     @Autowired
-    public StudentDashboardView(CourseService courseService, GradeService gradeService, AttendanceService attendanceService, AuthenticatedUser authenticatedUser) {
+    public StudentDashboardView(CourseService courseService, GradeService gradeService,
+                                AttendanceService attendanceService, AuthenticatedUser authenticatedUser,
+                                MessageSource messageSource) {
         this.courseService = courseService;
         this.attendanceService = attendanceService;
         this.authenticatedUser = authenticatedUser;
+        this.messageSource = messageSource;
 
         // Main layout setup
         getContent().addClassName("student-profile-page-view");
 
         // Page title
-        H1 welcomeText = new H1("Student Dashboard");
+        H1 welcomeText = new H1(getMessage("dashboard.welcome"));
         welcomeText.addClassName("student-dashboard-welcome-text");
         getContent().add(welcomeText);
 
@@ -68,10 +75,25 @@ public class StudentDashboardView extends Composite<VerticalLayout> {
         dashboardGrid.setJustifyContentMode(FlexLayout.JustifyContentMode.CENTER);
 
         // Add cards with navigation links
-        dashboardGrid.add(createDashboardCard("Courses", courseService.getAllCourses().size() + " Enrolled", CoursesView.class, "./icons/Your_Courses.png"));
-        dashboardGrid.add(createDashboardCard("Grades", gradeService.getAllGrades().size() + " Records", GradesView.class, "./icons/Recent_Grades.png"));
-        dashboardGrid.add(createDashboardCard("Attendance", "View Attendance", null, "./icons/Manage_Attendance.png")); // Opens the attendance dialog
-        dashboardGrid.add(createDashboardCard("Edit Profile", "Update Your Information", EditProfileView.class, "./icons/Quick_Links.png"));
+        dashboardGrid.add(createDashboardCard(
+                getMessage("dashboard.courses.title"),
+                courseService.getAllCourses().size() + " " + getMessage("dashboard.courses.count"),
+                CoursesView.class, "./icons/Your_Courses.png"));
+
+        dashboardGrid.add(createDashboardCard(
+                getMessage("dashboard.grades.title"),
+                gradeService.getAllGrades().size() + " " + getMessage("dashboard.grades.count"),
+                GradesView.class, "./icons/Recent_Grades.png"));
+
+        dashboardGrid.add(createDashboardCard(
+                getMessage("dashboard.attendance.title"),
+                getMessage("dashboard.attendance.description"),
+                null, "./icons/Manage_Attendance.png"));
+
+        dashboardGrid.add(createDashboardCard(
+                getMessage("dashboard.editprofile.title"),
+                getMessage("dashboard.editprofile.description"),
+                EditProfileView.class, "./icons/Quick_Links.png"));
 
         getContent().add(dashboardGrid);
     }
@@ -106,7 +128,7 @@ public class StudentDashboardView extends Composite<VerticalLayout> {
         } else {
             // Add click listener to open the dialog when the card is clicked
             card.addClickListener(event -> {
-                if (title.equals("Attendance")) {
+                if (title.equals(getMessage("dashboard.attendance.title"))) {
                     openAttendanceDialog(); // No arguments needed
                 }
             });
@@ -116,13 +138,12 @@ public class StudentDashboardView extends Composite<VerticalLayout> {
         return card;
     }
 
-
     private void openAttendanceDialog() {
         Dialog attendanceDialog = new Dialog();
         attendanceDialog.addClassName("student-attendance-dialog");
 
         // Title for the dialog
-        H1 title = new H1("Your Attendance");
+        H1 title = new H1(getMessage("attendance.dialog.title"));
         title.addClassName("attendance-dialog-title");
         attendanceDialog.add(title);
 
@@ -134,9 +155,9 @@ public class StudentDashboardView extends Composite<VerticalLayout> {
         attendanceGrid.addClassName("student-attendance-grid"); // Existing class
         attendanceGrid.addClassName("custom-attendance-grid"); // New class for styling
         attendanceGrid.removeAllColumns(); // Clear existing columns
-        attendanceGrid.addColumn(attendance -> attendance.getCourse().getCourseName()).setHeader("Course Name");
-        attendanceGrid.addColumn(Attendance::getAttendanceDate).setHeader("Date");
-        attendanceGrid.addColumn(Attendance::getAttendanceStatus).setHeader("Status");
+        attendanceGrid.addColumn(attendance -> attendance.getCourse().getCourseName()).setHeader(getMessage("attendance.grid.course"));
+        attendanceGrid.addColumn(Attendance::getAttendanceDate).setHeader(getMessage("attendance.grid.date"));
+        attendanceGrid.addColumn(Attendance::getAttendanceStatus).setHeader(getMessage("attendance.grid.status"));
 
         // Fetch attendance records for all enrolled courses
         List<Course> enrolledCourses = courseService.getEnrolledCourses(studentNumber);
@@ -148,16 +169,18 @@ public class StudentDashboardView extends Composite<VerticalLayout> {
         // Set items in the attendance grid
         attendanceGrid.setItems(attendanceRecords);
 
-        // Add attendance grid to the dialog
-        attendanceDialog.add(attendanceGrid);
-
         // Close button
-        Button closeButton = new Button("Close", event -> attendanceDialog.close());
+        Button closeButton = new Button(getMessage("attendance.dialog.close"), event -> attendanceDialog.close());
         closeButton.addClassName("attendance-dialog-close-button");
         attendanceDialog.add(new HorizontalLayout(closeButton));
 
-        // Open the attendance dialog
+        attendanceDialog.add(attendanceGrid); // Add the attendance grid to the dialog
         attendanceDialog.open();
+    }
+
+    private String getMessage(String code) {
+        Locale locale = LocaleContextHolder.getLocale();
+        return messageSource.getMessage(code, null, locale);
     }
 
     private Long getCurrentStudentNumber() {
