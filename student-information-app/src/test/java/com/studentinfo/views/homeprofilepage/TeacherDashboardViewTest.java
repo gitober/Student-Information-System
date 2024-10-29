@@ -41,6 +41,7 @@ import static org.mockito.Mockito.*;
 public class TeacherDashboardViewTest {
 
     private TeacherDashboardView teacherDashboardView;
+    private MessageSource messageSource; // Declare messageSource as a field
 
     @BeforeEach
     public void setUp() {

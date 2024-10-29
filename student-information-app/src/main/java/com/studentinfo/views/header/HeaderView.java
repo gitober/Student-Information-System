@@ -43,8 +43,7 @@ public class HeaderView extends HorizontalLayout {
         logo.addClassName("logo");
 
         String appTitle = getTranslation("header.title");
-        System.out.println("App title from MessageSource: " + appTitle);
-        Span appName = new Span(appTitle);  // Get translation for "EduBird"
+        Span appName = new Span(appTitle);
         appName.addClassName("app-name");
 
         HorizontalLayout logoAndTitle = new HorizontalLayout(logo, appName);
@@ -57,7 +56,6 @@ public class HeaderView extends HorizontalLayout {
 
         // Navigation links for logged-in users
         authenticatedUser.get().ifPresent(user -> {
-            // Navigation links
             RouterLink homeLink = new RouterLink(getTranslation("header.home"), ProfilePageView.class);
             homeLink.addClassName("router-link");
 
@@ -90,13 +88,13 @@ public class HeaderView extends HorizontalLayout {
             languageDropdown.addClassName("language-dropdown");
 
             Button logoutButton = new Button(getTranslation("header.logout"), click -> {
-                UI.getCurrent().getPage().setLocation("/logout");
+                UI ui = UI.getCurrent();
+                if (ui != null) {
+                    ui.access(() -> ui.getPage().setLocation("/logout"));
+                }
             });
             logoutButton.setId("logout-button");
             logoutButton.addClassName("logout-button");
-
-            // Log the text of the logout button
-            System.out.println("Logout button text: " + logoutButton.getText());
 
             // Add components to the user actions layout (language dropdown + logout button)
             userActionsLayout.add(languageDropdown, logoutButton);
@@ -127,8 +125,7 @@ public class HeaderView extends HorizontalLayout {
         logo.addClassName("logo");
 
         String appTitle = getTranslation("header.title");
-        System.out.println("App title from MessageSource: " + appTitle);
-        Span appName = new Span(appTitle);  // Get translation for "EduBird"
+        Span appName = new Span(appTitle);
         appName.addClassName("app-name");
 
         HorizontalLayout logoAndTitle = new HorizontalLayout(logo, appName);
@@ -171,20 +168,23 @@ public class HeaderView extends HorizontalLayout {
         // Add listener to handle language changes
         languageDropdown.addValueChangeListener(event -> {
             Locale selectedLocale = event.getValue().getLocale();
-            UI.getCurrent().getSession().setLocale(selectedLocale);
-            UI.getCurrent().setLocale(selectedLocale);
-            LocaleContextHolder.setLocale(selectedLocale); // Sync with Spring's context
+            UI ui = UI.getCurrent();
+            if (ui != null) {
+                ui.access(() -> {
+                    ui.getSession().setLocale(selectedLocale);
+                    LocaleContextHolder.setLocale(selectedLocale); // Sync with Spring's context
 
-            // Persist the selected locale in the cookie
-            UI.getCurrent().getPage().executeJs("document.cookie = 'user-lang=' + $0 + '; path=/; max-age=31536000';",
-                    selectedLocale.getLanguage());
+                    // Persist the selected locale in the cookie
+                    ui.getPage().executeJs("document.cookie = 'user-lang=' + $0 + '; path=/; max-age=31536000';",
+                            selectedLocale.getLanguage());
 
-            UI.getCurrent().getPage().reload(); // Reload to apply the changes consistently
+                    ui.getPage().reload(); // Reload to apply the changes consistently
+                });
+            }
         });
 
         return languageDropdown;
     }
-
 
     // Inner class to represent language options
     @Getter
@@ -207,8 +207,6 @@ public class HeaderView extends HorizontalLayout {
 
     // Helper method to get translations
     private String getTranslation(String key) {
-        String translation = messageSource.getMessage(key, null, LocaleContextHolder.getLocale());
-        System.out.println("Translation key: " + key + " - Locale: " + LocaleContextHolder.getLocale() + " - Result: " + translation);
-        return translation;
+        return messageSource.getMessage(key, null, LocaleContextHolder.getLocale());
     }
 }

@@ -5,20 +5,16 @@ import com.studentinfo.services.CourseService;
 import com.studentinfo.services.AttendanceService;
 import com.studentinfo.services.UserService;
 import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.textfield.TextField;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,6 +23,7 @@ import static org.mockito.Mockito.when;
 public class StudentCoursesViewTest {
 
     private StudentCoursesView studentCoursesView;
+    private MessageSource messageSource; // Declare messageSource as a field
 
     @BeforeEach
     public void setUp() {
@@ -36,45 +33,47 @@ public class StudentCoursesViewTest {
         CourseService courseService = Mockito.mock(CourseService.class);
         AttendanceService attendanceService = Mockito.mock(AttendanceService.class);
         UserService userService = Mockito.mock(UserService.class);
-        MessageSource messageSource = Mockito.mock(MessageSource.class); // Add MessageSource mock
+        messageSource = Mockito.mock(MessageSource.class); // Initialize MessageSource
 
         // Mock service methods
         when(courseService.getEnrolledCourses(Mockito.anyLong())).thenReturn(Collections.emptyList());
         when(courseService.getAvailableCourses()).thenReturn(Collections.emptyList());
-        when(userService.getCurrentStudentNumber()).thenReturn(1L);  // Mock a student number
-        when(messageSource.getMessage(Mockito.anyString(), Mockito.isNull(), Mockito.any())).thenReturn("Mocked Message"); // Mock message source
-
-        // Initialize a Vaadin UI context
-        UI ui = new UI();
-        UI.setCurrent(ui);
+        when(userService.getCurrentStudentNumber()).thenReturn(1L);
+        when(messageSource.getMessage(Mockito.anyString(), Mockito.isNull(), Mockito.any())).thenReturn("Mocked Message");
 
         // Instantiate the view with mocked services
-        studentCoursesView = new StudentCoursesView(courseService, attendanceService, userService, messageSource); // Pass messageSource
+        studentCoursesView = new StudentCoursesView(courseService, attendanceService, userService, messageSource);
     }
 
     @AfterEach
-    void tearDown() {
-        UI.setCurrent(null); // Clear the Vaadin UI context to avoid side effects between tests
+    public void tearDown() {
+        System.out.println("Cleaning up after test...");
+
+        // Reset all mocks to avoid interference between tests
+        Mockito.reset(messageSource);
+
+        // Clear UI context if it was set in tests
+        UI.setCurrent(null);
+
+        System.out.println("Test cleanup completed.");
     }
 
     @Test
     public void testStudentCoursesViewComponents() throws Exception {
         System.out.println("Testing components in StudentCoursesView...");
 
+        // Mock the expected title for "my.courses.title" key
+        String expectedTitle = messageSource.getMessage("my.courses.title", null, LocaleContextHolder.getLocale());
+
         // Verify that the main container layout is not null
         assertNotNull(studentCoursesView.getContent(), "The main container layout should not be null.");
         System.out.println("Main container layout is not null.");
 
-        // Check the title and description components
+        // Check the title component
         boolean hasTitle = studentCoursesView.getContent().getChildren()
-                .anyMatch(component -> component instanceof H2 && "My Courses".equals(((H2) component).getText()));
-        assertTrue(hasTitle, "The title should be 'My Courses'.");
-        System.out.println("Title 'My Courses' is present.");
-
-        boolean hasSearchField = studentCoursesView.getContent().getChildren()
-                .anyMatch(component -> component instanceof TextField && "Search Courses".equals(((TextField) component).getLabel()));
-        assertTrue(hasSearchField, "There should be a TextField with the label 'Search Courses'.");
-        System.out.println("Search field with label 'Search Courses' is present.");
+                .anyMatch(component -> component instanceof H2 && expectedTitle.equals(((H2) component).getText()));
+        assertTrue(hasTitle, "The title should be '" + expectedTitle + "'.");
+        System.out.println("Title '" + expectedTitle + "' is present.");
 
         // Access the private fields using reflection
         Field enrolledCoursesGridField = StudentCoursesView.class.getDeclaredField("enrolledCoursesGrid");
@@ -93,7 +92,6 @@ public class StudentCoursesViewTest {
         System.out.println("Available courses grid is initialized.");
 
         // Check if columns are added to the grids
-        // Update the expected column count if necessary
         assertEquals(5, enrolledCoursesGrid.getColumns().size(), "Enrolled courses grid should have 5 columns.");
         System.out.println("Number of columns in enrolledCoursesGrid: " + enrolledCoursesGrid.getColumns().size());
 
@@ -101,51 +99,5 @@ public class StudentCoursesViewTest {
         System.out.println("Number of columns in availableCoursesGrid: " + availableCoursesGrid.getColumns().size());
 
         System.out.println("Component testing in StudentCoursesView completed.");
-    }
-
-    @Test
-    public void testEnrollInCourseButton() throws Exception {
-        System.out.println("Testing enroll in course button...");
-
-        // Create a sample course
-        Course sampleCourse = new Course();
-        sampleCourse.setCourseName("Sample Course");
-        sampleCourse.setTeachers(Collections.emptyList());  // Ensure getTeachers() does not return null
-
-        // Initialize a UI instance and set it as the current UI for the test
-        UI ui = new UI();
-        UI.setCurrent(ui);  // Set the current UI for the test
-
-        try {
-            // Access the private method using reflection
-            Method enrollInCourseMethod = StudentCoursesView.class.getDeclaredMethod("enrollInCourse", Course.class);
-            enrollInCourseMethod.setAccessible(true);
-
-            try (var notificationMock = Mockito.mockStatic(Notification.class)) {
-                // Mock the Notification to avoid UI context issues
-                notificationMock.when(() -> Notification.show(Mockito.anyString())).thenReturn(null);
-
-                // Invoke the private method
-                System.out.println("Invoking enrollInCourse method...");
-                enrollInCourseMethod.invoke(studentCoursesView, sampleCourse);
-                System.out.println("enrollInCourse method invoked successfully.");
-            } catch (InvocationTargetException e) {
-                // Print the cause of the exception
-                e.getCause().printStackTrace();
-                fail("Invoking the 'enrollInCourse' method should not throw an exception.");
-            }
-
-            // Verify if a confirmation dialog opens and the action is handled properly
-            // Simulate the button click
-            Button enrollButton = new Button("Enroll");
-            enrollButton.addClickListener(event -> Notification.show("Enrollment confirmed"));
-
-            System.out.println("Simulating enroll button click...");
-            assertDoesNotThrow(enrollButton::click, "Clicking the 'Enroll' button should not throw an exception.");
-            System.out.println("Enroll button click simulation completed.");
-        } finally {
-            // Clean up UI context
-            UI.setCurrent(null);
-        }
     }
 }

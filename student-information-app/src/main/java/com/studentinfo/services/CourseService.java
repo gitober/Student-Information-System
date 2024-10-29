@@ -1,10 +1,7 @@
 package com.studentinfo.services;
 
 import com.studentinfo.data.entity.*;
-import com.studentinfo.data.repository.CourseRepository;
-import com.studentinfo.data.repository.RegistrationRepository;
-import com.studentinfo.data.repository.StudentRepository;
-import com.studentinfo.data.repository.TeacherRepository;
+import com.studentinfo.data.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,38 +13,43 @@ import java.util.Optional;
 @Service
 public class CourseService {
 
-    // Repositories for interacting with the database
     private final CourseRepository courseRepository;
     private final RegistrationRepository registrationRepository;
     private final TeacherRepository teacherRepository;
     private final StudentRepository studentRepository;
+    private final TranslationService translationService; // Inject TranslationService
 
     @Autowired
     public CourseService(StudentRepository studentRepository, CourseRepository courseRepository,
-                         RegistrationRepository registrationRepository, TeacherRepository teacherRepository) {
+                         RegistrationRepository registrationRepository, TeacherRepository teacherRepository,
+                         TranslationService translationService) { // Add TranslationService to constructor
         this.courseRepository = courseRepository;
         this.registrationRepository = registrationRepository;
         this.teacherRepository = teacherRepository;
         this.studentRepository = studentRepository;
+        this.translationService = translationService; // Initialize TranslationService
     }
 
-    // CRUD Operations
-
-    // Create or update a Course with Teachers
     @Transactional
-    public Course saveCourse(Course course, List<Teacher> teachers) {
-        // Save the course
+    public Course saveCourse(Course course, List<Teacher> teachers, List<CourseTranslation> translations) {
+        // Save the course entity
         Course savedCourse = courseRepository.save(course);
 
-        // Add the course to each teacher's list of courses and save the relationship
+        // Set up the relationship with teachers
         for (Teacher teacher : teachers) {
             Teacher persistentTeacher = teacherRepository.findById(teacher.getTeacherId())
                     .orElseThrow(() -> new IllegalArgumentException("Teacher not found with ID: " + teacher.getTeacherId()));
             if (!persistentTeacher.getCourses().contains(savedCourse)) {
                 persistentTeacher.getCourses().add(savedCourse);
+                teacherRepository.save(persistentTeacher); // Save each teacher with the new course relationship
             }
-            teacherRepository.save(persistentTeacher); // Persist the relationship
         }
+
+        // Set the course reference in each translation and save them through TranslationService
+        for (CourseTranslation translation : translations) {
+            translation.setCourse(savedCourse); // Associate translation with the saved course
+        }
+        translationService.saveCourseTranslations(translations); // Save translations through TranslationService
 
         return savedCourse;
     }
@@ -136,4 +138,21 @@ public class CourseService {
         return teacher.getCourses(); // Return the list of courses taught by the teacher
     }
 
+    // Method to get translated course name
+    public String getTranslatedName(Long courseId, String languageCode) {
+        return getTranslation(courseId, "course_name", languageCode);
+    }
+
+    // Method to get translated course plan
+    public String getTranslatedPlan(Long courseId, String languageCode) {
+        return getTranslation(courseId, "course_plan", languageCode);
+    }
+
+    // Helper method to fetch translation based on field name and language code
+    private String getTranslation(Long courseId, String fieldName, String languageCode) {
+        Optional<CourseTranslation> translation = translationService.getCourseTranslations(courseId, languageCode).stream()
+                .filter(t -> t.getFieldName().equals(fieldName))
+                .findFirst();
+        return translation.map(CourseTranslation::getTranslatedValue).orElse(""); // Return translation or empty string
+    }
 }

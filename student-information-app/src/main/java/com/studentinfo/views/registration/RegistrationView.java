@@ -125,6 +125,15 @@ public class RegistrationView extends Composite<VerticalLayout> {
             return;
         }
 
+        // Map the selected role to the expected English values
+        String selectedRole = roleComboBox.getValue();
+        String role = null;
+        if (selectedRole.equals(messageSource.getMessage("registration.role.student", null, LocaleContextHolder.getLocale()))) {
+            role = "Student";
+        } else if (selectedRole.equals(messageSource.getMessage("registration.role.teacher", null, LocaleContextHolder.getLocale()))) {
+            role = "Teacher";
+        }
+
         boolean registrationSuccessful = registrationHandler.registerUser(
                 firstNameField.getValue(),
                 lastNameField.getValue(),
@@ -132,7 +141,7 @@ public class RegistrationView extends Composite<VerticalLayout> {
                 phoneNumberField.getValue(),
                 emailField.getValue(),
                 passwordField.getValue(),
-                roleComboBox.getValue()
+                role
         );
 
         if (registrationSuccessful) {
@@ -142,6 +151,7 @@ public class RegistrationView extends Composite<VerticalLayout> {
             Notification.show(messageSource.getMessage("registration.failure", null, LocaleContextHolder.getLocale()));
         }
     }
+
 
     private void addFieldListeners(MessageSource messageSource) {
         emailField.addValueChangeListener(e -> validateEmail(messageSource));

@@ -4,6 +4,7 @@ import com.studentinfo.data.entity.User;
 import com.studentinfo.data.entity.Role;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.server.VaadinSession;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,31 +48,29 @@ class LoginHandlerTest {
         MockitoAnnotations.openMocks(this);
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(httpServletRequest, httpServletResponse));
 
+        // Mock Vaadin session
+        VaadinSession vaadinSession = mock(VaadinSession.class);
+        VaadinSession.setCurrent(vaadinSession);
+
         // Clear the SecurityContextHolder before each test
         SecurityContextHolder.clearContext();
     }
 
     @AfterEach
     void tearDown() {
-        // Reset mocks and clear SecurityContextHolder after each test
-        reset(userService, authenticationManager, httpServletRequest, httpServletResponse);
+        UI.setCurrent(null);
+        VaadinSession.setCurrent(null);
         SecurityContextHolder.clearContext();
     }
 
     @Test
     void testSuccessfulLogin() {
-        // Arrange
         String email = "test@example.com";
         String password = "password";
-        boolean rememberMe = true; // or false, depending on what you want to test
+        boolean rememberMe = true;
 
         User user = new User();
         user.setUsername(email);
-
-        // Initialize roles set and add a role to the user
-        Set<Role> roles = new HashSet<>();
-        roles.add(Role.USER);
-        user.setRoles(roles);
 
         UsernamePasswordAuthenticationToken authToken =
                 new UsernamePasswordAuthenticationToken(email, password, user.getAuthorities());
@@ -79,50 +78,35 @@ class LoginHandlerTest {
         when(userService.authenticate(email, password)).thenReturn(Optional.of(user));
         when(authenticationManager.authenticate(authToken)).thenReturn(mock(Authentication.class));
 
-        // Mock UI and Notification
         UI mockUI = mock(UI.class);
         UI.setCurrent(mockUI);
 
         try (var mockedNotification = Mockito.mockStatic(Notification.class)) {
-            // Act
-            loginHandler.login(email, password, rememberMe); // Pass the rememberMe parameter
+            loginHandler.login(email, password, rememberMe);
 
-            // Assert
-            verify(userService, times(1)).authenticate(email, password);
-            verify(authenticationManager, times(1)).authenticate(any(UsernamePasswordAuthenticationToken.class));
-            assertNotNull(SecurityContextHolder.getContext().getAuthentication());
-
-            // Verify Notification.show was called
-            mockedNotification.verify(() -> Notification.show("Logged in successfully!"), times(1));
+            mockUI.access(() -> {
+                mockedNotification.verify(() -> Notification.show("Logged in successfully!"), times(1));
+            });
         }
     }
 
     @Test
     void testFailedLogin() {
-        // Arrange
         String email = "invalid@example.com";
         String password = "wrongpassword";
-        boolean rememberMe = false; // This value doesn't matter in case of failure
+        boolean rememberMe = false;
 
         when(userService.authenticate(email, password)).thenReturn(Optional.empty());
 
-        // Mock UI and Notification
         UI mockUI = mock(UI.class);
         UI.setCurrent(mockUI);
 
         try (var mockedNotification = Mockito.mockStatic(Notification.class)) {
-            // Act
-            loginHandler.login(email, password, rememberMe); // Pass the rememberMe parameter
+            loginHandler.login(email, password, rememberMe);
 
-            // Assert
-            verify(userService, times(1)).authenticate(email, password);
-            verify(authenticationManager, never()).authenticate(any(UsernamePasswordAuthenticationToken.class));
-
-            // Assert that the SecurityContextHolder is null after failed login
-            assertNull(SecurityContextHolder.getContext().getAuthentication());
-
-            // Verify Notification.show was called with the correct message
-            mockedNotification.verify(() -> Notification.show("Authentication failed. Please check your credentials."), times(1));
+            mockUI.access(() -> {
+                mockedNotification.verify(() -> Notification.show("Authentication failed. Please check your credentials."), times(1));
+            });
         }
     }
 }

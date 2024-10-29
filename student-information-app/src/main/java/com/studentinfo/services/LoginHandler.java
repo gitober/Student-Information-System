@@ -46,6 +46,7 @@ public class LoginHandler {
                 return false; // Failed login
             }
         } catch (Exception e) {
+            System.err.println("Error during login: " + e.getMessage());
             return false; // Handle login error
         }
     }
@@ -65,23 +66,25 @@ public class LoginHandler {
             new HttpSessionSecurityContextRepository().saveContext(SecurityContextHolder.getContext(), request, response);
 
             // Handle "Remember me" cookie
-            assert response != null;
-            handleRememberMeCookie(rememberMe, email, response);
+            if (response != null) {
+                handleRememberMeCookie(rememberMe, email, response);
+            }
 
             // Navigate based on user role
             navigateUserBasedOnRole(user);
 
-            Notification.show("Logged in successfully!");
+            // Show login success notification
+            showNotification("Logged in successfully!");
         } catch (Exception e) {
             System.err.println("Error during authentication: " + e.getMessage());
-            Notification.show("Error during authentication.");
+            showNotification("Error during authentication.");
         }
     }
 
     // Handle Failed Login
     private void handleFailedLogin(String email) {
         System.out.println("Authentication failed for user: " + email);
-        Notification.show("Authentication failed. Please check your credentials.");
+        showNotification("Authentication failed. Please check your credentials.");
     }
 
     // Set or remove "Remember me" cookie
@@ -94,12 +97,29 @@ public class LoginHandler {
 
     // Navigate User Based on Role
     private void navigateUserBasedOnRole(User user) {
-        if (user.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_TEACHER"))) {
-            UI.getCurrent().navigate("profile"); // Redirect teachers
-        } else if (user.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_STUDENT"))) {
-            UI.getCurrent().navigate("profile"); // Redirect students
+        UI ui = UI.getCurrent();
+        if (ui != null) {
+            ui.access(() -> {
+                if (user.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_TEACHER"))) {
+                    ui.navigate("profile"); // Redirect teachers
+                } else if (user.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_STUDENT"))) {
+                    ui.navigate("profile"); // Redirect students
+                } else {
+                    ui.navigate("profile"); // Fallback navigation
+                }
+            });
         } else {
-            UI.getCurrent().navigate("profile"); // Fallback navigation
+            System.err.println("No UI instance available for navigation.");
+        }
+    }
+
+    // Show notification safely within the UI context
+    private void showNotification(String message) {
+        UI ui = UI.getCurrent();
+        if (ui != null) {
+            ui.access(() -> Notification.show(message));
+        } else {
+            System.err.println("No UI instance available to show notification.");
         }
     }
 }

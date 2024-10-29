@@ -15,6 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -36,19 +37,22 @@ public class StudentGradesViewTest {
 
     @BeforeEach
     public void setUp() {
+        // Set a default locale to ensure consistency in the test
+        LocaleContextHolder.setLocale(Locale.ENGLISH);
+
         // Mock the services
         gradeService = Mockito.mock(GradeService.class);
         userService = Mockito.mock(UserService.class);
-        messageSource = Mockito.mock(MessageSource.class); // Mock MessageSource
+        messageSource = Mockito.mock(MessageSource.class);
 
         // Mock service methods
-        when(userService.getCurrentStudentNumber()).thenReturn(1L);  // Mock a student number
+        when(userService.getCurrentStudentNumber()).thenReturn(1L);
         when(gradeService.getGradesByStudentNumber(1L)).thenReturn(Collections.emptyList());
 
-        // Set up message source for localization
-        when(messageSource.getMessage("grades.title", null, Locale.getDefault())).thenReturn("Grades Overview");
-        when(messageSource.getMessage("grades.description", null, Locale.getDefault())).thenReturn("View your grades for the courses you have taken.");
-        when(messageSource.getMessage("grades.search", null, Locale.getDefault())).thenReturn("Search Courses");
+        // Mock messages
+        when(messageSource.getMessage("grades.title", null, LocaleContextHolder.getLocale())).thenReturn("Grades Overview");
+        when(messageSource.getMessage("grades.description", null, LocaleContextHolder.getLocale())).thenReturn("View your grades for the courses you have taken.");
+        when(messageSource.getMessage("grades.search", null, LocaleContextHolder.getLocale())).thenReturn("Search Courses");
 
         // Initialize a Vaadin UI context
         UI ui = new UI();
@@ -59,9 +63,11 @@ public class StudentGradesViewTest {
     }
 
     @AfterEach
-    void tearDown() {
-        UI.setCurrent(null); // Clear the Vaadin UI context to avoid side effects between tests
+    public void tearDown() {
+        UI.setCurrent(null);
+        LocaleContextHolder.resetLocaleContext();
     }
+
 
     @Test
     public void testStudentGradesViewComponents() {
@@ -71,7 +77,10 @@ public class StudentGradesViewTest {
                 .findFirst()
                 .orElse(null);
         assertNotNull(title, "Title component should not be null.");
-        assertEquals("Grades Overview", title.getText(), "Title should be 'Grades Overview'.");
+
+        // Retrieve expected title text using messageSource for consistency with LocaleContextHolder's locale
+        String expectedTitle = messageSource.getMessage("grades.title", null, LocaleContextHolder.getLocale());
+        assertEquals(expectedTitle, title.getText(), "Title should match the localized message 'Grades Overview'.");
 
         // Check if the description is set correctly
         String descriptionText = studentGradesView.getContent().getChildren()
@@ -94,6 +103,7 @@ public class StudentGradesViewTest {
         Grid<Grade> gradesGrid = getPrivateField();
         assertNotNull(gradesGrid, "Grades grid should not be null.");
     }
+
 
     @Test
     public void testRefreshGradesData() throws Exception {

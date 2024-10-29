@@ -1,6 +1,8 @@
 package com.studentinfo.controller;
 
+import com.studentinfo.data.dto.CourseCreationRequestDTO;
 import com.studentinfo.data.entity.Course;
+import com.studentinfo.data.entity.CourseTranslation;
 import com.studentinfo.data.entity.Teacher;
 import com.studentinfo.services.CourseService;
 import com.studentinfo.services.TeacherService;
@@ -24,6 +26,27 @@ public class CourseController {
         this.teacherService = teacherService;
     }
 
+    // Create a new course with translations
+    @PostMapping
+    public ResponseEntity<Course> createCourse(@RequestBody CourseCreationRequestDTO request) {
+        Course course = request.getCourse();
+        List<Long> teacherIds = request.getTeacherIds();
+        List<CourseTranslation> translations = request.getTranslations();
+
+        // Retrieve teachers using the provided IDs
+        List<Teacher> teachers = teacherService.listByIds(teacherIds);
+
+        // Check if all provided teacher IDs exist
+        if (teachers.size() != teacherIds.size()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null); // Return 400 Bad Request if any teacher ID is invalid
+        }
+
+        // Save the course with the teachers and translations
+        Course savedCourse = courseService.saveCourse(course, teachers, translations);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedCourse);
+    }
+
+
     // Get all courses
     @GetMapping
     public ResponseEntity<List<Course>> getAllCourses() {
@@ -37,22 +60,6 @@ public class CourseController {
         return courseService.getCourseById(courseId)
                 .map(ResponseEntity::ok) // Return 200 OK with the found course
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build()); // Return 404 Not Found if course not found
-    }
-
-    // Create a new course
-    @PostMapping
-    public ResponseEntity<Course> createCourse(@RequestBody Course course, @RequestParam List<Long> teacherIds) {
-        // Retrieve teachers using the provided IDs
-        List<Teacher> teachers = teacherService.listByIds(teacherIds);
-
-        // Check if all provided teacher IDs exist
-        if (teachers.size() != teacherIds.size()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null); // Return 400 Bad Request if any teacher ID is invalid
-        }
-
-        // Save the course with the teachers
-        Course savedCourse = courseService.saveCourse(course, teachers);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedCourse);
     }
 
     // Update course by ID
@@ -88,5 +95,23 @@ public class CourseController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Return 404 if course not found
         }
         return ResponseEntity.noContent().build(); // Return 204 No Content after successful deletion
+    }
+
+    // Get translated course name by course ID and locale
+    @GetMapping("/{courseId}/translated-name")
+    public ResponseEntity<String> getTranslatedCourseName(
+            @PathVariable Long courseId,
+            @RequestParam String locale) {
+        String translatedName = courseService.getTranslatedName(courseId, locale);
+        return ResponseEntity.ok(translatedName);
+    }
+
+    // Get translated course plan by course ID and locale
+    @GetMapping("/{courseId}/translated-plan")
+    public ResponseEntity<String> getTranslatedCoursePlan(
+            @PathVariable Long courseId,
+            @RequestParam String locale) {
+        String translatedPlan = courseService.getTranslatedPlan(courseId, locale);
+        return ResponseEntity.ok(translatedPlan);
     }
 }

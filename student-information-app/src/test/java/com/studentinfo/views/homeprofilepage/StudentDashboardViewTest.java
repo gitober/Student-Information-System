@@ -27,6 +27,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ import static org.mockito.Mockito.when;
 public class StudentDashboardViewTest {
 
     private StudentDashboardView studentDashboardView;
+    private MessageSource messageSource; // Define messageSource as a class-level variable
 
     @BeforeEach
     public void setUp() {
@@ -49,8 +51,8 @@ public class StudentDashboardViewTest {
         AttendanceService attendanceService = Mockito.mock(AttendanceService.class);
         AuthenticatedUser authenticatedUser = Mockito.mock(AuthenticatedUser.class);
 
-        // Mock message source
-        MessageSource messageSource = createMessageSource();
+        // Initialize messageSource
+        messageSource = createMessageSource(); // Set up messageSource at the class level
 
         // Mock service methods
         when(courseService.getAllCourses()).thenReturn(new ArrayList<>(List.of(new Course(), new Course())));
@@ -96,24 +98,33 @@ public class StudentDashboardViewTest {
 
     @Test
     public void testStudentDashboardViewInitialization() {
+        // Retrieve the expected title from the message source
+        String expectedTitle = messageSource.getMessage("dashboard.welcome", null, LocaleContextHolder.getLocale());
+
         // Check if the main title is present
         H1 title = (H1) studentDashboardView.getContent().getComponentAt(0);
-        assertNotNull(title);
-        assertEquals("dashboard.welcome", title.getText()); // Adjusted to match the key used in your messages
+        assertNotNull(title, "The title component should not be null.");
+        assertEquals(expectedTitle, title.getText(), "The title should match the localized welcome message.");
 
         // Check if the dashboard grid is present
         FlexLayout dashboardGrid = (FlexLayout) studentDashboardView.getContent().getComponentAt(1);
-        assertNotNull(dashboardGrid);
-        assertEquals(4, dashboardGrid.getComponentCount()); // Should have 4 dashboard cards
+        assertNotNull(dashboardGrid, "The dashboard grid should not be null.");
+        assertEquals(4, dashboardGrid.getComponentCount(), "Dashboard should have 4 cards.");
+
+        // Retrieve localized titles for each card
+        String coursesTitle = messageSource.getMessage("dashboard.courses.title", null, LocaleContextHolder.getLocale());
+        String gradesTitle = messageSource.getMessage("dashboard.grades.title", null, LocaleContextHolder.getLocale());
+        String attendanceTitle = messageSource.getMessage("dashboard.attendance.title", null, LocaleContextHolder.getLocale());
+        String editProfileTitle = messageSource.getMessage("dashboard.editprofile.title", null, LocaleContextHolder.getLocale());
 
         // Check if the correct number of cards is displayed with expected titles
-        checkCardTitle(dashboardGrid.getComponentAt(0), "dashboard.courses.title");
-        checkCardTitle(dashboardGrid.getComponentAt(1), "dashboard.grades.title");
-        checkCardTitle(dashboardGrid.getComponentAt(2), "dashboard.attendance.title");
-        checkCardTitle(dashboardGrid.getComponentAt(3), "dashboard.editprofile.title");
+        checkCardTitle(dashboardGrid.getComponentAt(0), coursesTitle);
+        checkCardTitle(dashboardGrid.getComponentAt(1), gradesTitle);
+        checkCardTitle(dashboardGrid.getComponentAt(2), attendanceTitle);
+        checkCardTitle(dashboardGrid.getComponentAt(3), editProfileTitle);
     }
 
-    private void checkCardTitle(Component card, String expectedTitleKey) {
+    private void checkCardTitle(Component card, String expectedTitle) {
         if (card instanceof Div divCard) {
             RouterLink link = (RouterLink) divCard.getChildren()
                     .filter(component -> component instanceof RouterLink)
@@ -124,19 +135,20 @@ public class StudentDashboardViewTest {
                         .filter(component -> component instanceof Paragraph)
                         .findFirst()
                         .orElse(null);
-                assertNotNull(title);
-                assertEquals(expectedTitleKey, title.getText()); // Check title against the key
+                assertNotNull(title, "The title paragraph should not be null.");
+                assertEquals(expectedTitle, title.getText(), "The card title should match the localized message.");
             } else {
                 // Handle the case where there is no RouterLink
                 Paragraph title = (Paragraph) divCard.getChildren()
                         .filter(component -> component instanceof Paragraph)
                         .findFirst()
                         .orElse(null);
-                assertNotNull(title);
-                assertEquals(expectedTitleKey, title.getText()); // Check title against the key
+                assertNotNull(title, "The title paragraph should not be null.");
+                assertEquals(expectedTitle, title.getText(), "The card title should match the localized message.");
             }
         }
     }
+
 
     private MessageSource createMessageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();

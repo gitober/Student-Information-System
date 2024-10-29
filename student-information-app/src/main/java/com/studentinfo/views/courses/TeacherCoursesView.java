@@ -1,11 +1,12 @@
 package com.studentinfo.views.courses;
 
+import com.studentinfo.data.entity.Course;
+import com.studentinfo.data.entity.CourseTranslation;
 import com.studentinfo.data.entity.Student;
 import com.studentinfo.data.entity.Teacher;
 import com.studentinfo.services.CourseService;
-import com.studentinfo.data.entity.Course;
 import com.studentinfo.services.TeacherService;
-import com.studentinfo.services.DateService; // Import DateService
+import com.studentinfo.services.DateService;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -27,6 +28,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,6 +39,7 @@ public class TeacherCoursesView extends Composite<VerticalLayout> {
 
     private final CourseService courseService;
     private final TeacherService teacherService;
+    private final DateService dateService;
     private List<Course> courses;
     private final Grid<Course> coursesGrid;
 
@@ -44,7 +47,7 @@ public class TeacherCoursesView extends Composite<VerticalLayout> {
     public TeacherCoursesView(CourseService courseService, TeacherService teacherService, DateService dateService, MessageSource messageSource) {
         this.courseService = courseService;
         this.teacherService = teacherService;
-        // Inject DateService
+        this.dateService = dateService;
 
         getContent().addClassName("teacher-courses-view-container");
 
@@ -133,7 +136,7 @@ public class TeacherCoursesView extends Composite<VerticalLayout> {
         ComboBox<Teacher> teacherComboBox = new ComboBox<>(messageSource.getMessage("courses.selectTeacher", null, LocaleContextHolder.getLocale()));
         teacherComboBox.setItems(teacherService.getAllTeachers());
         teacherComboBox.setItemLabelGenerator(Teacher::getFullName);
-        teacherComboBox.setValue(course.getTeachers().isEmpty() ? null : course.getTeachers().getFirst());
+        teacherComboBox.setValue(course.getTeachers().isEmpty() ? null : course.getTeachers().get(0));
 
         Button saveButton = new Button(messageSource.getMessage("courses.save", null, LocaleContextHolder.getLocale()));
         saveButton.addClickListener(event -> {
@@ -143,7 +146,10 @@ public class TeacherCoursesView extends Composite<VerticalLayout> {
             course.setDuration((int) durationInDays);
             course.setTeachers(List.of(teacherComboBox.getValue()));
 
-            Course savedCourse = courseService.saveCourse(course, course.getTeachers());
+            String selectedLocale = LocaleContextHolder.getLocale().getLanguage().toUpperCase();
+            List<CourseTranslation> translations = createCourseTranslations(course, selectedLocale);
+
+            Course savedCourse = courseService.saveCourse(course, course.getTeachers(), translations);
             if (savedCourse != null) {
                 refreshCourseData();
                 Notification.show(messageSource.getMessage("courses.updateSuccess", null, LocaleContextHolder.getLocale()));
@@ -158,6 +164,68 @@ public class TeacherCoursesView extends Composite<VerticalLayout> {
 
         editDialog.add(courseNameField, coursePlanField, startDatePicker, endDatePicker, teacherComboBox, new HorizontalLayout(saveButton, cancelButton));
         editDialog.open();
+    }
+
+    private void openAddCourseDialog(MessageSource messageSource) {
+        Dialog addCourseDialog = new Dialog();
+        addCourseDialog.addClassName("teacher-courses-view-add-dialog");
+
+        TextField courseNameField = new TextField(messageSource.getMessage("courses.courseName", null, LocaleContextHolder.getLocale()));
+        TextField coursePlanField = new TextField(messageSource.getMessage("courses.coursePlan", null, LocaleContextHolder.getLocale()));
+        DatePicker startDatePicker = new DatePicker(messageSource.getMessage("courses.startDate", null, LocaleContextHolder.getLocale()));
+        startDatePicker.setValue(LocalDate.now());
+
+        DatePicker endDatePicker = new DatePicker(messageSource.getMessage("courses.endDate", null, LocaleContextHolder.getLocale()));
+        endDatePicker.setValue(startDatePicker.getValue().plusDays(30));
+
+        ComboBox<Teacher> teacherComboBox = new ComboBox<>(messageSource.getMessage("courses.selectTeacher", null, LocaleContextHolder.getLocale()));
+        teacherComboBox.setItems(teacherService.getAllTeachers());
+        teacherComboBox.setItemLabelGenerator(Teacher::getFullName);
+
+        Button saveButton = new Button(messageSource.getMessage("courses.save", null, LocaleContextHolder.getLocale()));
+        saveButton.addClickListener(event -> {
+            LocalDate startDate = startDatePicker.getValue();
+            LocalDate endDate = endDatePicker.getValue();
+
+            if (startDate == null || endDate == null || endDate.isBefore(startDate)) {
+                Notification.show(messageSource.getMessage("courses.invalidDateRange", null, LocaleContextHolder.getLocale()));
+                return;
+            }
+
+            Teacher selectedTeacher = teacherComboBox.getValue();
+            if (selectedTeacher == null) {
+                Notification.show(messageSource.getMessage("courses.selectTeacherPrompt", null, LocaleContextHolder.getLocale()));
+                return;
+            }
+
+            long durationInDays = java.time.temporal.ChronoUnit.DAYS.between(startDate, endDate);
+            Course newCourse = new Course(courseNameField.getValue(), coursePlanField.getValue(), (int) durationInDays);
+            String selectedLocale = LocaleContextHolder.getLocale().getLanguage().toUpperCase();
+            List<CourseTranslation> translations = createCourseTranslations(newCourse, selectedLocale);
+
+            try {
+                courseService.saveCourse(newCourse, List.of(selectedTeacher), translations);
+                refreshCourseData();
+                Notification.show(messageSource.getMessage("courses.addSuccess", null, LocaleContextHolder.getLocale()));
+            } catch (Exception e) {
+                Notification.show(messageSource.getMessage("courses.addError", null, LocaleContextHolder.getLocale()));
+            }
+
+            addCourseDialog.close();
+        });
+
+        Button cancelButton = new Button(messageSource.getMessage("courses.cancel", null, LocaleContextHolder.getLocale()));
+        cancelButton.addClickListener(event -> addCourseDialog.close());
+
+        addCourseDialog.add(courseNameField, coursePlanField, startDatePicker, endDatePicker, teacherComboBox, new HorizontalLayout(saveButton, cancelButton));
+        addCourseDialog.open();
+    }
+
+    private List<CourseTranslation> createCourseTranslations(Course course, String selectedLocale) {
+        List<CourseTranslation> translations = new ArrayList<>();
+        String translatedValue = course.getCourseName();
+        translations.add(new CourseTranslation(selectedLocale, "course_name", translatedValue));
+        return translations;
     }
 
     private void openViewDetailsDialog(Course course, MessageSource messageSource) {
@@ -219,57 +287,4 @@ public class TeacherCoursesView extends Composite<VerticalLayout> {
         confirmationDialog.open();
     }
 
-    private void openAddCourseDialog(MessageSource messageSource) {
-        Dialog addCourseDialog = new Dialog();
-        addCourseDialog.addClassName("teacher-courses-view-add-dialog");
-
-        TextField courseNameField = new TextField(messageSource.getMessage("courses.courseName", null, LocaleContextHolder.getLocale()));
-        TextField coursePlanField = new TextField(messageSource.getMessage("courses.coursePlan", null, LocaleContextHolder.getLocale()));
-        DatePicker startDatePicker = new DatePicker(messageSource.getMessage("courses.startDate", null, LocaleContextHolder.getLocale()));
-        startDatePicker.setValue(LocalDate.now());
-
-        DatePicker endDatePicker = new DatePicker(messageSource.getMessage("courses.endDate", null, LocaleContextHolder.getLocale()));
-        endDatePicker.setValue(startDatePicker.getValue().plusDays(30));
-
-        ComboBox<Teacher> teacherComboBox = new ComboBox<>(messageSource.getMessage("courses.selectTeacher", null, LocaleContextHolder.getLocale()));
-        teacherComboBox.setItems(teacherService.getAllTeachers());
-        teacherComboBox.setItemLabelGenerator(Teacher::getFullName);
-
-        Button saveButton = new Button(messageSource.getMessage("courses.save", null, LocaleContextHolder.getLocale()));
-        saveButton.addClickListener(event -> {
-            LocalDate startDate = startDatePicker.getValue();
-            LocalDate endDate = endDatePicker.getValue();
-
-            if (startDate == null || endDate == null || endDate.isBefore(startDate)) {
-                Notification.show(messageSource.getMessage("courses.invalidDateRange", null, LocaleContextHolder.getLocale()));
-                return;
-            }
-
-            Teacher selectedTeacher = teacherComboBox.getValue();
-            if (selectedTeacher == null) {
-                Notification.show(messageSource.getMessage("courses.selectTeacherPrompt", null, LocaleContextHolder.getLocale()));
-                return;
-            }
-
-            long durationInDays = java.time.temporal.ChronoUnit.DAYS.between(startDate, endDate);
-
-            Course newCourse = new Course(courseNameField.getValue(), coursePlanField.getValue(), (int) durationInDays);
-
-            try {
-                courseService.saveCourse(newCourse, List.of(selectedTeacher));
-                refreshCourseData();
-                Notification.show(messageSource.getMessage("courses.addSuccess", null, LocaleContextHolder.getLocale()));
-            } catch (Exception e) {
-                Notification.show(messageSource.getMessage("courses.addError", null, LocaleContextHolder.getLocale()));
-            }
-
-            addCourseDialog.close();
-        });
-
-        Button cancelButton = new Button(messageSource.getMessage("courses.cancel", null, LocaleContextHolder.getLocale()));
-        cancelButton.addClickListener(event -> addCourseDialog.close());
-
-        addCourseDialog.add(courseNameField, coursePlanField, startDatePicker, endDatePicker, teacherComboBox, new HorizontalLayout(saveButton, cancelButton));
-        addCourseDialog.open();
-    }
 }
