@@ -11,11 +11,16 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.stereotype.Component; // Added this import
 import lombok.Setter;
 
 import java.util.function.Consumer;
 
 @CssImport("./themes/studentinformationapp/views/edit-profile-view/student-edit-profile-view.css")
+@Component // Added this annotation to make it a Spring bean
 public class StudentEditProfileView extends VerticalLayout {
 
     private final TextField firstNameField;
@@ -26,20 +31,20 @@ public class StudentEditProfileView extends VerticalLayout {
     private final Button saveButton;
     private final Student student;
     private final UserService userService;
+    private final MessageSource messageSource;
 
-    // Consumer to handle save actions
     @Setter
     private Consumer<Student> saveListener;
 
-    // Paragraphs to display current details
     private final Paragraph nameParagraph;
     private final Paragraph emailParagraph;
     private final Paragraph phoneNumberParagraph;
 
-    // Constructor accepting a Student object and UserService
-    public StudentEditProfileView(Student studentData, UserService userService) {
+    @Autowired
+    public StudentEditProfileView(Student studentData, UserService userService, MessageSource messageSource) {
         this.student = studentData;
         this.userService = userService;
+        this.messageSource = messageSource;
 
         setSizeFull();
         setPadding(false);
@@ -49,44 +54,42 @@ public class StudentEditProfileView extends VerticalLayout {
         setJustifyContentMode(JustifyContentMode.CENTER);
         addClassName("student-edit-profile-container");
 
-        // Page title
-        H3 h3 = new H3("Edit Student Profile");
+        H3 h3 = new H3(getMessage("student.edit.profile.title"));
         h3.addClassName("student-edit-profile-title");
 
-        // Current details section
         VerticalLayout currentDetailsLayout = new VerticalLayout();
         currentDetailsLayout.addClassName("student-current-details-layout");
 
-        H3 currentDetailsHeading = new H3("Current Details:");
+        H3 currentDetailsHeading = new H3(getMessage("student.edit.profile.currentDetails"));
         currentDetailsHeading.addClassName("current-details-title");
         currentDetailsLayout.add(currentDetailsHeading);
 
         nameParagraph = new Paragraph();
-        nameParagraph.getElement().setProperty("innerHTML", "<span class='label'>Name </span>" + "<br>" + student.getFirstName() + " " + student.getLastName());
+        nameParagraph.getElement().setProperty("innerHTML", "<span class='label'>" + getMessage("student.edit.profile.name") + "</span><br>" +
+                student.getFirstName() + " " + student.getLastName());
         emailParagraph = new Paragraph();
-        emailParagraph.getElement().setProperty("innerHTML", "<span class='label'>Email </span>" + "<br>" + student.getEmail());
+        emailParagraph.getElement().setProperty("innerHTML", "<span class='label'>" + getMessage("student.edit.profile.email") + "</span><br>" +
+                student.getEmail());
         phoneNumberParagraph = new Paragraph();
-        phoneNumberParagraph.getElement().setProperty("innerHTML", "<span class='label'>Phone Number </span>" + "<br>" + student.getPhoneNumber());
+        phoneNumberParagraph.getElement().setProperty("innerHTML", "<span class='label'>" + getMessage("student.edit.profile.phoneNumber") + "</span><br>" +
+                student.getPhoneNumber());
 
         currentDetailsLayout.add(nameParagraph, emailParagraph, phoneNumberParagraph);
 
-        // Form section
         VerticalLayout formLayout = new VerticalLayout();
         formLayout.addClassName("student-edit-profile-form-layout");
 
-        firstNameField = new TextField("First Name");
-        lastNameField = new TextField("Last Name");
-        phoneNumberField = new TextField("Phone Number");
-        emailField = new TextField("Email");
-        newPasswordField = new PasswordField("New Password");
+        firstNameField = new TextField(getMessage("student.edit.profile.firstName"));
+        lastNameField = new TextField(getMessage("student.edit.profile.lastName"));
+        phoneNumberField = new TextField(getMessage("student.edit.profile.phoneNumber"));
+        emailField = new TextField(getMessage("student.edit.profile.email"));
+        newPasswordField = new PasswordField(getMessage("student.edit.profile.newPassword"));
 
-        // Save button
-        saveButton = new Button("Save"); // Save button is now a class-level field
+        saveButton = new Button(getMessage("student.edit.profile.save"));
         saveButton.addClassName("student-edit-profile-save-button");
 
         formLayout.add(firstNameField, lastNameField, phoneNumberField, emailField, newPasswordField, saveButton);
 
-        // Combine current details and form into a main layout
         HorizontalLayout mainLayout = new HorizontalLayout(currentDetailsLayout, formLayout);
         mainLayout.setWidthFull();
         mainLayout.setSpacing(true);
@@ -94,21 +97,18 @@ public class StudentEditProfileView extends VerticalLayout {
         mainLayout.setJustifyContentMode(JustifyContentMode.CENTER);
         mainLayout.addClassName("student-edit-profile-main-layout");
 
-        // Add title and main layout to the wrapper layout
         add(h3, mainLayout);
 
-        // Add save listener
         saveButton.addClickListener(event -> {
-            updateStudentProfile(); // This already updates the password
+            updateStudentProfile();
             if (saveListener != null) {
-                saveListener.accept(student); // Trigger the save listener
+                saveListener.accept(student);
             }
 
-            Notification.show("Profile updated successfully", 3000, Notification.Position.TOP_CENTER);
+            Notification.show(getMessage("student.edit.profile.success"), 3000, Notification.Position.TOP_CENTER);
         });
     }
 
-    // Method to update the student profile
     private void updateStudentProfile() {
         if (!firstNameField.isEmpty()) student.setFirstName(firstNameField.getValue());
         if (!lastNameField.isEmpty()) student.setLastName(lastNameField.getValue());
@@ -117,15 +117,20 @@ public class StudentEditProfileView extends VerticalLayout {
 
         String newPassword = newPasswordField.getValue();
         if (!newPassword.isEmpty()) {
-            userService.updatePassword(student.getEmail(), newPassword); // Ensure password is updated
+            userService.updatePassword(student.getEmail(), newPassword);
         }
 
-        // Save the updated student profile
         userService.save(student);
 
-        // Update displayed paragraphs with new values
-        nameParagraph.getElement().setProperty("innerHTML", "<span class='label'>Name </span>" + "<br>" + student.getFirstName() + " " + student.getLastName());
-        emailParagraph.getElement().setProperty("innerHTML", "<span class='label'>Email </span>" + "<br>" + student.getEmail());
-        phoneNumberParagraph.getElement().setProperty("innerHTML", "<span class='label'>Phone Number </span>" + "<br>" + student.getPhoneNumber());
+        nameParagraph.getElement().setProperty("innerHTML", "<span class='label'>" + getMessage("student.edit.profile.name") + "</span><br>" +
+                student.getFirstName() + " " + student.getLastName());
+        emailParagraph.getElement().setProperty("innerHTML", "<span class='label'>" + getMessage("student.edit.profile.email") + "</span><br>" +
+                student.getEmail());
+        phoneNumberParagraph.getElement().setProperty("innerHTML", "<span class='label'>" + getMessage("student.edit.profile.phoneNumber") + "</span><br>" +
+                student.getPhoneNumber());
+    }
+
+    private String getMessage(String key) {
+        return messageSource.getMessage(key, null, LocaleContextHolder.getLocale());
     }
 }
