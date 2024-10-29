@@ -52,7 +52,15 @@ public class UserService {
         return null;
     }
 
+    // Retrieve the current authenticated user as a Student, if applicable
+    public Student getCurrentStudent() {
+        Optional<User> currentUser = authenticatedUser.get();
 
+        if (currentUser.isPresent() && currentUser.get() instanceof Student) {
+            return (Student) currentUser.get();
+        }
+        return null; // Return null if the current user is not a student
+    }
 
     // Authenticate user based on email and password
     public Optional<User> authenticate(String email, String password) {
@@ -114,7 +122,6 @@ public class UserService {
             System.out.println("User with email " + email + " not found."); // Debugging log
         }
     }
-
 
     // Update both email and username for a user
     public void updateUserEmailAndUsername(Long userId, String newEmail, String newUsername) {

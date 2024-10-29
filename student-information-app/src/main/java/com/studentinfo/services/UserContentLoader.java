@@ -127,7 +127,7 @@ public class UserContentLoader {
                 teacherView.setSaveListener(teacherService::save);
                 layout.add(teacherView);
             } else if (user instanceof Student student) {
-                StudentEditProfileView studentView = new StudentEditProfileView(student, userService, messageSource); // Pass UserService and MessageSource
+                StudentEditProfileView studentView = new StudentEditProfileView(student, userService, messageSource); // Pass UserService
                 studentView.setSaveListener(studentService::save);
                 layout.add(studentView);
             } else {
