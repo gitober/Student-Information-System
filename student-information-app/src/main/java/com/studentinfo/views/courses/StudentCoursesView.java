@@ -25,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.List;
 import java.util.Locale;
@@ -55,15 +56,17 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
 
         getContent().addClassName("student-courses-view-container");
 
+        Locale currentLocale = LocaleContextHolder.getLocale(); // Use the current locale
+
         // Page title
-        H2 title = new H2(messageSource.getMessage("my.courses.title", null, Locale.getDefault()));
+        H2 title = new H2(messageSource.getMessage("my.courses.title", null, currentLocale));
         title.addClassName("student-courses-view-title");
 
-        Paragraph description = new Paragraph(messageSource.getMessage("my.courses.description", null, Locale.getDefault()));
+        Paragraph description = new Paragraph(messageSource.getMessage("my.courses.description", null, currentLocale));
         description.addClassName("student-courses-view-description");
 
         // Search bar to filter courses by course name
-        TextField searchField = new TextField(messageSource.getMessage("my.courses.search.label", null, Locale.getDefault()));
+        TextField searchField = new TextField(messageSource.getMessage("my.courses.search.label", null, currentLocale));
         searchField.addClassName("student-courses-view-search");
         searchField.setValueChangeMode(ValueChangeMode.EAGER);
         searchField.addValueChangeListener(event -> filterCourses(event.getValue()));
@@ -71,54 +74,54 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
         // Initialize the grid for enrolled courses
         enrolledCoursesGrid = new Grid<>(Course.class);
         enrolledCoursesGrid.removeAllColumns();
-        enrolledCoursesGrid.addColumn(Course::getCourseName).setHeader(messageSource.getMessage("my.courses.enrolled.column.name", null, Locale.getDefault()));
-        enrolledCoursesGrid.addColumn(Course::getCoursePlan).setHeader(messageSource.getMessage("my.courses.enrolled.column.plan", null, Locale.getDefault()));
-        enrolledCoursesGrid.addColumn(Course::getFormattedDateRange).setHeader(messageSource.getMessage("my.courses.enrolled.column.duration", null, Locale.getDefault()));
+        enrolledCoursesGrid.addColumn(Course::getCourseName).setHeader(messageSource.getMessage("my.courses.enrolled.column.name", null, currentLocale));
+        enrolledCoursesGrid.addColumn(Course::getCoursePlan).setHeader(messageSource.getMessage("my.courses.enrolled.column.plan", null, currentLocale));
+        enrolledCoursesGrid.addColumn(Course::getFormattedDateRange).setHeader(messageSource.getMessage("my.courses.enrolled.column.duration", null, currentLocale));
         enrolledCoursesGrid.addColumn(course -> {
             List<Teacher> teachers = course.getTeachers();
             if (!teachers.isEmpty()) {
                 return teachers.get(0).getFirstName() + " " + teachers.get(0).getLastName();
             } else {
-                return messageSource.getMessage("my.courses.no.teacher", null, Locale.getDefault());
+                return messageSource.getMessage("my.courses.no.teacher", null, currentLocale);
             }
-        }).setHeader(messageSource.getMessage("my.courses.enrolled.column.teacher", null, Locale.getDefault()));
+        }).setHeader(messageSource.getMessage("my.courses.enrolled.column.teacher", null, currentLocale));
 
         // Button to view attendance for each course
         enrolledCoursesGrid.addComponentColumn(course -> {
-            Button attendanceButton = new Button(messageSource.getMessage("my.courses.attendance.button", null, Locale.getDefault()));
+            Button attendanceButton = new Button(messageSource.getMessage("my.courses.attendance.button", null, currentLocale));
             attendanceButton.addClassName("student-courses-view-attendance-button");
             attendanceButton.addClickListener(event -> openAttendanceDialog(course));
             return attendanceButton;
-        }).setHeader(messageSource.getMessage("my.courses.attendance.column", null, Locale.getDefault()));
+        }).setHeader(messageSource.getMessage("my.courses.attendance.column", null, currentLocale));
 
         // Initialize the grid for available courses
         availableCoursesGrid = new Grid<>(Course.class);
         availableCoursesGrid.removeAllColumns();
-        availableCoursesGrid.addColumn(Course::getCourseName).setHeader(messageSource.getMessage("my.courses.available.column.name", null, Locale.getDefault()));
-        availableCoursesGrid.addColumn(Course::getCoursePlan).setHeader(messageSource.getMessage("my.courses.available.column.plan", null, Locale.getDefault()));
-        availableCoursesGrid.addColumn(Course::getFormattedDateRange).setHeader(messageSource.getMessage("my.courses.available.column.duration", null, Locale.getDefault()));
+        availableCoursesGrid.addColumn(Course::getCourseName).setHeader(messageSource.getMessage("my.courses.available.column.name", null, currentLocale));
+        availableCoursesGrid.addColumn(Course::getCoursePlan).setHeader(messageSource.getMessage("my.courses.available.column.plan", null, currentLocale));
+        availableCoursesGrid.addColumn(Course::getFormattedDateRange).setHeader(messageSource.getMessage("my.courses.available.column.duration", null, currentLocale));
         availableCoursesGrid.addColumn(course -> {
             List<Teacher> teachers = course.getTeachers();
             if (!teachers.isEmpty()) {
                 return teachers.get(0).getFirstName() + " " + teachers.get(0).getLastName();
             } else {
-                return messageSource.getMessage("my.courses.no.teacher", null, Locale.getDefault());
+                return messageSource.getMessage("my.courses.no.teacher", null, currentLocale);
             }
-        }).setHeader(messageSource.getMessage("my.courses.available.column.teacher", null, Locale.getDefault()));
+        }).setHeader(messageSource.getMessage("my.courses.available.column.teacher", null, currentLocale));
 
         // Add "Enroll" button for each course
         availableCoursesGrid.addComponentColumn(course -> {
-            Button enrollButton = new Button(messageSource.getMessage("my.courses.enroll.button", null, Locale.getDefault()));
+            Button enrollButton = new Button(messageSource.getMessage("my.courses.enroll.button", null, currentLocale));
             enrollButton.addClassName("student-courses-view-enroll-button");
             enrollButton.addClickListener(event -> enrollInCourse(course));
             return enrollButton;
-        }).setHeader(messageSource.getMessage("my.courses.available.column.actions", null, Locale.getDefault()));
+        }).setHeader(messageSource.getMessage("my.courses.available.column.actions", null, currentLocale));
 
         // Fetch the current student's number
         Long studentNumber = userService.getCurrentStudentNumber();
 
         if (studentNumber == null) {
-            Notification.show(messageSource.getMessage("my.courses.error.student.not.found", null, Locale.getDefault()));
+            Notification.show(messageSource.getMessage("my.courses.error.student.not.found", null, currentLocale));
             return;
         }
 
@@ -126,8 +129,8 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
         refreshCourseData(studentNumber);
 
         // Add components to layout
-        getContent().add(title, description, searchField, new H2(messageSource.getMessage("my.courses.enrolled.title", null, Locale.getDefault())), enrolledCoursesGrid,
-                new H2(messageSource.getMessage("my.courses.available.title", null, Locale.getDefault())), availableCoursesGrid);
+        getContent().add(title, description, searchField, new H2(messageSource.getMessage("my.courses.enrolled.title", null, currentLocale)), enrolledCoursesGrid,
+                new H2(messageSource.getMessage("my.courses.available.title", null, currentLocale)), availableCoursesGrid);
     }
 
     private void refreshCourseData(Long studentNumber) {
@@ -168,38 +171,34 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
 
     // Method to enroll in a course with a confirmation dialog
     private void enrollInCourse(Course course) {
-        // Create a confirmation dialog
         Dialog confirmationDialog = new Dialog();
         confirmationDialog.addClassName("student-courses-view-confirmation-dialog");
 
-        // Dialog content
         VerticalLayout dialogLayout = new VerticalLayout();
         dialogLayout.addClassName("student-courses-view-dialog-layout");
 
-        H2 dialogTitle = new H2(messageSource.getMessage("my.courses.dialog.confirm.title", null, Locale.getDefault()));
+        Locale currentLocale = LocaleContextHolder.getLocale();
+        H2 dialogTitle = new H2(messageSource.getMessage("my.courses.dialog.confirm.title", null, currentLocale));
         dialogTitle.addClassName("student-courses-view-dialog-title");
         dialogLayout.add(dialogTitle);
 
-        // Course field (read-only)
-        TextField courseField = new TextField(messageSource.getMessage("my.courses.dialog.course.label", null, Locale.getDefault()), course.getCourseName(), "");
+        TextField courseField = new TextField(messageSource.getMessage("my.courses.dialog.course.label", null, currentLocale), course.getCourseName(), "");
         courseField.addClassName("student-courses-view-dialog-course-field");
         courseField.setReadOnly(true);
         dialogLayout.add(courseField);
 
-        // Confirmation buttons
         HorizontalLayout buttonLayout = new HorizontalLayout();
         buttonLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
-        Button confirmButton = new Button(messageSource.getMessage("my.courses.dialog.confirm.button", null, Locale.getDefault()));
+        Button confirmButton = new Button(messageSource.getMessage("my.courses.dialog.confirm.button", null, currentLocale));
         confirmButton.addClickListener(event -> {
-            // Enroll the student in the selected course without batchId
             Long studentNumber = userService.getCurrentStudentNumber();
-            courseService.enrollInCourse(studentNumber, null, course.getCourseId(), 0); // Adjust the method call as needed
-            Notification.show(messageSource.getMessage("my.courses.enroll.success", null, Locale.getDefault()));
+            courseService.enrollInCourse(studentNumber, null, course.getCourseId(), 0);
+            Notification.show(messageSource.getMessage("my.courses.enroll.success", null, currentLocale));
             confirmationDialog.close();
             refreshCourseData(studentNumber);
         });
 
-        Button cancelButton = new Button(messageSource.getMessage("my.courses.dialog.cancel.button", null, Locale.getDefault()));
+        Button cancelButton = new Button(messageSource.getMessage("my.courses.dialog.cancel.button", null, currentLocale));
         cancelButton.addClickListener(event -> confirmationDialog.close());
 
         buttonLayout.add(confirmButton, cancelButton);
@@ -208,35 +207,25 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
         confirmationDialog.open();
     }
 
-
     // Method to open attendance dialog
     private void openAttendanceDialog(Course course) {
-        // Create attendance dialog
         Dialog attendanceDialog = new Dialog();
         attendanceDialog.addClassName("student-courses-view-attendance-dialog");
 
-        // Attendance title
-        H2 attendanceTitle = new H2(messageSource.getMessage("my.courses.attendance.title", null, Locale.getDefault()));
+        Locale currentLocale = LocaleContextHolder.getLocale();
+        H2 attendanceTitle = new H2(messageSource.getMessage("my.courses.attendance.title", null, currentLocale));
         attendanceDialog.add(attendanceTitle);
 
-        // Retrieve the current student's number
-        Long studentNumber = userService.getCurrentStudentNumber(); // Ensure this method exists and returns the correct student number
-
-        // Fetch attendance records
+        Long studentNumber = userService.getCurrentStudentNumber();
         List<Attendance> attendanceRecords = attendanceService.getAttendanceByStudentNumberAndCourseId(studentNumber, course.getCourseId());
 
-        // Create grid for attendance records
         Grid<Attendance> attendanceGrid = new Grid<>(Attendance.class);
-        attendanceGrid.removeAllColumns(); // Clear existing columns
-        attendanceGrid.addColumn(Attendance::getAttendanceDate).setHeader(messageSource.getMessage("my.courses.attendance.column.date", null, Locale.getDefault()));
-        attendanceGrid.addColumn(Attendance::getAttendanceStatus).setHeader(messageSource.getMessage("my.courses.attendance.column.status", null, Locale.getDefault()));
+        attendanceGrid.removeAllColumns();
+        attendanceGrid.addColumn(Attendance::getAttendanceDate).setHeader(messageSource.getMessage("my.courses.attendance.column.date", null, currentLocale));
+        attendanceGrid.addColumn(Attendance::getAttendanceStatus).setHeader(messageSource.getMessage("my.courses.attendance.column.status", null, currentLocale));
 
-        // Set items to the grid
         attendanceGrid.setItems(attendanceRecords);
-
-        // Add the grid to the dialog
         attendanceDialog.add(attendanceGrid);
         attendanceDialog.open();
     }
-
 }
