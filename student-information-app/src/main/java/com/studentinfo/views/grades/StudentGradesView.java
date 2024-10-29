@@ -14,9 +14,12 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @CssImport("./themes/studentinformationapp/views/grades-view/student-grades-view.css")
@@ -25,23 +28,30 @@ import java.util.stream.Collectors;
 public class StudentGradesView extends Composite<VerticalLayout> {
 
     private final GradeService gradeService;
+    private final UserService userService;
+    private final MessageSource messageSource;
     private final Grid<Grade> gradesGrid;
 
     @Autowired
-    public StudentGradesView(GradeService gradeService, UserService userService) {
+    public StudentGradesView(GradeService gradeService, UserService userService, MessageSource messageSource) {
         this.gradeService = gradeService;
+        this.userService = userService;
+        this.messageSource = messageSource;
 
         getContent().addClassName("student-grades-view-container");
 
+        // Use current locale for messages
+        Locale currentLocale = LocaleContextHolder.getLocale();
+
         // Page title
-        H2 title = new H2("Grades Overview");
+        H2 title = new H2(messageSource.getMessage("grades.title", null, currentLocale));
         title.addClassName("student-grades-view-title");
 
-        Paragraph description = new Paragraph("View your grades for the courses you have taken.");
+        Paragraph description = new Paragraph(messageSource.getMessage("grades.description", null, currentLocale));
         description.addClassName("student-grades-view-description");
 
         // Search bar to filter courses
-        TextField searchField = new TextField("Search Courses");
+        TextField searchField = new TextField(messageSource.getMessage("grades.search", null, currentLocale));
         searchField.addClassName("student-grades-view-search");
         searchField.setValueChangeMode(ValueChangeMode.EAGER);
         searchField.addValueChangeListener(event -> filterGrades(event.getValue()));
@@ -51,17 +61,22 @@ public class StudentGradesView extends Composite<VerticalLayout> {
         gradesGrid.addClassName("student-grades-view-grid");
 
         // Configure columns with keys for CSS styling
-        gradesGrid.addColumn(grade -> grade.getCourse().getCourseName()).setHeader("Course").setKey("course-name");
-        gradesGrid.addColumn(Grade::getGrade).setHeader("Grade").setKey("grade");
+        gradesGrid.addColumn(grade -> grade.getCourse().getCourseName())
+                .setHeader(messageSource.getMessage("grades.course", null, currentLocale))
+                .setKey("course-name");
+        gradesGrid.addColumn(Grade::getGrade)
+                .setHeader(messageSource.getMessage("grades.grade", null, currentLocale))
+                .setKey("grade");
         gradesGrid.addColumn(grade -> grade.getGradingDay().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
-                .setHeader("Date").setKey("grading-date");
+                .setHeader(messageSource.getMessage("grades.date", null, currentLocale))
+                .setKey("grading-date");
 
         // Fetch and display grades for the current student
         Long studentNumber = userService.getCurrentStudentNumber();
         if (studentNumber != null) {
             refreshGradesData(studentNumber);
         } else {
-            System.out.println("Error: Unable to retrieve student information.");
+            System.out.println(messageSource.getMessage("grades.view.error.student.not.found", null, currentLocale));
         }
 
         // Add components to the layout

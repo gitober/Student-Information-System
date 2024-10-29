@@ -14,12 +14,14 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.context.MessageSource;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -28,23 +30,32 @@ public class StudentGradesViewTest {
 
     private StudentGradesView studentGradesView;
     private GradeService gradeService;
+    private UserService userService;
+    private MessageSource messageSource; // Added MessageSource
+    private Locale currentLocale;
 
     @BeforeEach
     public void setUp() {
         // Mock the services
         gradeService = Mockito.mock(GradeService.class);
-        UserService userService = Mockito.mock(UserService.class);
+        userService = Mockito.mock(UserService.class);
+        messageSource = Mockito.mock(MessageSource.class); // Mock MessageSource
 
         // Mock service methods
         when(userService.getCurrentStudentNumber()).thenReturn(1L);  // Mock a student number
         when(gradeService.getGradesByStudentNumber(1L)).thenReturn(Collections.emptyList());
+
+        // Set up message source for localization
+        when(messageSource.getMessage("grades.title", null, Locale.getDefault())).thenReturn("Grades Overview");
+        when(messageSource.getMessage("grades.description", null, Locale.getDefault())).thenReturn("View your grades for the courses you have taken.");
+        when(messageSource.getMessage("grades.search", null, Locale.getDefault())).thenReturn("Search Courses");
 
         // Initialize a Vaadin UI context
         UI ui = new UI();
         UI.setCurrent(ui);
 
         // Instantiate the view with mocked services
-        studentGradesView = new StudentGradesView(gradeService, userService);
+        studentGradesView = new StudentGradesView(gradeService, userService, messageSource);
     }
 
     @AfterEach
@@ -109,8 +120,6 @@ public class StudentGradesViewTest {
         // The grades should be set in the grid
         assertEquals(1, gradesGrid.getDataProvider().size(new Query<>()), "Grades grid should contain one grade.");
     }
-
-
 
     private Grid<Grade> getPrivateField() {
         try {
