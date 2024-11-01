@@ -52,7 +52,7 @@ public class LocalizationConfigTest {
     @Test
     public void testLocaleChangeToFinnish() {
         String message = messageSource.getMessage("forgot.email", null, Locale.forLanguageTag("fi"));
-        assertEquals("Sähköposti", message); // Replace with actual Finnish message
+        assertEquals("Sähköpostiosoite", message); // Replace with actual Finnish message
     }
 
     @Test
