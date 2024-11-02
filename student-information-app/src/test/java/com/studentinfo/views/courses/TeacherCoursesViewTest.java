@@ -54,7 +54,7 @@ public class TeacherCoursesViewTest {
         UI.setCurrent(ui);
 
         // Instantiate the view with mocked services
-        teacherCoursesView = new TeacherCoursesView(courseService, teacherService, dateService, messageSource);
+        teacherCoursesView = new TeacherCoursesView(courseService, teacherService, messageSource, dateService);
     }
 
     @AfterEach

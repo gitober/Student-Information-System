@@ -3,9 +3,12 @@ package com.studentinfo.data.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 @Setter
 @Getter
@@ -54,9 +57,23 @@ public class Course {
     public String getFormattedDateRange() {
         LocalDate startDate = LocalDate.now();
         LocalDate endDate = startDate.plusDays(duration);
+        Locale currentLocale = LocaleContextHolder.getLocale();
 
-        // Format the date as "dd.MM.yyyy - dd.MM.yyyy"
-        return startDate.format(java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy")) +
-                " - " + endDate.format(java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        DateTimeFormatter formatter;
+        if (currentLocale.getLanguage().equals("ch")) {
+            formatter = DateTimeFormatter.ofPattern("yyyy年MM月dd日", Locale.forLanguageTag("ch"));
+        } else if (Locale.UK.equals(currentLocale)) {
+            formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.UK);
+        } else if (Locale.forLanguageTag("fi-FI").equals(currentLocale)) {
+            formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy", currentLocale);
+        } else if (Locale.forLanguageTag("ru-RU").equals(currentLocale)) {
+            formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy", currentLocale);
+        } else {
+            formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
+        }
+
+
+        return startDate.format(formatter) + " - " + endDate.format(formatter);
     }
+
 }

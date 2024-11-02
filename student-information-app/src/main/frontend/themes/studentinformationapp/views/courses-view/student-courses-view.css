@@ -102,10 +102,11 @@
 /* Confirmation dialog specific styles */
 .student-courses-view-confirmation-dialog {
     padding: 20px;
-    background-color: #f9f9f9;
     border-radius: 8px;
     max-width: 400px;
+    box-shadow: none; /* Remove any box shadow for a cleaner look */
 }
+
 
 .student-courses-view-dialog-title {
     font-size: 20px;

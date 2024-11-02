@@ -20,6 +20,17 @@
     justify-content: space-between; /* Distributes space between logo/title and nav items */
 }
 
+.flag-image {
+    width: 32px; /* Adjust size as needed */
+    height: auto; /* Keep aspect ratio */
+    margin-left: 8px; /* Add spacing between flags */
+}
+
+.logout-button-red {
+    background-color: red !important;
+    color: white !important;
+}
+
 /* Title styling */
 .app-name {
     color: white;

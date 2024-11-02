@@ -9,19 +9,15 @@ import com.studentinfo.views.grades.GradesView;
 import com.studentinfo.views.homeprofilepage.ProfilePageView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.component.dependency.CssImport;
 import lombok.Getter;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 @CssImport("./themes/studentinformationapp/views/header-view.css")
@@ -79,13 +75,12 @@ public class HeaderView extends HorizontalLayout {
             RouterLink editProfileLink = new RouterLink(getTranslation("header.profile"), EditProfileView.class);
             editProfileLink.addClassName("router-link");
 
-            // Create a layout for the language dropdown and logout button
+            // Create a layout for the language flags and logout button
             HorizontalLayout userActionsLayout = new HorizontalLayout();
             userActionsLayout.setAlignItems(Alignment.CENTER);
 
-            // Language selector
-            ComboBox<LanguageOption> languageDropdown = createLanguageDropdown();
-            languageDropdown.addClassName("language-dropdown");
+            // Language flags layout
+            HorizontalLayout languageFlags = createLanguageFlags();
 
             Button logoutButton = new Button(getTranslation("header.logout"), click -> {
                 UI ui = UI.getCurrent();
@@ -96,8 +91,8 @@ public class HeaderView extends HorizontalLayout {
             logoutButton.setId("logout-button");
             logoutButton.addClassName("logout-button");
 
-            // Add components to the user actions layout (language dropdown + logout button)
-            userActionsLayout.add(languageDropdown, logoutButton);
+            // Add components to the user actions layout (language flags + logout button)
+            userActionsLayout.add(languageFlags, logoutButton);
 
             // Add navigation links and user actions to the header
             this.add(homeLink, coursesLink, gradesLink);
@@ -111,7 +106,7 @@ public class HeaderView extends HorizontalLayout {
         });
     }
 
-    // Constructor for public pages (minimal header with language dropdown)
+    // Constructor for public pages (minimal header with language flags)
     public HeaderView(MessageSource messageSource) {
         this.messageSource = messageSource;
         this.setWidthFull();
@@ -133,76 +128,57 @@ public class HeaderView extends HorizontalLayout {
         logoAndTitle.setSpacing(false);
         logoAndTitle.addClassName("logo-title-container");
 
-        // Language dropdown for non-logged-in users
-        ComboBox<LanguageOption> languageDropdown = createLanguageDropdown();
-        languageDropdown.addClassName("language-dropdown");
+        // Language flags for non-logged-in users
+        HorizontalLayout languageFlags = createLanguageFlags();
 
-        // Add logo, title, and language dropdown to the header
-        this.add(logoAndTitle, languageDropdown);
+        // Add logo, title, and language flags to the header
+        this.add(logoAndTitle, languageFlags);
     }
 
-    private ComboBox<LanguageOption> createLanguageDropdown() {
-        List<LanguageOption> languageOptions = new ArrayList<>();
-        languageOptions.add(new LanguageOption("English", "images/flags/uk.png", Locale.ENGLISH));
-        languageOptions.add(new LanguageOption("Suomi", "images/flags/fi.png", Locale.forLanguageTag("fi")));
-        languageOptions.add(new LanguageOption("中文", "images/flags/ch.png", Locale.forLanguageTag("ch")));
-        languageOptions.add(new LanguageOption("Русский", "images/flags/ru.png", Locale.forLanguageTag("ru")));
+    private HorizontalLayout createLanguageFlags() {
+        HorizontalLayout flagLayout = new HorizontalLayout();
+        flagLayout.addClassName("language-flag-layout");
 
-        ComboBox<LanguageOption> languageDropdown = new ComboBox<>();
-        languageDropdown.setItems(languageOptions);
+        // Create flag images for each language
+        Image englishFlag = createFlagImage("images/flags/uk.png", Locale.ENGLISH);
+        Image finnishFlag = createFlagImage("images/flags/fi.png", Locale.forLanguageTag("fi"));
+        Image chineseFlag = createFlagImage("images/flags/ch.png", Locale.forLanguageTag("ch"));
+        Image russianFlag = createFlagImage("images/flags/ru.png", Locale.forLanguageTag("ru"));
 
-        // Customize the dropdown to show flag and language name
-        languageDropdown.setRenderer(new ComponentRenderer<>(option -> {
-            HorizontalLayout layout = new HorizontalLayout(new Image(option.getFlagPath(), option.getLanguage()), new Span(option.getLanguage()));
-            layout.setSpacing(true);
-            return layout;
-        }));
+        // Add flags to the layout
+        flagLayout.add(englishFlag, finnishFlag, chineseFlag, russianFlag);
+        return flagLayout;
+    }
 
-        // Set default value based on the current locale
-        Locale currentLocale = UI.getCurrent().getLocale();
-        languageOptions.stream()
-                .filter(option -> option.getLocale().equals(currentLocale))
-                .findFirst()
-                .ifPresentOrElse(languageDropdown::setValue, () -> languageDropdown.setValue(languageOptions.get(0)));
+    private Image createFlagImage(String imagePath, Locale locale) {
+        Image flagImage = new Image(imagePath, locale.getDisplayLanguage());
+        flagImage.addClassName("flag-image"); // Apply CSS class for styling
+        flagImage.getStyle().set("cursor", "pointer"); // Make it look clickable
 
-        // Add listener to handle language changes
-        languageDropdown.addValueChangeListener(event -> {
-            Locale selectedLocale = event.getValue().getLocale();
+        // Set a click listener to change the language
+        flagImage.addClickListener(event -> {
             UI ui = UI.getCurrent();
             if (ui != null) {
                 ui.access(() -> {
-                    ui.getSession().setLocale(selectedLocale);
-                    LocaleContextHolder.setLocale(selectedLocale); // Sync with Spring's context
+                    ui.getSession().setLocale(locale);
+                    LocaleContextHolder.setLocale(locale); // Sync with Spring's context
+
+                    // Check if the locale is Chinese and change the logout button color
+                    if (locale.getLanguage().equals("ch")) {
+                        ui.getPage().executeJs("document.getElementById('logout-button').classList.add('logout-button-red');");
+                    } else {
+                        ui.getPage().executeJs("document.getElementById('logout-button').classList.remove('logout-button-red');");
+                    }
 
                     // Persist the selected locale in the cookie
                     ui.getPage().executeJs("document.cookie = 'user-lang=' + $0 + '; path=/; max-age=31536000';",
-                            selectedLocale.getLanguage());
+                            locale.getLanguage());
 
                     ui.getPage().reload(); // Reload to apply the changes consistently
                 });
             }
         });
-
-        return languageDropdown;
-    }
-
-    // Inner class to represent language options
-    @Getter
-    private static class LanguageOption {
-        private final String language;
-        private final String flagPath;
-        private final Locale locale;
-
-        public LanguageOption(String language, String flagPath, Locale locale) {
-            this.language = language;
-            this.flagPath = flagPath;
-            this.locale = locale;
-        }
-
-        @Override
-        public String toString() {
-            return language;
-        }
+        return flagImage;
     }
 
     // Helper method to get translations

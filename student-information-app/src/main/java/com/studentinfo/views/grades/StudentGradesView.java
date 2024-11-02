@@ -63,13 +63,16 @@ public class StudentGradesView extends Composite<VerticalLayout> {
         // Configure columns with keys for CSS styling
         gradesGrid.addColumn(grade -> grade.getCourse().getCourseName())
                 .setHeader(messageSource.getMessage("grades.course", null, currentLocale))
-                .setKey("course-name");
+                .setKey("course-name")
+                .setClassNameGenerator(item -> "student-grades-view-course-column");
         gradesGrid.addColumn(Grade::getGrade)
                 .setHeader(messageSource.getMessage("grades.grade", null, currentLocale))
-                .setKey("grade");
-        gradesGrid.addColumn(grade -> grade.getGradingDay().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                .setKey("grade")
+                .setClassNameGenerator(item -> "student-grades-view-grade-column");
+        gradesGrid.addColumn(grade -> formatDate(grade.getGradingDay()))
                 .setHeader(messageSource.getMessage("grades.date", null, currentLocale))
-                .setKey("grading-date");
+                .setKey("grading-date")
+                .setClassNameGenerator(item -> "student-grades-view-date-column");
 
         // Fetch and display grades for the current student
         Long studentNumber = userService.getCurrentStudentNumber();
@@ -97,5 +100,14 @@ public class StudentGradesView extends Composite<VerticalLayout> {
                 .collect(Collectors.toList());
 
         gradesGrid.setItems(filteredGrades);
+    }
+
+    private String formatDate(java.time.LocalDate date) {
+        Locale locale = LocaleContextHolder.getLocale();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(
+                locale.getLanguage().equals("ch") ? "yyyy年MM月dd日" : "dd/MM/yyyy",
+                locale
+        );
+        return date.format(formatter);
     }
 }

@@ -35,6 +35,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Route(value = "teacher/attendance-tracking", layout = MainLayout.class)
@@ -142,8 +143,10 @@ public class TeacherAttendanceView extends Composite<VerticalLayout> {
                 .setHeader(getMessage("teacher.attendance.grid.status"))
                 .setAutoWidth(true);
 
-        attendanceGrid.addColumn(Attendance::getAttendanceDate)
-                .setHeader(getMessage("teacher.attendance.grid.date"))
+        attendanceGrid.addColumn(record -> {
+                    DateTimeFormatter formatter = getDateTimeFormatter();
+                    return record.getAttendanceDate().format(formatter);
+                }).setHeader(getMessage("teacher.attendance.grid.date"))
                 .setAutoWidth(true);
 
         attendanceGrid.addComponentColumn(attendanceRecord -> {
@@ -163,6 +166,13 @@ public class TeacherAttendanceView extends Composite<VerticalLayout> {
         attendanceGrid.setHeight("400px");
         attendanceGrid.setWidthFull();
         attendanceGrid.addClassName("teacher-attendance-grid");
+    }
+
+    private DateTimeFormatter getDateTimeFormatter() {
+        Locale locale = LocaleContextHolder.getLocale();
+        return locale.getLanguage().equals("ch")
+                ? DateTimeFormatter.ofPattern("yyyy年MM月dd日", locale)
+                : DateTimeFormatter.ofPattern("dd.MM.yyyy", locale);
     }
 
     private void filterAttendance(String searchTerm) {
@@ -255,7 +265,7 @@ public class TeacherAttendanceView extends Composite<VerticalLayout> {
         courseField.setValue(record.getCourse().getCourseName());
         studentField.setValue(record.getStudent().getFirstName() + " " + record.getStudent().getLastName());
         statusField.setValue(record.getAttendanceStatus());
-        dateField.setValue(record.getAttendanceDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
+        dateField.setValue(record.getAttendanceDate().format(getDateTimeFormatter()));
 
         Button saveButton = new Button(getMessage("teacher.attendance.save"), event -> {
             record.setAttendanceStatus(statusField.getValue());

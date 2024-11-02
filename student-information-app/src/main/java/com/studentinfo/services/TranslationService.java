@@ -1,13 +1,7 @@
 package com.studentinfo.services;
 
-import com.studentinfo.data.entity.CourseTranslation;
-import com.studentinfo.data.entity.DepartmentTranslation;
-import com.studentinfo.data.entity.SubjectTranslation;
-import com.studentinfo.data.entity.TeacherTranslation;
-import com.studentinfo.data.repository.CourseTranslationRepository;
-import com.studentinfo.data.repository.DepartmentTranslationRepository;
-import com.studentinfo.data.repository.SubjectTranslationRepository;
-import com.studentinfo.data.repository.TeacherTranslationRepository;
+import com.studentinfo.data.entity.*;
+import com.studentinfo.data.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,17 +14,33 @@ public class TranslationService {
     private final DepartmentTranslationRepository departmentTranslationRepository;
     private final SubjectTranslationRepository subjectTranslationRepository;
     private final TeacherTranslationRepository teacherTranslationRepository;
+    private final UserTranslationRepository userTranslationRepository;
 
     @Autowired
     public TranslationService(
             CourseTranslationRepository courseTranslationRepository,
             DepartmentTranslationRepository departmentTranslationRepository,
             SubjectTranslationRepository subjectTranslationRepository,
-            TeacherTranslationRepository teacherTranslationRepository) {
+            TeacherTranslationRepository teacherTranslationRepository,
+            UserTranslationRepository userTranslationRepository) {
         this.courseTranslationRepository = courseTranslationRepository;
         this.departmentTranslationRepository = departmentTranslationRepository;
         this.subjectTranslationRepository = subjectTranslationRepository;
         this.teacherTranslationRepository = teacherTranslationRepository;
+        this.userTranslationRepository = userTranslationRepository;
+    }
+
+    // User Translations
+    public List<UserTranslation> getUserTranslationsByLocale(Language locale) {
+        return userTranslationRepository.findByLocale(locale);
+    }
+
+    public List<UserTranslation> getUserTranslations(Long userId, Language locale) {
+        return userTranslationRepository.findByUser_IdAndLocale(userId, locale);
+    }
+
+    public void saveUserTranslations(List<UserTranslation> translations) {
+        userTranslationRepository.saveAll(translations);
     }
 
     // Course Translations

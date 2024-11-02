@@ -17,8 +17,8 @@ public class DateService {
 
     private DateTimeFormatter getFormatterForCurrentLocale() {
         Locale locale = LocaleContextHolder.getLocale();
-        if (Locale.CHINA.equals(locale)) {
-            return DateTimeFormatter.ofPattern("yyyy年MM月dd日", Locale.CHINA);
+        if (locale.getLanguage().equals("ch")) {
+            return DateTimeFormatter.ofPattern("yyyy年MM月dd日", Locale.forLanguageTag("ch"));
         } else if (Locale.UK.equals(locale)) {
             return DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.UK);
         } else if (Locale.forLanguageTag("fi-FI").equals(locale)) {

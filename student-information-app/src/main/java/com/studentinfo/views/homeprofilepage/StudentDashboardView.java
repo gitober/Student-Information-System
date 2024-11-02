@@ -163,7 +163,7 @@ public class StudentDashboardView extends Composite<VerticalLayout> {
         List<Course> enrolledCourses = courseService.getEnrolledCourses(studentNumber);
         List<Attendance> attendanceRecords = enrolledCourses.stream()
                 .flatMap(course -> attendanceService.getAttendanceByCourseId(course.getCourseId()).stream()
-                        .filter(attendance -> attendance.getStudent().getStudentNumber().equals(studentNumber)))
+                        .filter(attendance -> attendance.getStudent() != null && attendance.getStudent().getStudentNumber().equals(studentNumber)))
                 .collect(Collectors.toList());
 
         // Set items in the attendance grid

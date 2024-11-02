@@ -1,16 +1,13 @@
 package com.studentinfo.services;
 
-import com.studentinfo.data.entity.Role;
-import com.studentinfo.data.entity.Student;
-import com.studentinfo.data.entity.Teacher;
-import com.studentinfo.data.entity.User;
+import com.studentinfo.data.entity.*;
 import com.vaadin.flow.component.notification.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Objects;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,47 +15,45 @@ import java.util.logging.Logger;
 @Service
 public class RegistrationHandler {
 
-    // Dependencies
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private final StudentService studentService;
+    private final TranslationService translationService;
 
     @Autowired
-    public RegistrationHandler(StudentService studentService, UserService userService, PasswordEncoder passwordEncoder) {
+    public RegistrationHandler(StudentService studentService, UserService userService,
+                               PasswordEncoder passwordEncoder, TranslationService translationService) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.studentService = studentService;
+        this.translationService = translationService;
     }
 
-    // Public Methods
-
-    // Register a new user based on role
     public boolean registerUser(String firstName, String lastName, LocalDate birthday,
-                                String phoneNumber, String email, String password, String role) {
+                                String phoneNumber, String email, String password, String role, Language currentLocale) {
         try {
-            // Check if the email already exists
             if (userService.findByEmail(email).isPresent()) {
                 Notification.show("This email is already registered. Please use a different email.");
                 return false;
             }
 
-            // Create user based on role
             User user = createUserBasedOnRole(role);
             if (user == null) {
                 Notification.show("Invalid role selected.");
                 return false;
             }
 
-            // Set user attributes
             setUserAttributes(user, firstName, lastName, birthday, phoneNumber, email, password);
 
-            // Set student number for students
             if (user instanceof Student) {
                 ((Student) user).setStudentNumber(generateStudentNumber());
             }
 
-            // Save the user
             userService.save(user);
+
+            // Use the existing currentLocale parameter
+            addUserTranslations(user, firstName, lastName, email, currentLocale);
+
             return true;
         } catch (IllegalArgumentException e) {
             Logger.getLogger(getClass().getName()).log(Level.WARNING, "Invalid input", e);
@@ -71,9 +66,7 @@ public class RegistrationHandler {
         }
     }
 
-    // Private Helper Methods
 
-    // Create a User object based on role
     private User createUserBasedOnRole(String role) {
         if ("Student".equalsIgnoreCase(role)) {
             Student student = new Student();
@@ -84,17 +77,13 @@ public class RegistrationHandler {
             teacher.setUserType("TEACHER");
             return teacher;
         }
-        return null; // Invalid role
+        return null;
     }
 
-    // Generate student number
     private Long generateStudentNumber() {
-        // Using the current timestamp to generate a unique student number
-        return System.currentTimeMillis(); // Returns the current time in milliseconds since the epoch
+        return System.currentTimeMillis();
     }
 
-
-    // Set common attributes for User
     private void setUserAttributes(User user, String firstName, String lastName,
                                    LocalDate birthday, String phoneNumber,
                                    String email, String password) {
@@ -105,15 +94,21 @@ public class RegistrationHandler {
         user.setUsername(email);
         user.setEmail(email);
 
-        // Encode and set password
         String encodedPassword = passwordEncoder.encode(password);
         user.setHashedPassword(encodedPassword);
 
-        // Assign roles
         user.setRoles(Set.of(Role.USER));
     }
 
-    // Check if email is already registered
+    private void addUserTranslations(User user, String firstName, String lastName, String email, Language locale) {
+        translationService.saveUserTranslations(List.of(
+                new UserTranslation(user, locale, "first_name", firstName),
+                new UserTranslation(user, locale, "last_name", lastName),
+                new UserTranslation(user, locale, "email", email)
+        ));
+    }
+
+
     public boolean isEmailRegistered(String email) {
         return userService.findByEmail(email).isPresent();
     }

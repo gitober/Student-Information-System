@@ -1,5 +1,6 @@
 package com.studentinfo.views.registration;
 
+import com.studentinfo.data.entity.Language;
 import com.studentinfo.views.header.HeaderView;
 import com.studentinfo.services.RegistrationHandler;
 import com.vaadin.flow.component.Composite;
@@ -25,6 +26,8 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+
+import java.util.Locale;
 
 @PageTitle("Registration")
 @Route(value = "register")
@@ -74,6 +77,18 @@ public class RegistrationView extends Composite<VerticalLayout> {
         firstNameField = new TextField(messageSource.getMessage("registration.firstName", null, LocaleContextHolder.getLocale()));
         lastNameField = new TextField(messageSource.getMessage("registration.lastName", null, LocaleContextHolder.getLocale()));
         DatePicker birthdayField = new DatePicker(messageSource.getMessage("registration.birthday", null, LocaleContextHolder.getLocale()));
+
+        // Set date format based on locale
+        Locale currentLocale = LocaleContextHolder.getLocale();
+        if ("ch".equalsIgnoreCase(currentLocale.getLanguage())) {
+            birthdayField.setI18n(new DatePicker.DatePickerI18n()
+                    .setDateFormat("yyyy-MM-dd")); // Custom date format for Chinese locale
+        } else {
+            birthdayField.setI18n(new DatePicker.DatePickerI18n()
+                    .setDateFormat("dd/MM/yyyy")); // Default date format
+        }
+        birthdayField.setLocale(currentLocale);
+
         TextField phoneNumberField = new TextField(messageSource.getMessage("registration.phoneNumber", null, LocaleContextHolder.getLocale()));
         emailField = new EmailField(messageSource.getMessage("registration.email", null, LocaleContextHolder.getLocale()));
         passwordField = new PasswordField(messageSource.getMessage("registration.password", null, LocaleContextHolder.getLocale()));
@@ -134,6 +149,9 @@ public class RegistrationView extends Composite<VerticalLayout> {
             role = "Teacher";
         }
 
+        // Get the current locale from LocaleContextHolder
+        Language currentLocale = Language.valueOf(LocaleContextHolder.getLocale().getLanguage().toUpperCase());
+
         boolean registrationSuccessful = registrationHandler.registerUser(
                 firstNameField.getValue(),
                 lastNameField.getValue(),
@@ -141,7 +159,8 @@ public class RegistrationView extends Composite<VerticalLayout> {
                 phoneNumberField.getValue(),
                 emailField.getValue(),
                 passwordField.getValue(),
-                role
+                role,
+                currentLocale // Pass the locale here
         );
 
         if (registrationSuccessful) {
@@ -151,7 +170,6 @@ public class RegistrationView extends Composite<VerticalLayout> {
             Notification.show(messageSource.getMessage("registration.failure", null, LocaleContextHolder.getLocale()));
         }
     }
-
 
     private void addFieldListeners(MessageSource messageSource) {
         emailField.addValueChangeListener(e -> validateEmail(messageSource));

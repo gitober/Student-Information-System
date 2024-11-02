@@ -27,6 +27,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -76,7 +78,8 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
         enrolledCoursesGrid.removeAllColumns();
         enrolledCoursesGrid.addColumn(Course::getCourseName).setHeader(messageSource.getMessage("my.courses.enrolled.column.name", null, currentLocale));
         enrolledCoursesGrid.addColumn(Course::getCoursePlan).setHeader(messageSource.getMessage("my.courses.enrolled.column.plan", null, currentLocale));
-        enrolledCoursesGrid.addColumn(Course::getFormattedDateRange).setHeader(messageSource.getMessage("my.courses.enrolled.column.duration", null, currentLocale));
+        enrolledCoursesGrid.addColumn(course -> formatDateRange(LocalDate.now(), LocalDate.now().plusDays(course.getDuration())))
+                .setHeader(messageSource.getMessage("my.courses.enrolled.column.duration", null, currentLocale));
         enrolledCoursesGrid.addColumn(course -> {
             List<Teacher> teachers = course.getTeachers();
             if (!teachers.isEmpty()) {
@@ -99,7 +102,8 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
         availableCoursesGrid.removeAllColumns();
         availableCoursesGrid.addColumn(Course::getCourseName).setHeader(messageSource.getMessage("my.courses.available.column.name", null, currentLocale));
         availableCoursesGrid.addColumn(Course::getCoursePlan).setHeader(messageSource.getMessage("my.courses.available.column.plan", null, currentLocale));
-        availableCoursesGrid.addColumn(Course::getFormattedDateRange).setHeader(messageSource.getMessage("my.courses.available.column.duration", null, currentLocale));
+        availableCoursesGrid.addColumn(course -> formatDateRange(LocalDate.now(), LocalDate.now().plusDays(course.getDuration())))
+                .setHeader(messageSource.getMessage("my.courses.available.column.duration", null, currentLocale));
         availableCoursesGrid.addColumn(course -> {
             List<Teacher> teachers = course.getTeachers();
             if (!teachers.isEmpty()) {
@@ -169,7 +173,6 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
         availableCoursesGrid.setItems(filteredAvailableCourses);
     }
 
-    // Method to enroll in a course with a confirmation dialog
     private void enrollInCourse(Course course) {
         Dialog confirmationDialog = new Dialog();
         confirmationDialog.addClassName("student-courses-view-confirmation-dialog");
@@ -188,8 +191,11 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
         dialogLayout.add(courseField);
 
         HorizontalLayout buttonLayout = new HorizontalLayout();
+        buttonLayout.addClassName("student-courses-view-dialog-button-layout");
         buttonLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
+
         Button confirmButton = new Button(messageSource.getMessage("my.courses.dialog.confirm.button", null, currentLocale));
+        confirmButton.addClassName("student-courses-view-confirm-button");
         confirmButton.addClickListener(event -> {
             Long studentNumber = userService.getCurrentStudentNumber();
             courseService.enrollInCourse(studentNumber, null, course.getCourseId(), 0);
@@ -199,6 +205,7 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
         });
 
         Button cancelButton = new Button(messageSource.getMessage("my.courses.dialog.cancel.button", null, currentLocale));
+        cancelButton.addClassName("student-courses-view-cancel-button");
         cancelButton.addClickListener(event -> confirmationDialog.close());
 
         buttonLayout.add(confirmButton, cancelButton);
@@ -207,25 +214,52 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
         confirmationDialog.open();
     }
 
-    // Method to open attendance dialog
+
     private void openAttendanceDialog(Course course) {
         Dialog attendanceDialog = new Dialog();
         attendanceDialog.addClassName("student-courses-view-attendance-dialog");
 
         Locale currentLocale = LocaleContextHolder.getLocale();
+
+        // Title for the dialog
         H2 attendanceTitle = new H2(messageSource.getMessage("my.courses.attendance.title", null, currentLocale));
+        attendanceTitle.addClassName("student-courses-view-attendance-title"); // Add CSS class for the title
         attendanceDialog.add(attendanceTitle);
 
         Long studentNumber = userService.getCurrentStudentNumber();
         List<Attendance> attendanceRecords = attendanceService.getAttendanceByStudentNumberAndCourseId(studentNumber, course.getCourseId());
 
+        // Grid setup for attendance
         Grid<Attendance> attendanceGrid = new Grid<>(Attendance.class);
+        attendanceGrid.addClassName("student-courses-view-attendance-grid");
         attendanceGrid.removeAllColumns();
-        attendanceGrid.addColumn(Attendance::getAttendanceDate).setHeader(messageSource.getMessage("my.courses.attendance.column.date", null, currentLocale));
-        attendanceGrid.addColumn(Attendance::getAttendanceStatus).setHeader(messageSource.getMessage("my.courses.attendance.column.status", null, currentLocale));
+        attendanceGrid.addColumn(Attendance::getAttendanceDate)
+                .setHeader(messageSource.getMessage("my.courses.attendance.column.date", null, currentLocale))
+                .setKey("attendance-date-column");
+        attendanceGrid.addColumn(Attendance::getAttendanceStatus)
+                .setHeader(messageSource.getMessage("my.courses.attendance.column.status", null, currentLocale))
+                .setKey("attendance-status-column");
 
         attendanceGrid.setItems(attendanceRecords);
         attendanceDialog.add(attendanceGrid);
+
+        // Optionally, add a close button for better UX
+        Button closeButton = new Button(messageSource.getMessage("my.courses.attendance.close.button", null, currentLocale));
+        closeButton.addClassName("student-courses-view-attendance-close-button"); // Add CSS class for the button
+        closeButton.addClickListener(event -> attendanceDialog.close());
+        attendanceDialog.add(closeButton);
+
         attendanceDialog.open();
     }
+
+
+    public String formatDateRange(LocalDate startDate, LocalDate endDate) {
+        Locale locale = LocaleContextHolder.getLocale();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(
+                locale.getLanguage().equals("ch") ? "yyyy年MM月dd日" : "dd/MM/yyyy",
+                locale
+        );
+        return startDate.format(formatter) + " - " + endDate.format(formatter);
+    }
+
 }

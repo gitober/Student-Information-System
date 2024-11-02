@@ -21,10 +21,10 @@
 }
 
 .student-grades-view-search {
-    margin-bottom: 20px;
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto; /* Center search bar */
+    margin: 0; /* Remove any margins */
+    padding: 0; /* Remove any padding */
+    align-self: flex-start; /* Ensure it aligns to the start */
+    width: 100%; /* Or set to a specific width if needed */
 }
 
 .student-grades-view-grid {

@@ -23,6 +23,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 import jakarta.servlet.http.Cookie;
+import java.util.Locale;
 
 @PageTitle("Login Page")
 @Route(value = "login")
@@ -38,30 +39,32 @@ public class LoginPageView extends Composite<VerticalLayout> {
 
     @Autowired
     public LoginPageView(LoginHandler loginHandler, MessageSource messageSource) {
-        // Internationalized text fields and buttons
+        Locale currentLocale = LocaleContextHolder.getLocale();
+
+        // Internationalized text fields and buttons with a fallback to English if translation is missing
         this.emailField = new TextField(
-                messageSource.getMessage("login.email", null, LocaleContextHolder.getLocale()),
-                messageSource.getMessage("login.email.placeholder", null, LocaleContextHolder.getLocale())
+                messageSource.getMessage("login.email", null, "Email", currentLocale),
+                messageSource.getMessage("login.email.placeholder", null, "Enter your email", currentLocale)
         );
         this.emailField.addClassName("login-text-field");
 
         this.passwordField = new PasswordField(
-                messageSource.getMessage("login.password", null, LocaleContextHolder.getLocale()),
-                messageSource.getMessage("login.password.placeholder", null, LocaleContextHolder.getLocale())
+                messageSource.getMessage("login.password", null, "Password", currentLocale),
+                messageSource.getMessage("login.password.placeholder", null, "Enter your password", currentLocale)
         );
         this.passwordField.addClassName("login-text-field");
 
-        this.signInButton = new Button(messageSource.getMessage("login.signin", null, LocaleContextHolder.getLocale()));
+        this.signInButton = new Button(messageSource.getMessage("login.signin", null, "Sign In", currentLocale));
         this.signInButton.addClassName("login-signin-button");
 
-        this.signUpButton = new Button(messageSource.getMessage("login.signup", null, LocaleContextHolder.getLocale()));
+        this.signUpButton = new Button(messageSource.getMessage("login.signup", null, "Sign Up", currentLocale));
         this.signUpButton.addClassName("login-signup-link");
 
-        this.forgotPasswordButton = new Button(messageSource.getMessage("login.forgotPassword", null, LocaleContextHolder.getLocale()));
+        this.forgotPasswordButton = new Button(messageSource.getMessage("login.forgotPassword", null, "Forgot Your Password?", currentLocale));
         this.forgotPasswordButton.addClassName("login-forgot-password-link");
         this.forgotPasswordButton.addClickListener(e -> UI.getCurrent().navigate("forgotpassword"));
 
-        this.rememberMeCheckbox = new Checkbox(messageSource.getMessage("login.rememberMe", null, LocaleContextHolder.getLocale()));
+        this.rememberMeCheckbox = new Checkbox(messageSource.getMessage("login.rememberMe", null, "Remember Me", currentLocale));
         this.rememberMeCheckbox.addClassName("login-remember-checkbox");
         this.rememberMeCheckbox.setId("remember-me");
 
@@ -104,12 +107,12 @@ public class LoginPageView extends Composite<VerticalLayout> {
             boolean rememberMe = rememberMeCheckbox.getValue();
 
             if (email.isEmpty()) {
-                Notification.show(messageSource.getMessage("login.email.empty", null, LocaleContextHolder.getLocale()), 3000, Notification.Position.MIDDLE);
+                Notification.show(messageSource.getMessage("login.email.empty", null, "Email cannot be empty", currentLocale), 3000, Notification.Position.MIDDLE);
                 return;
             }
 
             if (password.isEmpty()) {
-                Notification.show(messageSource.getMessage("login.password.empty", null, LocaleContextHolder.getLocale()), 3000, Notification.Position.MIDDLE);
+                Notification.show(messageSource.getMessage("login.password.empty", null, "Password cannot be empty", currentLocale), 3000, Notification.Position.MIDDLE);
                 return;
             }
 
@@ -118,9 +121,9 @@ public class LoginPageView extends Composite<VerticalLayout> {
 
             // Check login success
             if (!loginSuccessful) {
-                Notification.show(messageSource.getMessage("login.invalid", null, LocaleContextHolder.getLocale()), 3000, Notification.Position.MIDDLE);
+                Notification.show(messageSource.getMessage("login.invalid", null, "Invalid email or password", currentLocale), 3000, Notification.Position.MIDDLE);
             } else {
-                Notification.show(messageSource.getMessage("login.success", null, LocaleContextHolder.getLocale()), 3000, Notification.Position.MIDDLE);
+                Notification.show(messageSource.getMessage("login.success", null, "Login successful", currentLocale), 3000, Notification.Position.MIDDLE);
             }
         });
 
@@ -131,6 +134,7 @@ public class LoginPageView extends Composite<VerticalLayout> {
     }
 
     private VerticalLayout setupLeftContent(MessageSource messageSource) {
+        Locale currentLocale = LocaleContextHolder.getLocale();
         VerticalLayout leftContent = new VerticalLayout();
         leftContent.setSizeFull();
         leftContent.setPadding(false);
@@ -140,13 +144,13 @@ public class LoginPageView extends Composite<VerticalLayout> {
         leftContent.addClassName("login-left-content");
 
         // Add components with translated text
-        Span welcomeText = new Span(messageSource.getMessage("login.welcome", null, LocaleContextHolder.getLocale()));
+        Span welcomeText = new Span(messageSource.getMessage("login.welcome", null, "Welcome", currentLocale));
         welcomeText.addClassName("login-welcome-text");
 
-        Span instructionText = new Span(messageSource.getMessage("login.instruction", null, LocaleContextHolder.getLocale()));
+        Span instructionText = new Span(messageSource.getMessage("login.instruction", null, "Please log in using your credentials", currentLocale));
         instructionText.addClassName("login-instruction-text");
 
-        Span signUpText = new Span(messageSource.getMessage("login.noAccount", null, LocaleContextHolder.getLocale()));
+        Span signUpText = new Span(messageSource.getMessage("login.noAccount", null, "Don't have an account? Sign up now!", currentLocale));
         signUpText.addClassName("login-signup-text");
 
         // Add the "Forgot Password?" button under the password field
