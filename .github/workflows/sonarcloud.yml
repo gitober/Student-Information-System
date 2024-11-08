@@ -28,7 +28,8 @@ jobs:
           distribution: 'zulu'
 
       - name: Build Project with Maven
-        run: mvn clean install  # Builds the project and generates the .class files
+        run: mvn clean install
+        working-directory: student-information-app  # Set working directory to where pom.xml is
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
@@ -40,4 +41,4 @@ jobs:
             -Dsonar.projectKey=eetuam1_Student-Information-System
             -Dsonar.organization=eetuam1
             -Dsonar.sources=student-information-app/src
-            -Dsonar.java.binaries=target  # Maven outputs compiled classes to the 'target' directory
+            -Dsonar.java.binaries=student-information-app/target  # Path for compiled .class files
