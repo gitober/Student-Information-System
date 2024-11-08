@@ -3,7 +3,7 @@ name: Deploy to Heroku
 on:
   push:
     branches:
-      - main  # This deploys only when code is pushed to the main branch
+      - main  # This triggers deployment on push to the main branch
 
 jobs:
   deploy:
@@ -17,7 +17,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '17'
-          distribution: ''
+          distribution: 'temurin'  # Specify Java distribution if needed
 
       - name: Build with Maven
         run: ./mvnw clean package -DskipTests
@@ -30,6 +30,5 @@ jobs:
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: |
-          heroku auth:token
-          heroku git:remote -a <your-heroku-app-name>
-          git push heroku `git subtree split --prefix student-information-app main`:refs/heads/main -f
+          heroku git:remote -a ${{ secrets.HEROKU_APP_NAME }}
+          git push heroku main
