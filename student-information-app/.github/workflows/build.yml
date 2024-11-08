@@ -13,10 +13,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: Set up JDK 22
+      - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
-          java-version: 22
+          java-version: 17  # Use JDK 17 for better compatibility with SonarCloud
           distribution: 'zulu' # Alternative distribution options are available.
       - name: Cache SonarCloud packages
         uses: actions/cache@v4
@@ -34,5 +34,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=eetuam1_Student-Information-System
-        #dfgdfg
+        run: |
+          cd student-information-app  # Ensure you're in the correct directory
+          mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=eetuam1_Student-Information-System
