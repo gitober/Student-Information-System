@@ -249,6 +249,14 @@
                 <version>2.15.0</version> <!-- Check for the latest version -->
             </plugin>
 
+            <!-- SonarQube Plugin for code quality analysis -->
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.9.1.2184</version> <!-- Check for the latest version -->
+            </plugin>
+
+
         </plugins>
     </build>
 
