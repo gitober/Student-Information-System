@@ -27,5 +27,4 @@ jobs:
             -Dsonar.projectKey=eetuam1_Student-Information-System
             -Dsonar.organization=eetuam1
             -Dsonar.sources=student-information-app/src  # Adjust to your source code directory
-            -Dsonar.tests=student-information-app/src/test  # Adjust to your test code directory
           projectBaseDir: student-information-app  # Set this if your code is in the subdirectory
