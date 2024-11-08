@@ -41,4 +41,5 @@ jobs:
             -Dsonar.projectKey=eetuam1_Student-Information-System
             -Dsonar.organization=eetuam1
             -Dsonar.sources=student-information-app/src
-            -Dsonar.java.binaries=student-information-app/target  # Path for compiled .class files
+            -Dsonar.java.binaries=student-information-app/target
+
