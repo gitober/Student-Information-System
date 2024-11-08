@@ -27,6 +27,9 @@ jobs:
           java-version: 22
           distribution: 'zulu'
 
+      - name: Build Project with Maven
+        run: mvn clean install  # Builds the project and generates the .class files
+
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
@@ -37,3 +40,4 @@ jobs:
             -Dsonar.projectKey=eetuam1_Student-Information-System
             -Dsonar.organization=eetuam1
             -Dsonar.sources=student-information-app/src
+            -Dsonar.java.binaries=target  # Maven outputs compiled classes to the 'target' directory
