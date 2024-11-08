@@ -13,7 +13,10 @@
         <vaadin.version>24.5.1</vaadin.version>
         <spring-boot.version>3.2.8</spring-boot.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <sonar.organization>eetuam1</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
+
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -250,11 +253,7 @@
             </plugin>
 
             <!-- SonarQube Plugin for code quality analysis -->
-            <plugin>
-                <groupId>org.sonarsource.scanner.maven</groupId>
-                <artifactId>sonar-maven-plugin</artifactId>
-                <version>3.9.1.2184</version> <!-- Check for the latest version -->
-            </plugin>
+
 
 
         </plugins>
