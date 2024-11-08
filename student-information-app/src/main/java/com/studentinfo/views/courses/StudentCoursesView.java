@@ -83,7 +83,7 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
         enrolledCoursesGrid.addColumn(course -> {
             List<Teacher> teachers = course.getTeachers();
             if (!teachers.isEmpty()) {
-                return teachers.get(0).getFirstName() + " " + teachers.get(0).getLastName();
+                return teachers.getFirst().getFirstName() + " " + teachers.getFirst().getLastName();
             } else {
                 return messageSource.getMessage("my.courses.no.teacher", null, currentLocale);
             }
@@ -107,7 +107,7 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
         availableCoursesGrid.addColumn(course -> {
             List<Teacher> teachers = course.getTeachers();
             if (!teachers.isEmpty()) {
-                return teachers.get(0).getFirstName() + " " + teachers.get(0).getLastName();
+                return teachers.getFirst().getFirstName() + " " + teachers.getFirst().getLastName();
             } else {
                 return messageSource.getMessage("my.courses.no.teacher", null, currentLocale);
             }

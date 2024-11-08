@@ -23,14 +23,13 @@ public class CoursesView extends Composite<VerticalLayout> {
     public CoursesView(AuthenticatedUser authenticatedUser, UserContentLoader userContentLoader, MessageSource messageSource) {
 
         // Debug statements to ensure proper injection
-        if (authenticatedUser == null) {
-            throw new IllegalStateException("AuthenticatedUser is not injected!");
-        }
-        if (userContentLoader == null) {
-            throw new IllegalStateException("UserContentLoader is not injected!");
-        }
-        if (messageSource == null) {
-            throw new IllegalStateException("MessageSource is not injected!");
+        if (authenticatedUser == null || userContentLoader == null || messageSource == null) {
+            throw new IllegalStateException(
+                    (authenticatedUser == null ? "AuthenticatedUser " : "") +
+                            (userContentLoader == null ? "UserContentLoader " : "") +
+                            (messageSource == null ? "MessageSource " : "") +
+                            "is not injected!"
+            );
         }
 
         // Main layout setup
