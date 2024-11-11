@@ -2,7 +2,6 @@ package com.studentinfo.controller;
 
 import com.studentinfo.data.entity.Attendance;
 import com.studentinfo.services.AttendanceService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +12,12 @@ import java.util.List;
 @RequestMapping("/api/attendance")
 public class AttendanceController {
 
-    @Autowired
-    private AttendanceService attendanceService;
+    private final AttendanceService attendanceService;
+
+    // Constructor injection
+    public AttendanceController(AttendanceService attendanceService) {
+        this.attendanceService = attendanceService;
+    }
 
     // Get all attendance records
     @GetMapping
