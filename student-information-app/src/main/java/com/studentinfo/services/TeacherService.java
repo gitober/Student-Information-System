@@ -35,6 +35,12 @@ public class TeacherService {
 
     // CRUD Operations for Teacher
 
+    // Save or update a teacher entity
+    @Transactional
+    public Teacher save(Teacher teacher) {
+        return teacherRepository.save(teacher);
+    }
+
     // Retrieve a teacher by their ID
     public Optional<Teacher> get(Long id) {
         return teacherRepository.findById(id);
@@ -43,11 +49,6 @@ public class TeacherService {
     // Retrieve a teacher by their username
     public Optional<Teacher> getTeacherByUsername(String username) {
         return teacherRepository.findByUsername(username);
-    }
-
-    // Save or update a teacher entity
-    public Teacher save(Teacher teacher) {
-        return teacherRepository.save(teacher);
     }
 
     // Delete a teacher by their ID

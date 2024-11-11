@@ -129,20 +129,22 @@ public class TeacherEditProfileView extends VerticalLayout {
 
     public void setSaveListener(Consumer<Teacher> saveListener) {
         saveButton.addClickListener(event -> {
-            teacher.setFirstName(firstNameField.getValue());
-            teacher.setLastName(lastNameField.getValue());
-            teacher.setPhoneNumber(phoneNumberField.getValue());
-            teacher.setEmail(emailField.getValue());
-            teacher.setDepartment(departmentComboBox.getValue());
-            teacher.setSubject(subjectComboBox.getValue());
+            // Only update fields if they have non-empty values to avoid overwriting with null
+            if (!firstNameField.isEmpty()) teacher.setFirstName(firstNameField.getValue());
+            if (!lastNameField.isEmpty()) teacher.setLastName(lastNameField.getValue());
+            if (!phoneNumberField.isEmpty()) teacher.setPhoneNumber(phoneNumberField.getValue());
+            if (!emailField.isEmpty()) teacher.setEmail(emailField.getValue());
+            if (departmentComboBox.getValue() != null) teacher.setDepartment(departmentComboBox.getValue());
+            if (subjectComboBox.getValue() != null) teacher.setSubject(subjectComboBox.getValue());
 
+            // Save teacher entity through the provided save listener
             saveListener.accept(teacher);
 
             Notification.show(getMessage("teacher.edit.profile.success"), 3000, Notification.Position.TOP_CENTER);
 
-            updateTeacherProfile();
+            updateTeacherProfile(); // Refresh displayed profile details
 
-            // Clear the fields after saving
+            // Clear fields after saving
             firstNameField.clear();
             lastNameField.clear();
             phoneNumberField.clear();
@@ -151,6 +153,7 @@ public class TeacherEditProfileView extends VerticalLayout {
             subjectComboBox.clear();
         });
     }
+
 
     private String getMessage(String key) {
         return messageSource.getMessage(key, null, LocaleContextHolder.getLocale());
