@@ -4,6 +4,7 @@ import com.studentinfo.data.entity.Teacher;
 import com.studentinfo.security.AuthenticatedUser;
 import com.studentinfo.services.CourseService;
 import com.studentinfo.services.TeacherService;
+import com.studentinfo.views.teacher_attendance_view.TeacherAttendanceView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
@@ -27,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class TeacherAttendanceViewTest {
+class TeacherAttendanceViewTest {
 
     private TeacherAttendanceView teacherAttendanceView;
 
@@ -90,7 +91,7 @@ public class TeacherAttendanceViewTest {
     }
 
     @Test
-    public void testTeacherAttendanceViewComponents() {
+    void testTeacherAttendanceViewComponents() {
         // Locate the search field by type (TextField) without specifying a labelText
         TextField searchField = findComponent(TextField.class);
         assertNotNull(searchField, "Search field should be present in the teacher attendance view.");

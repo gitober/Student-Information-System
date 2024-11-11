@@ -3,7 +3,7 @@ package com.studentinfo.services;
 import com.studentinfo.data.entity.Student;
 import com.studentinfo.data.entity.Teacher;
 import com.studentinfo.security.AuthenticatedUser;
-import com.studentinfo.views.TeacherAttendanceView.TeacherAttendanceView;
+import com.studentinfo.views.teacher_attendance_view.TeacherAttendanceView;
 import com.studentinfo.views.courses.StudentCoursesView;
 import com.studentinfo.views.courses.TeacherCoursesView;
 import com.studentinfo.views.homeprofilepage.StudentDashboardView;
@@ -32,41 +32,37 @@ public class UserContentLoader {
     private final DateService dateService;
     private final MessageSource messageSource;
 
-    // Lazy-Loaded Views
-    @Autowired
-    @Lazy
-    private TeacherCoursesView teacherCoursesView;
+    // Views
+    private final TeacherCoursesView teacherCoursesView;
+    private final StudentCoursesView studentCoursesView;
+    private final TeacherGradesView teacherGradesView;
+    private final StudentGradesView studentGradesView;
+    private final TeacherDashboardView teacherDashboardView;
+    private final StudentDashboardView studentDashboardView;
 
-    @Autowired
-    @Lazy
-    private StudentCoursesView studentCoursesView;
-
-    @Autowired
-    @Lazy
-    private TeacherGradesView teacherGradesView;
-
-    @Autowired
-    @Lazy
-    private StudentGradesView studentGradesView;
-
-    @Autowired
-    @Lazy
-    private TeacherDashboardView teacherDashboardView;
-
-    @Autowired
-    @Lazy
-    private StudentDashboardView studentDashboardView;
-
-    @Autowired
-    @Lazy
-    private TeacherAttendanceView teacherAttendanceView;
+    // Constants for messages
+    private static final String ROLE_NOT_RECOGNIZED_MESSAGE = "Role not recognized. Please contact support.";
+    private static final String USER_NOT_FOUND_MESSAGE = "User not found. Please log in again.";
 
     // Constructor for dependency injection
     @Autowired
-    public UserContentLoader(AuthenticatedUser authenticatedUser, TeacherService teacherService,
-                             StudentService studentService, DepartmentService departmentService,
-                             SubjectService subjectService, UserService userService,
-                             DateService dateService, MessageSource messageSource) {
+    public UserContentLoader(
+            AuthenticatedUser authenticatedUser,
+            TeacherService teacherService,
+            StudentService studentService,
+            DepartmentService departmentService,
+            SubjectService subjectService,
+            UserService userService,
+            DateService dateService,
+            MessageSource messageSource,
+            @Lazy TeacherCoursesView teacherCoursesView,
+            @Lazy StudentCoursesView studentCoursesView,
+            @Lazy TeacherGradesView teacherGradesView,
+            @Lazy StudentGradesView studentGradesView,
+            @Lazy TeacherDashboardView teacherDashboardView,
+            @Lazy StudentDashboardView studentDashboardView,
+            @Lazy TeacherAttendanceView teacherAttendanceView
+    ) {
         this.authenticatedUser = authenticatedUser;
         this.teacherService = teacherService;
         this.studentService = studentService;
@@ -75,11 +71,18 @@ public class UserContentLoader {
         this.userService = userService;
         this.dateService = dateService;
         this.messageSource = messageSource;
+
+        // Initialize views
+        this.teacherCoursesView = teacherCoursesView;
+        this.studentCoursesView = studentCoursesView;
+        this.teacherGradesView = teacherGradesView;
+        this.studentGradesView = studentGradesView;
+        this.teacherDashboardView = teacherDashboardView;
+        this.studentDashboardView = studentDashboardView;
     }
 
     // Methods to Load Content
 
-    // Load profile content based on user role
     public void loadProfileContent(VerticalLayout layout) {
         authenticatedUser.get().ifPresentOrElse(user -> {
             if (user instanceof Teacher && teacherDashboardView != null) {
@@ -87,12 +90,11 @@ public class UserContentLoader {
             } else if (user instanceof Student && studentDashboardView != null) {
                 layout.add(studentDashboardView); // Use injected view
             } else {
-                layout.add(new Paragraph("Role not recognized. Please contact support."));
+                layout.add(new Paragraph(ROLE_NOT_RECOGNIZED_MESSAGE));
             }
-        }, () -> layout.add(new Paragraph("User not found. Please log in again.")));
+        }, () -> layout.add(new Paragraph(USER_NOT_FOUND_MESSAGE)));
     }
 
-    // Load courses content based on user role
     public void loadCoursesContent(VerticalLayout layout) {
         authenticatedUser.get().ifPresentOrElse(user -> {
             if (user instanceof Teacher) {
@@ -100,12 +102,11 @@ public class UserContentLoader {
             } else if (user instanceof Student) {
                 layout.add(studentCoursesView);
             } else {
-                layout.add(new Paragraph("Role not recognized. Please contact support."));
+                layout.add(new Paragraph(ROLE_NOT_RECOGNIZED_MESSAGE));
             }
-        }, () -> layout.add(new Paragraph("User not found. Please log in again.")));
+        }, () -> layout.add(new Paragraph(USER_NOT_FOUND_MESSAGE)));
     }
 
-    // Load grades content based on user role
     public void loadGradesContent(VerticalLayout layout) {
         authenticatedUser.get().ifPresentOrElse(user -> {
             if (user instanceof Teacher) {
@@ -113,37 +114,26 @@ public class UserContentLoader {
             } else if (user instanceof Student) {
                 layout.add(studentGradesView);
             } else {
-                layout.add(new Paragraph("Role not recognized. Please contact support."));
+                layout.add(new Paragraph(ROLE_NOT_RECOGNIZED_MESSAGE));
             }
-        }, () -> layout.add(new Paragraph("User not found. Please log in again.")));
+        }, () -> layout.add(new Paragraph(USER_NOT_FOUND_MESSAGE)));
     }
 
-    // Load edit profile content based on user role
     public void loadEditProfileContent(VerticalLayout layout) {
         authenticatedUser.get().ifPresentOrElse(user -> {
-            if (user instanceof Teacher teacher) {
-                // Pass additional dependencies: dateService and messageSource
-                TeacherEditProfileView teacherView = new TeacherEditProfileView(teacher, departmentService, subjectService, dateService, messageSource);
-                teacherView.setSaveListener(teacherService::save);
-                layout.add(teacherView);
-            } else if (user instanceof Student student) {
-                StudentEditProfileView studentView = new StudentEditProfileView(student, userService, messageSource); // Pass UserService
-                studentView.setSaveListener(studentService::save);
-                layout.add(studentView);
-            } else {
-                layout.add(new Paragraph("Role not recognized. Please contact support."));
+            switch (user) {
+                case Teacher teacher -> {
+                    TeacherEditProfileView teacherView = new TeacherEditProfileView(teacher, departmentService, subjectService, dateService, messageSource);
+                    teacherView.setSaveListener(teacherService::save);
+                    layout.add(teacherView);
+                }
+                case Student student -> {
+                    StudentEditProfileView studentView = new StudentEditProfileView(student, userService, messageSource);
+                    studentView.setSaveListener(studentService::save);
+                    layout.add(studentView);
+                }
+                default -> layout.add(new Paragraph(ROLE_NOT_RECOGNIZED_MESSAGE)); // Removed redundant braces
             }
-        }, () -> layout.add(new Paragraph("User not found. Please log in again.")));
-    }
-
-    // Load attendance content based on user role
-    public void loadAttendanceContent(VerticalLayout layout) {
-        authenticatedUser.get().ifPresentOrElse(user -> {
-            if (user instanceof Teacher) {
-                layout.add(teacherAttendanceView);
-            } else {
-                layout.add(new Paragraph("Role not recognized. Only teachers can access attendance tracking."));
-            }
-        }, () -> layout.add(new Paragraph("User not found. Please log in again.")));
+        }, () -> layout.add(new Paragraph(USER_NOT_FOUND_MESSAGE)));
     }
 }

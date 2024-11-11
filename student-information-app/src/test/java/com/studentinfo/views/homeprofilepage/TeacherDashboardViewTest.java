@@ -6,8 +6,8 @@ import com.studentinfo.data.entity.Student;
 import com.studentinfo.services.CourseService;
 import com.studentinfo.services.GradeService;
 import com.studentinfo.services.StudentService;
-import com.studentinfo.views.TeacherAttendanceView.TeacherAttendanceView;
-import com.studentinfo.views.TeacherUpdateStudentProfileView.TeacherUpdateStudentProfileView;
+import com.studentinfo.views.teacher_attendance_view.TeacherAttendanceView;
+import com.studentinfo.views.teacher_update_student_profile.TeacherUpdateStudentProfileView;
 import com.studentinfo.views.courses.CoursesView;
 import com.studentinfo.views.editprofile.EditProfileView;
 import com.studentinfo.views.grades.GradesView;
@@ -26,7 +26,6 @@ import com.vaadin.flow.server.VaadinSession;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.context.MessageSource;
 
 import java.util.ArrayList;
@@ -38,10 +37,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
-public class TeacherDashboardViewTest {
+class TeacherDashboardViewTest {
 
     private TeacherDashboardView teacherDashboardView;
-    private MessageSource messageSource; // Declare messageSource as a field
 
     @BeforeEach
     public void setUp() {
@@ -109,7 +107,7 @@ public class TeacherDashboardViewTest {
     }
 
     @Test
-    public void testTeacherDashboardViewInitialization() {
+    void testTeacherDashboardViewInitialization() {
         // Check if the main title is present
         H1 title = (H1) teacherDashboardView.getContent().getComponentAt(0);
         assertNotNull(title);

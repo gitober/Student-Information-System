@@ -1,4 +1,4 @@
-package com.studentinfo.views.TeacherUpdateStudentProfileView;
+package com.studentinfo.views.teacher_update_student_profile;
 
 import com.studentinfo.data.entity.Student;
 import com.studentinfo.security.AuthenticatedUser;
@@ -23,7 +23,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Route(value = "teacher/update-students", layout = MainLayout.class)
 @PageTitle("Update Student Profiles")
@@ -31,8 +30,8 @@ import java.util.stream.Collectors;
 @CssImport("./themes/studentinformationapp/views/TeacherUpdateStudentProfile/teacher-update-student-profile.css")
 public class TeacherUpdateStudentProfileView extends Composite<VerticalLayout> {
 
-    private final StudentService studentService;
-    private final MessageSource messageSource;
+    private final transient StudentService studentService;
+    private final transient MessageSource messageSource;
     private final List<Student> students;
     private Grid<Student> studentGrid;
     private TextField searchField;
@@ -153,7 +152,7 @@ public class TeacherUpdateStudentProfileView extends Composite<VerticalLayout> {
         List<Student> filteredStudents = students.stream()
                 .filter(student -> student.getFirstName().toLowerCase().contains(searchTerm.toLowerCase()) ||
                         student.getLastName().toLowerCase().contains(searchTerm.toLowerCase()))
-                .collect(Collectors.toList());
+                .toList();
 
         studentGrid.setItems(filteredStudents);
     }

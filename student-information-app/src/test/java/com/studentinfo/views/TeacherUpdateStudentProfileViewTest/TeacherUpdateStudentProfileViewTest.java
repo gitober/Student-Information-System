@@ -3,7 +3,7 @@ package com.studentinfo.views.TeacherUpdateStudentProfileViewTest;
 import com.studentinfo.data.entity.Student;
 import com.studentinfo.security.AuthenticatedUser;
 import com.studentinfo.services.StudentService;
-import com.studentinfo.views.TeacherUpdateStudentProfileView.TeacherUpdateStudentProfileView;
+import com.studentinfo.views.teacher_update_student_profile.TeacherUpdateStudentProfileView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -12,18 +12,16 @@ import com.vaadin.flow.component.textfield.TextField;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.Collections;
-import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class TeacherUpdateStudentProfileViewTest {
+class TeacherUpdateStudentProfileViewTest {
 
     private TeacherUpdateStudentProfileView view;
 
@@ -57,7 +55,7 @@ public class TeacherUpdateStudentProfileViewTest {
     }
 
     @Test
-    public void testComponentsPresence() {
+    void testComponentsPresence() {
         // Check if the grid is present
         @SuppressWarnings("unchecked")
         Grid<Student> studentGrid = view.getContent().getChildren()

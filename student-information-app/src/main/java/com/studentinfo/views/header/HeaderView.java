@@ -1,8 +1,8 @@
 package com.studentinfo.views.header;
 
 import com.studentinfo.security.AuthenticatedUser;
-import com.studentinfo.views.TeacherAttendanceView.TeacherAttendanceView;
-import com.studentinfo.views.TeacherUpdateStudentProfileView.TeacherUpdateStudentProfileView;
+import com.studentinfo.views.teacher_attendance_view.TeacherAttendanceView;
+import com.studentinfo.views.teacher_update_student_profile.TeacherUpdateStudentProfileView;
 import com.studentinfo.views.courses.CoursesView;
 import com.studentinfo.views.editprofile.EditProfileView;
 import com.studentinfo.views.grades.GradesView;
@@ -14,7 +14,6 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.component.dependency.CssImport;
-import lombok.Getter;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 
@@ -23,7 +22,8 @@ import java.util.Locale;
 @CssImport("./themes/studentinformationapp/views/header-view.css")
 public class HeaderView extends HorizontalLayout {
 
-    private final MessageSource messageSource;
+    private final transient MessageSource messageSource;
+    private static final String ROUTER_LINK_CLASS = "router-link";
 
     // Constructor for logged-in users (full header with links)
     public HeaderView(AuthenticatedUser authenticatedUser, MessageSource messageSource) {
@@ -53,27 +53,27 @@ public class HeaderView extends HorizontalLayout {
         // Navigation links for logged-in users
         authenticatedUser.get().ifPresent(user -> {
             RouterLink homeLink = new RouterLink(getTranslation("header.home"), ProfilePageView.class);
-            homeLink.addClassName("router-link");
+            homeLink.addClassName(ROUTER_LINK_CLASS);
 
             RouterLink coursesLink = new RouterLink(getTranslation("header.courses"), CoursesView.class);
-            coursesLink.addClassName("router-link");
+            coursesLink.addClassName(ROUTER_LINK_CLASS);
 
             RouterLink gradesLink = new RouterLink(getTranslation("header.grades"), GradesView.class);
-            gradesLink.addClassName("router-link");
+            gradesLink.addClassName(ROUTER_LINK_CLASS);
 
             RouterLink attendanceTrackingLink = null;
             RouterLink updateStudentProfilesLink = null;
 
             if (user instanceof com.studentinfo.data.entity.Teacher) {
                 attendanceTrackingLink = new RouterLink(getTranslation("header.attendance"), TeacherAttendanceView.class);
-                attendanceTrackingLink.addClassName("router-link");
+                attendanceTrackingLink.addClassName(ROUTER_LINK_CLASS);
 
                 updateStudentProfilesLink = new RouterLink(getTranslation("header.students"), TeacherUpdateStudentProfileView.class);
-                updateStudentProfilesLink.addClassName("router-link");
+                updateStudentProfilesLink.addClassName(ROUTER_LINK_CLASS);
             }
 
             RouterLink editProfileLink = new RouterLink(getTranslation("header.profile"), EditProfileView.class);
-            editProfileLink.addClassName("router-link");
+            editProfileLink.addClassName(ROUTER_LINK_CLASS);
 
             // Create a layout for the language flags and logout button
             HorizontalLayout userActionsLayout = new HorizontalLayout();

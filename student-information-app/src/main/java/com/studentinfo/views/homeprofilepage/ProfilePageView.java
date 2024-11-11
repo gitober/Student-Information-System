@@ -19,11 +19,8 @@ import org.springframework.context.MessageSource;
 @CssImport("./themes/studentinformationapp/views/home-profile-page-view/home-profile-page-view.css")
 public class ProfilePageView extends Composite<VerticalLayout> {
 
-    private final UserContentLoader userContentLoader;
-
     @Autowired
     public ProfilePageView(AuthenticatedUser authenticatedUser, UserContentLoader userContentLoader, MessageSource messageSource) {
-        this.userContentLoader = userContentLoader;
 
         // Debug statements to ensure proper injection
         if (authenticatedUser == null) {

@@ -44,10 +44,8 @@
 
 /* Dialog styles */
 .teacher-attendance-dialog-edit {
-    background-color: #ffffff;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     max-width: 500px;
     width: 100%;
 }
@@ -199,6 +197,36 @@
     color: #333;
     font-size: 14px;
     margin-bottom: 10px;
+}
+
+/* Confirmation Dialog Title */
+.teacher-attendance-delete-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #000000;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Dialog content styling */
+.teacher-attendance-delete-dialog {
+    padding: 20px;
+    max-width: 400px;
+    width: 100%;
+}
+
+/* Action buttons for confirmation dialog */
+.teacher-attendance-delete-button,
+.teacher-attendance-close-button {
+    font-size: 16px;
+    padding: 10px 20px;
+}
+
+/* Button hover effects */
+.teacher-attendance-delete-button:hover,
+.teacher-attendance-close-button:hover {
+    background-color: #cc6b3a;
+    color: white;
 }
 
 /* Responsive design */

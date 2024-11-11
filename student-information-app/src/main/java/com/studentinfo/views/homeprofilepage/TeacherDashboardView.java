@@ -3,8 +3,8 @@ package com.studentinfo.views.homeprofilepage;
 import com.studentinfo.services.CourseService;
 import com.studentinfo.services.StudentService;
 import com.studentinfo.services.GradeService;
-import com.studentinfo.views.TeacherAttendanceView.TeacherAttendanceView;
-import com.studentinfo.views.TeacherUpdateStudentProfileView.TeacherUpdateStudentProfileView;
+import com.studentinfo.views.teacher_attendance_view.TeacherAttendanceView;
+import com.studentinfo.views.teacher_update_student_profile.TeacherUpdateStudentProfileView;
 import com.studentinfo.views.courses.CoursesView;
 import com.studentinfo.views.editprofile.EditProfileView;
 import com.studentinfo.views.grades.GradesView;
@@ -15,6 +15,7 @@ import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.RouterLink;
@@ -31,13 +32,11 @@ import java.util.Locale;
 @CssImport("./themes/studentinformationapp/views/home-profile-page-view/teacher-profile-page-view.css")
 public class TeacherDashboardView extends Composite<VerticalLayout> {
 
-    private final MessageSource messageSource;
-    private final Locale locale;
+    private final transient MessageSource messageSource;
 
     @Autowired
     public TeacherDashboardView(CourseService courseService, StudentService studentService, GradeService gradeService, MessageSource messageSource) {
         this.messageSource = messageSource;
-        this.locale = Locale.getDefault();
 
         // Main layout setup
         getContent().addClassName("teacher-dashboard-view");
@@ -51,7 +50,7 @@ public class TeacherDashboardView extends Composite<VerticalLayout> {
         FlexLayout dashboardGrid = new FlexLayout();
         dashboardGrid.addClassName("dashboard-grid");
         dashboardGrid.setFlexWrap(FlexLayout.FlexWrap.WRAP);
-        dashboardGrid.setJustifyContentMode(FlexLayout.JustifyContentMode.CENTER);
+        dashboardGrid.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
 
         // Add cards with navigation links
         dashboardGrid.add(createDashboardCard(getTranslation("teacher.dashboard.students.title"),
@@ -83,8 +82,8 @@ public class TeacherDashboardView extends Composite<VerticalLayout> {
 
         // Add the image icon at the top of the card
         Image cardIcon = new Image(iconUrl, title + " Icon");
-        cardIcon.addClassName("dashboard-card-icon"); // New class for the icon
-        card.add(cardIcon); // Add icon before title
+        cardIcon.addClassName("dashboard-card-icon");
+        card.add(cardIcon);
 
         // Title
         Paragraph cardTitle = new Paragraph(title);
@@ -97,14 +96,15 @@ public class TeacherDashboardView extends Composite<VerticalLayout> {
         if (navigationTarget != null) {
             RouterLink link = new RouterLink();
             link.setRoute(navigationTarget);
-            link.add(cardTitle, cardDescription); // Include title and description in the link
-            card.add(cardIcon, link); // Add icon and link to the card
+            link.add(cardTitle, cardDescription);
+            card.add(cardIcon, link);
         } else {
             card.add(cardIcon, cardTitle, cardDescription);
         }
         return card;
     }
 
+    // Get translation from message source
     private String getTranslation(String key) {
         Locale currentLocale = UI.getCurrent().getLocale();
         return messageSource.getMessage(key, null, currentLocale);
