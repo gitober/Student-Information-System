@@ -55,3 +55,6 @@ mvnw.cmd
 *.idea
 *.iml
 .idea/
+
+*.bundle
+
