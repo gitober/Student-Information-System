@@ -120,16 +120,19 @@ public class StudentEditProfileView extends VerticalLayout {
 
     // Method to update the student profile
     private void updateStudentProfile() {
+        // Update only if fields are non-empty to avoid setting null values
         if (!firstNameField.isEmpty()) student.setFirstName(firstNameField.getValue());
         if (!lastNameField.isEmpty()) student.setLastName(lastNameField.getValue());
         if (!phoneNumberField.isEmpty()) student.setPhoneNumber(phoneNumberField.getValue());
         if (!emailField.isEmpty()) student.setEmail(emailField.getValue());
 
+        // Handle password update if provided
         String newPassword = newPasswordField.getValue();
         if (!newPassword.isEmpty()) {
             userService.updatePassword(student.getEmail(), newPassword);
         }
 
+        // Save the student profile
         userService.save(student);
 
         // Update displayed paragraphs with new values
@@ -139,6 +142,12 @@ public class StudentEditProfileView extends VerticalLayout {
                 student.getEmail());
         phoneNumberParagraph.getElement().setProperty("innerHTML", "<span class='label'>" + getMessage("student.edit.profile.phoneNumber") + "</span><br>" +
                 student.getPhoneNumber());
+
+        // Clear fields after saving
+        firstNameField.clear();
+        lastNameField.clear();
+        phoneNumberField.clear();
+        emailField.clear();
     }
 
     // Helper method to get messages from MessageSource
