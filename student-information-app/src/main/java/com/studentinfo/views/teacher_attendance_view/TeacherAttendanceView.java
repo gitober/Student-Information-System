@@ -36,7 +36,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 @Route(value = "teacher/attendance-tracking", layout = MainLayout.class)
 @PageTitle("Attendance Tracking")
@@ -44,13 +43,16 @@ import java.util.stream.Collectors;
 @CssImport("./themes/studentinformationapp/views/TeacherAttendanceView/teacher-attendance-view.css")
 public class TeacherAttendanceView extends Composite<VerticalLayout> {
 
-    private final TeacherService teacherService;
-    private final CourseService courseService;
-    private final MessageSource messageSource;
+    private final transient TeacherService teacherService;
+    private final transient CourseService courseService;
+    private final transient MessageSource messageSource;
 
-    private List<Attendance> attendanceRecords;
+    private transient List<Attendance> attendanceRecords;
     private final Grid<Attendance> attendanceGrid;
     private TextField searchField;
+
+    // Key for the close button in the dialog
+    private static final String CLOSE_BUTTON_KEY = "teacher.attendance.close";
 
     @Autowired
     public TeacherAttendanceView(TeacherService teacherService, CourseService courseService, AuthenticatedUser authenticatedUser, MessageSource messageSource) {
@@ -131,11 +133,11 @@ public class TeacherAttendanceView extends Composite<VerticalLayout> {
     private void configureGrid() {
         attendanceGrid.setItems(attendanceRecords);
 
-        attendanceGrid.addColumn(record -> record.getCourse().getCourseName())
+        attendanceGrid.addColumn(attendanceRecord -> attendanceRecord.getCourse().getCourseName())
                 .setHeader(getMessage("teacher.attendance.grid.course"))
                 .setAutoWidth(true);
 
-        attendanceGrid.addColumn(record -> record.getStudent().getFirstName() + " " + record.getStudent().getLastName())
+        attendanceGrid.addColumn(attendanceRecord -> attendanceRecord.getStudent().getFirstName() + " " + attendanceRecord.getStudent().getLastName())
                 .setHeader(getMessage("teacher.attendance.grid.student"))
                 .setAutoWidth(true);
 
@@ -143,9 +145,9 @@ public class TeacherAttendanceView extends Composite<VerticalLayout> {
                 .setHeader(getMessage("teacher.attendance.grid.status"))
                 .setAutoWidth(true);
 
-        attendanceGrid.addColumn(record -> {
+        attendanceGrid.addColumn(attendanceRecord -> {
                     DateTimeFormatter formatter = getDateTimeFormatter();
-                    return record.getAttendanceDate().format(formatter);
+                    return attendanceRecord.getAttendanceDate().format(formatter);
                 }).setHeader(getMessage("teacher.attendance.grid.date"))
                 .setAutoWidth(true);
 
@@ -177,11 +179,12 @@ public class TeacherAttendanceView extends Composite<VerticalLayout> {
 
     private void filterAttendance(String searchTerm) {
         List<Attendance> filteredRecords = attendanceRecords.stream()
-                .filter(record -> record.getCourse().getCourseName().toLowerCase().contains(searchTerm.toLowerCase()) ||
-                        (record.getStudent().getFirstName() + " " + record.getStudent().getLastName()).toLowerCase().contains(searchTerm.toLowerCase()))
-                .collect(Collectors.toList());
+                .filter(attendanceRecord -> attendanceRecord.getCourse().getCourseName().toLowerCase().contains(searchTerm.toLowerCase()) ||
+                        (attendanceRecord.getStudent().getFirstName() + " " + attendanceRecord.getStudent().getLastName()).toLowerCase().contains(searchTerm.toLowerCase()))
+                .toList();
         attendanceGrid.setItems(filteredRecords);
     }
+
 
     private void openAddAttendanceDialog() {
         Dialog addDialog = new Dialog();
@@ -235,7 +238,7 @@ public class TeacherAttendanceView extends Composite<VerticalLayout> {
         });
         saveButton.addClassName("teacher-attendance-save-button");
 
-        Button closeButton = new Button(getMessage("teacher.attendance.close"), event -> addDialog.close());
+        Button closeButton = new Button(getMessage(CLOSE_BUTTON_KEY), event -> addDialog.close());
         closeButton.addClassName("teacher-attendance-close-button");
 
         HorizontalLayout dialogButtons = new HorizontalLayout(saveButton, closeButton);
@@ -275,7 +278,7 @@ public class TeacherAttendanceView extends Composite<VerticalLayout> {
         });
         saveButton.addClassName("teacher-attendance-dialog-edit-button-save");
 
-        Button closeButton = new Button(getMessage("teacher.attendance.close"), event -> editDialog.close());
+        Button closeButton = new Button(getMessage(CLOSE_BUTTON_KEY), event -> editDialog.close());
         closeButton.addClassName("teacher-attendance-dialog-edit-button-close");
 
         dialogLayout.add(courseField, studentField, statusField, dateField, new HorizontalLayout(saveButton, closeButton));
@@ -296,7 +299,7 @@ public class TeacherAttendanceView extends Composite<VerticalLayout> {
         });
         confirmButton.addClassName("teacher-attendance-delete-button");
 
-        Button cancelButton = new Button(getMessage("teacher.attendance.close"), event -> confirmDialog.close());
+        Button cancelButton = new Button(getMessage(CLOSE_BUTTON_KEY), event -> confirmDialog.close());
         cancelButton.addClassName("teacher-attendance-close-button");
 
         HorizontalLayout buttonsLayout = new HorizontalLayout(confirmButton, cancelButton);
