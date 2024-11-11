@@ -23,14 +23,15 @@ public class StudentService {
 
     // CRUD Operations
 
+    // Save or update a student entity
+    @Transactional
+    public Student save(Student student) {
+        return studentRepository.save(student);
+    }
+
     // Retrieve a student by ID
     public Optional<Student> get(Long id) {
         return studentRepository.findById(id);
-    }
-
-    // Save or update a student
-    public Student save(Student student) {
-        return studentRepository.save(student);
     }
 
     // Delete a student by ID
