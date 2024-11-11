@@ -10,6 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
+import java.time.Duration;
 import java.util.Locale;
 
 @Configuration
@@ -28,10 +29,10 @@ public class LocalizationConfig implements WebMvcConfigurer {
     // Use a CookieLocaleResolver to persist the locale in a cookie
     @Bean
     public LocaleResolver localeResolver() {
-        CookieLocaleResolver localeResolver = new CookieLocaleResolver();
+        // Use the constructor to set the cookie name and specify the max age using Duration
+        CookieLocaleResolver localeResolver = new CookieLocaleResolver("user-lang");
         localeResolver.setDefaultLocale(Locale.ENGLISH); // Set default locale to English
-        localeResolver.setCookieName("user-lang"); // Set cookie name (deprecated)
-        localeResolver.setCookieMaxAge(3600 * 24 * 365); // Set cookie max age to 1 year (deprecated)
+        localeResolver.setCookieMaxAge(Duration.ofDays(365)); // Set cookie max age to 1 year
         return localeResolver;
     }
 
