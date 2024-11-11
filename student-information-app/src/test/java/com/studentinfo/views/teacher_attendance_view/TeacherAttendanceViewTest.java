@@ -1,10 +1,9 @@
-package com.studentinfo.views.TeacherAttendanceView;
+package com.studentinfo.views.teacher_attendance_view;
 
 import com.studentinfo.data.entity.Teacher;
 import com.studentinfo.security.AuthenticatedUser;
 import com.studentinfo.services.CourseService;
 import com.studentinfo.services.TeacherService;
-import com.studentinfo.views.teacher_attendance_view.TeacherAttendanceView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
@@ -70,7 +69,7 @@ class TeacherAttendanceViewTest {
         VaadinSession.setCurrent(mockSession);
         ui.getInternals().setSession(mockSession);
 
-        // Instantiate the TeacherAttendanceView with mocked MessageSource
+        // Instantiate the teacher_attendance_view with mocked MessageSource
         teacherAttendanceView = new TeacherAttendanceView(mockTeacherService, mockCourseService, mockAuthenticatedUser, mockMessageSource);
     }
 
@@ -80,7 +79,7 @@ class TeacherAttendanceViewTest {
         UI.setCurrent(null);
         VaadinSession.setCurrent(null);
 
-        // Clear the reference to TeacherAttendanceView to ensure no residual data persists
+        // Clear the reference to teacher_attendance_view to ensure no residual data persists
         teacherAttendanceView = null;
 
         // Reset the SecurityContext to clear any mock authentication

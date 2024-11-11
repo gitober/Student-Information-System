@@ -40,7 +40,7 @@ import java.util.Locale;
 @Route(value = "teacher/attendance-tracking", layout = MainLayout.class)
 @PageTitle("Attendance Tracking")
 @RolesAllowed("USER")
-@CssImport("./themes/studentinformationapp/views/TeacherAttendanceView/teacher-attendance-view.css")
+@CssImport("./themes/studentinformationapp/views/teacher_attendance_view/teacher-attendance-view.css")
 public class TeacherAttendanceView extends Composite<VerticalLayout> {
 
     private final transient TeacherService teacherService;

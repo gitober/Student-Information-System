@@ -1,9 +1,8 @@
-package com.studentinfo.views.TeacherUpdateStudentProfileViewTest;
+package com.studentinfo.views.teacher_update_student_profile;
 
 import com.studentinfo.data.entity.Student;
 import com.studentinfo.security.AuthenticatedUser;
 import com.studentinfo.services.StudentService;
-import com.studentinfo.views.teacher_update_student_profile.TeacherUpdateStudentProfileView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
