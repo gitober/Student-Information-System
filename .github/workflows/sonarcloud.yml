@@ -38,8 +38,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
-            -Dsonar.projectKey=otpRyhma5_Student-Information-System
-            -Dsonar.organization=otpryhma5
+            -Dsonar.projectKey=eetuam1_Student-Information-System
+            -Dsonar.organization=eetuam1
             -Dsonar.sources=student-information-app/src
             -Dsonar.java.binaries=student-information-app/target
 
