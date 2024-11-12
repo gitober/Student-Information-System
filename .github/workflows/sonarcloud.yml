@@ -40,8 +40,8 @@ jobs:
           args: >
             -Dsonar.projectKey=eetuam1_Student-Information-System
             -Dsonar.organization=eetuam1
-            -Dsonar.sources=src
+            -Dsonar.sources=student-information-app/src
             -Dsonar.java.binaries=student-information-app/target
-            -Dsonar.exclusions=**/vaadin/**,**/node_modules/**,**/generated/**,**/target/**,**/src/test/**
+            -Dsonar.exclusions=**/vaadin/**,**/node_modules/**,**/generated/**,**/target/**
       
 
