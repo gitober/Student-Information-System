@@ -192,13 +192,25 @@ public class RegistrationView extends Composite<VerticalLayout> {
 
     private void validatePasswordStrength(MessageSource messageSource) {
         String password = passwordField.getValue();
-        if (password.length() < 8 || !password.matches(".*\\d.*")) {
+
+        // Check if password length is at least 8 characters and contains at least one digit
+        if (password.length() < 8 || !hasDigit(password)) {
             passwordField.setErrorMessage(messageSource.getMessage("registration.weakPassword", null, LocaleContextHolder.getLocale()));
             passwordField.setInvalid(true);
         } else {
             passwordField.setInvalid(false);
         }
         updateSaveButtonState();
+    }
+
+    // Helper method to check if the password contains at least one digit
+    private boolean hasDigit(String password) {
+        for (int i = 0; i < password.length(); i++) {
+            if (Character.isDigit(password.charAt(i))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void validatePasswordMatch(MessageSource messageSource) {
