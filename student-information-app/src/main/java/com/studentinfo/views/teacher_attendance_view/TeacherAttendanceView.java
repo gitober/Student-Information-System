@@ -125,7 +125,8 @@ public class TeacherAttendanceView extends Composite<VerticalLayout> {
                 .setHeader(getMessage("teacher.attendance.grid.student"))
                 .setAutoWidth(true);
 
-        attendanceGrid.addColumn(Attendance::getAttendanceStatus)
+        // Update this column to use the translated status
+        attendanceGrid.addColumn(attendanceRecord -> getTranslatedStatus(attendanceRecord.getAttendanceStatus()))
                 .setHeader(getMessage("teacher.attendance.grid.status"))
                 .setAutoWidth(true);
 
@@ -139,21 +140,23 @@ public class TeacherAttendanceView extends Composite<VerticalLayout> {
                 .setAutoWidth(true);
 
         attendanceGrid.addComponentColumn(attendanceRecord -> {
-            Button editButton = new Button(getMessage("teacher.attendance.edit.button"));
-            editButton.addClassName("teacher-attendance-edit-button");
-            editButton.addClickListener(event -> openEditAttendanceDialog(attendanceRecord));
+                    Button editButton = new Button(getMessage("teacher.attendance.edit.button"));
+                    editButton.addClassName("teacher-attendance-edit-button");
+                    editButton.addClickListener(event -> openEditAttendanceDialog(attendanceRecord));
 
-            Button deleteButton = new Button(getMessage("teacher.attendance.delete.button"));
-            deleteButton.addClassName("teacher-attendance-delete-button");
-            deleteButton.addClickListener(event -> confirmDeleteAttendance(attendanceRecord));
+                    Button deleteButton = new Button(getMessage("teacher.attendance.delete.button"));
+                    deleteButton.addClassName("teacher-attendance-delete-button");
+                    deleteButton.addClickListener(event -> confirmDeleteAttendance(attendanceRecord));
 
-            return new HorizontalLayout(editButton, deleteButton);
-        }).setHeader(getMessage("teacher.attendance.grid.actions"));
+                    return new HorizontalLayout(editButton, deleteButton);
+                }).setHeader(getMessage("teacher.attendance.grid.actions"))
+                .setKey("actions"); // Set a unique key for the Actions column
 
         attendanceGrid.setHeight("400px");
         attendanceGrid.setWidthFull();
         attendanceGrid.addClassName("teacher-attendance-grid");
     }
+
 
     private void filterAttendance(String searchTerm) {
         List<Attendance> filteredRecords = attendanceRecords.stream()
@@ -166,6 +169,7 @@ public class TeacherAttendanceView extends Composite<VerticalLayout> {
     private void openAddAttendanceDialog() {
         Dialog addDialog = new Dialog();
         addDialog.addClassName("teacher-attendance-add-dialog");
+        addDialog.getElement().setAttribute("dialog-id", "add-attendance-dialog");  // Set dialog ID
         addDialog.setModal(false);
 
         VerticalLayout dialogLayout = new VerticalLayout();
@@ -228,6 +232,7 @@ public class TeacherAttendanceView extends Composite<VerticalLayout> {
         addDialog.add(dialogLayout);
         addDialog.open();
     }
+
 
     private void refreshAttendanceData() {
         // Fetch all attendance records from the service
