@@ -34,7 +34,7 @@ jobs:
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
@@ -42,4 +42,7 @@ jobs:
             -Dsonar.organization=eetuam1
             -Dsonar.sources=student-information-app/src
             -Dsonar.java.binaries=student-information-app/target
+            -Dsonar.exclusions=**/vaadin/**,**/node_modules/**,**/generated/**,**/target/**,**/src/test/**
+            -Dsonar.coverage.jacoco.xmlReportPaths=student-information-app/target/jacoco-report/jacoco.xml
+
 
