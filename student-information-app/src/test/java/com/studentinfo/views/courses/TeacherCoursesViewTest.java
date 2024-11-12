@@ -1,7 +1,6 @@
 package com.studentinfo.views.courses;
 
 import com.studentinfo.data.entity.Course;
-import com.studentinfo.data.entity.Teacher;
 import com.studentinfo.services.CourseService;
 import com.studentinfo.services.TeacherService;
 import com.studentinfo.services.DateService;
@@ -27,7 +26,7 @@ import java.util.Locale;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-public class TeacherCoursesViewTest {
+class TeacherCoursesViewTest {
     private static final Logger logger = LoggerFactory.getLogger(TeacherCoursesViewTest.class); // Logger instance
     private TeacherCoursesView teacherCoursesView;
     private MessageSource messageSource;
@@ -65,7 +64,7 @@ public class TeacherCoursesViewTest {
     }
 
     @Test
-    public void testTeacherCoursesViewComponents() throws Exception {
+    void testTeacherCoursesViewComponents() throws Exception {
         // Verify that the main container layout is not null
         assertNotNull(teacherCoursesView.getContent(), "The main container layout should not be null.");
 
@@ -92,36 +91,45 @@ public class TeacherCoursesViewTest {
     }
 
     @Test
-    public void testOpenEditDialog() {
+    void testOpenEditDialog() {
         System.out.println("Testing openEditDialog method...");
 
-        // Create a sample course
+        // Create a sample course with necessary initial values to avoid NullPointerException
         Course sampleCourse = new Course();
         sampleCourse.setCourseName("Sample Course");
         sampleCourse.setCoursePlan("Sample Plan");
-        sampleCourse.setDuration(30);  // Set a valid duration to avoid NullPointerException
+        sampleCourse.setDuration(30);  // Set a valid duration
         sampleCourse.setTeachers(Collections.emptyList());  // Initialize the teachers list to avoid NullPointerException
 
-        try {
-            // Access the method with reflection
-            Method openEditDialogMethod = TeacherCoursesView.class.getDeclaredMethod("openEditDialog", Course.class, MessageSource.class);
-            openEditDialogMethod.setAccessible(true); // Allow access if private
+        // Ensure UI context is set up for Vaadin components
+        UI ui = new UI();
+        UI.setCurrent(ui);
 
-            // Invoke the method with both required parameters
+        try {
+            // Access the openEditDialog method with reflection
+            Method openEditDialogMethod = TeacherCoursesView.class.getDeclaredMethod("openEditDialog", Course.class, MessageSource.class);
+            openEditDialogMethod.setAccessible(true); // Allow access to the method if it is private
+
+            // Assert that invoking the method does not throw any exceptions
             assertDoesNotThrow(() -> openEditDialogMethod.invoke(teacherCoursesView, sampleCourse, messageSource),
                     "Invoking the 'openEditDialog' method should not throw an exception.");
+
             System.out.println("openEditDialog method invoked successfully.");
         } catch (NoSuchMethodException e) {
             logger.error("Method 'openEditDialog' with parameters Course and MessageSource not found in TeacherCoursesView", e);
             fail("Method 'openEditDialog' with parameters Course and MessageSource not found in TeacherCoursesView");
         } catch (Exception e) {
-            logger.error("An unexpected exception occurred while testing 'openEditDialog': " + e.getMessage(), e);
-            fail("An unexpected exception occurred while testing 'openEditDialog': " + e.getMessage());
+            // Log the specific exception message if an unexpected exception occurs
+            logger.error("An unexpected exception occurred while testing 'openEditDialog': ", e);
+            fail("An unexpected exception occurred while testing 'openEditDialog': " + e.getCause());
+        } finally {
+            // Clear the UI context after the test
+            UI.setCurrent(null);
         }
     }
 
     @Test
-    public void testAddCourseButton() {
+    void testAddCourseButton() {
         // Simulate the "Add Course" button click and check for exceptions
         Button addCourseButton = teacherCoursesView.getContent().getChildren()
                 .filter(component -> component instanceof Button && "courses.addCourse".equals(((Button) component).getText()))
@@ -136,7 +144,7 @@ public class TeacherCoursesViewTest {
     }
 
     @Test
-    public void testDeleteConfirmationDialog() throws Exception {
+    void testDeleteConfirmationDialog() throws Exception {
         // Create a sample course
         Course sampleCourse = new Course();
         sampleCourse.setCourseName("Sample Course");
