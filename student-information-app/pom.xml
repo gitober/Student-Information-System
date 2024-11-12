@@ -207,7 +207,7 @@
                     <!-- Create the coverage report after the tests run -->
                     <execution>
                         <id>report</id>
-                        <phase>verify</phase>
+                        <phase>verify</phase> <!-- Changed phase to prepare-package -->
                         <goals>
                             <goal>report</goal>
                         </goals>
@@ -217,6 +217,18 @@
                                 <include>**/com/studentinfo/data/repository/**/*.class</include>
                             </includes>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.9.1.2184</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>sonar</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
