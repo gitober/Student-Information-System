@@ -13,9 +13,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Route("logout")
 @AnonymousAllowed // Allow unauthenticated access
 public class LogoutView extends VerticalLayout implements BeforeEnterObserver {
+
+    private static final Logger logger = LoggerFactory.getLogger(LogoutView.class); // Logger instance
 
     private final HttpServletRequest request;
     private final HttpServletResponse response;
@@ -36,8 +41,7 @@ public class LogoutView extends VerticalLayout implements BeforeEnterObserver {
         try {
             response.sendRedirect("/login");
         } catch (IOException e) {
-            e.printStackTrace();
-            // Optionally log this error or provide feedback in a way that does not rely on Vaadin UI components
+            logger.error("An error occurred while attempting to redirect to the login page after logout", e); // Log the exception
         }
     }
 }

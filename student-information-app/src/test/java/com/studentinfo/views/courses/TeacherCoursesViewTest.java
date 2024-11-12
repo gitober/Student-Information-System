@@ -14,6 +14,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 
@@ -26,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 public class TeacherCoursesViewTest {
-
+    private static final Logger logger = LoggerFactory.getLogger(TeacherCoursesViewTest.class); // Logger instance
     private TeacherCoursesView teacherCoursesView;
     private MessageSource messageSource;
 
@@ -110,9 +112,10 @@ public class TeacherCoursesViewTest {
                     "Invoking the 'openEditDialog' method should not throw an exception.");
             System.out.println("openEditDialog method invoked successfully.");
         } catch (NoSuchMethodException e) {
+            logger.error("Method 'openEditDialog' with parameters Course and MessageSource not found in TeacherCoursesView", e);
             fail("Method 'openEditDialog' with parameters Course and MessageSource not found in TeacherCoursesView");
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("An unexpected exception occurred while testing 'openEditDialog': " + e.getMessage(), e);
             fail("An unexpected exception occurred while testing 'openEditDialog': " + e.getMessage());
         }
     }
