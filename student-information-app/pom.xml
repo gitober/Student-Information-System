@@ -13,7 +13,7 @@
         <vaadin.version>24.5.3</vaadin.version>
         <spring-boot.version>3.3.5</spring-boot.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <sonar.organization>otpryhma5</sonar.organization>
+        <sonar.organization>eetuam1</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.exclusions>**/*.ts,**/*.js,**/*.tsx,**/*.mjs,**/vaadin/**,**/node_modules/**,**/generated/**,**/target/**,**/src/test/**</sonar.exclusions>
     </properties>
