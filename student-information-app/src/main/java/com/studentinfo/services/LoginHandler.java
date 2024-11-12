@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Service;
@@ -18,12 +19,18 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Service
 public class LoginHandler {
 
-    // Dependencies
+    private static final Logger logger = LoggerFactory.getLogger(LoginHandler.class);
+    private static final String PROFILE_ROUTE = "profile";
+
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
+
 
     @Autowired
     public LoginHandler(UserService userService, AuthenticationManager authenticationManager) {
@@ -46,7 +53,7 @@ public class LoginHandler {
                 return false; // Failed login
             }
         } catch (Exception e) {
-            System.err.println("Error during login: " + e.getMessage());
+            logger.error("Error during login: {}", e.getMessage(), e);
             return false; // Handle login error
         }
     }
@@ -76,22 +83,26 @@ public class LoginHandler {
             // Show login success notification
             showNotification("Logged in successfully!");
         } catch (Exception e) {
-            System.err.println("Error during authentication: " + e.getMessage());
+            logger.error("Error during authentication: {}", e.getMessage(), e);
             showNotification("Error during authentication.");
         }
     }
 
     // Handle Failed Login
     private void handleFailedLogin(String email) {
-        System.out.println("Authentication failed for user: " + email);
+        logger.warn("Authentication failed for user: {}", email);
         showNotification("Authentication failed. Please check your credentials.");
     }
+
 
     // Set or remove "Remember me" cookie
     private void handleRememberMeCookie(boolean rememberMe, String email, HttpServletResponse response) {
         Cookie cookie = new Cookie("rememberMe", rememberMe ? email : "");
         cookie.setMaxAge(rememberMe ? 60 * 60 * 24 * 30 : 0); // 30 days or delete cookie
         cookie.setPath("/");
+        cookie.setHttpOnly(true); // Makes the cookie HttpOnly
+        cookie.setSecure(true); // Ensures the cookie is only sent over HTTPS
+
         response.addCookie(cookie);
     }
 
@@ -100,16 +111,17 @@ public class LoginHandler {
         UI ui = UI.getCurrent();
         if (ui != null) {
             ui.access(() -> {
-                if (user.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_TEACHER"))) {
-                    ui.navigate("profile"); // Redirect teachers
-                } else if (user.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_STUDENT"))) {
-                    ui.navigate("profile"); // Redirect students
-                } else {
-                    ui.navigate("profile"); // Fallback navigation
-                }
+                String route = user.getAuthorities().stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .filter(role -> role.equals("ROLE_TEACHER") || role.equals("ROLE_STUDENT"))
+                        .findFirst()
+                        .map(role -> PROFILE_ROUTE) // Assign route based on the role if matched
+                        .orElse(PROFILE_ROUTE); // Fallback navigation if no role is matched
+
+                ui.navigate(route);
             });
         } else {
-            System.err.println("No UI instance available for navigation.");
+            logger.error("No UI instance available for navigation.");
         }
     }
 
@@ -119,7 +131,7 @@ public class LoginHandler {
         if (ui != null) {
             ui.access(() -> Notification.show(message));
         } else {
-            System.err.println("No UI instance available to show notification.");
+            logger.error("No UI instance available to show notification.");
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.studentinfo.services;
 
+import com.studentinfo.data.dto.RegistrationDTO;
 import com.studentinfo.data.entity.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +27,7 @@ class RegistrationHandlerTest {
     private StudentService studentService;
 
     @Mock
-    private TranslationService translationService; // Added this
+    private TranslationService translationService;
 
     @InjectMocks
     private RegistrationHandler registrationHandler;
@@ -38,61 +39,61 @@ class RegistrationHandlerTest {
 
     @AfterEach
     void tearDown() {
-        reset(userService, passwordEncoder, studentService, translationService); // Reset mock
+        reset(userService, passwordEncoder, studentService, translationService);
     }
 
     @Test
-    public void testSuccessfulStudentRegistration() {
+    void testSuccessfulStudentRegistration() {
         // Arrange
-        String firstName = "John";
-        String lastName = "Doe";
-        LocalDate birthday = LocalDate.of(2000, 1, 1);
-        String phoneNumber = "1234567890";
-        String email = "john.doe@example.com";
-        String password = "password";
-        String role = "Student";
-        Language currentLocale = Language.EN;
+        RegistrationDTO registrationData = RegistrationDTO.builder()
+                .firstName("John")
+                .lastName("Doe")
+                .birthday(LocalDate.of(2000, 1, 1))
+                .phoneNumber("1234567890")
+                .email("john.doe@example.com")
+                .password("password")
+                .role("Student")
+                .currentLocale(Language.EN)
+                .build();
 
         User user = new Student(); // Simulate a Student entity
         when(userService.save(any(User.class))).thenReturn(user);
-        when(passwordEncoder.encode(password)).thenReturn("hashedPassword");
+        when(passwordEncoder.encode("password")).thenReturn("hashedPassword");
 
         // Act
-        boolean result = registrationHandler.registerUser(
-                firstName, lastName, birthday, phoneNumber, email, password, role, currentLocale
-        );
+        boolean result = registrationHandler.registerUser(registrationData);
 
         // Assert
         assertTrue(result);
         verify(userService, times(1)).save(any(User.class));
-        verify(passwordEncoder, times(1)).encode(password);
-        verify(translationService, times(1)).saveUserTranslations(anyList()); // Verify this
+        verify(passwordEncoder, times(1)).encode("password");
+        verify(translationService, times(1)).saveUserTranslations(anyList());
     }
 
     @Test
-    public void testSuccessfulTeacherRegistration() {
+    void testSuccessfulTeacherRegistration() {
         // Arrange
-        String firstName = "Jane";
-        String lastName = "Smith";
-        LocalDate birthday = LocalDate.of(1985, 5, 15);
-        String phoneNumber = "0987654321";
-        String email = "jane.smith@example.com";
-        String password = "password";
-        String role = "Teacher";
-        Language currentLocale = Language.FI; // Simulate the selected locale
+        RegistrationDTO registrationData = RegistrationDTO.builder()
+                .firstName("Jane")
+                .lastName("Smith")
+                .birthday(LocalDate.of(1985, 5, 15))
+                .phoneNumber("0987654321")
+                .email("jane.smith@example.com")
+                .password("password")
+                .role("Teacher")
+                .currentLocale(Language.FI)
+                .build();
 
         User user = new Teacher(); // Simulate a Teacher entity
         when(userService.save(any(User.class))).thenReturn(user);
-        when(passwordEncoder.encode(password)).thenReturn("hashedPassword");
+        when(passwordEncoder.encode("password")).thenReturn("hashedPassword");
 
         // Act
-        boolean result = registrationHandler.registerUser(
-                firstName, lastName, birthday, phoneNumber, email, password, role, currentLocale
-        );
+        boolean result = registrationHandler.registerUser(registrationData);
 
         // Assert
         assertTrue(result);
         verify(userService, times(1)).save(any(User.class));
-        verify(passwordEncoder, times(1)).encode(password);
+        verify(passwordEncoder, times(1)).encode("password");
     }
 }

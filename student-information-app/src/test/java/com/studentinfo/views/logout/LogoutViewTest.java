@@ -7,24 +7,22 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import static org.mockito.Mockito.*;
 
-public class LogoutViewTest {
+class LogoutViewTest {
 
     private LogoutView logoutView;
     private BeforeEnterEvent mockBeforeEnterEvent;
-    private HttpServletRequest mockRequest;
     private HttpServletResponse mockResponse;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         // Mock dependencies
-        mockRequest = mock(HttpServletRequest.class);
+        HttpServletRequest mockRequest = mock(HttpServletRequest.class);
         mockResponse = mock(HttpServletResponse.class);
         mockBeforeEnterEvent = mock(BeforeEnterEvent.class);
 
@@ -43,14 +41,14 @@ public class LogoutViewTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         // Clear the UI context and VaadinSession to avoid affecting other tests
         UI.setCurrent(null);
         SecurityContextHolder.clearContext();
     }
 
     @Test
-    public void testBeforeEnter() throws Exception {
+    void testBeforeEnter() throws Exception {
         // Call the beforeEnter method to trigger logout
         logoutView.beforeEnter(mockBeforeEnterEvent);
 

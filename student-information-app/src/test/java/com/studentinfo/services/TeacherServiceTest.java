@@ -11,14 +11,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class TeacherServiceTest {
+class TeacherServiceTest {
 
     @Mock
     private TeacherRepository teacherRepository;
@@ -32,6 +31,9 @@ public class TeacherServiceTest {
     @Mock
     private CourseRepository courseRepository;
 
+    @Mock
+    private UserRepository userRepository; // Add UserRepository mock
+
     @InjectMocks
     private TeacherService teacherService;
 
@@ -43,7 +45,7 @@ public class TeacherServiceTest {
     @AfterEach
     void tearDown() {
         // Reset mocks after each test
-        reset(teacherRepository, attendanceRepository, studentRepository, courseRepository);
+        reset(teacherRepository, attendanceRepository, studentRepository, courseRepository, userRepository);
     }
 
     @Test
@@ -64,13 +66,17 @@ public class TeacherServiceTest {
     @Test
     void testSaveTeacher() {
         Teacher teacher = new Teacher();
+        teacher.setUsername("teacherUser");
 
-        when(teacherRepository.save(teacher)).thenReturn(teacher);
+        // Simulate no existing user with the same username
+        when(userRepository.findByUsername("teacherUser")).thenReturn(Optional.empty());
+        when(teacherRepository.saveAndFlush(teacher)).thenReturn(teacher);
 
         Teacher result = teacherService.save(teacher);
 
         assertEquals(teacher, result);
-        verify(teacherRepository, times(1)).save(teacher);
+        verify(userRepository, times(1)).findByUsername("teacherUser");
+        verify(teacherRepository, times(1)).saveAndFlush(teacher);
     }
 
     @Test
@@ -158,7 +164,7 @@ public class TeacherServiceTest {
         List<Course> result = teacherService.getCoursesForTeacher(teacherId);
 
         assertEquals(1, result.size());
-        assertEquals(course, result.get(0));
+        assertEquals(course, result.getFirst());
         verify(teacherRepository, times(1)).findTeacherWithCourses(teacherId);
     }
 }

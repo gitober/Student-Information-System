@@ -20,33 +20,22 @@ class DepartmentTest {
         // Create a Department object with sample data
         department = new Department("Science");
 
-        // Create a set of Teachers
-        Teacher teacher1 = new Teacher();
-        teacher1.setFirstName("John");
-        teacher1.setLastName("Doe");
-
-        Teacher teacher2 = new Teacher();
-        teacher2.setFirstName("Jane");
-        teacher2.setLastName("Smith");
-
-        Set<Teacher> teachers = new HashSet<>();
-        teachers.add(teacher1);
-        teachers.add(teacher2);
-
-        // Create a set of Subjects
+        // Create Subjects and set the department for each subject
         Subject subject1 = new Subject();
         subject1.setName("Physics");
+        subject1.setDepartment(department); // Ensure subject is linked to department
 
         Subject subject2 = new Subject();
         subject2.setName("Chemistry");
+        subject2.setDepartment(department); // Ensure subject is linked to department
 
         subjects = new HashSet<>();
         subjects.add(subject1);
         subjects.add(subject2);
 
-        department.setTeachers(teachers);
         department.setSubjects(subjects);
     }
+
 
     @AfterEach
     void tearDown() {
@@ -59,13 +48,6 @@ class DepartmentTest {
     void testGetDepartmentName() {
         // Check if getDepartmentName() returns the correct name
         assertEquals("Science", department.getDepartmentName());
-    }
-
-    @Test
-    void testGetTeachers() {
-        // Check if getTeachers() returns the correct set of teachers
-        assertNotNull(department.getTeachers());
-        assertEquals(2, department.getTeachers().size());
     }
 
     @Test

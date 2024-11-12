@@ -2,8 +2,6 @@ package com.studentinfo.services;
 
 import com.studentinfo.data.entity.Course;
 import com.studentinfo.data.entity.CourseTranslation;
-import com.studentinfo.data.entity.Registration;
-import com.studentinfo.data.entity.Student;
 import com.studentinfo.data.entity.Teacher;
 import com.studentinfo.data.repository.CourseRepository;
 import com.studentinfo.data.repository.RegistrationRepository;

@@ -14,11 +14,10 @@ import org.springframework.test.web.servlet.ResultActions;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.mockito.Mockito.reset;
 
 @WebMvcTest(LogoutController.class)
 @AutoConfigureMockMvc(addFilters = false) // Disable security filters for testing
-public class LogoutControllerTest {
+class LogoutControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -31,7 +30,6 @@ public class LogoutControllerTest {
 
     @AfterEach
     void tearDown() {
-        // Reset mock beans if needed, e.g., reset(translationService);
         SecurityContextHolder.clearContext(); // Clear the security context to prevent state leakage between tests
     }
 
@@ -39,7 +37,7 @@ public class LogoutControllerTest {
 
     @Test
     @WithMockUser // Simulate an authenticated user
-    public void testLogout() throws Exception {
+    void testLogout() throws Exception {
         // Perform the logout request
         ResultActions response = mockMvc.perform(get("/logout"));
 

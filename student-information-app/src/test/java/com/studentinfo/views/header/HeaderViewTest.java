@@ -19,7 +19,7 @@ import java.util.Optional;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class HeaderViewTest {
+class HeaderViewTest {
 
     private HeaderView headerView;
     private MockedConstruction<RouterLink> mockedRouterLink;
@@ -68,7 +68,7 @@ public class HeaderViewTest {
     }
 
     @Test
-    public void testHeaderViewConstruction() {
+    void testHeaderViewConstruction() {
         // Check if the header view is constructed correctly
         System.out.println("HeaderView constructed: " + headerView);
         Assertions.assertNotNull(headerView, "HeaderView should be constructed.");

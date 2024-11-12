@@ -27,13 +27,11 @@ import java.util.Locale;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-public class StudentGradesViewTest {
+class StudentGradesViewTest {
 
     private StudentGradesView studentGradesView;
     private GradeService gradeService;
-    private UserService userService;
     private MessageSource messageSource; // Added MessageSource
-    private Locale currentLocale;
 
     @BeforeEach
     public void setUp() {
@@ -42,7 +40,7 @@ public class StudentGradesViewTest {
 
         // Mock the services
         gradeService = Mockito.mock(GradeService.class);
-        userService = Mockito.mock(UserService.class);
+        UserService userService = Mockito.mock(UserService.class);
         messageSource = Mockito.mock(MessageSource.class);
 
         // Mock service methods
@@ -70,7 +68,7 @@ public class StudentGradesViewTest {
 
 
     @Test
-    public void testStudentGradesViewComponents() {
+    void testStudentGradesViewComponents() {
         // Check if the title and description are set correctly
         H2 title = (H2) studentGradesView.getContent().getChildren()
                 .filter(component -> component instanceof H2)
@@ -106,11 +104,11 @@ public class StudentGradesViewTest {
 
 
     @Test
-    public void testRefreshGradesData() throws Exception {
+    void testRefreshGradesData() throws Exception {
         // Mock the grades data
         Course mockCourse = new Course("Mathematics", "MATH101", 3); // Use the correct constructor
         Grade mockGrade = new Grade();
-        mockGrade.setGrade("A");
+        mockGrade.setGradeValue("A");
         mockGrade.setGradingDay(LocalDate.now());
         mockGrade.setCourse(mockCourse);
 

@@ -5,7 +5,6 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.server.VaadinSession;
 import org.junit.jupiter.api.AfterEach;
@@ -19,7 +18,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 
-public class RegistrationViewTest {
+class RegistrationViewTest {
 
     private RegistrationView registrationView;
 
@@ -46,7 +45,7 @@ public class RegistrationViewTest {
     }
 
     @Test
-    public void testRegistrationViewComponents() {
+    void testRegistrationViewComponents() {
         // Recursively search the content for components
         FormLayout formLayout = findComponentByType(registrationView.getContent(), FormLayout.class);
         assertNotNull(formLayout, "FormLayout should be present in the registration view.");

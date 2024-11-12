@@ -4,34 +4,37 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Setter
 @Getter
 @Entity
 @PrimaryKeyJoinColumn(name = "user_id")
-public class Teacher extends User {
+public class Teacher extends User implements Serializable {
 
-    @ManyToOne
-    @JoinColumn(name = "subject_id", nullable = true)
-    private Subject subject;
+    @Serial
+    private static final long serialVersionUID = 1L; // Add serialVersionUID
 
-    @ManyToOne
-    @JoinColumn(name = "department_id", nullable = true)
-    private Department department;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "subject_id", nullable = false)
+    private Subject subject;  // This field will be serialized
 
-    // Getters and setters for courses, subject, and department
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "department_id", nullable = false)
+    private Department department;  // This field will be serialized
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "teacher_courses",
             joinColumns = @JoinColumn(name = "teacher_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id")
     )
-    private List<Course> courses = new ArrayList<>();
+    private List<Course> courses = new ArrayList<>();  // This field will also be serialized
 
-
-    // Constructor
     public Teacher() {
         super(); // Call the parent class (User) constructor
     }
@@ -43,5 +46,20 @@ public class Teacher extends User {
 
     public String getFullName() {
         return this.getFirstName() + " " + this.getLastName();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Teacher teacher = (Teacher) o;
+        return Objects.equals(getId(), teacher.getId()) &&
+                Objects.equals(subject, teacher.subject) &&
+                Objects.equals(department, teacher.department);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), subject, department);
     }
 }

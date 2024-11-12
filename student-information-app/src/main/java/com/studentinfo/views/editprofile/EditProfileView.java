@@ -19,11 +19,8 @@ import org.springframework.context.MessageSource;
 @CssImport("./themes/studentinformationapp/views/edit-profile-view/edit-profile-view.css")
 public class EditProfileView extends Composite<VerticalLayout> {
 
-    private final UserContentLoader userContentLoader;
-
     @Autowired
     public EditProfileView(AuthenticatedUser authenticatedUser, UserContentLoader userContentLoader, MessageSource messageSource) {
-        this.userContentLoader = userContentLoader;
 
         // Debug statements to ensure proper injection
         if (authenticatedUser == null) {

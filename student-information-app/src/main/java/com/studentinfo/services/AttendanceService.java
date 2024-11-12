@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -39,7 +40,7 @@ public class AttendanceService {
     // Update an existing attendance record by its ID
     public Attendance updateAttendance(Long attendanceId, Attendance attendance) {
         if (!attendanceRepository.existsById(attendanceId)) {
-            throw new RuntimeException("Attendance record not found");
+            throw new NoSuchElementException("Attendance record with ID " + attendanceId + " not found");
         }
         attendance.setAttendanceId(attendanceId); // Ensure the ID is correct
         return attendanceRepository.save(attendance);
@@ -63,11 +64,6 @@ public class AttendanceService {
 
     // Retrieve attendance records by student number and course ID
     public List<Attendance> getAttendanceByStudentNumberAndCourseId(Long studentNumber, Long courseId) {
-        return attendanceRepository.findByStudent_StudentNumberAndCourse_CourseId(studentNumber, courseId);
-    }
-
-    // Alternative method to retrieve attendance records by student number and course ID
-    public List<Attendance> findByStudent_StudentNumberAndCourse_CourseId(Long studentNumber, Long courseId) {
         return attendanceRepository.findByStudent_StudentNumberAndCourse_CourseId(studentNumber, courseId);
     }
 

@@ -4,12 +4,17 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 @Setter
 @Getter
 @Entity
-public class Subject {
+public class Subject implements Serializable {
 
-    // Getters and setters
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "subject_id")
@@ -28,5 +33,4 @@ public class Subject {
         this.name = name;
         this.department = department;
     }
-
 }

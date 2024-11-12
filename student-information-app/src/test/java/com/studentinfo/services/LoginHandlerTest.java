@@ -1,7 +1,6 @@
 package com.studentinfo.services;
 
 import com.studentinfo.data.entity.User;
-import com.studentinfo.data.entity.Role;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.server.VaadinSession;
@@ -20,10 +19,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class LoginHandlerTest {

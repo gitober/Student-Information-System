@@ -20,7 +20,7 @@ public class Grade {
     private Integer gradeId;
 
     @Column(name = "grade", nullable = false, length = 5)
-    private String grade;
+    private String gradeValue;
 
     @Column(name = "grading_day", nullable = false)
     private LocalDate gradingDay;

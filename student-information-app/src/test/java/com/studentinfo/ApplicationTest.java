@@ -8,7 +8,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class ApplicationTest {
+class ApplicationTest {
 
     @BeforeAll
     static void initAll() {

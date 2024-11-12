@@ -4,8 +4,9 @@ import com.studentinfo.data.entity.Student;
 import com.studentinfo.data.entity.User;
 import com.studentinfo.data.repository.UserRepository;
 import com.studentinfo.security.AuthenticatedUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,39 +17,28 @@ import java.util.Optional;
 @Service
 public class UserService {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+
     // Dependencies
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticatedUser authenticatedUser;
-    private final Environment environment;
 
     @Autowired
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder,
-                       AuthenticatedUser authenticatedUser, Environment environment) {
+                       AuthenticatedUser authenticatedUser) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticatedUser = authenticatedUser;
-        this.environment = environment;
-    }
-
-    // Check if the current environment is test
-    private boolean isTestEnvironment() {
-        return environment != null && List.of(environment.getActiveProfiles()).contains("test");
     }
 
     // Get the current authenticated user's student number
     public Long getCurrentStudentNumber() {
         Optional<User> currentUser = authenticatedUser.get();
 
-        if (currentUser.isPresent()) {
-            User user = currentUser.get();
-
-            // Try explicitly fetching the student entity
-            if (user instanceof Student) {
-                return ((Student) user).getStudentNumber();
-            }
+        if (currentUser.isPresent() && currentUser.get() instanceof Student student) {
+            return student.getStudentNumber();
         }
-
         return null;
     }
 
@@ -56,8 +46,8 @@ public class UserService {
     public Student getCurrentStudent() {
         Optional<User> currentUser = authenticatedUser.get();
 
-        if (currentUser.isPresent() && currentUser.get() instanceof Student) {
-            return (Student) currentUser.get();
+        if (currentUser.isPresent() && currentUser.get() instanceof Student student) {
+            return student;
         }
         return null; // Return null if the current user is not a student
     }
@@ -117,9 +107,9 @@ public class UserService {
             // Clear the current authentication to force re-login with the new password
             SecurityContextHolder.clearContext();
 
-            System.out.println("Password updated for user: " + email); // Debugging log
+            logger.info("Password updated for user: {}", email); // Logging instead of System.out
         } else {
-            System.out.println("User with email " + email + " not found."); // Debugging log
+            logger.warn("User with email {} not found.", email); // Logging instead of System.out
         }
     }
 

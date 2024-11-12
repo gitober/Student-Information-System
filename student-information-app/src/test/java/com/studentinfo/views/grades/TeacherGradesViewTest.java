@@ -27,7 +27,7 @@ import java.util.Locale;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-public class TeacherGradesViewTest {
+class TeacherGradesViewTest {
 
     private TeacherGradesView teacherGradesView;
     private GradeService gradeService;
@@ -66,7 +66,7 @@ public class TeacherGradesViewTest {
     }
 
     @Test
-    public void testTeacherGradesViewComponents() {
+    void testTeacherGradesViewComponents() {
         // Ensure the title and description are set correctly
         H2 title = (H2) teacherGradesView.getContent().getChildren()
                 .filter(component -> component instanceof H2)
@@ -91,13 +91,13 @@ public class TeacherGradesViewTest {
     }
 
     @Test
-    public void testRefreshGradesData() throws Exception {
+    void testRefreshGradesData() throws Exception {
         // Prepare a mock course and grade
         Course mockCourse = new Course("Mathematics", "MATH101", 3);
         when(courseService.getAllCourses()).thenReturn(List.of(mockCourse));
 
         Grade mockGrade = new Grade();
-        mockGrade.setGrade("A");
+        mockGrade.setGradeValue("A");
         mockGrade.setCourse(mockCourse);
         when(gradeService.getGradesByCourseId(mockCourse.getCourseId())).thenReturn(List.of(mockGrade));
 

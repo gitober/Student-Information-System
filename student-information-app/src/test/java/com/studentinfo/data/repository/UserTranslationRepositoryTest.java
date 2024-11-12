@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 @Transactional
 @ActiveProfiles("test")
-public class UserTranslationRepositoryTest {
+class UserTranslationRepositoryTest {
 
     @Autowired
     private UserTranslationRepository userTranslationRepository;
@@ -60,16 +60,16 @@ public class UserTranslationRepositoryTest {
     }
 
     @Test
-    public void testFindByUserIdAndLocale() {
+    void testFindByUserIdAndLocale() {
         List<UserTranslation> translations = userTranslationRepository.findByUser_IdAndLocale(testUser.getId(), Language.EN);
         assertThat(translations).hasSize(1);
-        assertThat(translations.get(0).getTranslatedValue()).isEqualTo("Test");
+        assertThat(translations.getFirst().getTranslatedValue()).isEqualTo("Test");
     }
 
     @Test
-    public void testFindByLocale() {
+    void testFindByLocale() {
         List<UserTranslation> translations = userTranslationRepository.findByLocale(Language.FI);
         assertThat(translations).hasSize(1);
-        assertThat(translations.get(0).getTranslatedValue()).isEqualTo("User");
+        assertThat(translations.getFirst().getTranslatedValue()).isEqualTo("User");
     }
 }

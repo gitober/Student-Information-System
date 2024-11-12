@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 
-public class GradesViewTest {
+class GradesViewTest {
 
     @InjectMocks
     private GradesView gradesView;
@@ -42,13 +42,13 @@ public class GradesViewTest {
     }
 
     @Test
-    public void testGradesViewInitialization() {
+    void testGradesViewInitialization() {
         // Verify that the GradesView is initialized properly
         assertNotNull(gradesView);
     }
 
     @Test
-    public void testLoadUserSpecificContent() {
+    void testLoadUserSpecificContent() {
         // Create a mock layout to load the content into
         VerticalLayout layoutColumn = new VerticalLayout();
 

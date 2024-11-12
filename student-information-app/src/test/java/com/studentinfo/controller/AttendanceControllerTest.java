@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(AttendanceController.class)
 @AutoConfigureMockMvc(addFilters = false) // Disable security filters for testing
-public class AttendanceControllerTest {
+class AttendanceControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -55,7 +55,7 @@ public class AttendanceControllerTest {
     }
 
     @Test
-    public void testGetAllAttendance() throws Exception {
+    void testGetAllAttendance() throws Exception {
         given(attendanceService.getAllAttendance()).willReturn(Arrays.asList(attendance1, attendance2));
 
         mockMvc.perform(get("/api/attendance"))
@@ -67,7 +67,7 @@ public class AttendanceControllerTest {
     }
 
     @Test
-    public void testGetAttendanceById() throws Exception {
+    void testGetAttendanceById() throws Exception {
         given(attendanceService.getAttendanceById(1L)).willReturn(Optional.of(attendance1));
 
         mockMvc.perform(get("/api/attendance/1"))
@@ -77,7 +77,7 @@ public class AttendanceControllerTest {
     }
 
     @Test
-    public void testCreateAttendance() throws Exception {
+    void testCreateAttendance() throws Exception {
         given(attendanceService.createAttendance(ArgumentMatchers.any(Attendance.class))).willReturn(attendance1);
 
         String attendanceJson = objectMapper.writeValueAsString(attendance1);
@@ -92,7 +92,7 @@ public class AttendanceControllerTest {
     }
 
     @Test
-    public void testUpdateAttendance() throws Exception {
+    void testUpdateAttendance() throws Exception {
         // Mock finding the attendance by ID to ensure it exists
         given(attendanceService.getAttendanceById(1L)).willReturn(Optional.of(attendance1));
 
@@ -110,7 +110,7 @@ public class AttendanceControllerTest {
     }
 
     @Test
-    public void testDeleteAttendance() throws Exception {
+    void testDeleteAttendance() throws Exception {
         // Mock the service method to return true for successful deletion
         given(attendanceService.deleteAttendance(1L)).willReturn(true);
 

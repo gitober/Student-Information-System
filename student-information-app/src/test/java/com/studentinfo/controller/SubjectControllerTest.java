@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(SubjectController.class)
 @AutoConfigureMockMvc(addFilters = false) // Disable security filters for testing
-public class SubjectControllerTest {
+class SubjectControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -42,7 +42,7 @@ public class SubjectControllerTest {
     }
 
     @Test
-    public void testGetSubjectTranslations_Found() throws Exception {
+    void testGetSubjectTranslations_Found() throws Exception {
         // Given
         Long subjectId = 1L;
         String locale = "EN";
@@ -74,7 +74,7 @@ public class SubjectControllerTest {
 
 
     @Test
-    public void testGetSubjectTranslations_NotFound() throws Exception {
+    void testGetSubjectTranslations_NotFound() throws Exception {
         // Given
         Long subjectId = 2L;
         String locale = "EN";

@@ -30,8 +30,6 @@ import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @SpringComponent
 @UIScope
@@ -40,14 +38,13 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
 
     private static final Logger logger = LoggerFactory.getLogger(TeacherGradesView.class);
 
-    private final GradeService gradeService;
-    private final CourseService courseService;
-    private final StudentService studentService;
-    private final DateService dateService;
-    private final MessageSource messageSource;
+    private final transient GradeService gradeService;
+    private final transient CourseService courseService;
+    private final transient StudentService studentService;
+    private final transient MessageSource messageSource;
 
     private final Grid<Grade> gradesGrid;
-    private List<Grade> gradeEntries;
+    private transient List<Grade> gradeEntries;
     private final ComboBox<Course> courseComboBox;
 
     @Autowired
@@ -55,7 +52,6 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
         this.gradeService = gradeService;
         this.courseService = courseService;
         this.studentService = studentService;
-        this.dateService = dateService;
         this.messageSource = messageSource;
 
         getContent().addClassName("teacher-grades-view-container");
@@ -91,13 +87,13 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
                 .setKey("course-column");
 
         gradesGrid.addColumn(grade -> {
-                    Optional<Student> studentOpt = Optional.ofNullable(studentService.getStudentByNumber(grade.getStudentNumber()));
-                    return studentOpt.map(student -> student.getFirstName() + " " + student.getLastName())
-                            .orElse(getMessage("grades.management.unknown.student"));
+                    Student student = studentService.getStudentByNumber(grade.getStudentNumber()).orElse(null);
+                    return student != null ? student.getFirstName() + " " + student.getLastName() : getMessage("grades.management.unknown.student");
                 }).setHeader(getMessage("grades.management.student.column"))
                 .setKey("student-column");
 
-        gradesGrid.addColumn(Grade::getGrade)
+
+        gradesGrid.addColumn(Grade::getGradeValue)
                 .setHeader(getMessage("grades.management.grade.column"))
                 .setKey("grade-column");
 
@@ -138,19 +134,19 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
         List<Course> allCourses = courseService.getAllCourses();
         courseComboBox.setItems(allCourses);
         if (!allCourses.isEmpty()) {
-            courseComboBox.setValue(allCourses.get(0)); // Optionally, auto-select the first course
+            courseComboBox.setValue(allCourses.getFirst()); // Optionally, auto-select the first course
         }
     }
 
     // Filter grades by student name
     private void filterGradesByStudent(String searchTerm) {
         List<Grade> filteredGrades = gradeEntries.stream()
-                .filter(entry -> {
-                    Optional<Student> studentOpt = Optional.ofNullable(studentService.getStudentByNumber(entry.getStudentNumber()));
-                    return studentOpt.map(student -> (student.getFirstName() + " " + student.getLastName()).toLowerCase().contains(searchTerm.toLowerCase()))
-                            .orElse(false);
-                })
-                .collect(Collectors.toList());
+                .filter(entry ->
+                        studentService.getStudentByNumber(entry.getStudentNumber())
+                                .map(student -> (student.getFirstName() + " " + student.getLastName()).toLowerCase().contains(searchTerm.toLowerCase()))
+                                .orElse(false) // If no student is found, return false
+                )
+                .toList(); // Replacing collect(Collectors.toList()) with toList()
         gradesGrid.setItems(filteredGrades);
     }
 
@@ -199,7 +195,7 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
             Grade newGrade = new Grade();
             newGrade.setCourse(selectedCourse);
             newGrade.setStudentNumber(selectedStudent.getStudentNumber());
-            newGrade.setGrade(gradeValue);
+            newGrade.setGradeValue(gradeValue);
             newGrade.setGradingDay(LocalDate.now());
 
             try {
@@ -260,7 +256,7 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
         editGradeDialog.addClassName("teacher-grades-view-edit-grade-dialog");
 
         TextField gradeField = new TextField(getMessage("grades.management.grade.input"));
-        gradeField.setValue(grade.getGrade());
+        gradeField.setValue(grade.getGradeValue());
         gradeField.addClassName("teacher-grades-view-edit-grade-field");
         gradeField.setValueChangeMode(ValueChangeMode.EAGER);
 
@@ -274,7 +270,7 @@ public class TeacherGradesView extends Composite<VerticalLayout> {
                 return;
             }
 
-            grade.setGrade(gradeValue);
+            grade.setGradeValue(gradeValue);
             try {
                 gradeService.saveGrade(grade);
                 Notification.show(getMessage("grades.management.update.success"));

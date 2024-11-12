@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @Transactional
-public class SecurityConfigurationTest {
+class SecurityConfigurationTest {
 
     @Autowired
     private MockMvc mockMvc;

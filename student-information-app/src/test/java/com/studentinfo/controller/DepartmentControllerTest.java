@@ -10,7 +10,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(DepartmentController.class)
 @AutoConfigureMockMvc(addFilters = false) // Disable security for testing
-public class DepartmentControllerTest {
+class DepartmentControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -48,7 +47,7 @@ public class DepartmentControllerTest {
     }
 
     @Test
-    public void testGetDepartmentTranslations() throws Exception {
+    void testGetDepartmentTranslations() throws Exception {
         // Given
         DepartmentTranslation translation1 = new DepartmentTranslation();
         translation1.setId(1L);
@@ -77,7 +76,4 @@ public class DepartmentControllerTest {
                 .andExpect(jsonPath("$[1].id").value(2L))
                 .andExpect(jsonPath("$[1].locale").value("EN"));
     }
-
-
-
 }

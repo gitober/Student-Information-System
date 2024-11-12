@@ -1,12 +1,12 @@
 package com.studentinfo.services;
 
+import com.studentinfo.data.dto.RegistrationDTO;
 import com.studentinfo.data.entity.*;
 import com.vaadin.flow.component.notification.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -17,7 +17,6 @@ public class RegistrationHandler {
 
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
-    private final StudentService studentService;
     private final TranslationService translationService;
 
     @Autowired
@@ -25,34 +24,37 @@ public class RegistrationHandler {
                                PasswordEncoder passwordEncoder, TranslationService translationService) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
-        this.studentService = studentService;
         this.translationService = translationService;
     }
 
-    public boolean registerUser(String firstName, String lastName, LocalDate birthday,
-                                String phoneNumber, String email, String password, String role, Language currentLocale) {
+    public boolean registerUser(RegistrationDTO registrationData) {
         try {
-            if (userService.findByEmail(email).isPresent()) {
+            // Check if the email is already registered
+            if (userService.findByEmail(registrationData.getEmail()).isPresent()) {
                 Notification.show("This email is already registered. Please use a different email.");
                 return false;
             }
 
-            User user = createUserBasedOnRole(role);
+            // Create user based on role
+            User user = createUserBasedOnRole(registrationData.getRole());
             if (user == null) {
                 Notification.show("Invalid role selected.");
                 return false;
             }
 
-            setUserAttributes(user, firstName, lastName, birthday, phoneNumber, email, password);
+            // Set user attributes from registration data
+            setUserAttributes(user, registrationData);
 
-            if (user instanceof Student) {
-                ((Student) user).setStudentNumber(generateStudentNumber());
+            // Generate student number for Student user
+            if (user instanceof Student student) {
+                student.setStudentNumber(generateStudentNumber());
             }
 
+            // Save the user to the database
             userService.save(user);
 
-            // Use the existing currentLocale parameter
-            addUserTranslations(user, firstName, lastName, email, currentLocale);
+            // Add translations for the user
+            addUserTranslations(user, registrationData);
 
             return true;
         } catch (IllegalArgumentException e) {
@@ -65,7 +67,6 @@ public class RegistrationHandler {
             return false;
         }
     }
-
 
     private User createUserBasedOnRole(String role) {
         if ("Student".equalsIgnoreCase(role)) {
@@ -84,27 +85,25 @@ public class RegistrationHandler {
         return System.currentTimeMillis();
     }
 
-    private void setUserAttributes(User user, String firstName, String lastName,
-                                   LocalDate birthday, String phoneNumber,
-                                   String email, String password) {
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setBirthday(birthday);
-        user.setPhoneNumber(phoneNumber);
-        user.setUsername(email);
-        user.setEmail(email);
+    private void setUserAttributes(User user, RegistrationDTO registrationData) {
+        user.setFirstName(registrationData.getFirstName());
+        user.setLastName(registrationData.getLastName());
+        user.setBirthday(registrationData.getBirthday());
+        user.setPhoneNumber(registrationData.getPhoneNumber());
+        user.setUsername(registrationData.getEmail());
+        user.setEmail(registrationData.getEmail());
 
-        String encodedPassword = passwordEncoder.encode(password);
+        String encodedPassword = passwordEncoder.encode(registrationData.getPassword());
         user.setHashedPassword(encodedPassword);
 
         user.setRoles(Set.of(Role.USER));
     }
 
-    private void addUserTranslations(User user, String firstName, String lastName, String email, Language locale) {
+    private void addUserTranslations(User user, RegistrationDTO registrationData) {
         translationService.saveUserTranslations(List.of(
-                new UserTranslation(user, locale, "first_name", firstName),
-                new UserTranslation(user, locale, "last_name", lastName),
-                new UserTranslation(user, locale, "email", email)
+                new UserTranslation(user, registrationData.getCurrentLocale(), "first_name", registrationData.getFirstName()),
+                new UserTranslation(user, registrationData.getCurrentLocale(), "last_name", registrationData.getLastName()),
+                new UserTranslation(user, registrationData.getCurrentLocale(), "email", registrationData.getEmail())
         ));
     }
 

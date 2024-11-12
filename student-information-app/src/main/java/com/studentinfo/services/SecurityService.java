@@ -14,7 +14,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 @Service
 public class SecurityService {
@@ -49,7 +48,7 @@ public class SecurityService {
     private Collection<SimpleGrantedAuthority> convertRolesToAuthorities(User user) {
         return user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
-                .collect(Collectors.toList());
+                .toList(); // Directly collect the result into a List
     }
 
     // Create and authenticate the token

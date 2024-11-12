@@ -1,7 +1,6 @@
 package com.studentinfo.views.editprofile;
 
 import com.studentinfo.data.entity.Department;
-import com.studentinfo.data.entity.Subject;
 import com.studentinfo.data.entity.Teacher;
 import com.studentinfo.services.DateService;
 import com.studentinfo.services.DepartmentService;
@@ -22,7 +21,7 @@ import java.util.Collections;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-public class TeacherEditProfileViewTest {
+class TeacherEditProfileViewTest {
 
     private TeacherEditProfileView teacherEditProfileView;
 
@@ -56,7 +55,7 @@ public class TeacherEditProfileViewTest {
     }
 
     @Test
-    public void testTeacherEditProfileViewComponents() throws Exception {
+    void testTeacherEditProfileViewComponents() throws Exception {
         // Verify that the main layout is not null
         assertNotNull(teacherEditProfileView, "The TeacherEditProfileView should not be null.");
 

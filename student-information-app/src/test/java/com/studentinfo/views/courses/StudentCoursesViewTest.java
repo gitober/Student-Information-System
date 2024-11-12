@@ -20,7 +20,7 @@ import java.util.Collections;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-public class StudentCoursesViewTest {
+class StudentCoursesViewTest {
 
     private StudentCoursesView studentCoursesView;
     private MessageSource messageSource; // Declare messageSource as a field
@@ -59,7 +59,7 @@ public class StudentCoursesViewTest {
     }
 
     @Test
-    public void testStudentCoursesViewComponents() throws Exception {
+    void testStudentCoursesViewComponents() throws Exception {
         System.out.println("Testing components in StudentCoursesView...");
 
         // Mock the expected title for "my.courses.title" key
@@ -73,31 +73,36 @@ public class StudentCoursesViewTest {
         boolean hasTitle = studentCoursesView.getContent().getChildren()
                 .anyMatch(component -> component instanceof H2 && expectedTitle.equals(((H2) component).getText()));
         assertTrue(hasTitle, "The title should be '" + expectedTitle + "'.");
-        System.out.println("Title '" + expectedTitle + "' is present.");
 
         // Access the private fields using reflection
-        Field enrolledCoursesGridField = StudentCoursesView.class.getDeclaredField("enrolledCoursesGrid");
-        enrolledCoursesGridField.setAccessible(true);
-        Grid<Course> enrolledCoursesGrid = (Grid<Course>) enrolledCoursesGridField.get(studentCoursesView);
+        try {
+            // Test accessing enrolledCoursesGrid field
+            Field enrolledCoursesGridField = StudentCoursesView.class.getDeclaredField("enrolledCoursesGrid");
+            enrolledCoursesGridField.setAccessible(true);
+            Grid<Course> enrolledCoursesGrid = (Grid<Course>) enrolledCoursesGridField.get(studentCoursesView);
+            assertNotNull(enrolledCoursesGrid, "Enrolled courses grid should be initialized.");
+            System.out.println("Enrolled courses grid is initialized.");
 
-        Field availableCoursesGridField = StudentCoursesView.class.getDeclaredField("availableCoursesGrid");
-        availableCoursesGridField.setAccessible(true);
-        Grid<Course> availableCoursesGrid = (Grid<Course>) availableCoursesGridField.get(studentCoursesView);
+            // Test accessing availableCoursesGrid field
+            Field availableCoursesGridField = StudentCoursesView.class.getDeclaredField("availableCoursesGrid");
+            availableCoursesGridField.setAccessible(true);
+            Grid<Course> availableCoursesGrid = (Grid<Course>) availableCoursesGridField.get(studentCoursesView);
+            assertNotNull(availableCoursesGrid, "Available courses grid should be initialized.");
+            System.out.println("Available courses grid is initialized.");
 
-        // Verify that the grid components are initialized
-        assertNotNull(enrolledCoursesGrid, "Enrolled courses grid should be initialized.");
-        System.out.println("Enrolled courses grid is initialized.");
+            // Check if columns are added to the grids
+            assertEquals(5, enrolledCoursesGrid.getColumns().size(), "Enrolled courses grid should have 5 columns.");
+            System.out.println("Number of columns in enrolledCoursesGrid: " + enrolledCoursesGrid.getColumns().size());
 
-        assertNotNull(availableCoursesGrid, "Available courses grid should be initialized.");
-        System.out.println("Available courses grid is initialized.");
+            assertEquals(5, availableCoursesGrid.getColumns().size(), "Available courses grid should have 5 columns.");
+            System.out.println("Number of columns in availableCoursesGrid: " + availableCoursesGrid.getColumns().size());
 
-        // Check if columns are added to the grids
-        assertEquals(5, enrolledCoursesGrid.getColumns().size(), "Enrolled courses grid should have 5 columns.");
-        System.out.println("Number of columns in enrolledCoursesGrid: " + enrolledCoursesGrid.getColumns().size());
-
-        assertEquals(5, availableCoursesGrid.getColumns().size(), "Available courses grid should have 5 columns.");
-        System.out.println("Number of columns in availableCoursesGrid: " + availableCoursesGrid.getColumns().size());
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            fail("Reflection error: " + e.getMessage());
+        }
 
         System.out.println("Component testing in StudentCoursesView completed.");
     }
+
+
 }

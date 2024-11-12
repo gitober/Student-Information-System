@@ -22,6 +22,10 @@ FROM eclipse-temurin:21-jre
 # Set metadata information
 LABEL authors="bober"
 
+# Create a non-root user and switch to it
+RUN adduser --disabled-password --gecos "" appuser
+USER appuser
+
 # Copy the jar file and any required frontend resources from the build stage
 COPY --from=builder /app/target/student-information-app-1.0-SNAPSHOT.jar /app.jar
 

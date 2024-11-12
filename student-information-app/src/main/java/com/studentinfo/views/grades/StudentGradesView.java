@@ -20,23 +20,23 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 @CssImport("./themes/studentinformationapp/views/grades-view/student-grades-view.css")
 @SpringComponent
 @UIScope
 public class StudentGradesView extends Composite<VerticalLayout> {
 
-    private final GradeService gradeService;
-    private final UserService userService;
-    private final MessageSource messageSource;
+    private static final Logger logger = LoggerFactory.getLogger(StudentGradesView.class);
+    private final transient GradeService gradeService;
     private final Grid<Grade> gradesGrid;
 
     @Autowired
     public StudentGradesView(GradeService gradeService, UserService userService, MessageSource messageSource) {
         this.gradeService = gradeService;
-        this.userService = userService;
-        this.messageSource = messageSource;
 
         getContent().addClassName("student-grades-view-container");
 
@@ -64,22 +64,26 @@ public class StudentGradesView extends Composite<VerticalLayout> {
         gradesGrid.addColumn(grade -> grade.getCourse().getCourseName())
                 .setHeader(messageSource.getMessage("grades.course", null, currentLocale))
                 .setKey("course-name")
-                .setClassNameGenerator(item -> "student-grades-view-course-column");
-        gradesGrid.addColumn(Grade::getGrade)
+                .getElement().getClassList().add("student-grades-view-course-column"); // Updated to set CSS class
+
+        gradesGrid.addColumn(Grade::getGradeValue) // Updated to getGradeValue
                 .setHeader(messageSource.getMessage("grades.grade", null, currentLocale))
                 .setKey("grade")
-                .setClassNameGenerator(item -> "student-grades-view-grade-column");
+                .getElement().getClassList().add("student-grades-view-grade-column"); // Updated to set CSS class
+
         gradesGrid.addColumn(grade -> formatDate(grade.getGradingDay()))
                 .setHeader(messageSource.getMessage("grades.date", null, currentLocale))
                 .setKey("grading-date")
-                .setClassNameGenerator(item -> "student-grades-view-date-column");
+                .getElement().getClassList().add("student-grades-view-date-column"); // Updated to set CSS class
 
         // Fetch and display grades for the current student
         Long studentNumber = userService.getCurrentStudentNumber();
         if (studentNumber != null) {
             refreshGradesData(studentNumber);
         } else {
-            System.out.println(messageSource.getMessage("grades.view.error.student.not.found", null, currentLocale));
+            if (logger.isErrorEnabled()) {
+                logger.error(messageSource.getMessage("grades.view.error.student.not.found", null, currentLocale));
+            }
         }
 
         // Add components to the layout
@@ -89,7 +93,7 @@ public class StudentGradesView extends Composite<VerticalLayout> {
     // Method to fetch grades and populate the grid
     private void refreshGradesData(Long studentNumber) {
         List<Grade> studentGrades = gradeService.getGradesByStudentNumber(studentNumber);
-        gradesGrid.setItems(studentGrades); // Use actual data from service
+        gradesGrid.setItems(studentGrades);
     }
 
     // Method to filter grades based on the search term
@@ -97,7 +101,7 @@ public class StudentGradesView extends Composite<VerticalLayout> {
         List<Grade> filteredGrades = gradesGrid.getListDataView().getItems().toList()
                 .stream()
                 .filter(grade -> grade.getCourse().getCourseName().toLowerCase().contains(searchTerm.toLowerCase()))
-                .collect(Collectors.toList());
+                .toList();
 
         gradesGrid.setItems(filteredGrades);
     }

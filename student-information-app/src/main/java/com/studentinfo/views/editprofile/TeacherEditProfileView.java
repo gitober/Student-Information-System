@@ -38,14 +38,14 @@ public class TeacherEditProfileView extends VerticalLayout {
     private final Button saveButton;
     private final Teacher teacher;
     private final VerticalLayout currentDetailsLayout;
-    private final MessageSource messageSource;
-    private final DateService dateService;
+    private final transient MessageSource messageSource;
+
+    private static final String CSS_CLASS_INPUT = "teacher-edit-profile-view-input";
 
     @Autowired
     public TeacherEditProfileView(Teacher teacher, DepartmentService departmentService, SubjectService subjectService, DateService dateService, MessageSource messageSource) {
         this.teacher = teacher;
         this.messageSource = messageSource;
-        this.dateService = dateService;
 
         addClassName("teacher-edit-profile-view-container");
         setAlignItems(Alignment.CENTER);
@@ -63,10 +63,10 @@ public class TeacherEditProfileView extends VerticalLayout {
         phoneNumberField = new TextField(getMessage("teacher.edit.profile.phoneNumber"));
         emailField = new TextField(getMessage("teacher.edit.profile.email"));
 
-        firstNameField.addClassName("teacher-edit-profile-view-input");
-        lastNameField.addClassName("teacher-edit-profile-view-input");
-        phoneNumberField.addClassName("teacher-edit-profile-view-input");
-        emailField.addClassName("teacher-edit-profile-view-input");
+        firstNameField.addClassName(CSS_CLASS_INPUT);
+        lastNameField.addClassName(CSS_CLASS_INPUT);
+        phoneNumberField.addClassName(CSS_CLASS_INPUT);
+        emailField.addClassName(CSS_CLASS_INPUT);
 
         departmentComboBox = new ComboBox<>(getMessage("teacher.edit.profile.department"));
         departmentComboBox.setItems(departmentService.findAll());

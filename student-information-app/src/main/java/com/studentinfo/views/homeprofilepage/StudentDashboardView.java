@@ -20,7 +20,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Paragraph;
-import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -33,17 +33,16 @@ import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 @SpringComponent
 @UIScope
 @CssImport("./themes/studentinformationapp/views/home-profile-page-view/student-profile-page-view.css")
 public class StudentDashboardView extends Composite<VerticalLayout> {
 
-    private final CourseService courseService;
-    private final AttendanceService attendanceService;
-    private final AuthenticatedUser authenticatedUser;
-    private final MessageSource messageSource;
+    private final transient CourseService courseService;
+    private final transient AttendanceService attendanceService;
+    private final transient AuthenticatedUser authenticatedUser;
+    private final transient MessageSource messageSource;
 
     @Autowired
     public StudentDashboardView(CourseService courseService, GradeService gradeService,
@@ -62,17 +61,11 @@ public class StudentDashboardView extends Composite<VerticalLayout> {
         welcomeText.addClassName("student-dashboard-welcome-text");
         getContent().add(welcomeText);
 
-        // Fetch the current student's number
-        Long studentNumber = getCurrentStudentNumber();
-
-        // Retrieve the enrolled courses for the student
-        List<Course> enrolledCourses = courseService.getEnrolledCourses(studentNumber);
-
         // Dashboard Grid Container
         FlexLayout dashboardGrid = new FlexLayout();
         dashboardGrid.addClassName("student-dashboard-grid");
         dashboardGrid.setFlexWrap(FlexLayout.FlexWrap.WRAP);
-        dashboardGrid.setJustifyContentMode(FlexLayout.JustifyContentMode.CENTER);
+        dashboardGrid.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
 
         // Add cards with navigation links
         dashboardGrid.add(createDashboardCard(
@@ -164,7 +157,7 @@ public class StudentDashboardView extends Composite<VerticalLayout> {
         List<Attendance> attendanceRecords = enrolledCourses.stream()
                 .flatMap(course -> attendanceService.getAttendanceByCourseId(course.getCourseId()).stream()
                         .filter(attendance -> attendance.getStudent() != null && attendance.getStudent().getStudentNumber().equals(studentNumber)))
-                .collect(Collectors.toList());
+                .toList(); // Use Stream.toList() instead of collect(Collectors.toList())
 
         // Set items in the attendance grid
         attendanceGrid.setItems(attendanceRecords);
@@ -184,11 +177,13 @@ public class StudentDashboardView extends Composite<VerticalLayout> {
     }
 
     private Long getCurrentStudentNumber() {
-        return authenticatedUser.get().map(user -> {
-            if (user instanceof Student) {
-                return ((Student) user).getStudentNumber();
-            }
-            return null;
-        }).orElse(null);
+        return authenticatedUser.get()
+                .map(user -> {
+                    if (user instanceof Student student) {
+                        return student.getStudentNumber();
+                    }
+                    return null;
+                })
+                .orElse(null);
     }
 }

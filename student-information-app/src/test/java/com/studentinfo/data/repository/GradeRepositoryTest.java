@@ -60,14 +60,14 @@ class GradeRepositoryTest {
         Grade grade1 = new Grade();
         grade1.setStudentNumber(student.getStudentNumber());
         grade1.setCourse(course);
-        grade1.setGrade("A");
+        grade1.setGradeValue("A");
         grade1.setGradingDay(LocalDate.now());
         gradeRepository.save(grade1);
 
         Grade grade2 = new Grade();
         grade2.setStudentNumber(student.getStudentNumber());
         grade2.setCourse(course);
-        grade2.setGrade("B");
+        grade2.setGradeValue("B");
         grade2.setGradingDay(LocalDate.now());
         gradeRepository.save(grade2);
     }

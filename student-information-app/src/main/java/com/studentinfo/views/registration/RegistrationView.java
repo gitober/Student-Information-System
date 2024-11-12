@@ -1,5 +1,6 @@
 package com.studentinfo.views.registration;
 
+import com.studentinfo.data.dto.RegistrationDTO;
 import com.studentinfo.data.entity.Language;
 import com.studentinfo.views.header.HeaderView;
 import com.studentinfo.services.RegistrationHandler;
@@ -35,7 +36,7 @@ import java.util.Locale;
 @CssImport("./themes/studentinformationapp/views/registration-view.css")
 public class RegistrationView extends Composite<VerticalLayout> {
 
-    private final RegistrationHandler registrationHandler;
+    private final transient RegistrationHandler registrationHandler;
     private final TextField firstNameField;
     private final TextField lastNameField;
     private final EmailField emailField;
@@ -152,16 +153,19 @@ public class RegistrationView extends Composite<VerticalLayout> {
         // Get the current locale from LocaleContextHolder
         Language currentLocale = Language.valueOf(LocaleContextHolder.getLocale().getLanguage().toUpperCase());
 
-        boolean registrationSuccessful = registrationHandler.registerUser(
-                firstNameField.getValue(),
-                lastNameField.getValue(),
-                birthdayField.getValue(),
-                phoneNumberField.getValue(),
-                emailField.getValue(),
-                passwordField.getValue(),
-                role,
-                currentLocale // Pass the locale here
-        );
+        // Create RegistrationDTO object using builder pattern
+        RegistrationDTO registrationDTO = RegistrationDTO.builder()
+                .firstName(firstNameField.getValue())
+                .lastName(lastNameField.getValue())
+                .birthday(birthdayField.getValue())
+                .phoneNumber(phoneNumberField.getValue())
+                .email(emailField.getValue())
+                .password(passwordField.getValue())
+                .role(role)
+                .currentLocale(currentLocale)
+                .build();
+
+        boolean registrationSuccessful = registrationHandler.registerUser(registrationDTO);
 
         if (registrationSuccessful) {
             Notification.show(messageSource.getMessage("registration.success", null, LocaleContextHolder.getLocale()));

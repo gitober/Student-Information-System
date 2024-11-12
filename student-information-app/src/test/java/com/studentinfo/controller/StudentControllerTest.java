@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,7 +25,8 @@ class StudentControllerTest {
     @InjectMocks
     private StudentController studentController;
 
-    private Student newStudent, createdStudent, updatedStudent;
+    private Student newStudent;
+    private Student updatedStudent;
 
     @BeforeAll
     static void setUpAll() {
@@ -35,7 +37,6 @@ class StudentControllerTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         newStudent = new Student();
-        createdStudent = new Student();
         updatedStudent = new Student();
 
         newStudent.setId(1L);
@@ -90,7 +91,7 @@ class StudentControllerTest {
         assertNotNull(response);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertTrue(response.hasBody());
-        assertEquals("John", response.getBody().getFirstName());
+        assertEquals("John", Objects.requireNonNull(response.getBody()).getFirstName());
         assertEquals("Doe", response.getBody().getLastName());
     }
 
@@ -105,7 +106,7 @@ class StudentControllerTest {
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertTrue(response.hasBody());
-        assertEquals("Jane", response.getBody().getFirstName());
+        assertEquals("Jane", Objects.requireNonNull(response.getBody()).getFirstName());
         assertEquals("Wayne", response.getBody().getLastName());
     }
 

@@ -51,8 +51,8 @@ public class StudentService {
         return studentRepository.findByCourses_CourseId(courseId);
     }
 
-    // Retrieve a student by their student number
-    public Student getStudentByNumber(Long studentNumber) {
-        return studentRepository.findByStudentNumber(studentNumber).orElse(null);
+    // Retrieve a student by their student number, returning Optional<Student> for consistency
+    public Optional<Student> getStudentByNumber(Long studentNumber) {
+        return studentRepository.findByStudentNumber(studentNumber);
     }
 }

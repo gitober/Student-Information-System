@@ -22,7 +22,7 @@ class GradeTest {
         // Create a Grade object with sample data
         grade = new Grade();
         grade.setGradeId(1);
-        grade.setGrade("A");
+        grade.setGradeValue("A");
         grade.setGradingDay(LocalDate.of(2024, 10, 1));
         grade.setStudentNumber(12345L);
         grade.setCourse(course);
@@ -36,7 +36,7 @@ class GradeTest {
     @Test
     void testGetGrade() {
         // Check if getGrade() returns the correct grade
-        assertEquals("A", grade.getGrade());
+        assertEquals("A", grade.getGradeValue());
     }
 
     @Test

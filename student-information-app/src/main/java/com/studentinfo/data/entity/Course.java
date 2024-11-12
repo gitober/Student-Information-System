@@ -5,8 +5,11 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.context.i18n.LocaleContextHolder;
 
+import java.io.Serial;
+import java.io.Serializable; // Import Serializable
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
@@ -14,9 +17,10 @@ import java.util.Locale;
 @Getter
 @Entity
 @Table(name = "course")
-public class Course {
+public class Course implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
-    // Getters and Setters
     // Fields
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,39 +45,42 @@ public class Course {
     private List<Teacher> teachers;
 
     // Constructors
-    // Default constructor required by JPA
     public Course() {}
 
-    // Constructor accepting all fields (except for ID, which is auto-generated)
     public Course(String courseName, String coursePlan, Integer duration) {
         this.courseName = courseName;
         this.coursePlan = coursePlan;
         this.duration = duration;
     }
 
-
     // Additional Methods
-    // Method to calculate and display start and end dates based on duration
     public String getFormattedDateRange() {
         LocalDate startDate = LocalDate.now();
         LocalDate endDate = startDate.plusDays(duration);
         Locale currentLocale = LocaleContextHolder.getLocale();
 
         DateTimeFormatter formatter;
-        if (currentLocale.getLanguage().equals("ch")) {
-            formatter = DateTimeFormatter.ofPattern("yyyy年MM月dd日", Locale.forLanguageTag("ch"));
-        } else if (Locale.UK.equals(currentLocale)) {
-            formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.UK);
-        } else if (Locale.forLanguageTag("fi-FI").equals(currentLocale)) {
+        if (currentLocale.getLanguage().equals("zh")) {
+            formatter = DateTimeFormatter.ofPattern("yyyy年MM月dd日", currentLocale);
+        } else if (currentLocale.equals(Locale.forLanguageTag("fi-FI"))) {
             formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy", currentLocale);
-        } else if (Locale.forLanguageTag("ru-RU").equals(currentLocale)) {
+        } else if (currentLocale.equals(Locale.forLanguageTag("ru-RU"))) {
             formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy", currentLocale);
         } else {
-            formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
+            formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", currentLocale);
         }
-
 
         return startDate.format(formatter) + " - " + endDate.format(formatter);
     }
 
+    @ManyToMany(mappedBy = "courses")
+    private Collection<Student> students;
+
+    public Collection<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Collection<Student> students) {
+        this.students = students;
+    }
 }

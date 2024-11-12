@@ -38,7 +38,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
-public class StudentDashboardViewTest {
+class StudentDashboardViewTest {
 
     private StudentDashboardView studentDashboardView;
     private MessageSource messageSource; // Define messageSource as a class-level variable
@@ -97,7 +97,7 @@ public class StudentDashboardViewTest {
     }
 
     @Test
-    public void testStudentDashboardViewInitialization() {
+    void testStudentDashboardViewInitialization() {
         // Retrieve the expected title from the message source
         String expectedTitle = messageSource.getMessage("dashboard.welcome", null, LocaleContextHolder.getLocale());
 
@@ -149,10 +149,9 @@ public class StudentDashboardViewTest {
         }
     }
 
-
     private MessageSource createMessageSource() {
-        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasename("messages"); // Base name for message bundles
-        return messageSource;
+        ResourceBundleMessageSource newMessageSource = new ResourceBundleMessageSource();  // Renamed the local variable to avoid conflict
+        newMessageSource.setBasename("messages"); // Base name for message bundles
+        return newMessageSource;
     }
 }

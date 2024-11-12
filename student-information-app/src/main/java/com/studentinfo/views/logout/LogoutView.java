@@ -22,8 +22,8 @@ public class LogoutView extends VerticalLayout implements BeforeEnterObserver {
 
     private static final Logger logger = LoggerFactory.getLogger(LogoutView.class); // Logger instance
 
-    private final HttpServletRequest request;
-    private final HttpServletResponse response;
+    private final transient HttpServletRequest request;
+    private final transient HttpServletResponse response;
 
     @Autowired
     public LogoutView(HttpServletRequest request, HttpServletResponse response) {

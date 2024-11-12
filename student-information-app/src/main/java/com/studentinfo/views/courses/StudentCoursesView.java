@@ -21,8 +21,6 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -31,23 +29,20 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 @SpringComponent
 @UIScope
 @CssImport("./themes/studentinformationapp/views/courses-view/student-courses-view.css")
 public class StudentCoursesView extends Composite<VerticalLayout> {
 
-    private static final Logger logger = LoggerFactory.getLogger(StudentCoursesView.class);
-
-    private final CourseService courseService;
-    private final AttendanceService attendanceService;
-    private final UserService userService;
-    private final MessageSource messageSource;
-    private List<Course> enrolledCourses;
-    private List<Course> availableCourses;
-    private final Grid<Course> enrolledCoursesGrid;
-    private final Grid<Course> availableCoursesGrid;
+    private final transient CourseService courseService;
+    private final transient AttendanceService attendanceService;
+    private final transient UserService userService;
+    private final transient MessageSource messageSource;
+    private transient List<Course> enrolledCourses;
+    private transient List<Course> availableCourses;
+    private final transient Grid<Course> enrolledCoursesGrid;
+    private final transient Grid<Course> availableCoursesGrid;
 
     @Autowired
     public StudentCoursesView(CourseService courseService, AttendanceService attendanceService, UserService userService, MessageSource messageSource) {
@@ -157,7 +152,7 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
                         course.getFormattedDateRange().toLowerCase().contains(lowerCaseSearchTerm) ||
                         course.getTeachers().stream()
                                 .anyMatch(teacher -> (teacher.getFirstName() + " " + teacher.getLastName()).toLowerCase().contains(lowerCaseSearchTerm))
-                ).collect(Collectors.toList());
+                ).toList(); // Use Stream.toList() instead of Collectors.toList()
 
         // Filter available courses
         List<Course> filteredAvailableCourses = availableCourses.stream()
@@ -166,7 +161,7 @@ public class StudentCoursesView extends Composite<VerticalLayout> {
                         course.getFormattedDateRange().toLowerCase().contains(lowerCaseSearchTerm) ||
                         course.getTeachers().stream()
                                 .anyMatch(teacher -> (teacher.getFirstName() + " " + teacher.getLastName()).toLowerCase().contains(lowerCaseSearchTerm))
-                ).collect(Collectors.toList());
+                ).toList(); // Use Stream.toList() instead of Collectors.toList()
 
         // Update the grids
         enrolledCoursesGrid.setItems(filteredEnrolledCourses);

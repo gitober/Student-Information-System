@@ -37,9 +37,10 @@ import java.util.Optional;
 @CssImport("./themes/studentinformationapp/views/forgotpassword-view.css")
 public class ForgotPasswordView extends Composite<VerticalLayout> implements BeforeEnterObserver, LocaleChangeObserver {
 
-    private final EmailService emailService;
-    private final MessageSource messageSource;
+    private final transient EmailService emailService;
+    private final transient MessageSource messageSource;
 
+    private static final String LOGIN_ROUTE = "login";
     private EmailField emailField;
     private PasswordField newPasswordField;
     private VerticalLayout forgotPasswordLayout;
@@ -139,7 +140,7 @@ public class ForgotPasswordView extends Composite<VerticalLayout> implements Bef
         Button cancelButton = new Button(getTranslation("forgot.back"));
         cancelButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
         cancelButton.addClassName("forgot-password-close-button");
-        cancelButton.addClickListener(e -> getUI().ifPresent(ui -> ui.navigate("login")));
+        cancelButton.addClickListener(e -> getUI().ifPresent(ui -> ui.navigate(LOGIN_ROUTE)));
 
         HorizontalLayout buttonLayout = new HorizontalLayout(submitButton, cancelButton);
         buttonLayout.setSpacing(true);
@@ -167,7 +168,7 @@ public class ForgotPasswordView extends Composite<VerticalLayout> implements Bef
         Button resetCancelButton = new Button(getTranslation("reset.close"));
         resetCancelButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
         resetCancelButton.addClassName("reset-password-close-button");
-        resetCancelButton.addClickListener(e -> getUI().ifPresent(ui -> ui.navigate("login")));
+        resetCancelButton.addClickListener(e -> getUI().ifPresent(ui -> ui.navigate(LOGIN_ROUTE)));
 
         layout.add(title, newPasswordField, resetButton, resetCancelButton);
         return layout;
@@ -216,7 +217,7 @@ public class ForgotPasswordView extends Composite<VerticalLayout> implements Bef
             if (email != null) {
                 emailService.updatePassword(email, newPassword);
                 Notification.show(getTranslation("reset.notification.success"), 3000, Notification.Position.TOP_CENTER);
-                getUI().ifPresent(ui -> ui.navigate("login"));
+                getUI().ifPresent(ui -> ui.navigate(LOGIN_ROUTE));
             } else {
                 Notification.show(getTranslation("reset.notification.failure"), 3000, Notification.Position.TOP_CENTER);
             }

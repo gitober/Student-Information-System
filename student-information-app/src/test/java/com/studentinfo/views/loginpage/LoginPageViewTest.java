@@ -5,8 +5,6 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
-import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.server.VaadinRequest;
@@ -25,7 +23,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class LoginPageViewTest {
+class LoginPageViewTest {
 
     private LoginPageView loginPageView;
     private LoginHandler loginHandler;
@@ -77,7 +75,7 @@ public class LoginPageViewTest {
     }
 
     @Test
-    public void testLoginPageComponents() {
+    void testLoginPageComponents() {
         TextField emailField = findComponentOfType(loginPageView.getContent(), TextField.class);
         assertNotNull(emailField, "Email field should be present in the login page.");
         assertEquals("Enter your email", emailField.getPlaceholder(), "Email field should have the correct placeholder.");
@@ -100,7 +98,7 @@ public class LoginPageViewTest {
     }
 
     @Test
-    public void testLoginButtonFunctionality() {
+    void testLoginButtonFunctionality() {
         TextField emailField = findComponentOfType(loginPageView.getContent(), TextField.class);
         PasswordField passwordField = findComponentOfType(loginPageView.getContent(), PasswordField.class);
         Checkbox rememberMeCheckbox = findComponentOfType(loginPageView.getContent(), Checkbox.class);
@@ -120,7 +118,7 @@ public class LoginPageViewTest {
     }
 
     @Test
-    public void testForgotPasswordButtonFunctionality() {
+    void testForgotPasswordButtonFunctionality() {
         UI mockUI = mock(UI.class);
         UI.setCurrent(mockUI);
 
@@ -133,7 +131,7 @@ public class LoginPageViewTest {
     }
 
     @Test
-    public void testRememberMeCookie() {
+    void testRememberMeCookie() {
         TextField emailField = findComponentOfType(loginPageView.getContent(), TextField.class);
         assertNotNull(emailField);
         assertEquals("test@example.com", emailField.getValue(), "Email should be pre-filled from the cookie.");
@@ -157,11 +155,10 @@ public class LoginPageViewTest {
     }
 
     private Button findButtonByText(Component root, String text) {
-        if (root instanceof Button button) {
-            if (text.equals(button.getText())) {
+        if (root instanceof Button button && text.equals(button.getText())) {
                 return button;
             }
-        }
+
         for (Component child : root.getChildren().toList()) {
             Button found = findButtonByText(child, text);
             if (found != null) {

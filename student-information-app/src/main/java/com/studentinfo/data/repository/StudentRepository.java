@@ -22,9 +22,8 @@ public interface StudentRepository extends JpaRepository<Student, Long>, JpaSpec
     List<Student> findByGradeAndStudentClass(String grade, String studentClass);
 
     // Find students enrolled in a specific course (by course ID)
-    List<Student> findByCourses_CourseId(Long courseId); // Requires a Many-to-Many relationship
+    List<Student> findByCourses_CourseId(Long courseId); // This should now work after fixing the 'courses' mapping
 
     // Find a student by studentNumber
-    Optional<Student> findByStudentNumber(Long studentNumber); // Add this method
-
+    Optional<Student> findByStudentNumber(Long studentNumber);
 }

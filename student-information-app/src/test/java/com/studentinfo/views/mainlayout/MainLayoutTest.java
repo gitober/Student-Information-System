@@ -14,7 +14,7 @@ import org.springframework.context.MessageSource;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class MainLayoutTest {
+class MainLayoutTest {
 
     @Mock
     private AuthenticatedUser authenticatedUser;
@@ -44,7 +44,7 @@ public class MainLayoutTest {
     }
 
     @Test
-    public void testHeaderViewIsAddedToMainLayout() {
+    void testHeaderViewIsAddedToMainLayout() {
         // Act
         Div content = mainLayout.getContent(); // This retrieves the root layout of MainLayout
 

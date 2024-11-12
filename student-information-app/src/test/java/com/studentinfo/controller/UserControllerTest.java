@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(controllers = UserController.class)
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
-public class UserControllerTest {
+class UserControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -59,7 +59,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testCreateUser() throws Exception {
+    void testCreateUser() throws Exception {
         // Mock the userService.save() method to return the created user
         given(userService.save(ArgumentMatchers.any(User.class))).willReturn(user);
 

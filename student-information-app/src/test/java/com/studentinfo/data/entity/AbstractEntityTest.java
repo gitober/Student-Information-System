@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class AbstractEntityTest {
 
@@ -54,7 +53,7 @@ class AbstractEntityTest {
     void testEquals() {
         // Check if two entities with the same ID are equal
         entity2.setId(1001L);
-        assertTrue(entity1.equals(entity2));
+        assertEquals(entity1, entity2);
     }
 
     @Test

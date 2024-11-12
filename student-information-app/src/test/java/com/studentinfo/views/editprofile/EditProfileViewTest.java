@@ -4,7 +4,6 @@ import com.studentinfo.security.AuthenticatedUser;
 import com.studentinfo.services.UserContentLoader;
 import com.studentinfo.views.header.HeaderView;
 import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,9 +13,8 @@ import org.springframework.context.MessageSource;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
 
-public class EditProfileViewTest {
+class EditProfileViewTest {
 
     private EditProfileView editProfileView;
 
@@ -41,7 +39,7 @@ public class EditProfileViewTest {
     }
 
     @Test
-    public void testEditProfileViewComponents() {
+    void testEditProfileViewComponents() {
         // Verify that the main layout is not null
         VerticalLayout mainLayout = editProfileView.getContent();
         assertNotNull(mainLayout, "The main layout should not be null.");

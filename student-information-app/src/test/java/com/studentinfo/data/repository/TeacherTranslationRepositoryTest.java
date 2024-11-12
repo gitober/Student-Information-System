@@ -1,5 +1,7 @@
 package com.studentinfo.data.repository;
 
+import com.studentinfo.data.entity.Department;
+import com.studentinfo.data.entity.Subject;
 import com.studentinfo.data.entity.Teacher;
 import com.studentinfo.data.entity.TeacherTranslation;
 import org.junit.jupiter.api.AfterEach;
@@ -26,10 +28,24 @@ class TeacherTranslationRepositoryTest {
     @Autowired
     private TeacherRepository teacherRepository;
 
+    @Autowired
+    private DepartmentRepository departmentRepository;
+
+    @Autowired
+    private SubjectRepository subjectRepository;
+
     private Teacher teacher;
 
     @BeforeEach
     void setUp() {
+        // Create and save a Department instance
+        Department department = new Department("Science");
+        department = departmentRepository.saveAndFlush(department); // Save and flush to ensure it exists in the database
+
+        // Create and save a Subject instance (make sure it's linked to the Department)
+        Subject subject = new Subject("Mathematics", department);  // Set a subject for the teacher
+        subject = subjectRepository.saveAndFlush(subject);  // Save and flush to ensure it exists in the database
+
         // Create and save a Teacher instance with all required fields
         teacher = new Teacher();
         teacher.setFirstName("John");
@@ -37,7 +53,8 @@ class TeacherTranslationRepositoryTest {
         teacher.setEmail("john.doe@example.com"); // Ensure the email is set
         teacher.setUsername("johndoe");           // Ensure the username is set
         teacher.setUserType("TEACHER");           // Set the appropriate user type
-        // Set other required fields if necessary
+        teacher.setDepartment(department);        // Set the department
+        teacher.setSubject(subject);              // Set the subject (this is the key change)
 
         teacher = teacherRepository.saveAndFlush(teacher); // Save and flush to ensure it exists in the database
 

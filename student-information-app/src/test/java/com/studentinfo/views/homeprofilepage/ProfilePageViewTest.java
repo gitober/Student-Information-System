@@ -15,7 +15,7 @@ import java.util.Locale;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class ProfilePageViewTest {
+class ProfilePageViewTest {
 
     private ProfilePageView profilePageView;
 
@@ -46,7 +46,7 @@ public class ProfilePageViewTest {
     }
 
     @Test
-    public void testProfilePageViewInitialization() {
+    void testProfilePageViewInitialization() {
         // Get the main layout from ProfilePageView
         VerticalLayout mainLayout = profilePageView.getContent();
 

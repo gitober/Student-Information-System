@@ -111,12 +111,20 @@ class StudentServiceTest {
         Student student = new Student();
         student.setStudentNumber(studentNumber);
 
+        // Mock the return value for the repository method to return an Optional containing the student
         when(studentRepository.findByStudentNumber(studentNumber)).thenReturn(Optional.of(student));
 
-        Student result = studentService.getStudentByNumber(studentNumber);
+        // Call the service method which now returns an Optional
+        Optional<Student> result = studentService.getStudentByNumber(studentNumber);
 
-        assertNotNull(result);
-        assertEquals(studentNumber, result.getStudentNumber());
+        // Assert that the result is present
+        assertTrue(result.isPresent(), "The student should be present.");
+
+        // Assert that the student returned is the same as the mocked one
+        assertEquals(student, result.get(), "The student returned should be the same as the mocked student.");
+
+        // Verify that the repository method was called once with the correct student number
         verify(studentRepository, times(1)).findByStudentNumber(studentNumber);
     }
+
 }

@@ -22,7 +22,7 @@ import java.util.Map;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
-public class ForgotPasswordViewTest {
+class ForgotPasswordViewTest {
 
     @Mock
     private EmailService emailService;

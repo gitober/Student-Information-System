@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ActiveProfiles("test")
-public class UserServiceTest {
+class UserServiceTest {
 
     private AutoCloseable mocks;
 

@@ -19,11 +19,8 @@ import org.springframework.context.MessageSource;
 @CssImport("./themes/studentinformationapp/views/grades-view/grades-view.css")
 public class GradesView extends Composite<VerticalLayout> {
 
-    private final UserContentLoader userContentLoader;
-
     @Autowired
     public GradesView(AuthenticatedUser authenticatedUser, UserContentLoader userContentLoader, MessageSource messageSource) {
-        this.userContentLoader = userContentLoader;
 
         // Debug statements to ensure proper injection
         if (authenticatedUser == null) {

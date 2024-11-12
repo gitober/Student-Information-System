@@ -19,7 +19,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(CourseController.class)
 @AutoConfigureMockMvc(addFilters = false) // Disable security for testing
-public class CourseControllerTest {
+class CourseControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -75,7 +74,7 @@ public class CourseControllerTest {
     }
 
     @Test
-    public void testGetAllCourses() throws Exception {
+    void testGetAllCourses() throws Exception {
         given(courseService.getAllCourses()).willReturn(Arrays.asList(course1, course2));
 
         mockMvc.perform(get("/api/courses"))
@@ -87,7 +86,7 @@ public class CourseControllerTest {
     }
 
     @Test
-    public void testGetCourseById() throws Exception {
+    void testGetCourseById() throws Exception {
         given(courseService.getCourseById(1L)).willReturn(Optional.of(course1));
 
         mockMvc.perform(get("/api/courses/1"))
@@ -97,7 +96,7 @@ public class CourseControllerTest {
     }
 
     @Test
-    public void testCreateCourse() throws Exception {
+    void testCreateCourse() throws Exception {
         // Prepare mock data for teachers and translations
         given(teacherService.listByIds(Arrays.asList(1L, 2L))).willReturn(Arrays.asList(teacher1, teacher2));
 
@@ -123,13 +122,13 @@ public class CourseControllerTest {
 
 
     @Test
-    public void testUpdateCourse() throws Exception {
+    void testUpdateCourse() throws Exception {
         given(courseService.getCourseById(1L)).willReturn(Optional.of(course1));
         given(teacherService.listByIds(Arrays.asList(1L, 2L))).willReturn(Arrays.asList(teacher1, teacher2));
 
-        // Create a mock list of CourseTranslation for testing
-        List<CourseTranslation> mockTranslations = List.of(new CourseTranslation("EN", "course_name", "Mathematics"));
-        given(courseService.updateCourse(ArgumentMatchers.eq(1L), ArgumentMatchers.any(Course.class), ArgumentMatchers.anyList())).willReturn(course1);
+        // Set up mock behavior for the updateCourse method
+        given(courseService.updateCourse(ArgumentMatchers.eq(1L), ArgumentMatchers.any(Course.class), ArgumentMatchers.anyList()))
+                .willReturn(course1);
 
         String courseJson = objectMapper.writeValueAsString(course1);
         String teacherIds = "1,2";
@@ -143,8 +142,9 @@ public class CourseControllerTest {
                 .andExpect(jsonPath("$.courseName").value("Mathematics"));
     }
 
+
     @Test
-    public void testDeleteCourse() throws Exception {
+    void testDeleteCourse() throws Exception {
         given(courseService.deleteCourse(1L)).willReturn(true);
 
         mockMvc.perform(delete("/api/courses/1"))

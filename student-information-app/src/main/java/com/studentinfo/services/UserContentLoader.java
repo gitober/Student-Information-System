@@ -18,9 +18,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Component
 public class UserContentLoader {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserContentLoader.class);
 
     // Dependencies
     private final AuthenticatedUser authenticatedUser;
@@ -86,9 +90,11 @@ public class UserContentLoader {
     public void loadProfileContent(VerticalLayout layout) {
         authenticatedUser.get().ifPresentOrElse(user -> {
             if (user instanceof Teacher && teacherDashboardView != null) {
-                layout.add(teacherDashboardView); // Use injected view
+                logger.info("Adding TeacherDashboardView to layout");
+                layout.add(teacherDashboardView);
             } else if (user instanceof Student && studentDashboardView != null) {
-                layout.add(studentDashboardView); // Use injected view
+                logger.info("Adding StudentDashboardView to layout");
+                layout.add(studentDashboardView);
             } else {
                 layout.add(new Paragraph(ROLE_NOT_RECOGNIZED_MESSAGE));
             }

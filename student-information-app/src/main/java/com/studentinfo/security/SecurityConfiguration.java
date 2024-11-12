@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 @EnableWebSecurity
 public class SecurityConfiguration extends VaadinWebSecurity {
 
+    private static final String LOGIN_URL = "/login";
     private static final Logger logger = LoggerFactory.getLogger(SecurityConfiguration.class);
     private final UserDetailsServiceImpl userDetailsService;
     private final DataSource dataSource;
@@ -80,44 +81,41 @@ public class SecurityConfiguration extends VaadinWebSecurity {
                     logCurrentSecurityContext("After setting security context repository");
                 })
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/login", "/register", "/images/**", "/forgotpassword").permitAll();
+                    auth.requestMatchers(LOGIN_URL, "/register", "/images/**", "/forgotpassword").permitAll();
                     auth.requestMatchers("/profile", "/courses", "/editprofile", "/grades", "/teacher/attendance-tracking", "teacher/update-students").hasRole("USER");
                     logger.info("Configured request matchers for authorization.");
                     logCurrentSecurityContext("After configuring authorization requests");
                 })
                 .formLogin(form -> {
-                    form.loginPage("/login")
+                    form.loginPage(LOGIN_URL)
                             .usernameParameter("email") // Use email for login
                             .defaultSuccessUrl("/profile", true);
                     logger.info("Form login configured.");
                     logCurrentSecurityContext("After configuring form login");
                 })
-                .rememberMe(rememberMe -> {
-                    rememberMe.tokenRepository(persistentTokenRepository())
-                            .tokenValiditySeconds(1209600) // 2 weeks
-                            .rememberMeParameter("remember-me"); // This corresponds to the checkbox in your login form
-                })
-                .logout(logout -> {
-                    logout.logoutUrl("/logout")
-                            .invalidateHttpSession(true)
-                            .clearAuthentication(true)
-                            .deleteCookies("JSESSIONID", "XSRF-TOKEN")
-                            .logoutSuccessUrl("/login")
-                            .addLogoutHandler((request, response, authentication) -> {
-                                logger.info("Session invalidated during logout.");
-                            })
-                            .logoutSuccessHandler((request, response, authentication) -> {
-                                response.setStatus(HttpServletResponse.SC_OK);
-                                response.sendRedirect("/login");
-                                logger.info("Successfully logged out and redirected to login.");
-                            });
-                    logCurrentSecurityContext("After configuring logout");
-                })
+                .rememberMe(rememberMe ->
+                        rememberMe.tokenRepository(persistentTokenRepository())
+                                .tokenValiditySeconds(1209600) // 2 weeks
+                                .rememberMeParameter("remember-me") // This corresponds to the checkbox in your login form
+                )
+                .logout(logout -> logout.logoutUrl("/logout")
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
+                        .deleteCookies("JSESSIONID", "XSRF-TOKEN")
+                        .logoutSuccessUrl(LOGIN_URL)
+                        .addLogoutHandler((request, response, authentication) -> logger.info("Session invalidated during logout."))
+                        .logoutSuccessHandler((request, response, authentication) -> {
+                            response.setStatus(HttpServletResponse.SC_OK);
+                            response.sendRedirect(LOGIN_URL);
+                            logger.info("Successfully logged out and redirected to login.");
+                        })
+                )
+
                 .authenticationProvider(authenticationProvider())
                 .exceptionHandling(exception -> {
                     exception.authenticationEntryPoint((request, response, authException) -> {
                         logger.warn("Unauthenticated access attempt. Redirecting to /login.");
-                        response.sendRedirect("/login");
+                        response.sendRedirect(LOGIN_URL);
                     });
                     logCurrentSecurityContext("After configuring exception handling");
                 })

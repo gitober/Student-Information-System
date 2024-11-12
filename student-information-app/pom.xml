@@ -12,6 +12,7 @@
         <java.version>22</java.version>
         <vaadin.version>24.5.3</vaadin.version>
         <spring-boot.version>3.3.5</spring-boot.version>
+        <org.junit.jupiter.version>5.11.3</org.junit.jupiter.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <sonar.organization>eetuam1</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
@@ -166,6 +167,13 @@
             <version>2.10.0</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -248,7 +256,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.4.1</version>
+                <version>3.4.0</version>
                 <configuration>
                     <archive>
                         <manifest>

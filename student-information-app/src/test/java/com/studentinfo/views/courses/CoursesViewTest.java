@@ -13,7 +13,7 @@ import org.springframework.context.MessageSource;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class CoursesViewTest {
+class CoursesViewTest {
 
     private UserContentLoader userContentLoader;
     private CoursesView coursesView;
@@ -37,7 +37,7 @@ public class CoursesViewTest {
     }
 
     @Test
-    public void testCoursesViewComponents() {
+    void testCoursesViewComponents() {
         // Retrieve the main layout
         VerticalLayout mainLayout = coursesView.getContent();
 
