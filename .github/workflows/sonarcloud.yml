@@ -42,5 +42,5 @@ jobs:
             -Dsonar.organization=eetuam1
             -Dsonar.sources=student-information-app/src
             -Dsonar.java.binaries=student-information-app/target
-            -Dsonar.exclusions=**/vaadin/**, **/frontend/**, **/node_modules/**, **/generated/**, **/target/**
+            -Dsonar.exclusions=**/vaadin/**, **/node_modules/**, **/generated/**, **/target/**
 
