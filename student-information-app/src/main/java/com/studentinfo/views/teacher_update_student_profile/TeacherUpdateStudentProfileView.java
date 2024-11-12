@@ -27,7 +27,7 @@ import java.util.List;
 @Route(value = "teacher/update-students", layout = MainLayout.class)
 @PageTitle("Update Student Profiles")
 @RolesAllowed("USER")
-@CssImport("./themes/studentinformationapp/views/TeacherUpdateStudentProfile/teacher-update-student-profile.css")
+@CssImport("./themes/studentinformationapp/views/teacher_update_student_profile/teacher-update-student-profile.css")
 public class TeacherUpdateStudentProfileView extends Composite<VerticalLayout> {
 
     private final transient StudentService studentService;
