@@ -42,5 +42,5 @@ jobs:
             -Dsonar.organization=eetuam1
             -Dsonar.sources=student-information-app/src
             -Dsonar.java.binaries=student-information-app/target
-            -Dsonar.exclusions=**/*.ts,**/*.js,**/*.tsx,**/*.mjs,**/vaadin/**,**/node_modules/**,**/generated/**,**/target/**
+            -Dsonar.exclusions=**/*.ts,**/*.js,**/*.tsx,**/*.mjs,**/vaadin/**,**/node_modules/**,**/generated/**,**/target/**,**/src/test/**
             -Dsonar.coverage.jacoco.xmlReportPaths=student-information-app/target/site/jacoco/jacoco.xml
