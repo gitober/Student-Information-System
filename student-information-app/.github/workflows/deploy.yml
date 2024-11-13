@@ -1,34 +1,35 @@
-name: Deploy to Heroku
+name: Student Information System
 
 on:
   push:
     branches:
-      - main  # This triggers deployment on push to the main branch
+      - main  # Deploys on push to main branch
+  workflow_dispatch:  # Allows for manual deployment triggers
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # Check out the repository
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - name: Set up JDK
-        uses: actions/setup-java@v2
+      # Set up JDK
+      - name: Set up JDK 22
+        uses: actions/setup-java@v4
         with:
-          java-version: '17'
-          distribution: 'temurin'  # Specify Java distribution if needed
+          java-version: 22
+          distribution: 'zulu'
 
-      - name: Build with Maven
-        run: ./mvnw clean package -DskipTests
+      # Build the project
+      - name: Build Project with Maven
+        run: mvn clean install
+        working-directory: student-information-app  # Set the working directory to student-information-app
 
-      - name: Install Heroku CLI
+      # Run additional steps, such as deploying to a server or cloud provider, if required
+      - name: Deploy to Server
         run: |
-          curl https://cli-assets.heroku.com/install.sh | sh
-
-      - name: Deploy to Heroku
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: |
-          heroku git:remote -a ${{ secrets.HEROKU_APP_NAME }}
-          git push heroku main
+          echo "Starting deployment..."
+          # Add your deployment commands here, e.g., Docker, SCP, or SSH commands
+        working-directory: student-information-app  # Set the working directory to student-information-app
