@@ -22,12 +22,17 @@ FROM eclipse-temurin:21-jre
 # Set metadata information
 LABEL authors="bober"
 
-# Create a non-root user and switch to it
-RUN adduser --disabled-password --gecos "" appuser
-USER appuser
+# Create a non-root user and group, e.g., `appuser`
+RUN groupadd -r appuser && useradd --no-log-init -r -g appuser appuser
 
 # Copy the jar file and any required frontend resources from the build stage
 COPY --from=builder /app/target/student-information-app-1.0-SNAPSHOT.jar /app.jar
+
+# Set permissions on the jar file
+RUN chown appuser:appuser /app.jar
+
+# Run as the new non-root user
+USER appuser
 
 # Expose the application port
 EXPOSE 8080
