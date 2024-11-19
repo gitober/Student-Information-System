@@ -42,6 +42,10 @@ The views are the user interface components built with Vaadin. Our tests for vie
 - Simulate user interactions, such as button clicks and form submissions.
 - Verify that UI components interact correctly with the underlying services.
 
+### 6. Utils and Helpers
+
+These classes provide utility functions and helper methods used across the application.
+
 ## Testing Approach
 
 Our test suite primarily consists of unit tests and integration tests:

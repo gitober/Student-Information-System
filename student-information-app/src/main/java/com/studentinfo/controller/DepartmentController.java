@@ -25,6 +25,4 @@ public class DepartmentController {
         List<DepartmentTranslation> translations = translationService.getDepartmentTranslationsByLocale(locale);
         return ResponseEntity.ok(translations); // Return 200 OK with the list of translated departments
     }
-
-    // Additional department-related endpoints (CRUD, etc.) can go here
 }

@@ -1,6 +1,6 @@
 package com.studentinfo.views.loginpage;
 
-import com.studentinfo.services.LoginHandler;
+import com.studentinfo.utils.LoginHandler;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;

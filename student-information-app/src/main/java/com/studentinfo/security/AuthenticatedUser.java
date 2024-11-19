@@ -44,6 +44,7 @@ public class AuthenticatedUser {
         });
     }
 
+    // Logout the user
     public void logout() {
         authenticationContext.logout();
         logger.info("User logged out successfully.");

@@ -3,7 +3,7 @@ package com.studentinfo.views.registration;
 import com.studentinfo.data.dto.RegistrationDTO;
 import com.studentinfo.data.entity.Language;
 import com.studentinfo.views.header.HeaderView;
-import com.studentinfo.services.RegistrationHandler;
+import com.studentinfo.utils.RegistrationHandler;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;

@@ -8,6 +8,10 @@ import java.util.List;
 
 @Repository
 public interface SubjectTranslationRepository extends JpaRepository<SubjectTranslation, Long> {
-    List<SubjectTranslation> findBySubjectIdAndLocale(Long subjectId, String locale); // Make sure this method exists
+
+    // Retrieve translations by subject ID and locale
+    List<SubjectTranslation> findBySubjectIdAndLocale(Long subjectId, String locale);
+
+    // Retrieve a specific translation by subject ID, locale, and field name
     List<SubjectTranslation> findByLocale(String locale);
 }
