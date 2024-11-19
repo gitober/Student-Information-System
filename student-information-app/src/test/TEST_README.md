@@ -2,6 +2,33 @@
 
 This document outlines the testing strategy and methodologies used in the project, focusing on the key areas of the application: controllers, data (including entities and repositories), services, security, and views. It provides insight into how we ensure the functionality, reliability, and robustness of the application.
 
+## Contents
+- [Introduction](#introduction)
+- [Testing Focus Areas](#testing-focus-areas)
+    - [Controllers](#1-controllers)
+    - [Data (Entities and Repositories)](#2-data-entities-and-repositories)
+    - [Services](#3-services)
+    - [Security](#4-security)
+    - [Views (UI Components)](#5-views-ui-components)
+    - [Utils and Helpers](#6-utils-and-helpers)
+- [Testing Approach](#testing-approach)
+- [Testing Methodologies](#testing-methodologies)
+    - [Mocking with Mockito](#mocking-with-mockito)
+    - [Assertions](#assertions)
+    - [Reflection](#reflection)
+    - [Simulating User Interactions](#simulating-user-interactions)
+    - [Setup and Teardown](#setup-and-teardown)
+- [Annotations Used](#annotations-used)
+    - [`@DataJpaTest`](#1-datajpatest)
+    - [`@Transactional`](#2-transactional)
+    - [`@ActiveProfiles("test")`](#3-activeprofilestest)
+    - [`@WebMvcTest(controllers = UserController.class)`](#4-webmvctestcontrollers-usercontrollerclass)
+    - [`@AutoConfigureMockMvc(addFilters = false)`](#5-autoconfiguremockmvcaddfilters--false)
+    - [`@ExtendWith(MockitoExtension.class)`](#6-extendwithmockitoextensionclass)
+    - [`@SpringBootTest`](#7-springboottest)
+- [Test Configuration](#test-configuration)
+    - [`application-test.properties`](#application-testproperties)
+
 ## Introduction
 
 The project's test suite is designed to cover a wide range of functionalities, from data persistence and service layer logic to user interface components and security mechanisms. Our goal is to create a stable, maintainable application by employing unit tests that validate individual components, integration tests that ensure cohesive operation across layers, and mock testing to simulate complex interactions.
@@ -121,14 +148,12 @@ The test environment employs a dedicated `application-test.properties` file to c
 
 ```properties
 # H2 Database configuration for tests
-# H2 is an in-memory database that simplifies testing by avoiding disk I/O, speeding up tests, and ensuring they don't affect production databases.
 spring.datasource.url=jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false
 spring.datasource.driver-class-name=org.h2.Driver
 spring.datasource.username=sa
 spring.datasource.password=
 
 # Hibernate settings for testing
-# Hibernate ORM configures the persistence and management of Java entities into the H2 database, with settings to automatically create and drop schema, display SQL, and format it for better readability.
 spring.jpa.hibernate.ddl-auto=create-drop
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.format_sql=true
