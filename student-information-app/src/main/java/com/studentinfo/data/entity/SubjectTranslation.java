@@ -24,7 +24,7 @@ public class SubjectTranslation {
     @Column(name = "field_name", nullable = false, length = 50)
     private String fieldName;
 
-    @Column(name = "translated_value", nullable = false, length = 255)
+    @Column(name = "translated_value", nullable = false)
     private String translatedValue;
 
     // Default constructor

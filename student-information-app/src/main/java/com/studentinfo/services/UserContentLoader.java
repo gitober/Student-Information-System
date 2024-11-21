@@ -14,6 +14,7 @@ import com.studentinfo.views.editprofile.StudentEditProfileView;
 import com.studentinfo.views.editprofile.TeacherEditProfileView;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.Composite;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Lazy;
@@ -124,6 +125,18 @@ public class UserContentLoader {
             }
         }, () -> layout.add(new Paragraph(USER_NOT_FOUND_MESSAGE)));
     }
+
+//    private void loadContent(VerticalLayout layout, Composite<VerticalLayout> teacherContentLoader, Composite<VerticalLayout> studentContentLoader) {
+//        authenticatedUser.get().ifPresentOrElse(user -> {
+//            if (user instanceof Teacher) {
+//                layout.add(teacherContentLoader);
+//            } else if (user instanceof Student) {
+//                layout.add(studentContentLoader);
+//            } else {
+//                layout.add(new Paragraph(ROLE_NOT_RECOGNIZED_MESSAGE));
+//            }
+//        }, () -> layout.add(new Paragraph(USER_NOT_FOUND_MESSAGE)));
+//    }
 
     public void loadEditProfileContent(VerticalLayout layout) {
         authenticatedUser.get().ifPresentOrElse(user -> {

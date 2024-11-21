@@ -29,7 +29,7 @@ public class Registration {
     @JoinColumn(name = "student_number", referencedColumnName = "student_number", insertable = false, updatable = false)
     private Student student;
 
-    @Column(name = "batch_id", nullable = true)
+    @Column(name = "batch_id")
     private Long batchId;
 
     @Column(name = "course_id")
