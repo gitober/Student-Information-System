@@ -1,6 +1,6 @@
 package com.studentinfo.views.registration;
 
-import com.studentinfo.services.RegistrationHandler;
+import com.studentinfo.utils.RegistrationHandler;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.textfield.EmailField;

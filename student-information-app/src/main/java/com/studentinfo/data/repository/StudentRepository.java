@@ -12,17 +12,8 @@ public interface StudentRepository extends JpaRepository<Student, Long>, JpaSpec
     // Find a student by username
     Student findByUsername(String username);
 
-    // Find students by their grade
-    List<Student> findByGrade(String grade);
-
-    // Find students by studentClass (matching the entity field name)
-    List<Student> findByStudentClass(String studentClass);
-
-    // Find students by both grade and studentClass
-    List<Student> findByGradeAndStudentClass(String grade, String studentClass);
-
     // Find students enrolled in a specific course (by course ID)
-    List<Student> findByCourses_CourseId(Long courseId); // This should now work after fixing the 'courses' mapping
+    List<Student> findByCourses_CourseId(Long courseId);
 
     // Find a student by studentNumber
     Optional<Student> findByStudentNumber(Long studentNumber);

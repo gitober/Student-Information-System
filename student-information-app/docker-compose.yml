@@ -31,6 +31,7 @@ services:
       - mysql
     networks:
       - app-network
+    user: appuser  # Run studentinfoapp as the non-root appuser
 
 volumes:
   mysql-data:

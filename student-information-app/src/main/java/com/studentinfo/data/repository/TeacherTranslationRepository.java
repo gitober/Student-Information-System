@@ -8,6 +8,10 @@ import java.util.List;
 
 @Repository
 public interface TeacherTranslationRepository extends JpaRepository<TeacherTranslation, Long> {
-    List<TeacherTranslation> findByTeacherIdAndLocale(Long teacherId, String locale); // Verify this method is defined
+
+    // Retrieve translations by teacher ID and locale
+    List<TeacherTranslation> findByTeacherIdAndLocale(Long teacherId, String locale);
+
+    // Retrieve a specific translation by teacher ID, locale, and field name
     List<TeacherTranslation> findByLocale(String locale);
 }

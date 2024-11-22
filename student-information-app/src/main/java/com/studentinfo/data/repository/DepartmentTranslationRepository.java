@@ -8,6 +8,10 @@ import java.util.List;
 
 @Repository
 public interface DepartmentTranslationRepository extends JpaRepository<DepartmentTranslation, Long> {
-    List<DepartmentTranslation> findByDepartmentIdAndLocale(Long departmentId, String locale); // Ensure this method is present
+
+    // Retrieve translations by department ID and locale
+    List<DepartmentTranslation> findByDepartmentIdAndLocale(Long departmentId, String locale);
+
+    // Retrieve a specific translation by department ID, locale, and field name
     List<DepartmentTranslation> findByLocale(String locale);
 }

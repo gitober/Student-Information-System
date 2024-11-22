@@ -11,16 +11,6 @@ import java.util.List;
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Long> {
 
-    // Custom query to find courses by name
-    List<Course> findByCourseName(String courseName);
-
-    // Custom query to find courses by duration
-    List<Course> findByDuration(int duration);
-
-    // Find courses taught by a specific teacher
-    @Query("SELECT c FROM Course c JOIN c.teachers t WHERE t.id = :teacherId")
-    List<Course> findByTeacherId(Long teacherId);
-
     // Custom query to find courses by student ID
     @Query("SELECT c FROM Course c JOIN Registration r ON c.courseId = r.courseId WHERE r.studentNumber = :studentId")
     List<Course> findCoursesByStudentId(@Param("studentId") Long studentId);
