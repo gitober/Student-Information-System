@@ -199,6 +199,23 @@
                 </executions>
             </plugin>
 
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <configLocation>src/main/resources/checkstyle.xml</configLocation>
+                    <sourceDirectories>
+                        <directory>src/main/java</directory>
+                    </sourceDirectories>
+                    <consoleOutput>true</consoleOutput>
+                    <failsOnError>true</failsOnError>
+                    <includes>**/*.java</includes> <!-- Comma-separated includes -->
+                    <excludes>**/generated/**</excludes> <!-- Comma-separated excludes -->
+                </configuration>
+            </plugin>
+
+
             <!-- JaCoCo Plugin for Code Coverage -->
             <plugin>
                 <groupId>org.jacoco</groupId>
@@ -274,13 +291,12 @@
             </plugin>
 
 
-
         </plugins>
     </build>
 
     <profiles>
         <profile>
-            <!-- Production mode is activated using -Pproduction -->
+            <!-- Production mode is activated using -Production -->
             <id>production</id>
             <dependencies>
                 <!-- Exclude development dependencies from production -->
