@@ -145,7 +145,7 @@ SonarCloud provides detailed reports on code quality. Key metrics include:
 4. **Security Hotspots**
    - All critical issues have been reviewed.
 
-![SonarCloudResult](../../../images/test_tools/sonarCloud/sonarCloudResult.PNG)
+![SonarCloudResult](../../../images/test_tools/sonarcloud/sonarCloudResult.PNG)
 
 <p align="right">(<a href="#contents">back to top</a>)</p>
 
