@@ -82,3 +82,7 @@ The page also adheres to localization standards, making it accessible to users o
 - **`registration-secondary-button`**: Styling for the "Cancel" button.
 
 This documentation provides an overview of the `RegistrationView` class, highlighting its features, layout, and usage in the user registration process. Let me know if you need more details or further refinement!
+
+---
+
+[Back to System Overview](../../system-overview.md)

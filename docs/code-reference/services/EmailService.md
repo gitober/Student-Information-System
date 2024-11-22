@@ -38,3 +38,6 @@ The `EmailService` class is responsible for sending emails, generating and manag
 
 The `EmailService` class is used for managing email operations such as sending emails, handling password reset requests, and updating user passwords. It provides utility methods to generate and manage reset tokens, ensuring secure password reset functionality for users.
 
+---
+
+[Back to System Overview](../system-overview.md)

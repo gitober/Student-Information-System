@@ -27,3 +27,7 @@ This class is an abstract entity used as a base for other entities in the applic
 ## Usage
 
 This abstract entity is intended to be extended by other entity classes, providing shared functionality and common fields for persistence.
+
+---
+
+[Back to System Overview](../../system-overview.md)

@@ -21,3 +21,6 @@ This interface represents the `DepartmentTranslationRepository`, which provides 
 
 This repository is used to manage `DepartmentTranslation` entities, providing methods for both basic CRUD operations and custom queries. The custom query methods allow for retrieving department translations by department ID and locale, which are useful for displaying localized department information in different languages.
 
+---
+
+[Back to System Overview](../../system-overview.md)

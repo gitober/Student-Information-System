@@ -32,3 +32,6 @@ This class represents the `DepartmentTranslation` entity, used for storing trans
 
 This entity is used to persist translations for department fields, allowing department information to be displayed in different languages as per the user's locale.
 
+---
+
+[Back to System Overview](../../system-overview.md)

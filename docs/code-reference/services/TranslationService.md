@@ -57,3 +57,7 @@ The `TranslationService` class is responsible for managing translations for vari
 ## Usage
 
 The `TranslationService` class is used to manage translation data for various entities in the application, providing multilingual support. It ensures that localized versions of data for users, courses, departments, subjects, and teachers are consistently maintained and accessed.
+
+---
+
+[Back to System Overview](../system-overview.md)

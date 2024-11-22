@@ -31,3 +31,6 @@ This class represents the `Teacher` entity, which extends the `User` class, used
 
 This entity is used to persist information specific to teachers, such as their subjects, department, and courses taught. It extends the `User` class to inherit common user attributes and functionality.
 
+---
+
+[Back to System Overview](../../system-overview.md)

@@ -36,3 +36,7 @@ The `GradeService` class is responsible for managing grade-related operations, i
 ## Usage
 
 The `GradeService` class is used to manage grade data, including CRUD operations and retrieval based on student or course details. It serves as the intermediary between the application logic and the database, ensuring that grade data is consistently managed.
+
+---
+
+[Back to System Overview](../system-overview.md)

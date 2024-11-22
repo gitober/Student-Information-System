@@ -19,3 +19,7 @@ This class is a Data Transfer Object (DTO) used for transferring course creation
 ## Usage
 
 This DTO is used for transferring information required to create a course, typically in REST API requests.
+
+---
+
+[Back to System Overview](../../system-overview.md)

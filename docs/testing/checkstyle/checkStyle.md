@@ -1,4 +1,20 @@
-# Checkstyle Report
+# Checkstyle Documentation
+
+## Contents
+- [Summary](#summary)
+- [Configuration and Process](#configuration-and-process)
+    - [Build and Checkstyle Workflow](#1-build-and-checkstyle-workflow)
+    - [Checkstyle Configuration (`checkstyle.xml`)](#2-checkstyle-configuration-checkstylexml)
+    - [Maven Checkstyle Plugin (`pom.xml`)](#3-maven-checkstyle-plugin-pomxml)
+- [Analysis Results](#analysis-results)
+- [Conclusion](#conclusion)
+- [Implementation Steps](#implementation-steps)
+    - [Add Checkstyle Plugin to the Project](#1-add-checkstyle-plugin-to-the-project)
+- [Configuration Steps](#configuration-steps)
+    - [Define Rules (`checkstyle.xml`)](#1-define-rules-checkstylexml)
+    - [Configure Suppressions](#2-configure-suppressions)
+    - [GitHub Actions Integration](#3-github-actions-integration)
+- [Benefits of Integration](#benefits-of-integration)
 
 ---
 
@@ -32,6 +48,8 @@ This pipeline ensures Checkstyle is executed on every change to the `main` branc
 - **Console output**: Enabled (`true`)
 - **Fail on errors**: Enabled (`failsOnError: true`)
 
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
 ---
 
 ## Analysis Results
@@ -41,10 +59,12 @@ This pipeline ensures Checkstyle is executed on every change to the `main` branc
 - **Errors**: 0
 - **Warnings**: 0
 
-![CheckStyle](../../images/test_tools/checkstyle/CheckStyle_testitulos.PNG)
+![CheckStyle](../../../images/test_tools/checkstyle/CheckStyle_testitulos.PNG)
 
 ### Details:
 The analysis confirmed no violations of the defined Checkstyle rules in the project files. Suppressions were effectively configured to avoid irrelevant warnings.
+
+<p align="right">(<a href="#contents">back to top</a>)</p>
 
 ---
 
@@ -56,6 +76,8 @@ The Checkstyle results confirm that the project's code fully complies with the d
 - Review and limit suppressions to maximize rule coverage.
 
 Checkstyle integration serves as a strong foundation for ensuring code quality as part of continuous integration and delivery.
+
+<p align="right">(<a href="#contents">back to top</a>)</p>
 
 ---
 
@@ -75,10 +97,10 @@ Using Maven, the Checkstyle plugin was integrated by adding the following config
         <failsOnError>true</failsOnError>
     </configuration>
 </plugin>
-
-
 ```
 This configuration enables automatic Checkstyle execution as part of the Maven build process.
+
+<p align="right">(<a href="#contents">back to top</a>)</p>
 
 ---
 
@@ -87,14 +109,14 @@ This configuration enables automatic Checkstyle execution as part of the Maven b
 ### 1. Define Rules (`checkstyle.xml`)
 Rules for code checks were defined in `src/main/resources/checkstyle.xml`, including:
 
-- **Maximum line length**: 120 characters.  
-- **JavaDoc checks**: Enforce consistent documentation.  
+- **Maximum line length**: 120 characters.
+- **JavaDoc checks**: Enforce consistent documentation.
 - **Suppressions**: Configured in a separate file (`checkstyle-suppressions.xml`) to avoid unnecessary warnings for test code and line length checks.
 
 ### 2. Configure Suppressions
 Suppressions were configured in `checkstyle-suppressions.xml` to exclude certain checks:
 
-- **Test Code**: All files in the `src/test` directory are ignored.  
+- **Test Code**: All files in the `src/test` directory are ignored.
 - **Line Length**: Line length checks are suppressed globally.
 
 ### 3. GitHub Actions Integration
@@ -123,25 +145,31 @@ jobs:
         run: mvn install
       - name: Run Checkstyle
         run: mvn checkstyle:check
-
 ```
-4. Console Output and Logs
-   Checkstyle results can be reviewed directly from the console logs (stdout) or by generating an HTML report. The configuration consoleOutput: true ensures clear output during the CI process.
 
-### Benefits of Integration
-1. Automatic Validation
+4. Console Output and Logs
+   Checkstyle results can be reviewed directly from the console logs (stdout) or by generating an HTML report. The configuration `consoleOutput: true` ensures clear output during the CI process.
+
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
+---
+
+## Benefits of Integration
+
+1. **Automatic Validation**
    Checkstyle runs on every code change in the GitHub Actions pipeline, ensuring continuous compliance with rules.
 
-2. Consistency
+2. **Consistency**
    Enforces coding standards, aiding collaboration in larger teams.
 
-3. Customizability
+3. **Customizability**
    Rules can be tailored, and suppressions focus on key areas.
 
-4. Fail-Fast Mechanism
-   The failsOnError: true configuration ensures the build fails if style violations are detected.
+4. **Fail-Fast Mechanism**
+   The `failsOnError: true` configuration ensures the build fails if style violations are detected.
 
-Conclusion
-The Checkstyle integration was successfully implemented and is now part of the project's continuous integration pipeline. It ensures adherence to style rules and improves long-term code quality.
+<p align="right">(<a href="#contents">back to top</a>)</p>
 
-This configuration is easily extendable by adding new rules and checks as the project evolves.
+---
+
+[Back to Testing Overview](../testing-overview.md)

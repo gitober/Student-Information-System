@@ -34,3 +34,6 @@ This class represents the `Department` entity, used for storing information abou
 
 This entity is used to persist department information, manage teacher and subject assignments, and facilitate department-level operations within the application.
 
+---
+
+[Back to System Overview](../../system-overview.md)

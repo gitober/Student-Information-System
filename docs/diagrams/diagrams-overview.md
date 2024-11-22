@@ -1,6 +1,12 @@
 # Project Diagrams Overview
 
-This document provides an overview of various diagrams that describe the architecture, structure, and processes within the project. Each diagram serves a different purpose in representing aspects of the **Student Information System**.
+## Contents
+- [Entity Relationship (ER) Diagram](#1-entity-relationship-er-diagram)
+- [Relational Database Diagram](#2-relational-database-diagram)
+- [Class Diagram](#3-class-diagram)
+- [Use Case Diagram for Grades](#4-use-case-diagram-for-grades)
+- [Activity Diagram for Grades](#5-activity-diagram-for-grades)
+- [Sequence Diagram for Course](#6-sequence-diagram-for-course)
 
 ---
 
@@ -11,27 +17,27 @@ The **ER Diagram** represents the entities in the project and their relationship
 
 > **Note**: The diagram does not include the later-added translation tables, which were introduced to support multiple languages in the application.
 
+<p align="right">(<a href="#contents">back to top</a>)</p>
 
 ---
-
 
 ## 2. Relational Database Diagram
 ![Relational Database Diagram](../../images/diagrams/2.Relational-Database-Diagram.png)
 
 The **Relational Database Diagram** shows the structure of the database, including the tables, columns, and relationships between them. It provides insight into how data is stored and linked, ensuring data consistency across different modules.
 
+<p align="right">(<a href="#contents">back to top</a>)</p>
 
 ---
-
 
 ## 3. Class Diagram
 ![Class Diagram](../../images/diagrams/3.Class-Diagram.png)
 
 The **Class Diagram** represents the system's static structure by showing the classes, their attributes, and methods, along with the relationships between them. This diagram is crucial for understanding the project's object-oriented structure and interactions between different classes.
 
+<p align="right">(<a href="#contents">back to top</a>)</p>
 
 ---
-
 
 ## 4. Use Case Diagram for Grades
 ![Use Case Diagram - Grades](../../images/diagrams/4.Use-Case-Diagram-Grades.png)
@@ -45,29 +51,29 @@ The **Use Case Diagram for Grades** illustrates an example of how teachers and s
 **Use Cases:**
 
 1. **Edit Student Information** ("Opiskelija tietojen muokkaus")
-    - The **teacher** can view and edit student information.
+   - The **teacher** can view and edit student information.
 
 2. **Edit Profile** ("Profiilin muokkaus")
-    - Both **teachers** and **students** can view and edit their own profile information.
+   - Both **teachers** and **students** can view and edit their own profile information.
 
 3. **Edit Grades** ("Arvosanojen muokkaus")
-    - The **teacher** can view and edit students' grades.
+   - The **teacher** can view and edit students' grades.
 
 4. **View Grades** ("Arvosanojen tarkastelu")
-    - **Students** can view their grades but do not have permission to modify them.
+   - **Students** can view their grades but do not have permission to modify them.
 
 5. **Attendance Management** ("Läsnäolo hallinta")
-    - The **teacher** can manage student attendance information.
+   - The **teacher** can manage student attendance information.
 
 6. **Course Enrollment** ("Kurssi ilmoittautuminen")
-    - The **teacher** can enroll students in courses.
-    - **Students** can also enroll themselves in courses.
+   - The **teacher** can enroll students in courses.
+   - **Students** can also enroll themselves in courses.
 
 This diagram serves as an example use-case diagram for grades, showcasing how different users, specifically teachers and students, interact with the grade-related features of the **Student Information System**.
 
+<p align="right">(<a href="#contents">back to top</a>)</p>
 
 ---
-
 
 ## 5. Activity Diagram for Grades
 ![Activity Diagram - Grades](../../images/diagrams/5.Activity-Diagram-Grades.png)
@@ -82,9 +88,9 @@ The **Activity Diagram for Grades** illustrates the workflow for managing grades
 6. The teacher must click **Save** to confirm changes or **Cancel** to discard them.
 7. The teacher can exit at any point during the process.
 
+<p align="right">(<a href="#contents">back to top</a>)</p>
 
 ---
-
 
 ## 6. Sequence Diagram for Course
 ![Sequence Diagram - Course](../../images/diagrams/6.Sequence-Diagram-Course.png)
@@ -96,7 +102,15 @@ The **Sequence Diagram for Course** illustrates the interaction between differen
 3. If the save operation is successful, a confirmation message is sent back to the teacher to confirm changes.
 4. If there is an error during the save operation, an error message is returned, and the teacher is informed about the issue.
 
+<p align="right">(<a href="#contents">back to top</a>)</p>
 
 ---
 
 These diagrams are integral to understanding the system's architecture, data flow, and user interactions. Each diagram provides a unique perspective, offering insights into the design and functional aspects of the **Student Information System**.
+
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
+---
+
+[Back to Project Overview](../project-overview.md)
+

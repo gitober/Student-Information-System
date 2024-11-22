@@ -16,3 +16,8 @@ This class configures internationalization (i18n) for the application, enabling 
 ## Notes
 - Ensure `messages_{locale}.properties` files exist for supported languages.
 - Example URL for switching locale: `http://example.com?lang=fi`.
+
+---
+
+[Back to System Overview](../system-overview.md)
+

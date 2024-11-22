@@ -21,3 +21,7 @@ This interface represents the `CourseRepository`, which provides methods to perf
 ## Usage
 
 This repository is used to manage `Course` entities, providing methods for both basic CRUD operations and custom queries. The custom query method allows for retrieving courses by a specific student, which is useful for managing course enrollments and student-specific data in the application.
+
+---
+
+[Back to System Overview](../../system-overview.md)

@@ -48,3 +48,6 @@ This class represents the `User` entity, which serves as the base class for all 
 
 This entity is used to store and manage user information, including authentication credentials, personal details, and roles. It serves as the base class for other user types, such as students and teachers, and integrates with Spring Security for authentication.
 
+---
+
+[Back to System Overview](../../system-overview.md)

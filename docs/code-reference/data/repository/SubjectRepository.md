@@ -20,3 +20,6 @@ This interface represents the `SubjectRepository`, which provides methods to per
 
 This repository is used to manage `Subject` entities, providing methods for both basic CRUD operations and custom queries. The custom query method allows for retrieving a subject by its name, which is useful for ensuring uniqueness and managing subject-related data efficiently.
 
+---
+
+[Back to System Overview](../../system-overview.md)

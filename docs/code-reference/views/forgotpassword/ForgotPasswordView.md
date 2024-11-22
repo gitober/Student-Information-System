@@ -67,3 +67,7 @@ This view helps users recover their accounts and reset their passwords securely.
 ## Usage
 
 The `ForgotPasswordView` is used to assist users who need to recover access to their accounts by resetting their passwords. It allows users to securely request a reset link, set a new password, and update their credentials.
+
+---
+
+[Back to System Overview](../../system-overview.md)

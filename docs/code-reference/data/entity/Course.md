@@ -41,3 +41,6 @@ This class represents the `Course` entity, used for storing course information a
 
 This entity is used to persist course information, manage teacher assignments, and track student enrollments, typically used in course management features.
 
+---
+
+[Back to System Overview](../../system-overview.md)

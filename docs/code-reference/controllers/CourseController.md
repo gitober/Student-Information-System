@@ -47,3 +47,8 @@ This class handles HTTP requests for managing course records, providing RESTful 
 - **Get translated course name**: `GET /api/courses/{courseId}/translated-name?locale={locale}`
 - **Get translated course plan**: `GET /api/courses/{courseId}/translated-plan?locale={locale}`
 
+---
+
+[Back to System Overview](../system-overview.md)
+
+

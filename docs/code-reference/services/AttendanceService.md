@@ -38,3 +38,6 @@ The `AttendanceService` class is responsible for managing attendance records, in
 
 The `AttendanceService` class is used to manage attendance records, providing methods for basic CRUD operations as well as specific methods for retrieving attendance data by course or student. It serves as the intermediary between the application logic and the database, ensuring that attendance data is consistently managed.
 
+---
+
+[Back to System Overview](../system-overview.md)

@@ -21,3 +21,6 @@ This interface represents the `TeacherTranslationRepository`, which provides met
 
 This repository is used to manage `TeacherTranslation` entities, providing methods for both basic CRUD operations and custom queries. The custom query methods allow for retrieving teacher translations by teacher ID and locale, which are useful for displaying localized teacher information in different languages.
 
+---
+
+[Back to System Overview](../../system-overview.md)

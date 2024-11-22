@@ -33,3 +33,6 @@ This class represents the `TeacherTranslation` entity, used for storing translat
 
 This entity is used to persist translations for teacher fields, allowing teacher information to be displayed in different languages as per the user's locale.
 
+---
+
+[Back to System Overview](../../system-overview.md)

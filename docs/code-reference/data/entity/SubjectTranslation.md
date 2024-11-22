@@ -33,3 +33,6 @@ This class represents the `SubjectTranslation` entity, used for storing translat
 
 This entity is used to persist translations for subject fields, allowing the subject information to be displayed in different languages as per the user's locale.
 
+---
+
+[Back to System Overview](../../system-overview.md)

@@ -33,3 +33,6 @@ The `UserDetailsServiceImpl` class is responsible for loading user-specific data
 
 The `UserDetailsServiceImpl` class is used by Spring Security during the authentication process to load user details, such as their email, password, and roles. It is essential for ensuring that users can authenticate and gain access to the application based on their credentials.
 
+---
+
+[Back to System Overview](../system-overview.md)

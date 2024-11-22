@@ -56,3 +56,7 @@ The `RegistrationHandler` class is responsible for handling the user registratio
 ## Usage
 
 The `RegistrationHandler` class is used to manage the user registration process in the application. It ensures that users are registered securely, with support for password encoding and multilingual translations for user attributes. The class also validates that each email is unique before registering a new user.
+
+---
+
+[Back to System Overview](../system-overview.md)

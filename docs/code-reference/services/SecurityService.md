@@ -37,3 +37,6 @@ The `SecurityService` class is responsible for managing authentication operation
 
 The `SecurityService` class is used to authenticate users and manage security contexts within the application. It plays a critical role in ensuring secure access and maintaining the user's authenticated session.
 
+---
+
+[Back to System Overview](../system-overview.md)

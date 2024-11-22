@@ -21,3 +21,7 @@ This interface represents the `AttendanceRepository`, which provides methods to 
 ## Usage
 
 This repository is used to manage `Attendance` entities, providing methods for both basic CRUD operations and custom queries. The custom query methods allow for more specific lookups, such as retrieving attendance records by student number or course details, which are essential for managing attendance efficiently in the application.
+
+---
+
+[Back to System Overview](../../system-overview.md)

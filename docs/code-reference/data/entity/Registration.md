@@ -34,3 +34,6 @@ This class represents the `Registration` entity, used for storing information ab
 
 This entity is used to persist registration information for students enrolling in courses, including registration details, course payments, and associations with students, courses, and batches.
 
+---
+
+[Back to System Overview](../../system-overview.md)

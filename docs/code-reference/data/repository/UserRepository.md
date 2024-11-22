@@ -18,3 +18,6 @@ This interface represents the `UserRepository`, which provides methods to perfor
 
 This repository is used to manage `User` entities, providing methods for both basic CRUD operations, custom queries, and complex specification-based searches. The custom query methods allow for retrieving users by their username or email, which are essential for user authentication, authorization, and account management.
 
+---
+
+[Back to System Overview](../../system-overview.md)

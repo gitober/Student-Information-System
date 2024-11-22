@@ -1,39 +1,190 @@
-# ![EduBird Logo](images/logo/logoandname.png)
-# Student Information System
+<!-- PROJECT SHIELDS -->
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stars][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
 
-The Student Information System, called **EduBird**, is a web application designed to facilitate student and teacher interactions, manage course enrollments, track attendance, and handle grade management. Developed as a school group project, it provides an efficient platform for educational institutions to manage their academic activities.
+<!-- PROJECT LOGO -->
+<div align="left">
+  <a href="https://github.com/gitober/Student-Information-System">
+    <img src="images/logo/logoandname.png" alt="Logo" width="120">
+  </a>
+  <h3>EduBird - Student Information System</h3>
+  <p align="left">
+    A web application designed for educational institutions to manage academic activities efficiently.
+    <br /><br />
+    <a href="https://github.com/gitober/Student-Information-System/issues">Report Bug</a>
+    &nbsp;|&nbsp;
+    <a href="https://github.com/gitober/Student-Information-System/issues">Request Feature</a>
+  </p>
+</div>
 
-## Project Overview
+---
+
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol><a id="top"></a>
+    <li><a href="#about-the-project">About The Project</a></li>
+    <li><a href="#technologies-used">Technologies Used</a></li>
+    <li><a href="#getting-started">Getting Started</a></li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#further-development-plan">Further Development Plan</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#documentation">Documentation</a></li>
+  </ol>
+</details>
+
+---
+
+## About The Project
+
+EduBird is a web application designed for educational institutions to efficiently manage academic activities like student-teacher interactions, course enrollments, attendance tracking, and grade management. The project is part of a school assignment, aimed at building a comprehensive and user-friendly system to assist in education management.
+
+This project is the result of a collaborative effort by a dedicated team of contributors. Their vision, creativity, and hard work have transformed EduBird from a concept into a functional and user-friendly system.
+
 For a detailed breakdown of the system, including its structure, components, and functionalities, please refer to the [Project Overview](docs/project-overview.md).
 
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+---
+
+<!-- TECHNOLOGIES USED -->
 ## Technologies Used
-This project utilizes the following technologies and tools:
 
-- **Java 21**: Programming language for backend logic.
-- **Spring Boot**: Framework for developing the backend services.
-- **Vaadin**: Frontend framework for building UI.
-- **MySQL**: Production database.
-- **H2**: In-memory database for testing.
-- **Maven**: Dependency management and project build tool.
-- **Docker**: Containerization of the application for easy deployment.
-- **Jenkins**: Continuous Integration and Continuous Delivery (CI/CD).
-- **JUnit and Mockito**: Unit and integration testing frameworks.
-- **Lombok**: Reduces boilerplate code in Java.
-- **SLF4J and Logback**: Logging framework for maintaining logs.
+EduBird was built with the following technologies and tools:
 
+- ![Java](https://img.shields.io/badge/Java-21-007396?style=for-the-badge&logo=java&logoColor=white) **Java 21**: Backend programming language.
+- ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-2.5-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white) **Spring Boot**: Framework for backend services.
+- ![Vaadin](https://img.shields.io/badge/Vaadin-Framework-00B4F0?style=for-the-badge&logo=vaadin&logoColor=white) **Vaadin**: Frontend framework for building UI components.
+- ![MySQL](https://img.shields.io/badge/MySQL-Database-4479A1?style=for-the-badge&logo=mysql&logoColor=white) **MySQL**: Production database.
+- ![H2](https://img.shields.io/badge/H2-Database-007396?style=for-the-badge&logo=h2&logoColor=white) **H2**: In-memory database for testing.
+- ![Maven](https://img.shields.io/badge/Maven-Build-C71A36?style=for-the-badge&logo=apache-maven&logoColor=white) **Maven**: Dependency management and project build tool.
+- ![Docker](https://img.shields.io/badge/Docker-Container-2496ED?style=for-the-badge&logo=docker&logoColor=white) **Docker**: Containerization for easy deployment.
+- ![Jenkins](https://img.shields.io/badge/Jenkins-CI%2FCD-D24939?style=for-the-badge&logo=jenkins&logoColor=white) **Jenkins**: Continuous Integration and Continuous Delivery (CI/CD).
+- ![JUnit](https://img.shields.io/badge/JUnit-Testing-25A162?style=for-the-badge&logo=junit5&logoColor=white) **JUnit and Mockito**: Testing frameworks for unit and integration testing.
+- ![Lombok](https://img.shields.io/badge/Lombok-Utility-FF6347?style=for-the-badge&logo=lombok&logoColor=white) **Lombok**: Reduces Java boilerplate code.
+- ![SLF4J](https://img.shields.io/badge/SLF4J-Logging-323232?style=for-the-badge&logo=slf4j&logoColor=white) **SLF4J and Logback**: Logging framework.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+---
+
+<!-- GETTING STARTED -->
+## Getting Started
+
+This section provides instructions on how to set up the project locally and run it.
+
+### Prerequisites
+
+- Java Development Kit (JDK) 21
+- Maven
+- MySQL
+- Docker (Optional for containerized deployment)
+
+### Installation
+
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/gitober/Student-Information-System.git
+   ```
+   For detailed setup and configuration, please refer to the [Settings Overview](docs/project-settings/settings-overview.md).
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+---
+
+<!-- USAGE -->
+## Usage
+
+The system is designed to handle multiple functionalities:
+
+- Student and teacher interaction via online course platforms.
+- Course management, enrollment, and attendance tracking.
+- Grade and result management for teachers and students.
+
+For more examples and screenshots of the application's user interface, refer to the [Application Walkthrough](docs/app-walkthrough/app-walkthrough-overview.md).
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+---
+
+<!-- FURTHER DEVELOPMENT PLAN -->
 ## Further Development Plan
-- Introduce admin role for central management.
-- Implement real-time communication features like chat between students and teachers.
+
+- Introduce admin role for centralized management.
+- Implement real-time communication features, such as chat between students and teachers.
 - Add comprehensive analytics and reporting tools.
-- Integrate calendar and notification systems.
+- Integrate calendar and notification systems for event and deadline reminders.
 
-## References
-- [Vaadin Documentation](https://vaadin.com/docs)
-- [Spring Boot Reference](https://spring.io/projects/spring-boot)
-- [MySQL Documentation](https://dev.mysql.com/doc/)
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-## Authors
-- [Anni](https://github.com/annikannisto)
-- [Eetu](https://github.com/eetuam1)
-- [George](https://github.com/GeorgeChirikov)
-- [Gitta](https://github.com/gitober)
+---
+
+
+<!-- CONTRIBUTING -->
+## Contributing
+
+We believe that collaboration and innovation drive progress. Contributions to this project help us improve and build a solution that benefits everyone. We appreciate the effort and creativity our contributors bring to the table. If you have ideas or improvements, we'd love to hear from you!
+
+### How to Contribute
+If you'd like to contribute, follow these steps to help us improve the project:
+
+1. Fork the repository to your GitHub account.
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`).
+3. Make your changes and commit them (`git commit -m 'Add some AmazingFeature'`).
+4. Push your changes to your branch (`git push origin feature/AmazingFeature`).
+5. Open a pull request for review.
+
+We carefully review all contributions to ensure they align with the project’s vision and goals.
+
+### Acknowledgments
+This project was envisioned and built by its creators, whose hard work and dedication laid the foundation for its success. Their efforts continue to inspire ongoing improvements and innovation.
+
+We value the hard work of everyone contributing to this project. Below are the creators and top contributors who have helped shape it:
+
+<a href="https://github.com/gitober/Student-Information-System/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=gitober/Student-Information-System" alt="Creators and Top Contributors" />
+</a>
+
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+---
+
+<!-- LICENSE -->
+## License
+
+Distributed under the MIT License. See [LICENSE.txt](LICENSE.txt) for more information.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+---
+
+## Documentation
+
+For more detailed information about the project, explore the following resources:
+
+- **[Application Walkthrough](docs/app-walkthrough/app-walkthrough-overview.md)**: Step-by-step guide to using the application.
+- **[Code Reference](docs/code-reference/system-overview.md)**: Architecture and system component details.
+- **[Database Overview](docs/database/database-overview.md)**: Database schema and relationships.
+- **[Deployment with Docker](docs/deployment/docker/docker.md)**: Docker setup and deployment instructions.
+- **[Development and Testing Cases](docs/development-cases/development_and_testing_report.md)**: Testing scenarios and progress tracking.
+- **[Diagrams Overview](docs/diagrams/diagrams-overview.md)**: Workflow and relationship diagrams.
+- **[Settings Overview](docs/project-settings/settings-overview.md)**: Configuration and setup instructions.
+- **[Testing Overview](docs/testing/junit/test-overview.md)**: Testing strategy and execution steps.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+[contributors-shield]: https://img.shields.io/github/contributors/gitober/Student-Information-System.svg?style=for-the-badge
+[contributors-url]: https://github.com/gitober/Student-Information-System/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/gitober/Student-Information-System.svg?style=for-the-badge
+[forks-url]: https://github.com/gitober/Student-Information-System/network/members
+[stars-shield]: https://img.shields.io/github/stars/gitober/Student-Information-System.svg?style=for-the-badge
+[stars-url]: https://github.com/gitober/Student-Information-System/stargazers
+[issues-shield]: https://img.shields.io/github/issues/gitober/Student-Information-System.svg?style=for-the-badge
+[issues-url]: https://github.com/gitober/Student-Information-System/issues
+

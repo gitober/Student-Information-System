@@ -21,3 +21,6 @@ This interface represents the `SubjectTranslationRepository`, which provides met
 
 This repository is used to manage `SubjectTranslation` entities, providing methods for both basic CRUD operations and custom queries. The custom query methods allow for retrieving subject translations by subject ID and locale, which are useful for displaying localized subject information in different languages.
 
+---
+
+[Back to System Overview](../../system-overview.md)

@@ -35,7 +35,7 @@ RUN chown appuser:appuser /app.jar
 USER appuser
 
 # Expose the application port
-EXPOSE 8080
+EXPOSE 8090
 
 # Run the application
 ENTRYPOINT ["java", "-jar", "/app.jar"]

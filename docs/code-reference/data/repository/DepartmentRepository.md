@@ -19,3 +19,7 @@ This interface represents the `DepartmentRepository`, which provides methods to 
 ## Usage
 
 This repository is used to manage `Department` entities, providing methods for both basic CRUD operations and custom queries. The custom query method allows for retrieving a department by its name, which is useful for ensuring uniqueness and managing department-related data efficiently.
+
+---
+
+[Back to System Overview](../../system-overview.md)

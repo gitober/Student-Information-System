@@ -28,3 +28,6 @@ This class represents the `Subject` entity, used for storing information about s
 
 This entity is used to persist information about subjects, including their names and associated departments. It is typically used in the management of academic departments and their offerings.
 
+---
+
+[Back to System Overview](../../system-overview.md)

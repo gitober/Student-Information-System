@@ -36,3 +36,6 @@ The `MainLayout` is a crucial component that ensures a consistent user experienc
 
 This class enhances the application's UX by maintaining a familiar navigation bar throughout the user's journey, whether they are logged in or browsing as a guest.
 
+---
+
+[Back to System Overview](../../system-overview.md)

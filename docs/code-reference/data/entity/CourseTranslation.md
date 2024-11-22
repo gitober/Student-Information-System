@@ -33,3 +33,6 @@ This class represents the `CourseTranslation` entity, used for storing translate
 
 This entity is used to persist translations for course fields, allowing the course information to be displayed in different languages as per the user's locale.
 
+---
+
+[Back to System Overview](../../system-overview.md)

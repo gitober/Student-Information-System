@@ -30,3 +30,6 @@ The `DepartmentService` class is responsible for managing department-related ope
 
 The `DepartmentService` class is used to manage department data, including retrieving all departments, creating a default department, and initializing department relationships with teachers and subjects. It acts as a bridge between the application logic and the database, ensuring that department data is consistently managed and that relationships are properly loaded.
 
+---
+
+[Back to System Overview](../system-overview.md)

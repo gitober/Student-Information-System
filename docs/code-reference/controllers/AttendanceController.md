@@ -36,3 +36,7 @@ This class handles HTTP requests for managing attendance records, providing REST
 
 - **Get all records**: `GET /api/attendance`
 - **Get record by ID**: `GET /api/attendance/{attendanceId}`
+
+---
+
+[Back to System Overview](../system-overview.md)

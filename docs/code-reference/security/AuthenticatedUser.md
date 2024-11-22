@@ -35,3 +35,6 @@ The `AuthenticatedUser` class handles authentication and user details retrieval 
 
 The `AuthenticatedUser` class is used to manage user authentication operations, such as retrieving the authenticated user's entity or logging out. This is useful for maintaining session-specific user data and handling security within the application.
 
+---
+
+[Back to System Overview](../system-overview.md)

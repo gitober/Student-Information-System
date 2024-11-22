@@ -23,3 +23,6 @@ This interface represents the `TeacherRepository`, which provides methods to per
 
 This repository is used to manage `Teacher` entities, providing methods for both basic CRUD operations, custom queries, and complex specification-based searches. The custom query methods allow for retrieving teachers by their department, subject, or specific attributes, and also support eager fetching of associated courses, which is useful for managing teacher information efficiently and reducing the number of database queries.
 
+---
+
+[Back to System Overview](../../system-overview.md)

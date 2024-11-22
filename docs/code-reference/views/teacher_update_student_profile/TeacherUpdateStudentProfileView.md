@@ -57,3 +57,7 @@ The `TeacherUpdateStudentProfileView` class provides a user interface for teache
 ## Usage
 
 The `TeacherUpdateStudentProfileView` is used by teachers to manage student information. Teachers can view a list of students, search by name, and edit their details through a form. The view utilizes localization features to adapt to different languages and leverages Vaadin components for an interactive UI experience. It serves as part of the teacher's functionality to maintain up-to-date student information.
+
+---
+
+[Back to System Overview](../../system-overview.md)

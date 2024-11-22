@@ -26,3 +26,7 @@ This class handles HTTP requests for managing subject translations, providing an
 ## Example Endpoint
 
 - **Get subject translations**: `GET /api/subjects/{id}/translations?locale={locale}`
+
+---
+
+[Back to System Overview](../system-overview.md)

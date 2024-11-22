@@ -25,3 +25,8 @@ This class handles HTTP requests for managing department translations, providing
 ## Example Endpoints
 
 - **Get department translations**: `GET /api/departments/translations?locale={locale}`
+
+---
+
+[Back to System Overview](../system-overview.md)
+

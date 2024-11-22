@@ -2,16 +2,22 @@
 
 ## Contents
 - [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Installation](#installation)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
 - [Configuration Files](#configuration-files)
-    - [.env File](#env-file)
-    - [Docker .env File](#docker-env-file)
-    - [application.properties](#application-properties)
-    - [Dockerfile](#dockerfile)
-    - [Jenkins Pipeline](#jenkins-pipeline)
+  - [.env File](#env-file)
+  - [Docker .env File](#docker-env-file)
+  - [application.properties](#application-properties)
+  - [Dockerfile](#dockerfile)
+  - [Jenkins Pipeline](#jenkins-pipeline)
 - [Database Overview](#database-overview)
 - [Additional Configurations](#additional-configurations)
+  - [Localization](#localization)
+  - [Email Service](#email-service)
+  - [Security Configuration](#security-configuration)
+  - [Environment Profiles](#environment-profiles)
+
+---
 
 ## Getting Started
 
@@ -21,10 +27,15 @@
 - MySQL
 - Docker (Optional for containerized deployment)
 
+
 ### Installation
 - Clone the repository and navigate to the project directory.
 - Configure the `.env` file in the `src/main/resources` folder.
 - Build the project using Maven.
+
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
+---
 
 ## Configuration Files
 
@@ -88,8 +99,16 @@ The Jenkins pipeline automates code checkout, build, testing, and code coverage 
 
 See the pipeline script (`Jenkinsfile`) in the root directory for more details.
 
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
+---
+
 ## Database Overview
 For more details on the database structure and schema, please refer to the [database-overview](../database/database-overview.md) file in the `database` folder. This includes a comprehensive explanation of all tables, relationships, and database configurations used in the **Student Information System**.
+
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
+---
 
 ## Additional Configurations
 
@@ -107,4 +126,10 @@ For more details on the database structure and schema, please refer to the [data
 ### Environment Profiles
 - The application uses profiles such as **dev**, **test**, and **prod** to manage different configurations for local development, testing, and production environments.
 - Profiles can be activated by using the `spring.profiles.active` property.
+
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
+---
+
+[Back to Project Overview](../project-overview.md)
 

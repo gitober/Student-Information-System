@@ -33,3 +33,6 @@ This class represents the `Attendance` entity, used for storing attendance recor
 
 This entity is used to persist attendance information for students in specific courses, typically used in attendance tracking features.
 
+---
+
+[Back to System Overview](../../system-overview.md)

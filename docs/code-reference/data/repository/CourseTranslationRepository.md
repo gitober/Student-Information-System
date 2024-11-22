@@ -22,3 +22,6 @@ This interface represents the `CourseTranslationRepository`, which provides meth
 
 This repository is used to manage `CourseTranslation` entities, providing methods for both basic CRUD operations and custom queries. The custom query methods allow for retrieving course translations by course ID, locale, and specific field names, which are useful for displaying translated course information in different languages.
 
+---
+
+[Back to System Overview](../../system-overview.md)

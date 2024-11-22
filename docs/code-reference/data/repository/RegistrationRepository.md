@@ -23,3 +23,6 @@ This interface represents the `RegistrationRepository`, which provides methods t
 
 This repository is used to manage `Registration` entities, providing methods for both basic CRUD operations and custom queries. The custom query methods allow for retrieving courses by student number and students by course ID, which are essential for managing student enrollment and course participation data.
 
+---
+
+[Back to System Overview](../../system-overview.md)

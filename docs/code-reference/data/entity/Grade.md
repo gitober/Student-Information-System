@@ -28,3 +28,6 @@ This class represents the `Grade` entity, used for storing information about stu
 
 This entity is used to persist information about student grades in specific courses, allowing the application to manage grading and reporting functionalities.
 
+---
+
+[Back to System Overview](../../system-overview.md)

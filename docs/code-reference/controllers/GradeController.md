@@ -40,3 +40,7 @@ This class handles HTTP requests for managing grade records, providing RESTful e
 - **Update grade by ID**: `PUT /api/grades/{gradeId}`
 - **Delete grade by ID**: `DELETE /api/grades/{gradeId}`
 
+---
+
+[Back to System Overview](../system-overview.md)
+

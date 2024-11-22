@@ -20,3 +20,7 @@ This interface represents the `UserTranslationRepository`, which provides method
 ## Usage
 
 This repository is used to manage `UserTranslation` entities, providing methods for both basic CRUD operations and custom queries. The custom query methods allow for retrieving user translations by user ID and locale, which are useful for displaying localized user information in different languages.
+
+---
+
+[Back to System Overview](../../system-overview.md)

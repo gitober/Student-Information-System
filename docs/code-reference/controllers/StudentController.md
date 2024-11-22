@@ -39,3 +39,7 @@ This class handles HTTP requests for managing student records, providing RESTful
 - **Create a new student**: `POST /students`
 - **Update student by ID**: `PUT /students/{id}`
 - **Delete student by ID**: `DELETE /students/{id}`
+
+---
+
+[Back to System Overview](../system-overview.md)

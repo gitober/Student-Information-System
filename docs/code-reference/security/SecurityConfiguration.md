@@ -51,3 +51,6 @@ The `SecurityConfiguration` class is responsible for configuring the security se
 
 The `SecurityConfiguration` class is used to define the security rules and settings for the application, including how users authenticate, how sessions are managed, and how different endpoints are secured. It integrates Vaadin with Spring Security to provide seamless security handling across the application.
 
+---
+
+[Back to System Overview](../system-overview.md)

@@ -1,4 +1,12 @@
-# SonarCloud: Report and Implementation
+# SonarCloud Documentation
+
+## Contents
+- [Summary](#summary)
+- [Implementation Steps](#implementation-steps)
+   - [Maven Plugin Configuration (`pom.xml`)](#1-maven-plugin-configuration-pomxml)
+   - [SonarCloud GitHub Actions Workflow](#2-sonarcloud-github-actions-workflow)
+   - [SonarCloud Project Configuration (`sonar-project.properties`)](#3-sonarcloud-project-configuration-sonar-projectproperties)
+- [Analysis Results](#analysis-results)
 
 ---
 
@@ -19,7 +27,7 @@ SonarCloud was integrated using the **Sonar Maven Plugin**, enabling analysis as
 <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 <sonar.exclusions>**/*.ts,**/*.js,**/*.tsx,**/*.mjs,**/vaadin/**,**/node_modules/**,**/generated/**,**/target/**,**/src/test/**</sonar.exclusions>
 </properties>
- ```
+```
 - Defines which files are analyzed and which are excluded.
 - **Sonar Maven Plugin**:
 ```yaml
@@ -36,7 +44,8 @@ SonarCloud was integrated using the **Sonar Maven Plugin**, enabling analysis as
    </executions>
 </plugin>
 ```
-  This plugin enables SonarCloud analysis through the command `mvn sonar:sonar`.
+This plugin enables SonarCloud analysis through the command `mvn sonar:sonar`.
+
 
 ### 2. SonarCloud GitHub Actions Workflow
 The workflow configuration enables automatic analysis whenever code is pushed to the `main` branch or a pull request is created.
@@ -55,7 +64,7 @@ on:
    workflow_dispatch:  
 
 permissions:
-   pull-requests: read 
+   pull-requests: read
 
 jobs:
    sonarcloud:
@@ -94,12 +103,14 @@ jobs:
 ```
 The workflow performs the following steps:
 
-Code Checkout: Downloads the project code.
-JDK 22 Setup: Uses the Zulu distribution.
-Maven Build: Runs mvn clean install to build the project before analysis.
-SonarCloud Analysis: Utilizes encrypted tokens SONAR_TOKEN and GITHUB_TOKEN for authentication.
-### 3. SonarCloud Project Configuration (sonar-project.properties)
-   This file contains project-specific settings, such as the source code location and analysis exclusions.
+- **Code Checkout**: Downloads the project code.
+- **JDK 22 Setup**: Uses the Zulu distribution.
+- **Maven Build**: Runs `mvn clean install` to build the project before analysis.
+- **SonarCloud Analysis**: Utilizes encrypted tokens `SONAR_TOKEN` and `GITHUB_TOKEN` for authentication.
+
+
+### 3. SonarCloud Project Configuration (`sonar-project.properties`)
+This file contains project-specific settings, such as the source code location and analysis exclusions.
 ```yaml
 sonar.projectKey=
 sonar.organization=
@@ -115,19 +126,31 @@ sonar.sources=src
 sonar.java.source=22
 ```
 
-Analysis Results
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
+---
+
+## Analysis Results
 SonarCloud provides detailed reports on code quality. Key metrics include:
 
-1. Code Quality Rating
-   Code Smells: 0
-   Bugs: 0
-   Vulnerabilities: 0
-   Duplicated Code: 2.4%
-2. Test Coverage
-   Reported through jacoco.xml, current coverage: 58.6%.
-3. Cyclomatic Complexity
-   Some methods exceed the recommended complexity threshold based on measurements.
-4. Security Hotspots
-   All critical issues have been reviewed.
+1. **Code Quality Rating**
+   - Code Smells: 0
+   - Bugs: 0
+   - Vulnerabilities: 0
+   - Duplicated Code: 2.4%
+2. **Test Coverage**
+   - Reported through `jacoco.xml`, current coverage: 58.6%.
+3. **Cyclomatic Complexity**
+   - Some methods exceed the recommended complexity threshold based on measurements.
+4. **Security Hotspots**
+   - All critical issues have been reviewed.
 
-![SonarCloudResult](../../images/test_tools/sonarCloud/sonarCloudResult.PNG)
+![SonarCloudResult](../../../images/test_tools/sonarCloud/sonarCloudResult.PNG)
+
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
+---
+
+[Back to Testing Overview](../testing-overview.md)
+
+

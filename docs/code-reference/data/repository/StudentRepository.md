@@ -19,3 +19,6 @@ This interface represents the `StudentRepository`, which provides methods to per
 
 This repository is used to manage `Student` entities, providing methods for both basic CRUD operations, custom queries, and complex specification-based searches. The custom query methods allow for retrieving students by username, course enrollment, and student number, which are essential for managing student information and their participation in courses.
 
+---
+
+[Back to System Overview](../../system-overview.md)

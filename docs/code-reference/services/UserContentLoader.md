@@ -65,3 +65,7 @@ The `UserContentLoader` class is responsible for dynamically loading user-specif
 ## Usage
 
 The `UserContentLoader` class is used to load user-specific content into the application layout, based on the authenticated user's role. It abstracts the process of identifying the user type and loading the appropriate view for profile, courses, grades, and profile editing.
+
+---
+
+[Back to System Overview](../system-overview.md)

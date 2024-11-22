@@ -21,3 +21,6 @@ This interface represents the `GradeRepository`, which provides methods to perfo
 
 This repository is used to manage `Grade` entities, providing methods for both basic CRUD operations and custom queries. The custom query methods allow for retrieving grades by student number and course ID, which are essential for managing student performance and academic records.
 
+---
+
+[Back to System Overview](../../system-overview.md)

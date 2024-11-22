@@ -27,3 +27,6 @@ This class represents the `Student` entity, which extends the `User` class, used
 
 This entity is used to persist information specific to students, such as their address, grade, and enrolled courses. It provides a many-to-many relationship to manage the courses that students are enrolled in.
 
+---
+
+[Back to System Overview](../../system-overview.md)

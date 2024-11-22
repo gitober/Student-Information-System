@@ -11,6 +11,8 @@ This document provides an overview of the database schema used in the **Student 
 - [Teacher and Student Details](#teacher-and-student-details)
 - [Translations](#translations)
 
+---
+
 ## Course and Batch Tables
 
 ### Course
@@ -42,6 +44,10 @@ create table batch (
 );
 ```
 
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
+---
+
 ## Department and Subjects
 
 ### Department
@@ -70,6 +76,10 @@ create table subject (
 );
 ```
 
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
+---
+
 ## Enrollments and Grades
 
 ### Enrollments
@@ -83,6 +93,7 @@ create table enrollments (
     student_id bigint null
 );
 ```
+
 
 ### Grade
 - **Table:** `grade`
@@ -99,6 +110,10 @@ create table grade (
     constraint FK7e8ca7hfmrpruicqhocskjlf2 foreign key (course_id) references course (course_id)
 );
 ```
+
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
+---
 
 ## Users and Roles
 
@@ -121,6 +136,7 @@ create table users (
 );
 ```
 
+
 ### User Roles
 - **Table:** `user_roles`
 - **Description:** Associates users with their respective roles, e.g., **STUDENT**, **TEACHER**, etc.
@@ -134,6 +150,10 @@ create table user_roles (
         on update cascade on delete cascade
 );
 ```
+
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
+---
 
 ## Attendance and Registration
 
@@ -154,6 +174,7 @@ create table attendance (
 );
 ```
 
+
 ### Registration
 - **Table:** `registration`
 - **Description:** Manages the registration of students in batches, including **registration date**, **course**, **batch**, and **student details**.
@@ -171,6 +192,10 @@ create table registration (
         on update cascade on delete cascade
 );
 ```
+
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
+---
 
 ## Teacher and Student Details
 
@@ -191,6 +216,7 @@ create table teacher (
 );
 ```
 
+
 ### Student
 - **Table:** `student`
 - **Description:** Represents students, with references to the **user** and additional student-specific information.
@@ -205,6 +231,10 @@ create table student (
         on update cascade on delete set null
 );
 ```
+
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
+---
 
 ## Translations
 
@@ -224,6 +254,7 @@ create table course_translation (
 );
 ```
 
+
 ### User Translation
 - **Table:** `user_translation`
 - **Description:** Stores translations for user-specific fields in different languages.
@@ -240,6 +271,16 @@ create table user_translation (
 );
 ```
 
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
+---
+
 ## Summary
 The database schema for the **Student Information System** efficiently organizes student and teacher information, course management, attendance tracking, and other essential elements needed for a student-centric educational application. Translation tables are included to support multiple languages, ensuring that all users have access to their preferred language. The use of relational foreign keys ensures data consistency and facilitates the management of relationships between entities.
+
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
+---
+
+[Back to Project Overview](../project-overview.md)
 

@@ -74,3 +74,7 @@ These views provide functionality such as course browsing, enrollment, attendanc
 ## Usage
 
 These views are part of the student information system, designed to manage courses and attendance, allowing teachers and students to interact with courses efficiently. The classes use Vaadin components to create dynamic and responsive UIs for both students and teachers, ensuring that each user's experience is tailored to their role in the system.
+
+---
+
+[Back to System Overview](../../system-overview.md)

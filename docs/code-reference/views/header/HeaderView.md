@@ -68,3 +68,7 @@ The `HeaderView` class provides a flexible header component for the student info
 - **Minimal Header**: Used for public pages like login and registration, allowing language selection without any user-specific navigation.
 
 The `HeaderView` thus acts as a unified navigation and settings point for both logged-in and guest users, supporting multiple languages and providing a consistent and intuitive user interface.
+
+---
+
+[Back to System Overview](../../system-overview.md)

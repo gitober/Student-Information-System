@@ -36,3 +36,6 @@ The `StudentService` class is responsible for managing student-related operation
 
 The `StudentService` class is used to manage student data, including CRUD operations and additional retrieval methods for course-specific student information. It acts as a key component for maintaining and accessing student-related records within the application.
 
+---
+
+[Back to System Overview](../system-overview.md)

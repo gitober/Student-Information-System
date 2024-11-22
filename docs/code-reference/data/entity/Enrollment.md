@@ -23,3 +23,6 @@ This class represents the `Enrollment` entity, used for storing information abou
 
 This entity is used to persist information about which students are enrolled in which courses, facilitating the management of enrollments within the application.
 
+---
+
+[Back to System Overview](../../system-overview.md)

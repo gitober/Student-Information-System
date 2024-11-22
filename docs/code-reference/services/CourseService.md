@@ -60,3 +60,6 @@ The `CourseService` class is responsible for managing course-related operations,
 
 The `CourseService` class is used to manage course data, including CRUD operations, enrollment, registration, and translation. It serves as the intermediary between the application logic and the database, ensuring that course data is consistently managed and that relationships between courses, teachers, and students are maintained.
 
+---
+
+[Back to System Overview](../system-overview.md)

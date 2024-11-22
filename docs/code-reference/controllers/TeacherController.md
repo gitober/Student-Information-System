@@ -40,3 +40,8 @@ This class handles HTTP requests for managing teacher records, providing RESTful
 - **Update teacher by ID**: `PUT /teachers/{id}`
 - **Delete teacher by ID**: `DELETE /teachers/{id}`
 
+---
+
+[Back to System Overview](../system-overview.md)
+
+

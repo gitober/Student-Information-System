@@ -40,3 +40,6 @@ The `LogoutView` is a straightforward logout mechanism that handles logging the 
 
 The `LogoutView` is an essential part of the application's security, ensuring that users can securely terminate their sessions and be redirected to the login page. It is designed to handle logout operations automatically when a user navigates to the `/logout` route, providing a seamless and secure logout experience.
 
+---
+
+[Back to System Overview](../../system-overview.md)

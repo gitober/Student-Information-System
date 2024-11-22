@@ -27,3 +27,6 @@ The `DateService` class is responsible for formatting date ranges based on the c
 
 The `DateService` class is used for formatting date ranges in the application. It ensures that date formats are adapted based on the current user's locale, providing localized date representations for better user experience.
 
+---
+
+[Back to System Overview](../system-overview.md)

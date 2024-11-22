@@ -77,3 +77,7 @@ These views support localized messages for multi-language use and provide a comp
 - **Localization**: Supports multi-language usage for both students and teachers, enhancing the user experience for diverse audiences.
 
 These views together form a comprehensive grade management module that provides functionality for both students and teachers in the system.
+
+---
+
+[Back to System Overview](../../system-overview.md)

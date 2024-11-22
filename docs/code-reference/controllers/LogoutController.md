@@ -26,3 +26,7 @@ This class handles HTTP requests for user logout, providing an endpoint to log o
 ## Example Endpoint
 
 - **Log out the user**: `GET /logout`
+
+---
+
+[Back to System Overview](../system-overview.md)

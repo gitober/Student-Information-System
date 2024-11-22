@@ -57,3 +57,7 @@ These views are used to present both students and teachers with an overview of r
 - **StudentDashboardView** and **TeacherDashboardView** provide more specialized information depending on the user role. The teacher view is more focused on management, while the student view offers a summary of their academic details.
 
 These views ensure a consistent user experience across both student and teacher roles, with navigation and actions tailored to their specific needs.
+
+---
+
+[Back to System Overview](../../system-overview.md)

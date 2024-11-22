@@ -34,3 +34,6 @@ This class represents the `UserTranslation` entity, used for storing translated 
 
 This entity is used to persist translations for user fields, allowing user information to be displayed in different languages as per the user's locale.
 
+---
+
+[Back to System Overview](../../system-overview.md)

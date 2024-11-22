@@ -41,3 +41,7 @@ This class handles HTTP requests for managing user records, providing RESTful en
 - **Update user by ID**: `PUT /users/{id}`
 - **Delete user by ID**: `DELETE /users/{id}`
 
+---
+
+[Back to System Overview](../system-overview.md)
+
