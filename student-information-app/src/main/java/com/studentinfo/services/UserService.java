@@ -42,16 +42,6 @@ public class UserService {
         return null;
     }
 
-    // Retrieve the current authenticated user as a Student, if applicable
-    public Student getCurrentStudent() {
-        Optional<User> currentUser = authenticatedUser.get();
-
-        if (currentUser.isPresent() && currentUser.get() instanceof Student student) {
-            return student;
-        }
-        return null; // Return null if the current user is not a student
-    }
-
     // Authenticate user based on email and password
     public Optional<User> authenticate(String email, String password) {
         Optional<User> userOptional = userRepository.findByEmail(email);
@@ -59,16 +49,6 @@ public class UserService {
             return userOptional;
         }
         return Optional.empty();
-    }
-
-    // Find a user by email
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username).orElse(null);
-    }
-
-    // Get the current authenticated user
-    public User getCurrentUser() {
-        return authenticatedUser.get().orElse(null);
     }
 
     // List all users
@@ -113,14 +93,4 @@ public class UserService {
         }
     }
 
-    // Update both email and username for a user
-    public void updateUserEmailAndUsername(Long userId, String newEmail, String newUsername) {
-        Optional<User> userOptional = userRepository.findById(userId);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            user.setUsername(newUsername);
-            user.setEmail(newEmail);
-            userRepository.save(user);
-        }
-    }
 }

@@ -72,24 +72,6 @@ public class TeacherService {
         return teacherRepository.findAll();
     }
 
-    // Retrieval Operations for Teacher
-
-    public List<Teacher> findByDepartment(String departmentName) {
-        return teacherRepository.findByDepartment_Name(departmentName);
-    }
-
-    public List<Teacher> findBySubject(String subjectName) {
-        return teacherRepository.findBySubject_Name(subjectName);
-    }
-
-    public List<Teacher> findByDepartmentAndSubject(String departmentName, String subjectName) {
-        return teacherRepository.findByDepartment_NameAndSubject_Name(departmentName, subjectName);
-    }
-
-    public Optional<Teacher> getTeacherByUsernameWithCourses(String username) {
-        return teacherRepository.findTeacherByUsernameWithCourses(username);
-    }
-
     // Operations for Attendance
 
     public Attendance saveAttendanceRecord(Attendance attendanceRecord) {
