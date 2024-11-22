@@ -13,7 +13,6 @@ public class TranslationService {
     private final CourseTranslationRepository courseTranslationRepository;
     private final DepartmentTranslationRepository departmentTranslationRepository;
     private final SubjectTranslationRepository subjectTranslationRepository;
-    private final TeacherTranslationRepository teacherTranslationRepository;
     private final UserTranslationRepository userTranslationRepository;
 
     @Autowired
@@ -26,7 +25,6 @@ public class TranslationService {
         this.courseTranslationRepository = courseTranslationRepository;
         this.departmentTranslationRepository = departmentTranslationRepository;
         this.subjectTranslationRepository = subjectTranslationRepository;
-        this.teacherTranslationRepository = teacherTranslationRepository;
         this.userTranslationRepository = userTranslationRepository;
     }
 
@@ -57,26 +55,8 @@ public class TranslationService {
         return departmentTranslationRepository.findByLocale(locale);
     }
 
-    public List<DepartmentTranslation> getDepartmentTranslations(Long departmentId, String locale) {
-        return departmentTranslationRepository.findByDepartmentIdAndLocale(departmentId, locale);
-    }
-
-    // Subject Translations
-    public List<SubjectTranslation> getSubjectTranslationsByLocale(String locale) {
-        return subjectTranslationRepository.findByLocale(locale);
-    }
-
     public List<SubjectTranslation> getSubjectTranslations(Long subjectId, String locale) {
         return subjectTranslationRepository.findBySubjectIdAndLocale(subjectId, locale);
-    }
-
-    // Teacher Translations
-    public List<TeacherTranslation> getTeacherTranslationsByLocale(String locale) {
-        return teacherTranslationRepository.findByLocale(locale);
-    }
-
-    public List<TeacherTranslation> getTeacherTranslations(Long teacherId, String locale) {
-        return teacherTranslationRepository.findByTeacherIdAndLocale(teacherId, locale);
     }
 
     public void saveCourseTranslations(List<CourseTranslation> translations) {

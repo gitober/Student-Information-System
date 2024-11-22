@@ -76,7 +76,10 @@ public class TeacherCoursesView extends Composite<VerticalLayout> {
     private static final String STUDENT_PHONE_KEY = "courses.studentPhoneNumber";
 
     @Autowired
-    public TeacherCoursesView(CourseService courseService, TeacherService teacherService, MessageSource messageSource, DateService dateService) {
+    public TeacherCoursesView(CourseService courseService,
+                              TeacherService teacherService,
+                              MessageSource messageSource,
+                              DateService dateService) {
         this.courseService = courseService;
         this.teacherService = teacherService;
 

@@ -109,34 +109,17 @@ public class CourseService {
         return registrationRepository.findCoursesByStudentNumber(studentNumber);
     }
 
-    // Retrieve enrolled students for a course by its course ID
-    public List<Student> getEnrolledStudents(Long courseId) {
-        return registrationRepository.findStudentsByCourseId(courseId);
-    }
-
-    // Additional Operations
-
     // Retrieve all available courses (same as getAllCourses, can be adjusted or removed)
     public List<Course> getAvailableCourses() {
         return courseRepository.findAll();
     }
 
-    // Retrieve courses for a specific student by student ID
-    public List<Course> getCoursesForStudent(Long studentId) {
-        return courseRepository.findCoursesByStudentId(studentId);
-    }
 
     // Retrieve students enrolled in a course by course ID (duplicate method, can be combined or removed)
     public List<Student> getEnrolledStudentsByCourseId(Long courseId) {
         return registrationRepository.findStudentsByCourseId(courseId);
     }
 
-    // Retrieve courses taught by a specific teacher by their teacher ID
-    public List<Course> getCoursesByTeacherId(Long teacherId) {
-        Teacher teacher = teacherRepository.findById(teacherId)
-                .orElseThrow(() -> new IllegalArgumentException("Teacher not found with ID: " + teacherId));
-        return teacher.getCourses(); // Return the list of courses taught by the teacher
-    }
 
     // Method to get translated course name
     public String getTranslatedName(Long courseId, String languageCode) {

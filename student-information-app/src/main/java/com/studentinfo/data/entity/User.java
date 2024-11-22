@@ -56,7 +56,7 @@ public class User implements UserDetails {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(name = "student_number", unique = true, nullable = true)
+    @Column(name = "student_number", unique = true)
     private Long studentNumber;
 
     @Column(name = "user_type", nullable = false)
