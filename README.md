@@ -173,7 +173,7 @@ For more detailed information about the project, explore the following resources
 - **[Development and Testing Cases](docs/development-cases/development_and_testing_report.md)**: Testing scenarios and progress tracking.
 - **[Diagrams Overview](docs/diagrams/diagrams-overview.md)**: Workflow and relationship diagrams.
 - **[Settings Overview](docs/project-settings/settings-overview.md)**: Configuration and setup instructions.
-- **[Testing Overview](docs/testing/junit/test-overview.md)**: Testing strategy and execution steps.
+- **[Testing Overview](docs/testing/testing-overview.md)**: Testing strategy and execution steps.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
