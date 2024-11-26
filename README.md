@@ -44,8 +44,6 @@ EduBird is a web application designed for educational institutions to efficientl
 
 This project is the result of a collaborative effort by a dedicated team of contributors. Their vision, creativity, and hard work have transformed EduBird from a concept into a functional and user-friendly system.
 
-For a detailed breakdown of the system, including its structure, components, and functionalities, please refer to the [Project Overview](docs/project-overview.md).
-
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ---
@@ -89,7 +87,7 @@ This section provides instructions on how to set up the project locally and run 
    ```sh
    git clone https://github.com/gitober/Student-Information-System.git
    ```
-   For detailed setup and configuration, please refer to the [Settings Overview](docs/project-settings/settings-overview.md).
+   For detailed setup and configuration, please refer to the [Settings Overview](docs/development/project-settings/settings-overview.md).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -104,7 +102,7 @@ The system is designed to handle multiple functionalities:
 - Course management, enrollment, and attendance tracking.
 - Grade and result management for teachers and students.
 
-For more examples and screenshots of the application's user interface, refer to the [Application Walkthrough](docs/app-walkthrough/app-walkthrough-overview.md).
+For more examples and screenshots of the application's user interface, refer to the [Application Walkthrough](docs/user-documentation/application-walkthrough.md).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -121,7 +119,6 @@ For more examples and screenshots of the application's user interface, refer to 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ---
-
 
 <!-- CONTRIBUTING -->
 ## Contributing
@@ -148,7 +145,6 @@ We value the hard work of everyone contributing to this project. Below are the c
   <img src="https://contrib.rocks/image?repo=gitober/Student-Information-System" alt="Creators and Top Contributors" />
 </a>
 
-
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ---
@@ -164,19 +160,31 @@ Distributed under the MIT License. See [LICENSE.txt](LICENSE.txt) for more infor
 
 ## Documentation
 
-For more detailed information about the project, explore the following resources:
+The [***Project Overview***](docs/project-overview/project-overview.md) serves as the main resource for understanding the entire project. It contains comprehensive information about the system's purpose, components, and functionality.
 
-- **[Application Walkthrough](docs/app-walkthrough/app-walkthrough-overview.md)**: Step-by-step guide to using the application.
-- **[Code Reference](docs/code-reference/system-overview.md)**: Architecture and system component details.
-- **[Database Overview](docs/database/database-overview.md)**: Database schema and relationships.
-- **[Deployment with Docker](docs/deployment/docker/docker.md)**: Docker setup and deployment instructions.
-- **[Development and Testing Cases](docs/development-cases/development_and_testing_report.md)**: Testing scenarios and progress tracking.
-- **[Diagrams Overview](docs/diagrams/diagrams-overview.md)**: Workflow and relationship diagrams.
-- **[Settings Overview](docs/project-settings/settings-overview.md)**: Configuration and setup instructions.
-- **[Testing Overview](docs/testing/testing-overview.md)**: Testing strategy and execution steps.
+For additional in-depth topics, explore the following resources:
+
+### Deployment
+- **[Docker](docs/deployment/docker.md)**: Docker setup and deployment instructions.
+
+### Design and Architecture
+- **[Architecture Diagrams](docs/design-and-architecture/architecture-diagrams.md)**: Workflow and relationship diagrams.
+- **[System Design](docs/design-and-architecture/system-design.md)**: Detailed system design documentation.
+
+### Development
+- **[Code Structure](docs/development/code-structure/code-structure.md)**: Architecture and system component details.
+- **[Database Schema](docs/development/database-schema/database-schema.md)**: Database design and schema details.
+- **[Development and Testing Report](docs/development/development-cases/development_and_testing_report.md)**: Development cases and progress tracking.
+- **[Project Settings Overview](docs/development/project-settings/settings-overview.md)**: Configuration and setup instructions.
+
+### Testing
+- **[Testing](docs/testing/testing-overview.md)**: Testing strategy and execution steps.
+
+### User Documentation
+- **[Application Walkthrough](docs/user-documentation/application-walkthrough.md)**: Step-by-step guide to using the application.
+
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [contributors-shield]: https://img.shields.io/github/contributors/gitober/Student-Information-System.svg?style=for-the-badge
