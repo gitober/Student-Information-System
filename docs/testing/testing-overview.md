@@ -10,6 +10,7 @@ Welcome to the Testing Documentation for the **Student Information System** proj
 2. [Jenkins Pipeline](#jenkins-pipeline)
 3. [JUnit](#junit)
 4. [SonarCloud Analysis](#sonarcloud-analysis)
+5. [Performance Test](#performance-test)
 
 ---
 
@@ -50,6 +51,14 @@ Welcome to the Testing Documentation for the **Student Information System** proj
 - **Details**: Explains how to configure and use SonarCloud for the project, including generating and interpreting quality reports.
 
 <p align="right">(<a href="#contents">back to top</a>)</p>
+
+---
+
+## Performance Test
+
+- **File**: [Performance Test Report](../testing/apacheJMeter/apacheJMeter.md)
+- **Purpose**: Evaluates the system's performance under various load conditions.
+- **Details**: Provides a detailed report on the performance test conducted using Apache JMeter, including test methodology, results, anomalies, conclusion and implementation.
 
 ---
 
