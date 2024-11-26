@@ -1,7 +1,7 @@
 <!-- PROJECT SHIELDS -->
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
-[![Stars][stars-shield]][stars-url]
+[![Stars][stars-shield]](https://github.com/gitober/Student-Information-System/stargazers)
 [![Issues][issues-shield]][issues-url]
 
 <!-- PROJECT LOGO -->
