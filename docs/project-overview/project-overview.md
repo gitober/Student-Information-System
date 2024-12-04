@@ -66,3 +66,18 @@ Below is an overview of the documentation to guide setup and maintenance.
 
 <p align="right">(<a href="#project-overview">back to top</a>)</p>
 
+---
+
+## Authors
+
+This project was envisioned and developed by the following contributors:
+
+- **[gitober](https://github.com/gitober)** 
+- **[eetuam1](https://github.com/eetuam1)** 
+- **[GeorgeChirikov](https://github.com/GeorgeChirikov)** 
+- **[annikannisto](https://github.com/annikannisto)**
+
+We appreciate their hard work and dedication in bringing this project to life.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
